@@ -14,7 +14,7 @@ import de.tum.`in`.tumcampusapp.component.notifications.ProvidesNotifications
 import de.tum.`in`.tumcampusapp.component.other.locations.RoomLocationsDao
 import de.tum.`in`.tumcampusapp.component.other.locations.model.Geo
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItem
-import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.Event
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.AbstractEvent
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.WidgetsTimetableBlacklist
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.ProvidesCard
@@ -136,7 +136,7 @@ class CalendarController(private val context: Context) : ProvidesCard, ProvidesN
      */
     fun getCalendarItemAndDuplicatesById(id: String) = calendarDao.getCalendarItemsById(id)
 
-    fun scheduleNotifications(events: List<Event>) {
+    fun scheduleNotifications(events: List<AbstractEvent>) {
         // Be responsible when scheduling alarms. We don't want to exceed system resources
         // By only using up half of the remaining resources, we achieve fair distribution of the
         // remaining usable notifications
@@ -150,7 +150,7 @@ class CalendarController(private val context: Context) : ProvidesCard, ProvidesN
         scheduler.schedule(notifications)
     }
 
-    fun importCalendar(events: List<Event>) {
+    fun importCalendar(events: List<AbstractEvent>) {
         // Cleanup cache before importing
         removeCache()
 
@@ -170,10 +170,10 @@ class CalendarController(private val context: Context) : ProvidesCard, ProvidesN
         calendarDao.flush()
     }
 
-    private fun replaceIntoDb(events: List<Event>) {
+    private fun replaceIntoDb(events: List<AbstractEvent>) {
         val items = ArrayList<CalendarItem>()
         for (event in events) {
-            if (event.id != null && event.id.isNotEmpty() && event.title.isNotEmpty()) {
+            if (event.id != null && event.id!!.isNotEmpty() && event.title.isNotEmpty()) {
                 items.add(event.toCalendarItem())
             }
         }

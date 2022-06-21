@@ -29,8 +29,6 @@ class NewsInflater(context: Context) {
 
     fun onBindNewsView(viewHolder: NewsViewHolder, newsItem: News) {
         val newsSource = newsSourcesDao.getNewsSource(newsItem.src.toInt())
-        val nrOfEvents = newsDao.hasEventAssociated(newsItem.id)
-        val hasEvents = nrOfEvents != 0
-        viewHolder.bind(newsItem, newsSource, hasEvents)
+        viewHolder.bind(newsItem, newsSource)
     }
 }

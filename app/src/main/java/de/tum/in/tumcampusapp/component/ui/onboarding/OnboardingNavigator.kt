@@ -1,35 +1,45 @@
 package de.tum.`in`.tumcampusapp.component.ui.onboarding
 
 import android.content.Intent
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.transaction
 import de.tum.`in`.tumcampusapp.R
+import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.di.OnboardingScope
-import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.Utils
+import de.tum.`in`.tumcampusapp.config.AuthMethod
+import de.tum.`in`.tumcampusapp.config.Config
+import de.tum.`in`.tumcampusapp.utils.*
 import javax.inject.Inject
 
 @OnboardingScope
 class OnboardingNavigator @Inject constructor(
     private val activity: OnboardingActivity
 ) {
+    @Inject
+    lateinit var authManager: AuthManager
 
     private var didFinishFlow = false
 
     private val fragmentManager: FragmentManager
         get() = activity.supportFragmentManager
 
-    fun openNext() {
-        val destination = when (val current = fragmentManager.findFragmentById(R.id.contentFrame)) {
-            is OnboardingStartFragment -> CheckTokenFragment.newInstance()
-            is CheckTokenFragment -> OnboardingExtrasFragment.newInstance()
-            else -> throw IllegalStateException("Invalid fragment ${current?.javaClass?.simpleName}")
+    fun openFirst() {
+        val first = when (ConfigUtils.getConfig(ConfigConst.AUTH_METHOD, AuthMethod.OAUTH10A)) {
+            // Add more authentication methods here
+            AuthMethod.OAUTH10A -> OnboardingOAuth10aFragment.newInstance()
+            else -> throw IllegalStateException("Authentication method not known.")
         }
 
-        fragmentManager.transaction {
-            replace(R.id.contentFrame, destination)
-            addToBackStack(null)
-        }
+        fragmentManager.beginTransaction()
+            .replace(R.id.contentFrame, first)
+            .commit()
+    }
+
+    fun openNext(destination: Fragment) {
+        fragmentManager.beginTransaction()
+            .replace(R.id.contentFrame, destination)
+            .addToBackStack(null)
+            .commit()
     }
 
     fun finish() {
@@ -44,8 +54,7 @@ class OnboardingNavigator @Inject constructor(
         if (!didFinishFlow) {
             // The user opened the onboarding screen and maybe filled out some information, but did
             // not finish it completely.
-            Utils.setSetting(activity, Const.LRZ_ID, "")
-            Utils.setSetting(activity, Const.ACCESS_TOKEN, "")
+            authManager.clear()
         }
     }
 }

@@ -8,11 +8,8 @@ import androidx.core.content.edit
 import com.google.gson.Gson
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.app.AuthenticationManager
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
-import de.tum.`in`.tumcampusapp.api.app.model.TUMCabeVerification
-import de.tum.`in`.tumcampusapp.api.app.model.UploadStatus
-import de.tum.`in`.tumcampusapp.api.tumonline.AccessTokenManager
+import de.tum.`in`.tumcampusapp.api.auth.AuthManager
+import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForLoadingInBackground
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomController
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMember
@@ -26,7 +23,6 @@ import de.tum.`in`.tumcampusapp.utils.NetUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import org.jetbrains.anko.defaultSharedPreferences
 import org.jetbrains.anko.support.v4.browse
-import java.io.IOException
 import javax.inject.Inject
 
 class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
@@ -42,13 +38,13 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
     lateinit var cacheManager: CacheManager
 
     @Inject
-    lateinit var tumCabeClient: TUMCabeClient
+    lateinit var apiClient: LMSClient
 
     @Inject
     lateinit var chatRoomController: ChatRoomController
 
     @Inject
-    lateinit var authManager: AuthenticationManager
+    lateinit var authManager: AuthManager
 
     @Inject
     lateinit var navigator: OnboardingNavigator
@@ -64,9 +60,9 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            bugReportsCheckBox.isChecked = Utils.getSettingBool(requireContext(), Const.BUG_REPORTS, true)
+//            bugReportsCheckBox.isChecked = Utils.getSettingBool(requireContext(), Const.BUG_REPORTS, true)
 
-            if (AccessTokenManager.hasValidAccessToken(requireContext())) {
+            if (authManager.hasAccess()) {
                 silentModeCheckBox.isChecked =
                     Utils.getSettingBool(requireContext(), Const.SILENCE_SERVICE, false)
                 silentModeCheckBox.setOnCheckedChangeListener { _, isChecked ->
@@ -80,7 +76,7 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
                 silentModeCheckBox.isEnabled = false
             }
 
-            if (AccessTokenManager.hasValidAccessToken(requireContext())) {
+            if (authManager.hasAccess()) {
                 groupChatCheckBox.isChecked =
                     Utils.getSettingBool(requireContext(), Const.GROUP_CHAT_ENABLED, true)
             } else {
@@ -88,8 +84,9 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
                 groupChatCheckBox.isEnabled = false
             }
 
-            if (AccessTokenManager.hasValidAccessToken(requireContext())) {
-                cacheManager.fillCache()
+            if (authManager.hasAccess()) {
+                // TODO: Enable after CacheManager is adopted
+//                cacheManager.fillCache()
             }
 
             privacyPolicyButton.setOnClickListener { browse(getString(R.string.url_privacy_policy)) }
@@ -106,64 +103,65 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
 
         // By now, we should have generated the RSA key and uploaded it to our server and TUMonline
 
-        val lrzId = Utils.getSetting(requireContext(), Const.LRZ_ID, "")
-        val name = Utils.getSetting(requireContext(),
-            Const.CHAT_ROOM_DISPLAY_NAME, getString(R.string.not_connected_to_tumonline))
+//        val lrzId = Utils.getSetting(requireContext(), Const.LRZ_ID, "")
+//        val name = Utils.getSetting(requireContext(),
+//            Const.CHAT_ROOM_DISPLAY_NAME, getString(R.string.not_connected_to_tumonline))
+//
+//        val currentChatMember = ChatMember(lrzId)
+//        currentChatMember.displayName = name
+//
+//        if (currentChatMember.lrzId.isNullOrEmpty()) {
+//            return currentChatMember
+//        }
+//
+//        // Tell the server the new member
+//        val member: ChatMember?
+//        try {
+//            // After the user has entered their display name, create the new member on the server
+//            member = tumCabeClient.createMember(currentChatMember)
+//        } catch (e: IOException) {
+//            Utils.log(e)
+//            Utils.showToastOnUIThread(requireActivity(), R.string.error_setup_chat_member)
+//            return null
+//        }
+//
+//        // Catch a possible error, when we didn't get something returned
+//        if (member?.lrzId == null) {
+//            Utils.showToastOnUIThread(requireActivity(), R.string.error_setup_chat_member)
+//            return null
+//        }
 
-        val currentChatMember = ChatMember(lrzId)
-        currentChatMember.displayName = name
-
-        if (currentChatMember.lrzId.isNullOrEmpty()) {
-            return currentChatMember
-        }
-
-        // Tell the server the new member
-        val member: ChatMember?
-        try {
-            // After the user has entered their display name, create the new member on the server
-            member = tumCabeClient.createMember(currentChatMember)
-        } catch (e: IOException) {
-            Utils.log(e)
-            Utils.showToastOnUIThread(requireActivity(), R.string.error_setup_chat_member)
-            return null
-        }
-
-        // Catch a possible error, when we didn't get something returned
-        if (member?.lrzId == null) {
-            Utils.showToastOnUIThread(requireActivity(), R.string.error_setup_chat_member)
-            return null
-        }
-
-        val status = tumCabeClient.verifyKey()
-        if (status?.status != UploadStatus.VERIFIED) {
-            Utils.showToastOnUIThread(requireActivity(), getString(R.string.error_pk_verification))
-            return null
-        }
+//        val status = tumCabeClient.verifyKey()
+//        if (status?.status != UploadStatus.VERIFIED) {
+//            Utils.showToastOnUIThread(requireActivity(), getString(R.string.error_pk_verification))
+//            return null
+//        }
 
         // Try to restore already joined chat rooms from server
-        return try {
-            val verification = TUMCabeVerification.create(requireContext(), null)
-            val rooms = tumCabeClient.getMemberRooms(member.id, verification)
-            chatRoomController.replaceIntoRooms(rooms)
-
-            // upload obfuscated ids now that we have a member
-            val uploadStatus = tumCabeClient.getUploadStatus(lrzId)
-            if (uploadStatus != null) {
-                authManager.uploadObfuscatedIds(uploadStatus)
-            }
-
-            member
-        } catch (e: IOException) {
-            Utils.log(e)
-            null
-        }
+//        return try {
+//            val verification = TUMCabeVerification.create(requireContext(), null)
+//            val rooms = tumCabeClient.getMemberRooms(member.id, verification)
+//            chatRoomController.replaceIntoRooms(rooms)
+//
+//            // upload obfuscated ids now that we have a member
+//            val uploadStatus = tumCabeClient.getUploadStatus(lrzId)
+//            if (uploadStatus != null) {
+//                authManager.uploadObfuscatedIds(uploadStatus)
+//            }
+//
+//            member
+//        } catch (e: IOException) {
+//            Utils.log(e)
+//            null
+//        }
+        return ChatMember()
     }
 
     override fun onLoadFinished(result: ChatMember?) {
-        if (result == null) {
-            showLoadingEnded()
-            return
-        }
+//        if (result == null) {
+//            showLoadingEnded()
+//            return
+//        }
 
         // Gets the editor for editing preferences and updates the preference values with the
         // chosen state
@@ -173,13 +171,13 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
                 with(binding) {
                     putBoolean(Const.SILENCE_SERVICE, silentModeCheckBox.isChecked)
                     putBoolean(Const.BACKGROUND_MODE, true) // Enable by default
-                    putBoolean(Const.BUG_REPORTS, bugReportsCheckBox.isChecked)
+//                    putBoolean(Const.BUG_REPORTS, bugReportsCheckBox.isChecked)
 
-                    if (!result.lrzId.isNullOrEmpty()) {
-                        putBoolean(Const.GROUP_CHAT_ENABLED, groupChatCheckBox.isChecked)
-                        putBoolean(Const.AUTO_JOIN_NEW_ROOMS, groupChatCheckBox.isChecked)
-                        put(Const.CHAT_MEMBER, result)
-                    }
+//                    if (!result.lrzId.isNullOrEmpty()) {
+//                        putBoolean(Const.GROUP_CHAT_ENABLED, groupChatCheckBox.isChecked)
+//                        putBoolean(Const.AUTO_JOIN_NEW_ROOMS, groupChatCheckBox.isChecked)
+//                        put(Const.CHAT_MEMBER, result)
+//                    }
                 }
             }
 

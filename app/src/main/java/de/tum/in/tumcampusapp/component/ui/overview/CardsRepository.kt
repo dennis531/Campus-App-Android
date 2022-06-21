@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import de.tum.`in`.tumcampusapp.api.tumonline.AccessTokenManager
+import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
 import de.tum.`in`.tumcampusapp.component.tumui.tutionfees.TuitionFeeManager
@@ -17,19 +17,22 @@ import de.tum.`in`.tumcampusapp.component.ui.news.TopNewsCard
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.LoginPromptCard
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.ProvidesCard
-import de.tum.`in`.tumcampusapp.component.ui.ticket.EventCardsProvider
 import de.tum.`in`.tumcampusapp.component.ui.transportation.TransportController
 import de.tum.`in`.tumcampusapp.component.ui.updatenote.UpdateNoteCard
+import de.tum.`in`.tumcampusapp.utils.Component
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
 class CardsRepository @Inject constructor(
     private val context: Context,
-    private val eventCardsProvider: EventCardsProvider
 ) {
 
     private var cards = MutableLiveData<List<Card>>()
+
+    @Inject
+    lateinit var authManager: AuthManager
 
     /**
      * Starts refresh of [Card]s and returns the corresponding [LiveData]
@@ -69,15 +72,14 @@ class CardsRepository @Inject constructor(
         }
 
         val providers = ArrayList<ProvidesCard>().apply {
-            if (AccessTokenManager.hasValidAccessToken(context)) {
-                add(CalendarController(context))
-                add(TuitionFeeManager(context))
-                add(ChatRoomController(context))
+            if (authManager.hasAccess()) {
+                addIfEnabled(Component.CALENDAR, CalendarController(context))
+                addIfEnabled(Component.CHAT, ChatRoomController(context))
             }
-            add(CafeteriaManager(context))
-            add(TransportController(context))
-            add(NewsController(context))
-            add(eventCardsProvider)
+            addIfEnabled(Component.TUTIONFEES, TuitionFeeManager(context))
+            addIfEnabled(Component.CAFETERIA, CafeteriaManager(context))
+            addIfEnabled(Component.TRANSPORTATION, TransportController(context))
+            addIfEnabled(Component.NEWS, NewsController(context))
         }
 
         providers.forEach { provider ->
@@ -95,5 +97,11 @@ class CardsRepository @Inject constructor(
         results.add(RestoreCard(context).getIfShowOnStart())
 
         return results.filterNotNull()
+    }
+
+    private fun ArrayList<ProvidesCard>.addIfEnabled(component: Component, provider: ProvidesCard) {
+        if (ConfigUtils.isComponentEnabled(context, component)) {
+            add(provider)
+        }
     }
 }

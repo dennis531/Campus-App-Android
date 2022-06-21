@@ -374,18 +374,6 @@ object Utils {
             Html.fromHtml(source)
     }
 
-    @JvmStatic
-    fun extractRoomNumberFromLocation(location: String): String {
-        val pattern = Pattern.compile("\\((.*?)\\)")
-        val matcher = pattern.matcher(location)
-        return if (matcher.find()) {
-            // The string returned by matcher.group() might be null, but this method requires a non-null string as return value
-            matcher.group(1) ?: location
-        } else {
-            location
-        }
-    }
-
     /**
      * Creates a bitmap for a vector image (.xml) to be able to use it for notifications.
      *

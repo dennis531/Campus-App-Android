@@ -8,14 +8,14 @@ import androidx.core.content.ContextCompat
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
-import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingTumOnline
+import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingLMS
 import de.tum.`in`.tumcampusapp.component.tumui.tutionfees.model.TuitionList
 import de.tum.`in`.tumcampusapp.databinding.FragmentTuitionFeesBinding
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import java.util.Locale
 
-class TuitionFeesFragment : FragmentForAccessingTumOnline<TuitionList>(
+class TuitionFeesFragment : FragmentForAccessingLMS<TuitionList>(
     R.layout.fragment_tuition_fees,
     R.string.tuition_fees
 ) {
@@ -39,8 +39,8 @@ class TuitionFeesFragment : FragmentForAccessingTumOnline<TuitionList>(
     }
 
     private fun refreshData(cacheControl: CacheControl) {
-        val apiCall = apiClient.getTuitionFeesStatus(cacheControl)
-        fetch(apiCall)
+//        val apiCall = apiClient.getTuitionFeesStatus(cacheControl)
+//        fetch(apiCall)
     }
 
     override fun onDownloadSuccessful(response: TuitionList) {

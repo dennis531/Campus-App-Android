@@ -1,11 +1,9 @@
 package de.tum.`in`.tumcampusapp.component.ui.onboarding.di
 
-import dagger.BindsInstance
-import dagger.Subcomponent
-import de.tum.`in`.tumcampusapp.component.ui.onboarding.CheckTokenFragment
-import de.tum.`in`.tumcampusapp.component.ui.onboarding.OnboardingActivity
-import de.tum.`in`.tumcampusapp.component.ui.onboarding.OnboardingExtrasFragment
-import de.tum.`in`.tumcampusapp.component.ui.onboarding.OnboardingStartFragment
+import dagger.*
+import de.tum.`in`.tumcampusapp.component.ui.onboarding.*
+import de.tum.`in`.tumcampusapp.component.ui.onboarding.legacy.CheckTokenFragment
+import de.tum.`in`.tumcampusapp.component.ui.onboarding.legacy.OnboardingStartFragment
 import javax.inject.Scope
 
 @Scope
@@ -19,6 +17,7 @@ interface OnboardingComponent {
     fun inject(startFragment: OnboardingStartFragment)
     fun inject(checkTokenFragment: CheckTokenFragment)
     fun inject(extrasFragment: OnboardingExtrasFragment)
+    fun inject(oauthFragment: OnboardingOAuth10aFragment)
 
     @Subcomponent.Factory
     interface Factory {

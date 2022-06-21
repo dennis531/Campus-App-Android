@@ -12,17 +12,6 @@
             android:targetClass="de.tum.in.tumcampusapp.component.ui.cafeteria.activity.CafeteriaActivity"/>
     </shortcut>
     <shortcut
-        android:shortcutId="studyrooms"
-        android:enabled="true"
-        android:icon="@drawable/ic_study_rooms_shortcut"
-        android:shortcutShortLabel="@string/study_rooms"
-        tools:targetApi="n_mr1">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetPackage="de.tum.in.tumcampus"
-            android:targetClass="de.tum.in.tumcampusapp.component.ui.studyroom.StudyRoomsActivity"/>
-    </shortcut>
-    <shortcut
         android:shortcutId="calendar"
         android:enabled="true"
         android:icon="@drawable/ic_calendar_shortcut"

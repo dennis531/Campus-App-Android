@@ -23,7 +23,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.squareup.picasso.Picasso
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.tumonline.AccessTokenManager
+import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.SetupEduroamActivity
@@ -58,6 +58,9 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
     @Inject
     lateinit var newsController: NewsController
 
+    @Inject
+    lateinit var authManager: AuthManager
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         injector.inject(this)
@@ -74,7 +77,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         // Disables silence service and logout if the app is used without TUMOnline access
         val silentSwitch = findPreference(Const.SILENCE_SERVICE) as? SwitchPreferenceCompat
         val logoutButton = findPreference(BUTTON_LOGOUT)
-        if (!AccessTokenManager.hasValidAccessToken(context)) {
+        if (!authManager.hasAccess()) {
             if (silentSwitch != null) {
                 silentSwitch.isEnabled = false
             }

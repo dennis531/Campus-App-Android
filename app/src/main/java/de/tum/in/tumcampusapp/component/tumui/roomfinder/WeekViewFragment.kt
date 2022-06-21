@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.alamkanak.weekview.WeekView
 import com.alamkanak.weekview.WeekViewDisplayable
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.WidgetCalendarItem
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils

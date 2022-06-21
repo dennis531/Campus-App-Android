@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
 
 import de.tum.in.tumcampusapp.R;
 import de.tum.in.tumcampusapp.component.other.generic.activity.BaseActivity;
+import de.tum.in.tumcampusapp.utils.Component;
+import de.tum.in.tumcampusapp.utils.ConfigConst;
 import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.Utils;
 
@@ -26,7 +28,7 @@ public class SetupEduroamActivity extends BaseActivity {
     private TextInputEditText password;
 
     public SetupEduroamActivity() {
-        super(R.layout.activity_setup_eduroam);
+        super(R.layout.activity_setup_eduroam, Component.EDUROAM);
     }
 
     @Override

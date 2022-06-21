@@ -6,6 +6,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import de.tum.in.tumcampusapp.R;
+import de.tum.in.tumcampusapp.utils.Component;
+import de.tum.in.tumcampusapp.utils.ConfigConst;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -47,8 +49,12 @@ public abstract class ActivityForLoadingInBackground<S, T> extends ProgressActiv
      *
      * @param layoutId Resource id of the xml layout that should be used to inflate the activity
      */
+    public ActivityForLoadingInBackground(int layoutId, Component component) {
+        super(layoutId, component);
+    }
+
     public ActivityForLoadingInBackground(int layoutId) {
-        super(layoutId);
+        this(layoutId, null);
     }
 
     /**

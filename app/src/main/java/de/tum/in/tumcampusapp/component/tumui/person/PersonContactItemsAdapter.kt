@@ -56,8 +56,10 @@ class PersonContactItemsAdapter(
             labelTextView.text = context.getString(item.labelResourceId)
             valueTextView.text = item.value
 
-            setOnClickListener {
-                item.getIntent(context)?.let { intent -> handleItemClick(context, intent) }
+            item.getIntent(context)?.let { intent ->
+                setOnClickListener {
+                    handleItemClick(context, intent)
+                }
             }
         }
 

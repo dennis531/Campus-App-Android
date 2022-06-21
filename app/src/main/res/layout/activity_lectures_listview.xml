@@ -45,10 +45,10 @@
                 android:layout_margin="3dp"
                 android:background="@drawable/unread_messages_bg"
                 android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingTop="2dp"
-                android:paddingRight="5dp"
                 android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp"
                 android:textColor="@android:color/white"
                 android:visibility="gone"
                 tools:text="Unread messages"
@@ -62,7 +62,9 @@
                 android:maxLines="1"
                 android:textColor="@color/text_secondary"
                 android:textSize="16sp"
-                tools:text="Professor" />
+                android:visibility="gone"
+                tools:text="Professor"
+                tools:visibility="visible" />
 
         </LinearLayout>
 

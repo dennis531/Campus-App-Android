@@ -119,7 +119,7 @@ class SilenceService : JobIntentService() {
             }
 
             // refresh when event has ended
-            waitDuration = getWaitDuration(currentLectures[0].dtstart)
+            waitDuration = getWaitDuration(currentLectures[0].dtend)
         }
 
         alarmManager.set(AlarmManager.RTC, startTime + waitDuration, pendingIntent)

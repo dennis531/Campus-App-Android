@@ -2,7 +2,7 @@ package de.tum.`in`.tumcampusapp.component.ui.transportation.api
 
 import android.content.Context
 import com.google.gson.GsonBuilder
-import de.tum.`in`.tumcampusapp.api.app.ApiHelper
+import de.tum.`in`.tumcampusapp.api.general.ApiHelper
 import org.joda.time.DateTime
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

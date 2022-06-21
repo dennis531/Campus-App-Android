@@ -2,7 +2,7 @@ package de.tum.`in`.tumcampusapp.component.ui.updatenote
 
 import android.content.Context
 import de.tum.`in`.tumcampusapp.BuildConfig
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.service.DownloadWorker
 import de.tum.`in`.tumcampusapp.utils.Const

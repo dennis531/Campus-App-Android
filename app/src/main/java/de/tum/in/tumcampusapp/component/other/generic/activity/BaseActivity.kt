@@ -10,12 +10,17 @@ import de.tum.`in`.tumcampusapp.di.AppComponent
 import de.tum.`in`.tumcampusapp.di.app
 import java.util.Locale
 import android.content.pm.PackageManager
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.preference.PreferenceManager
 import de.tum.`in`.tumcampusapp.R
+import de.tum.`in`.tumcampusapp.utils.Component
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
+import de.tum.`in`.tumcampusapp.utils.Utils
 
 abstract class BaseActivity(
-    @LayoutRes private val layoutId: Int
+    @LayoutRes private val layoutId: Int,
+    val component: Component? = null,
 ) : AppCompatActivity() {
 
     val injector: AppComponent by lazy { app.appComponent }
@@ -23,6 +28,16 @@ abstract class BaseActivity(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
+
+        Utils.log("Activity: ${this.javaClass.name}") // TODO: REMOVE
+
+        component?.let {
+            if (!ConfigUtils.isComponentEnabled(this, component)) {
+                val componentTitle = component.getTitle(this)
+                Toast.makeText(this, getString(R.string.component_not_available_format, componentTitle), Toast.LENGTH_LONG).show()
+                this.finish()
+            }
+        }
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 

@@ -65,27 +65,6 @@
                 tools:text="Lorem ipsum" />
 
             <TextView
-                android:id="@+id/dateHeaderTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/material_default_padding"
-                android:autoLink="none"
-                android:fontFamily="sans-serif-medium"
-                android:scrollHorizontally="false"
-                android:text="@string/lecture_begin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/color_primary" />
-
-            <TextView
-                android:id="@+id/dateTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="none"
-                android:scrollHorizontally="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="Lorem ipsum" />
-
-            <TextView
                 android:id="@+id/contributorsHeaderTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,26 +153,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="none"
-                android:scrollHorizontally="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                tools:text="Lorem ipsum" />
-
-            <TextView
-                android:id="@+id/examinationAidsHeaderTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/material_default_padding"
-                android:autoLink="none"
-                android:fontFamily="sans-serif-medium"
-                android:scrollHorizontally="false"
-                android:text="@string/examination_aids"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/color_primary" />
-
-            <TextView
-                android:id="@+id/examinationAidsTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:scrollHorizontally="false"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="Lorem ipsum" />

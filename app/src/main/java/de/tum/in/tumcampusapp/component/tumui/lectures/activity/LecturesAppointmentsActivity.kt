@@ -3,9 +3,11 @@ package de.tum.`in`.tumcampusapp.component.tumui.lectures.activity
 import android.os.Bundle
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
-import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingTumOnline
+import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingLMS
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.adapter.LectureAppointmentsListAdapter
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LectureAppointmentsResponse
+import de.tum.`in`.tumcampusapp.component.tumui.lectures.api.LecturesAPI
+import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
+import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LectureAppointmentInterface
 import de.tum.`in`.tumcampusapp.databinding.ActivityLecturesappointmentsBinding
 import de.tum.`in`.tumcampusapp.utils.Const
 
@@ -19,7 +21,7 @@ import de.tum.`in`.tumcampusapp.utils.Const
  *
  * NEEDS: stp_sp_nr and title set in incoming bundle (lecture id, title)
  */
-class LecturesAppointmentsActivity : ActivityForAccessingTumOnline<LectureAppointmentsResponse>(R.layout.activity_lecturesappointments) {
+class LecturesAppointmentsActivity : ActivityForAccessingLMS<List<LectureAppointmentInterface>>(R.layout.activity_lecturesappointments) {
 
     private var lectureId: String? = null
 
@@ -35,7 +37,7 @@ class LecturesAppointmentsActivity : ActivityForAccessingTumOnline<LectureAppoin
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.tvTermineLectureName.text = intent.getStringExtra(Const.TITLE_EXTRA)
-        lectureId = intent.getStringExtra(Const.LECTURE_ID_EXTRA)
+        lectureId = intent.getStringExtra(AbstractLecture.Lecture_ID)
 
         if (lectureId == null) {
             finish()
@@ -51,17 +53,16 @@ class LecturesAppointmentsActivity : ActivityForAccessingTumOnline<LectureAppoin
 
     private fun loadLectureAppointments(lectureId: String?, cacheControl: CacheControl) {
         lectureId?.let {
-            fetch(apiClient.getLectureAppointments(lectureId, cacheControl))
+            fetch { (apiClient as LecturesAPI).getLectureAppointments(lectureId) }
         }
     }
 
-    override fun onDownloadSuccessful(response: LectureAppointmentsResponse) {
-        val appointments = response.lectureAppointments
-        if (appointments == null || appointments.isEmpty()) {
+    override fun onDownloadSuccessful(response: List<LectureAppointmentInterface>) {
+        if (response.isNullOrEmpty()) {
             showError(R.string.no_appointments)
             return
         }
 
-        binding.lvTerminList.adapter = LectureAppointmentsListAdapter(this, appointments)
+        binding.lvTerminList.adapter = LectureAppointmentsListAdapter(this, response)
     }
 }

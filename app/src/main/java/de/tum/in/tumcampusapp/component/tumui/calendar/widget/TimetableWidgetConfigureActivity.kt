@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.adapter.LectureListSelectionAdapter
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.adapter.LectureListSelectionAdapter
 
 class TimetableWidgetConfigureActivity : AppCompatActivity() {
 

@@ -18,6 +18,7 @@ import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager.CARD_CHAT
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
 import de.tum.`in`.tumcampusapp.database.TcaDb
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import java.util.ArrayList
 
@@ -27,7 +28,7 @@ import java.util.ArrayList
 class ChatMessagesCard(
     context: Context,
     room: ChatRoomDbRow
-) : Card(CARD_CHAT, context, "card_chat") {
+) : Card(CARD_CHAT, context, Component.CHAT, "card_chat") {
 
     private var mUnread: List<ChatMessage> = ArrayList()
     private var nrUnread = 0

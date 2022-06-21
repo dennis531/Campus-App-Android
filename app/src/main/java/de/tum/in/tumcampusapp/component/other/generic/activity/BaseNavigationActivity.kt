@@ -20,6 +20,7 @@ import de.tum.`in`.tumcampusapp.component.other.navigation.NavigationManager
 import de.tum.`in`.tumcampusapp.component.other.settings.SettingsActivity
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager
 import de.tum.`in`.tumcampusapp.component.ui.overview.MainFragment
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.closeDrawers
 import org.jetbrains.anko.defaultSharedPreferences

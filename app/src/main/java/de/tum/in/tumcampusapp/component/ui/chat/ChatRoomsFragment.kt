@@ -6,8 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -20,15 +18,14 @@ import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
-import de.tum.`in`.tumcampusapp.api.app.model.TUMCabeVerification
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.model.TUMCabeVerification
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl.BYPASS_CACHE
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl.USE_CACHE
 import de.tum.`in`.tumcampusapp.component.other.generic.adapter.NoResultsAdapter
-import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingTumOnline
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.Lecture
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LecturesResponse
+import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 import de.tum.`in`.tumcampusapp.component.ui.chat.activity.ChatActivity
 import de.tum.`in`.tumcampusapp.component.ui.chat.activity.JoinRoomScanActivity
 import de.tum.`in`.tumcampusapp.component.ui.chat.adapter.ChatRoomListAdapter
@@ -42,10 +39,8 @@ import org.jetbrains.anko.support.v4.runOnUiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
-import java.net.UnknownHostException
 
-class ChatRoomsFragment : FragmentForAccessingTumOnline<LecturesResponse>(
+class ChatRoomsFragment : FragmentForAccessingLMS<List<AbstractLecture>>(
     R.layout.fragment_chat_rooms,
     R.string.chat_rooms
 ) {
@@ -102,57 +97,57 @@ class ChatRoomsFragment : FragmentForAccessingTumOnline<LecturesResponse>(
     }
 
     private fun loadPersonalLectures(cacheControl: CacheControl) {
-        val apiCall = apiClient.getPersonalLectures(cacheControl)
-        fetch(apiCall)
+//        val apiCall = apiClient.getPersonalLectures(cacheControl)
+//        fetch(apiCall)
     }
 
-    override fun onDownloadSuccessful(response: LecturesResponse) {
-        val lectures = response.lectures
+//    override fun onDownloadSuccessful(response: LecturesResponse) {
+//        val lectures = response.lectures
+//
+//        // We're starting more background work, so we show a loading indicator again
+//        showLoadingStart()
+//
+//        val handlerThread = HandlerThread("UpdateDatabaseThread")
+//        handlerThread.start()
+//
+//        val handler = Handler(handlerThread.looper)
+//        handler.post { createLectureRoomsAndUpdateDatabase(lectures) }
+//    }
 
-        // We're starting more background work, so we show a loading indicator again
-        showLoadingStart()
-
-        val handlerThread = HandlerThread("UpdateDatabaseThread")
-        handlerThread.start()
-
-        val handler = Handler(handlerThread.looper)
-        handler.post { createLectureRoomsAndUpdateDatabase(lectures) }
-    }
-
-    private fun createLectureRoomsAndUpdateDatabase(lectures: List<Lecture>) {
-        manager.createLectureRooms(lectures)
-
-        populateCurrentChatMember()
-
-        val currentChatMember = currentChatMember
-        if (currentChatMember != null) {
-            try {
-                val verification = TUMCabeVerification.create(requireContext(), null)
-                if (verification == null) {
-                    requireActivity().finish()
-                    return
-                }
-
-                val rooms = TUMCabeClient
-                    .getInstance(requireContext())
-                    .getMemberRooms(currentChatMember.id, verification)
-                manager.replaceIntoRooms(rooms)
-            } catch (e: IOException) {
-                Utils.log(e)
-
-                if (e is UnknownHostException) {
-                    showErrorSnackbar(R.string.error_no_internet_connection)
-                } else {
-                    showErrorSnackbar(R.string.error_something_wrong)
-                }
-            }
-        }
-
-        val chatRoomAndLastMessages = manager.getAllByStatus(currentMode)
-        runOnUiThread {
-            displayChatRoomsAndMessages(chatRoomAndLastMessages)
-            showLoadingEnded()
-        }
+    private fun createLectureRoomsAndUpdateDatabase(lectures: List<AbstractLecture>) {
+//        manager.createLectureRooms(lectures)
+//
+//        populateCurrentChatMember()
+//
+//        val currentChatMember = currentChatMember
+//        if (currentChatMember != null) {
+//            try {
+//                val verification = TUMCabeVerification.create(requireContext(), null)
+//                if (verification == null) {
+//                    requireActivity().finish()
+//                    return
+//                }
+//
+//                val rooms = TUMCabeClient
+//                    .getInstance(requireContext())
+//                    .getMemberRooms(currentChatMember.id, verification)
+//                manager.replaceIntoRooms(rooms)
+//            } catch (e: IOException) {
+//                Utils.log(e)
+//
+//                if (e is UnknownHostException) {
+//                    showErrorSnackbar(R.string.error_no_internet_connection)
+//                } else {
+//                    showErrorSnackbar(R.string.error_something_wrong)
+//                }
+//            }
+//        }
+//
+//        val chatRoomAndLastMessages = manager.getAllByStatus(currentMode)
+//        runOnUiThread {
+//            displayChatRoomsAndMessages(chatRoomAndLastMessages)
+//            showLoadingEnded()
+//        }
     }
 
     private fun displayChatRoomsAndMessages(results: List<ChatRoomAndLastMessage>) {

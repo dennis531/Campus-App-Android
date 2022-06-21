@@ -45,7 +45,8 @@
         android:logo="@drawable/tum_logo"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="false"
-        android:theme="@style/AppTheme">
+        android:usesCleartextTraffic="true"
+        android:theme="@style/AppTheme"> <!-- Todo: Remove usesCleartextTraffic in production -->
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -238,16 +239,6 @@
                 android:value="de.tum.in.tumcampusapp.component.ui.cafeteria.activity.CafeteriaActivity" />
         </activity>
         <activity
-            android:name=".component.ui.tufilm.KinoActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/kino"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".component.ui.overview.MainActivity" />
-        </activity>
-        <activity
             android:name=".component.tumui.person.PersonSearchActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/person_search"
@@ -268,6 +259,7 @@
             android:name=".component.tumui.person.PersonDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/person_information"
+            android:theme="@style/AppTheme.NoDrawerLayout">
             android:parentActivityName=".component.tumui.person.PersonSearchActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -300,15 +292,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.tum.in.tumcampusapp.component.tumui.roomfinder.RoomFinderActivity" />
-        </activity>
-        <activity
-            android:name=".component.ui.studyroom.StudyRoomsActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/study_rooms"
-            android:parentActivityName=".component.ui.overview.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".component.ui.overview.MainActivity" />
         </activity>
         <activity
             android:name=".component.tumui.tutionfees.TuitionFeesActivity"
@@ -346,11 +329,22 @@
             android:name=".component.ui.onboarding.OnboardingActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/connect_to_tum_online"
+            android:launchMode="singleTop"
             android:parentActivityName=".component.other.generic.activity.BaseNavigationActivity"
             android:theme="@style/AppTheme.NoDrawerLayout">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.other.generic.activity.BaseNavigationActivity" />
+            <!-- An intent-filter for the OAuth Redirect -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="@string/oauth_callback_scheme"
+                    android:host="@string/oauth_callback_host"
+                    android:pathPrefix="@string/oauth_callback_path_prefix" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".component.tumui.calendar.CalendarActivity"
@@ -400,41 +394,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.tum.in.tumcampusapp.component.ui.chat.activity.ChatRoomsActivity" />
         </activity>
-        <activity
-            android:name=".component.ui.alarm.AlarmActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity"
-            android:theme="@style/AppThemeFullscreen">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".component.ui.overview.MainActivity" />
-        </activity>
-        <activity
-            android:name=".component.ui.barrierfree.BarrierFreeInfoActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/barrier_free"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity" />
-        <activity
-            android:name=".component.ui.barrierfree.BarrierFreeContactActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/contact_person"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.barrierfree.BarrierFreeInfoActivity" />
-        <activity
-            android:name=".component.ui.barrierfree.BarrierFreeFacilitiesActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/facilities"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.barrierfree.BarrierFreeInfoActivity" />
-        <activity
-            android:name=".component.ui.barrierfree.BarrierFreeMoreInfoActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/more_info"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.barrierfree.BarrierFreeInfoActivity" />
         <activity
             android:name=".component.tumui.feedback.FeedbackActivity"
             android:configChanges="orientation|screenSize"
@@ -572,68 +531,6 @@
                 <action android:name="android.location.PROVIDERS_CHANGED" />
             </intent-filter>
         </receiver>
-
-        <activity
-            android:name=".component.ui.ticket.activity.ShowTicketActivity"
-            android:configChanges="keyboardHidden|screenSize"
-            android:label="@string/your_ticket"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.tufilm.KinoActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".component.ui.overview.MainActivity" />
-        </activity>
-        <activity
-            android:name=".component.ui.ticket.activity.BuyTicketActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/order_summary"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.tufilm.KinoActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".component.ui.overview.MainActivity" />
-        </activity>
-        <activity
-            android:name=".component.ui.ticket.activity.EventsActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/events_tickets"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".component.ui.overview.MainActivity" />
-        </activity>
-        <activity
-            android:name=".component.ui.ticket.activity.EventDetailsActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/events"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.ticket.activity.EventsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".component.ui.ticket.activity.EventsActivity" />
-        </activity>
-        <activity
-            android:name=".component.ui.ticket.activity.StripePaymentActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/enter_card_info_title"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.ticket.activity.BuyTicketActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".component.ui.overview.MainActivity" />
-        </activity>
-        <activity
-            android:name=".component.ui.ticket.activity.PaymentConfirmationActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/payment_confirmation"
-            android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.ticket.activity.StripePaymentActivity"
-            android:theme="@style/AppTheme.NoDrawerLayout">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".component.ui.ticket.activity.StripePaymentActivity" />
-        </activity>
 
         <receiver android:name=".component.notifications.receivers.NotificationReceiver" />
         <receiver android:name=".component.notifications.receivers.NotificationAlarmReceiver" />

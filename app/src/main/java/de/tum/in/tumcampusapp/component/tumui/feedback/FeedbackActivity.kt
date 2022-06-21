@@ -30,6 +30,7 @@ import de.tum.`in`.tumcampusapp.component.tumui.feedback.FeedbackPresenter.Compa
 import de.tum.`in`.tumcampusapp.component.tumui.feedback.FeedbackPresenter.Companion.REQUEST_GALLERY
 import de.tum.`in`.tumcampusapp.component.tumui.feedback.FeedbackPresenter.Companion.REQUEST_TAKE_PHOTO
 import de.tum.`in`.tumcampusapp.databinding.ActivityFeedbackBinding
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import io.reactivex.Observable

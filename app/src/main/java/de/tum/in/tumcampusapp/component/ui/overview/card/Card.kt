@@ -7,6 +7,8 @@ import android.preference.PreferenceManager
 import androidx.recyclerview.widget.DiffUtil
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.navigation.NavDestination
+import de.tum.`in`.tumcampusapp.utils.Component
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Const.CARD_POSITION_PREFERENCE_SUFFIX
 import de.tum.`in`.tumcampusapp.utils.Const.DISCARD_SETTINGS_START
 import de.tum.`in`.tumcampusapp.utils.Utils
@@ -20,11 +22,18 @@ import de.tum.`in`.tumcampusapp.utils.Utils
 abstract class Card(
     val cardType: Int,
     protected var context: Context,
+    val component: Component? = null,
     val settingsPrefix: String = ""
 ) : Comparable<Card> {
 
     // Settings for showing this card on start page or as notification
-    private var showStart = Utils.getSettingBool(context, settingsPrefix + "_start", true)
+    private val showStart: Boolean
+        get() {
+            component?.let {
+                if (!ConfigUtils.isComponentEnabled(context, component)) return false
+            }
+            return Utils.getSettingBool(context, settingsPrefix + "_start", true)
+        }
 
     open fun getId(): Int {
         return 0

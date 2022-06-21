@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.core.view.isVisible
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.activity.LecturesAppointmentsActivity
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LectureAppointment
+import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LectureAppointmentInterface
 import de.tum.`in`.tumcampusapp.utils.DateTimeUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import org.joda.time.format.DateTimeFormat
@@ -18,7 +19,7 @@ import org.joda.time.format.DateTimeFormat
  */
 class LectureAppointmentsListAdapter(
     context: Context, // list of Appointments to one lecture
-    private val appointmentList: List<LectureAppointment>
+    private val appointmentList: List<LectureAppointmentInterface>
 ) : BaseAdapter() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -53,16 +54,26 @@ class LectureAppointmentsListAdapter(
         }
 
         val lvItem = appointmentList[position]
-        holder.appointmentLocation?.text = lvItem.location
-        holder.appointmentDetails?.text = getAppointmentDetails(lvItem)
+
+        if (!lvItem.location.isNullOrBlank()) {
+            holder.appointmentLocation?.isVisible = true
+            holder.appointmentLocation?.text = lvItem.location
+        } else {
+            holder.appointmentLocation?.isVisible = false
+        }
+
         holder.appointmentTime?.text = Utils.fromHtml(getAppointmentTime(lvItem))
+
+        val strAppointmentDetails = getAppointmentDetails(lvItem)
+        holder.appointmentDetails?.text = getAppointmentDetails(lvItem)
+        holder.appointmentDetails?.isVisible = strAppointmentDetails.isNotBlank()
 
         return view
     }
 
-    private fun getAppointmentTime(lvItem: LectureAppointment): String {
-        val start = lvItem.startTime
-        val end = lvItem.endTime
+    private fun getAppointmentTime(lvItem: LectureAppointmentInterface): String {
+        val start = lvItem.dtstart
+        val end = lvItem.dtend
 
         // output if same day: we only show the date once
         val output = StringBuilder()
@@ -86,11 +97,14 @@ class LectureAppointmentsListAdapter(
         return output.toString()
     }
 
-    private fun getAppointmentDetails(lvItem: LectureAppointment): String {
+    private fun getAppointmentDetails(lvItem: LectureAppointmentInterface): String {
         val details = StringBuilder(lvItem.type ?: "")
         val title = lvItem.title
-        if (title != null && title.isNotEmpty()) {
-            details.append(" - ").append(lvItem.title)
+        if (!title.isNullOrBlank()) {
+            if (details.isNotBlank()) {
+                details.append(" - ")
+            }
+            details.append(lvItem.title)
         }
         return details.toString()
     }

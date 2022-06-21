@@ -14,11 +14,11 @@ import de.tum.`in`.tumcampusapp.R
  * Helper class for exporting to Google Calendar.
  */
 object CalendarHelper {
-    private const val ACCOUNT_NAME = "TUM_Campus_APP"
-    private const val CALENDAR_NAME = "TUM Campus"
+    private const val ACCOUNT_NAME = "Campus_APP"
+    private const val CALENDAR_NAME = "Campus App"
 
     /**
-     * Gets uri query to insert calendar TUM_Campus_APP to google calendar
+     * Gets uri query to insert calendar Campus_APP to google calendar
      *
      * @param context Context
      * @return Uri for insertion
@@ -26,7 +26,7 @@ object CalendarHelper {
     fun addCalendar(context: Context): Uri? = context.contentResolver.insert(buildCalendarUri(), buildContentValues(context))
 
     /**
-     * Deletes the calendar TUM_Campus_APP from google calendar
+     * Deletes the calendar Campus_APP from google calendar
      *
      * @param c Context
      * @return Number of rows deleted

@@ -5,8 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.BaseActivity
+import de.tum.`in`.tumcampusapp.utils.Component
 
-class GradesActivity : BaseActivity(R.layout.activity_grades) {
+class GradesActivity : BaseActivity(R.layout.activity_grades, Component.GRADES) {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

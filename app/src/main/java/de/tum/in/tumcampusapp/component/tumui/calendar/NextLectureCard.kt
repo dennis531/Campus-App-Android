@@ -11,10 +11,11 @@ import de.tum.`in`.tumcampusapp.component.ui.overview.CardInteractionListener
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
+import de.tum.`in`.tumcampusapp.utils.Component
 import org.joda.time.DateTime
 import java.util.*
 
-class NextLectureCard(context: Context) : Card(CardManager.CARD_NEXT_LECTURE, context, "card_next_lecture") {
+class NextLectureCard(context: Context) : Card(CardManager.CARD_NEXT_LECTURE, context, Component.CALENDAR,"card_next_lecture") {
 
     private val calendarController: CalendarController = CalendarController(context)
 
@@ -47,11 +48,11 @@ class NextLectureCard(context: Context) : Card(CardManager.CARD_NEXT_LECTURE, co
     fun setLectures(calendarItems: List<CalendarItem>) {
         calendarItems.mapTo(lectures) { calendarItem ->
             CardCalendarItem(
-                    id = calendarItem.nr,
+                    id = calendarItem.id,
                     start = calendarItem.dtstart,
                     end = calendarItem.dtend,
-                    title = calendarItem.getFormattedTitle(),
-                    locations = calendarController.getLocationsForEvent(calendarItem.nr)
+                    title = calendarItem.title,
+                    locations = calendarController.getLocationsForEvent(calendarItem.id)
             )
         }
     }

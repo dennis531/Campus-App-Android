@@ -7,30 +7,44 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
+import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.other.general.RecentsDao
 import de.tum.`in`.tumcampusapp.component.other.general.model.Recent
-import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForSearchingTumOnline
+import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForSearching
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
+import de.tum.`in`.tumcampusapp.component.tumui.person.api.PersonAPI
+import de.tum.`in`.tumcampusapp.component.tumui.person.model.PersonInterface
 import de.tum.`in`.tumcampusapp.component.tumui.person.model.Person
-import de.tum.`in`.tumcampusapp.component.tumui.person.model.PersonList
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.databinding.FragmentPersonSearchBinding
+import de.tum.`in`.tumcampusapp.di.injector
+import de.tum.`in`.tumcampusapp.utils.Utils
+import io.reactivex.Single
+import javax.inject.Inject
 
-class PersonSearchFragment : FragmentForSearchingTumOnline<PersonList>(
+class PersonSearchFragment : FragmentForSearching<List<PersonInterface>>(
     R.layout.fragment_person_search,
     R.string.person_search,
     PersonSearchSuggestionProvider.AUTHORITY,
     minLength = 3
 ) {
+    @Inject
+    lateinit var apiClient: LMSClient
 
     private lateinit var recentsDao: RecentsDao
 
-    private val recents: List<Person>
+    private val recents: List<PersonInterface>
         get() {
             val recents = recentsDao.getAll(RecentsDao.PERSONS) ?: return emptyList()
             return recents.map { recent -> Person.fromRecent(recent) }
         }
 
     private val binding by viewBinding(FragmentPersonSearchBinding::bind)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injector.personComponent().inject(this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,8 +63,8 @@ class PersonSearchFragment : FragmentForSearchingTumOnline<PersonList>(
         binding.personsRecyclerView.addItemDecoration(itemDecoration)
     }
 
-    private fun onItemClick(person: Person) {
-        val lastSearch = person.id + "$" + person.getFullName().trim { it <= ' ' }
+    private fun onItemClick(person: PersonInterface) {
+        val lastSearch = person.id + "$" + person.fullName.trim { it <= ' ' }
         recentsDao.insert(Recent(lastSearch, RecentsDao.PERSONS))
         showPersonDetails(person)
     }
@@ -68,24 +82,28 @@ class PersonSearchFragment : FragmentForSearchingTumOnline<PersonList>(
     }
 
     private fun searchPerson(query: String) {
-        val apiCall = apiClient.searchPerson(query)
-        fetch(apiCall)
+        if (apiClient !is PersonAPI) {
+            showError(R.string.error_function_not_available)
+            return
+        }
+
+        fetch(Single.fromCallable { (apiClient as PersonAPI).searchPerson(query) })
     }
 
-    override fun onDownloadSuccessful(response: PersonList) {
+    override fun onDownloadSuccessful(response: List<PersonInterface>) {
         with(binding) {
             recentsHeader.visibility = View.GONE
 
-            if (response.persons.size == 1) {
-                showPersonDetails(response.persons.first())
+            if (response.size == 1) {
+                showPersonDetails(response.first())
             } else {
                 val adapter = personsRecyclerView.adapter as? PersonSearchResultsAdapter
-                adapter?.update(response.persons)
+                adapter?.update(response)
             }
         }
     }
 
-    private fun showPersonDetails(person: Person) {
+    private fun showPersonDetails(person: PersonInterface) {
         val intent = Intent(requireContext(), PersonDetailsActivity::class.java).apply {
             putExtra("personObject", person)
         }

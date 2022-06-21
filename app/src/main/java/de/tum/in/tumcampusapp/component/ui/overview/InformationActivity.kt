@@ -20,13 +20,14 @@ import de.tum.`in`.tumcampusapp.BuildConfig
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.BaseActivity
 import de.tum.`in`.tumcampusapp.databinding.ActivityInformationBinding
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 
 /**
  * Provides information about this app and all contributors
  */
-class InformationActivity : BaseActivity(R.layout.activity_information) {
+class InformationActivity : BaseActivity(R.layout.activity_information, Component.OVERVIEW) {
 
     private lateinit var binding: ActivityInformationBinding
     private val rowParams = TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)

@@ -8,6 +8,7 @@ import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaNotificationSett
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaNotificationSettingsAdapter
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaNotificationTime
 import de.tum.`in`.tumcampusapp.databinding.ActivityCafeteriaNotificationSettingsBinding
+import de.tum.`in`.tumcampusapp.utils.Component
 import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants
 
@@ -15,7 +16,10 @@ import org.joda.time.DateTimeConstants
  * This activity enables the user to set a preferred notification time for a day of the week.
  * The actual local storage of the preferences is done in the CafeteriaNotificationSettings class.
  */
-class CafeteriaNotificationSettingsActivity : BaseActivity(R.layout.activity_cafeteria_notification_settings) {
+class CafeteriaNotificationSettingsActivity : BaseActivity(
+    R.layout.activity_cafeteria_notification_settings,
+    Component.CAFETERIA
+) {
 
     private lateinit var binding: ActivityCafeteriaNotificationSettingsBinding
     

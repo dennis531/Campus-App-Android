@@ -15,6 +15,7 @@ import de.tum.`in`.tumcampusapp.component.ui.overview.CardInteractionListener
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.DateTimeUtils
 import org.joda.time.format.DateTimeFormat
 
@@ -24,7 +25,7 @@ import org.joda.time.format.DateTimeFormat
 class TuitionFeesCard(
     context: Context,
     private val tuition: Tuition
-) : Card(CardManager.CARD_TUITION_FEE, context, "card_tuition_fee") {
+) : Card(CardManager.CARD_TUITION_FEE, context, Component.TUTIONFEES, "card_tuition_fee") {
 
     override val optionsMenuResId: Int
         get() = R.menu.card_popup_menu

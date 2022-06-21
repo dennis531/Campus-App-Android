@@ -13,7 +13,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.tum.in.tumcampusapp.api.app.AuthenticationManager;
+import de.tum.in.tumcampusapp.api.general.AuthenticationManager;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMessage;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatPublicKey;
 import de.tum.in.tumcampusapp.utils.RSASigner;

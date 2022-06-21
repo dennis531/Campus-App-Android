@@ -11,8 +11,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.app.ApiHelper
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.ApiHelper
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.component.other.generic.ImageViewTouchFragment
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForLoadingInBackground
 import de.tum.`in`.tumcampusapp.component.other.locations.LocationManager
@@ -20,6 +20,7 @@ import de.tum.`in`.tumcampusapp.component.other.locations.model.Geo
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinate
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderMap
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoom
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.NetUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
@@ -31,7 +32,7 @@ import javax.inject.Inject
 /**
  * Displays the map regarding the searched room.
  */
-class RoomFinderDetailsActivity : ActivityForLoadingInBackground<Void, String>(R.layout.activity_roomfinderdetails), DialogInterface.OnClickListener {
+class RoomFinderDetailsActivity : ActivityForLoadingInBackground<Void, String>(R.layout.activity_roomfinderdetails, Component.ROOMFINDER), DialogInterface.OnClickListener {
 
     @Inject
     lateinit var tumCabeClient: TUMCabeClient

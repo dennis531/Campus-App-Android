@@ -5,15 +5,16 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItem
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItemType
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.EventSeriesMapping
 import org.joda.time.DateTime
 
 @Dao
 interface CalendarDao {
-    @get:Query("SELECT c.* FROM calendar c WHERE status != 'CANCEL'")
+    @get:Query("SELECT c.* FROM calendar c WHERE typeName != '${CalendarItem.CANCELED}'")
     val allNotCancelled: List<CalendarItem>
 
-    @get:Query("SELECT c.* FROM calendar c WHERE datetime('now', 'localtime') BETWEEN dtstart AND dtend AND status != 'CANCEL' ORDER BY title")
+    @get:Query("SELECT c.* FROM calendar c WHERE datetime('now', 'localtime') BETWEEN dtstart AND dtend AND typeName != '${CalendarItem.CANCELED}' ORDER BY title")
     val currentLectures: List<CalendarItem>
 
     @get:Query("SELECT c.* " +
@@ -24,16 +25,18 @@ interface CalendarDao {
     val lecturesWithoutCoordinates: List<CalendarItem>
 
     @get:Query("SELECT c.* FROM calendar c JOIN " +
-            "(SELECT dtstart AS maxstart FROM calendar WHERE status!='CANCEL' AND datetime('now', 'localtime')<dtstart " +
-            "ORDER BY dtstart LIMIT 1) ON status!='CANCEL' AND datetime('now', 'localtime')<dtend AND dtstart<=maxstart " +
-            "ORDER BY dtend, dtstart LIMIT 4")
+            "(SELECT dtstart AS maxstart FROM calendar WHERE typeName!='${CalendarItem.CANCELED}' AND datetime('now', 'localtime')<dtstart " +
+            "ORDER BY dtstart LIMIT 1) ON typeName!='${CalendarItem.CANCELED}' AND datetime('now', 'localtime')<dtend AND dtstart<=maxstart " +
+            "ORDER BY dtend, dtstart LIMIT 4"
+    )
     val nextCalendarItems: List<CalendarItem>
 
     @get:Query("SELECT * FROM calendar " +
-            "WHERE status!='CANCEL' " +
+            "WHERE typeName!='${CalendarItem.CANCELED}' " +
             "AND dtstart > datetime('now', 'localtime') " +
             "GROUP BY title, dtstart, dtend " +
-            "ORDER BY dtstart LIMIT 4")
+            "ORDER BY dtstart LIMIT 4"
+    )
     val nextUniqueCalendarItems: List<CalendarItem>
 
     @Query("SELECT c.* FROM calendar c WHERE dtstart LIKE '%' || :date || '%' ORDER BY dtstart ASC")
@@ -42,16 +45,20 @@ interface CalendarDao {
     @Query("SELECT c.* FROM calendar c WHERE dtend BETWEEN :from AND :to " + "ORDER BY dtstart, title, location ASC")
     fun getAllBetweenDates(from: DateTime, to: DateTime): List<CalendarItem>
 
-    @Query("SELECT c.* FROM calendar c WHERE dtend BETWEEN :from AND :to " +
-            "AND STATUS != 'CANCEL'" +
-            "ORDER BY dtstart, title, location ASC")
+    @Query(
+        "SELECT c.* FROM calendar c WHERE dtend BETWEEN :from AND :to " +
+            "AND typeName != '${CalendarItem.CANCELED}'" +
+                "ORDER BY dtstart, title, location ASC"
+    )
     fun getAllNotCancelledBetweenDates(from: DateTime, to: DateTime): List<CalendarItem>
 
-    @Query("SELECT c.* FROM calendar c WHERE dtend BETWEEN :from AND :to " +
-            "AND STATUS != 'CANCEL'" +
+    @Query(
+        "SELECT c.* FROM calendar c WHERE dtend BETWEEN :from AND :to " +
+            "AND typeName != '${CalendarItem.CANCELED}'" +
             "AND NOT EXISTS (SELECT * FROM widgets_timetable_blacklist WHERE widget_id = :widgetId" +
             "                AND lecture_title = c.title)" +
-            "ORDER BY dtstart ASC")
+                "ORDER BY dtstart ASC"
+    )
     fun getNextDays(from: DateTime, to: DateTime, widgetId: String): List<CalendarItem>
 
     @Query("SELECT COUNT(*) FROM calendar")
@@ -71,38 +78,39 @@ interface CalendarDao {
     @Query("DELETE FROM calendar")
     fun flush()
 
-    @Query("DELETE FROM calendar WHERE nr=:eventNr")
+    @Query("DELETE FROM calendar WHERE id=:eventNr")
     fun delete(eventNr: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg cal: CalendarItem)
 
     @Query("SELECT location FROM calendar " +
-            "WHERE title = (SELECT title FROM calendar WHERE nr=:id) " +
-            "AND dtstart = (SELECT dtstart FROM calendar WHERE nr=:id) " +
-            "AND dtend = (SELECT dtend FROM calendar WHERE nr=:id) " +
-            "AND status != 'CANCEL' " +
+            "WHERE title = (SELECT title FROM calendar WHERE id=:id) " +
+            "AND dtstart = (SELECT dtstart FROM calendar WHERE id=:id) " +
+            "AND dtend = (SELECT dtend FROM calendar WHERE id=:id) " +
+            "AND typeName != '${CalendarItem.CANCELED}' " +
             "ORDER BY location ASC")
     fun getNonCancelledLocationsById(id: String): List<String>
 
-    @Query("SELECT * FROM calendar WHERE nr=:id" +
+    @Query(
+        "SELECT * FROM calendar WHERE id=:id" +
             " UNION " +
             "SELECT * FROM calendar " +
-            "WHERE title = (SELECT title FROM calendar WHERE nr=:id) " +
-            "AND dtstart = (SELECT dtstart FROM calendar WHERE nr=:id) " +
-            "AND dtend = (SELECT dtend FROM calendar WHERE nr=:id) " +
-            "AND nr != :id " +
+                "WHERE title = (SELECT title FROM calendar WHERE id=:id) " +
+                "AND dtstart = (SELECT dtstart FROM calendar WHERE id=:id) " +
+                "AND dtend = (SELECT dtend FROM calendar WHERE id=:id) " +
+                "AND id != :id " +
             "ORDER BY location ASC")
     fun getCalendarItemsById(id: String): List<CalendarItem>
 
-    @Query("SELECT * FROM calendar WHERE nr=:id")
+    @Query("SELECT * FROM calendar WHERE id=:id")
     fun getCalendarItemById(id: String): CalendarItem
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg cal: EventSeriesMapping)
 
     @Query("SELECT calendar.* FROM calendar " +
-            "LEFT JOIN eventSeriesMappings ON eventSeriesMappings.eventId=calendar.nr " +
+            "LEFT JOIN eventSeriesMappings ON eventSeriesMappings.eventId=calendar.id " +
             "WHERE eventSeriesMappings.seriesId=:seriesId")
     fun getCalendarItemsInSeries(seriesId: String): List<CalendarItem>
 

@@ -2,7 +2,7 @@ package de.tum.`in`.tumcampusapp.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import de.tum.`in`.tumcampusapp.component.ui.alarm.model.FcmNotificationLocation
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItemType
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMember
 import de.tum.`in`.tumcampusapp.utils.DateTimeUtils
 import de.tum.`in`.tumcampusapp.utils.tryOrNull
@@ -18,12 +18,6 @@ class Converters {
     fun fromDateTime(date: DateTime?): String? {
         return if (date == null) null else DateTimeUtils.getDateTimeString(date)
     }
-
-    @TypeConverter
-    fun toJson(location: FcmNotificationLocation): String = Gson().toJson(location)
-
-    @TypeConverter
-    fun toLocation(json: String): FcmNotificationLocation = Gson().fromJson(json, FcmNotificationLocation::class.java)
 
     @TypeConverter
     fun fromMember(member: ChatMember?): String = Gson().toJson(member)

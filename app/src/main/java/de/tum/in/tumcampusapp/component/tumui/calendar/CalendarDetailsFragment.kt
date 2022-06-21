@@ -12,23 +12,24 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.tumonline.TUMOnlineClient
-import de.tum.`in`.tumcampusapp.api.tumonline.exception.RequestLimitReachedException
+import de.tum.`in`.tumcampusapp.api.general.exception.ForbiddenException
+import de.tum.`in`.tumcampusapp.api.general.exception.NotFoundException
+import de.tum.`in`.tumcampusapp.api.general.exception.UnauthorizedException
 import de.tum.`in`.tumcampusapp.component.other.navigation.NavDestination
 import de.tum.`in`.tumcampusapp.component.other.navigation.NavigationManager
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItem
-import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.DeleteEventResponse
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.RoomFinderActivity
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.databinding.FragmentCalendarDetailsBinding
-import de.tum.`in`.tumcampusapp.utils.Const
+import de.tum.`in`.tumcampusapp.utils.*
 import de.tum.`in`.tumcampusapp.utils.Const.CALENDAR_ID_PARAM
 import de.tum.`in`.tumcampusapp.utils.Const.CALENDAR_SHOWN_IN_CALENDAR_ACTIVITY_PARAM
-import de.tum.`in`.tumcampusapp.utils.Utils
 import de.tum.`in`.tumcampusapp.utils.ui.RoundedBottomSheetDialogFragment
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import java.net.UnknownHostException
 
 class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
@@ -44,7 +45,7 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
                 ?: throw IllegalStateException("Incomplete Bundle when opening calendar details fragment")
     }
 
-    private var deleteApiCall: Call<DeleteEventResponse>? = null
+    private val compositeDisposable = CompositeDisposable()
 
     private val binding by viewBinding(FragmentCalendarDetailsBinding::bind)
 
@@ -73,7 +74,7 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
                 descriptionTextView.setTextColor(Color.RED)
             }
 
-            titleTextView.text = calendarItem.getFormattedTitle()
+            titleTextView.text = calendarItem.title
             dateTextView.text = calendarItem.getEventDateString()
 
             val locationList = calendarItemList.map { it.location }
@@ -94,7 +95,9 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
                     } else {
                         locationText.text = item.location
                     }
-                    locationText.setOnClickListener { onLocationClicked(item.location) }
+                    if (ConfigUtils.isComponentEnabled(requireContext(), Component.ROOMFINDER)) {
+                        locationText.setOnClickListener { onLocationClicked(item.location) }
+                    }
                     locationLinearLayout.addView(locationText)
                 }
             }
@@ -113,11 +116,11 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
                 }
             }
 
-            if (calendarItem.isEditable && isShownInCalendarActivity) {
+            if (ConfigUtils.isCalendarEditable() && calendarItem.isEditable && isShownInCalendarActivity) {
                 // We only provide edit and delete functionality if the user is in CalendarActivity,
                 // but not if the user opens the fragment from MainActivity.
                 buttonsContainer.visibility = View.VISIBLE
-                deleteButton.setOnClickListener { displayDeleteDialog(calendarItem.nr) }
+                deleteButton.setOnClickListener { displayDeleteDialog(calendarItem.id) }
                 editButton.setOnClickListener { listener?.onEditEvent(calendarItem) }
             } else {
                 buttonsContainer.visibility = View.GONE
@@ -128,7 +131,7 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
 
     private fun openEventInCalendarActivity(calendarItem: CalendarItem) {
         val args = Bundle().apply {
-            putLong(Const.EVENT_TIME, calendarItem.eventStart.millis)
+            putLong(Const.EVENT_TIME, calendarItem.dtstart.millis)
         }
         val destination = NavDestination.Fragment(CalendarFragment::class.java, args)
         NavigationManager.open(requireContext(), destination)
@@ -150,39 +153,34 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
     private fun deleteEventSeries(seriesId: String) {
         val calendarItems = TcaDb.getInstance(requireContext()).calendarDao().getCalendarItemsInSeries(seriesId)
         calendarItems.forEach {
-            deleteEvent(it.nr)
+            deleteEvent(it.id)
         }
         TcaDb.getInstance(requireContext()).calendarDao().removeSeriesIdMappings(seriesId)
     }
 
     private fun deleteEvent(eventId: String) {
         val c = requireContext()
-        deleteApiCall = TUMOnlineClient.getInstance(c).deleteEvent(eventId)
-        deleteApiCall?.enqueue(object : Callback<DeleteEventResponse> {
-            override fun onResponse(
-                call: Call<DeleteEventResponse>,
-                response: Response<DeleteEventResponse>
-            ) {
+        compositeDisposable += Single.fromCallable { (ConfigUtils.getLMSClient(c) as CalendarAPI).deleteCalenderEvent(eventId) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
                 dismiss()
                 listener?.onEventDeleted(eventId)
-                deleteApiCall = null
-            }
-
-            override fun onFailure(call: Call<DeleteEventResponse>, t: Throwable) {
-                if (call.isCanceled) {
-                    return
-                }
-                deleteApiCall = null
-                handleDeleteEventError(t)
-            }
-        })
+            }, {
+                // if (call.isCanceled) {
+                //     return
+                //}
+                handleDeleteEventError(it)
+            })
     }
 
     private fun handleDeleteEventError(t: Throwable) {
         val c = requireContext()
         val messageResId = when (t) {
             is UnknownHostException -> R.string.error_no_internet_connection
-            is RequestLimitReachedException -> R.string.error_request_limit_reached
+            is UnauthorizedException -> R.string.error_unauthorized
+            is ForbiddenException -> R.string.error_no_rights_to_access_function
+            is NotFoundException -> R.string.error_resource_not_found
             else -> R.string.error_unknown
         }
         Utils.showToast(c, messageResId)
@@ -190,7 +188,7 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
 
     private fun onLocationClicked(location: String) {
         val findStudyRoomIntent = Intent()
-        findStudyRoomIntent.putExtra(SearchManager.QUERY, Utils.extractRoomNumberFromLocation(location))
+        findStudyRoomIntent.putExtra(SearchManager.QUERY, location)
         findStudyRoomIntent.setClass(requireContext(), RoomFinderActivity::class.java)
         startActivity(findStudyRoomIntent)
     }
@@ -215,7 +213,7 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
 
     override fun onDetach() {
         super.onDetach()
-        deleteApiCall?.cancel()
+        compositeDisposable.dispose()
     }
 
     interface OnEventInteractionListener {

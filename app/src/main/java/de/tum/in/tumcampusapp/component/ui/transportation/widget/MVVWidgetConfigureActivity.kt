@@ -19,13 +19,14 @@ import de.tum.`in`.tumcampusapp.component.ui.transportation.TransportController
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.StationResult
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.WidgetDepartures
 import de.tum.`in`.tumcampusapp.database.TcaDb
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Utils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class MVVWidgetConfigureActivity : ActivityForSearching<Unit>(
-        R.layout.activity_mvv_widget_configure, MVVStationSuggestionProvider.AUTHORITY, 3) {
+        R.layout.activity_mvv_widget_configure, Component.TRANSPORTATION, MVVStationSuggestionProvider.AUTHORITY, 3) {
 
     private var appWidgetId: Int = 0
     private lateinit var listViewResults: ListView

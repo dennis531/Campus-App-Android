@@ -9,7 +9,7 @@ import android.preference.PreferenceManager
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.component.other.locations.model.BuildingToGps
 import de.tum.`in`.tumcampusapp.component.other.locations.model.Geo
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
@@ -223,10 +223,12 @@ class LocationManager @Inject constructor(c: Context) {
             return results
         }
 
-        val newResults = tryOrNull { TUMCabeClient.getInstance(mContext).building2Gps }
-        return newResults.orEmpty().also {
-            buildingToGpsDao.insert(*it.toTypedArray())
-        }
+        return results
+
+//        val newResults = tryOrNull { TUMCabeClient.getInstance(mContext).building2Gps }
+//        return newResults.orEmpty().also {
+//            buildingToGpsDao.insert(*it.toTypedArray())
+//        }
     }
 
     /**
@@ -415,7 +417,7 @@ class LocationManager @Inject constructor(c: Context) {
                 }
             }
 
-            return if (bestDistance < 1000) {
+            return if (bestDistance < 10000000) {
                 bestCampus
             } else {
                 null

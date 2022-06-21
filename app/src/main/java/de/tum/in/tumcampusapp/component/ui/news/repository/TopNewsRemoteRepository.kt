@@ -1,7 +1,7 @@
 package de.tum.`in`.tumcampusapp.component.ui.news.repository
 
 import android.annotation.SuppressLint
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.component.ui.news.TopNewsStore
 import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsAlert
 import de.tum.`in`.tumcampusapp.utils.Utils

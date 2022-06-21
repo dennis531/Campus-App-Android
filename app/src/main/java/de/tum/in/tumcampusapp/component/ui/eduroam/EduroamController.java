@@ -99,7 +99,7 @@ public class EduroamController {
     }
 
     private void setupEnterpriseConfigAPI18(WifiConfiguration conf, String lrzId, String networkPass) {
-        conf.enterpriseConfig.setIdentity(lrzId + "@eduroam.mwn.de");
+        conf.enterpriseConfig.setIdentity(lrzId + "@" + Const.EDUROAM_DOMAIN);
         conf.enterpriseConfig.setPassword(networkPass);
         conf.enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.PWD);
     }

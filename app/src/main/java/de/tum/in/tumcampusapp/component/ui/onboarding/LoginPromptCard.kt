@@ -10,6 +10,7 @@ import de.tum.`in`.tumcampusapp.component.ui.overview.CardInteractionListener
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 
@@ -17,7 +18,7 @@ import de.tum.`in`.tumcampusapp.utils.Utils
  * Card that prompts the user to login to TUMonline since we don't show the wizard after the first launch anymore.
  * It will be shown until it is swiped away for the first time.
  */
-class LoginPromptCard(context: Context) : Card(CardManager.CARD_LOGIN, context, "card_login") {
+class LoginPromptCard(context: Context) : Card(CardManager.CARD_LOGIN, context, Component.ONBOARDING, "card_login") {
 
     public override fun discard(editor: SharedPreferences.Editor) {
         Utils.setSetting(context, CardManager.SHOW_LOGIN, false)

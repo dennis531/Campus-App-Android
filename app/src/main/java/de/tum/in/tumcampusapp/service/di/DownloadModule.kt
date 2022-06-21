@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.res.AssetManager
 import dagger.Module
 import dagger.Provides
-import de.tum.`in`.tumcampusapp.api.app.AuthenticationManager
-import de.tum.`in`.tumcampusapp.api.app.IdUploadAction
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.AuthenticationManager
+import de.tum.`in`.tumcampusapp.api.general.IdUploadAction
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.component.tumui.grades.GradesBackgroundUpdater
 import de.tum.`in`.tumcampusapp.component.tumui.grades.GradesDownloadAction
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaDownloadAction
@@ -17,10 +17,6 @@ import de.tum.`in`.tumcampusapp.component.ui.news.NewsDownloadAction
 import de.tum.`in`.tumcampusapp.component.ui.news.TopNewsDownloadAction
 import de.tum.`in`.tumcampusapp.component.ui.news.repository.TopNewsRemoteRepository
 import de.tum.`in`.tumcampusapp.component.ui.openinghour.LocationImportAction
-import de.tum.`in`.tumcampusapp.component.ui.ticket.EventsDownloadAction
-import de.tum.`in`.tumcampusapp.component.ui.ticket.repository.EventsRemoteRepository
-import de.tum.`in`.tumcampusapp.component.ui.tufilm.FilmDownloadAction
-import de.tum.`in`.tumcampusapp.component.ui.tufilm.repository.KinoRemoteRepository
 import de.tum.`in`.tumcampusapp.component.ui.updatenote.UpdateNoteDownloadAction
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.service.DownloadWorker
@@ -52,18 +48,6 @@ object DownloadModule {
         database: TcaDb,
         tumCabeClient: TUMCabeClient
     ): LocationImportAction = LocationImportAction(context, database, tumCabeClient)
-
-    @JvmStatic
-    @Provides
-    fun provideEventsDownloadAction(
-        remoteRepository: EventsRemoteRepository
-    ): EventsDownloadAction = EventsDownloadAction(remoteRepository)
-
-    @JvmStatic
-    @Provides
-    fun provideFilmDownloadAction(
-        remoteRepository: KinoRemoteRepository
-    ): FilmDownloadAction = FilmDownloadAction(remoteRepository)
 
     @JvmStatic
     @Provides
@@ -102,8 +86,6 @@ object DownloadModule {
     fun provideWorkerActions(
         cafeteriaDownloadAction: CafeteriaDownloadAction,
         locationImportAction: LocationImportAction,
-        eventsDownloadAction: EventsDownloadAction,
-        filmDownloadAction: FilmDownloadAction,
         gradesDownloadAction: GradesDownloadAction,
         idUploadAction: IdUploadAction,
         newsDownloadAction: NewsDownloadAction,
@@ -112,8 +94,6 @@ object DownloadModule {
     ): DownloadWorker.WorkerActions = DownloadWorker.WorkerActions(
             cafeteriaDownloadAction,
             locationImportAction,
-            eventsDownloadAction,
-            filmDownloadAction,
             gradesDownloadAction,
             idUploadAction,
             newsDownloadAction,

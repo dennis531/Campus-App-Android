@@ -17,6 +17,7 @@ import de.tum.`in`.tumcampusapp.component.ui.overview.CardInteractionListener
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import org.jetbrains.anko.defaultSharedPreferences
@@ -26,7 +27,7 @@ import java.util.regex.Pattern
 
 class EduroamFixCard(
     context: Context
-) : Card(CardManager.CARD_EDUROAM_FIX, context, "card_eduroam_fix_start") {
+) : Card(CardManager.CARD_EDUROAM_FIX, context, Component.EDUROAM, "card_eduroam_fix_start") {
 
     private val errors: MutableList<String> = ArrayList()
     private lateinit var eduroam: WifiConfiguration

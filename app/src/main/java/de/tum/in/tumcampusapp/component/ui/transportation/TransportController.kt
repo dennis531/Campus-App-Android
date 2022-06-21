@@ -7,7 +7,7 @@ import de.tum.`in`.tumcampusapp.component.notifications.NotificationScheduler
 import de.tum.`in`.tumcampusapp.component.notifications.ProvidesNotifications
 import de.tum.`in`.tumcampusapp.component.other.general.model.Recent
 import de.tum.`in`.tumcampusapp.component.other.locations.LocationManager
-import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.Event
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.AbstractEvent
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.ProvidesCard
 import de.tum.`in`.tumcampusapp.component.ui.transportation.api.MvvClient
@@ -133,7 +133,7 @@ class TransportController(private val context: Context) : ProvidesCard, Provides
         return Utils.getSettingBool(context, "card_mvv_phone", false)
     }
 
-    fun scheduleNotifications(events: List<Event>) {
+    fun scheduleNotifications(events: List<AbstractEvent>) {
         if (events.isEmpty()) {
             return
         }
@@ -148,10 +148,10 @@ class TransportController(private val context: Context) : ProvidesCard, Provides
                 .dropLast(1)
                 .filterIndexed { index, current ->
                     val next = events[index + 1]
-                    if (current.startTime == null || next.startTime == null) {
+                    if (current.dtstart == null || next.dtstart == null) {
                         false
                     } else {
-                        current.startTime.dayOfYear != next.startTime.dayOfYear
+                        current.dtstart!!.dayOfYear != next.dtstart!!.dayOfYear
                     }
                 }
                 .take(maxNotificationsToSchedule) // Some manufacturers cap the amount of alarms you can schedule (https://stackoverflow.com/a/29610474)

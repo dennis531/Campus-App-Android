@@ -1,7 +1,7 @@
 package de.tum.`in`.tumcampusapp.component.ui.chat.repository
 
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
-import de.tum.`in`.tumcampusapp.api.app.model.TUMCabeVerification
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.model.TUMCabeVerification
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMessage
 import io.reactivex.Observable
 

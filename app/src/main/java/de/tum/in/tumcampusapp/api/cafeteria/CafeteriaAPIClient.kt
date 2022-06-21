@@ -2,8 +2,8 @@ package de.tum.`in`.tumcampusapp.api.cafeteria
 
 import android.content.Context
 import com.google.gson.GsonBuilder
-import de.tum.`in`.tumcampusapp.api.app.ApiHelper
-import de.tum.`in`.tumcampusapp.api.app.DateSerializer
+import de.tum.`in`.tumcampusapp.api.general.ApiHelper
+import de.tum.`in`.tumcampusapp.api.general.DateSerializer
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.api.tumonline.interceptors.CacheResponseInterceptor
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.CafeteriaResponse

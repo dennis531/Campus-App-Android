@@ -8,8 +8,9 @@ import android.widget.TextView
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.generic.adapter.SimpleStickyListHeadersAdapter
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.activity.LecturesPersonalActivity
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.Lecture
+import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 import de.tum.`in`.tumcampusapp.component.ui.chat.activity.ChatRoomsActivity
+import java.lang.StringBuilder
 
 /**
  * This class handles the view output of the results for finding lectures via
@@ -19,13 +20,13 @@ import de.tum.`in`.tumcampusapp.component.ui.chat.activity.ChatRoomsActivity
  * show semester info as sticky header.
  */
 
-class LecturesListAdapter(context: Context, results: MutableList<Lecture>) : SimpleStickyListHeadersAdapter<Lecture>(context, results) {
+class LecturesListAdapter(context: Context, results: MutableList<AbstractLecture>) : SimpleStickyListHeadersAdapter<AbstractLecture>(context, results) {
 
-    override fun generateHeaderName(item: Lecture) = super.generateHeaderName(item)
-            .replace("Sommersemester", this.context
-                    .getString(R.string.semester_summer))
-            .replace("Wintersemester", this.context
-                    .getString(R.string.semester_winter))
+//    override fun generateHeaderName(item: AbstractLecture) = super.generateHeaderName(item)
+//            .replace("Sommersemester", this.context
+//                    .getString(R.string.semester_summer))
+//            .replace("Wintersemester", this.context
+//                    .getString(R.string.semester_winter))
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val holder: ViewHolder
@@ -43,16 +44,36 @@ class LecturesListAdapter(context: Context, results: MutableList<Lecture>) : Sim
             holder = view.tag as ViewHolder
         }
 
-        val lvItem = itemList[position]
+        val lecture = itemList[position]
 
         // if we have something to display - set for each lecture element
-        holder.tvLectureName?.text = lvItem.title
-        val details = context.getString(R.string.lecture_list_item_details_format_string,
-                lvItem.lectureType, lvItem.semesterId, lvItem.duration)
+        holder.tvLectureName?.text = lecture.title
+
+        val details = StringBuilder()
+        details.addDetail(lecture.lectureType)
+        details.addDetail(lecture.semester)
+
+        if (!lecture.duration.isNullOrBlank()) {
+            details.addDetail("${lecture.duration} SWS")
+        }
+
         holder.tvTypeSWSSemester?.text = details
-        holder.tvDozent?.text = lvItem.lecturers
+
+        if (!lecture.lecturers.isNullOrEmpty()) {
+            holder.tvDozent?.visibility = View.VISIBLE
+            holder.tvDozent?.text = lecture.lecturers!!.first()
+        }
 
         return view
+    }
+
+    private fun StringBuilder.addDetail(detail: String?) {
+        if (!detail.isNullOrBlank()) {
+            if (isNotBlank()) {
+                append(" - ")
+            }
+            append(detail)
+        }
     }
 
     // the layout of the list

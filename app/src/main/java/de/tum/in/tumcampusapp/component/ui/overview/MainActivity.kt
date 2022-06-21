@@ -3,12 +3,13 @@ package de.tum.`in`.tumcampusapp.component.ui.overview
 import android.os.Bundle
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.BaseActivity
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Utils
 
 /**
  * Main activity displaying the cards and providing navigation with navigation drawer
  */
-class MainActivity : BaseActivity(R.layout.activity_main) {
+class MainActivity : BaseActivity(R.layout.activity_main, Component.OVERVIEW) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

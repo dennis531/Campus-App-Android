@@ -130,7 +130,7 @@ class TimetableWidget : AppWidgetProvider() {
             remoteViews.setPendingIntentTemplate(R.id.timetable_widget_listview, eventPendingIntent)
 
             // Set up the intent that starts the TimetableWidgetService, which will
-            // provide the departure times for this station
+            // provide the calendar events
             val intent = Intent(context, TimetableWidgetService::class.java)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))

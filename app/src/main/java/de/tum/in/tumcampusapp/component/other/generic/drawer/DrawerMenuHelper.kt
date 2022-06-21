@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.tumonline.AccessTokenManager
 import de.tum.`in`.tumcampusapp.component.other.settings.SettingsActivity
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarFragment
 import de.tum.`in`.tumcampusapp.component.tumui.feedback.FeedbackActivity
@@ -15,19 +14,13 @@ import de.tum.`in`.tumcampusapp.component.tumui.lectures.fragment.LecturesFragme
 import de.tum.`in`.tumcampusapp.component.tumui.person.PersonSearchFragment
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.RoomFinderFragment
 import de.tum.`in`.tumcampusapp.component.tumui.tutionfees.TuitionFeesFragment
-import de.tum.`in`.tumcampusapp.component.ui.barrierfree.BarrierFreeInfoFragment
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.fragment.CafeteriaFragment
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomsFragment
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsFragment
 import de.tum.`in`.tumcampusapp.component.ui.openinghour.OpeningHoursListFragment
 import de.tum.`in`.tumcampusapp.component.ui.overview.InformationActivity
 import de.tum.`in`.tumcampusapp.component.ui.overview.MainFragment
-import de.tum.`in`.tumcampusapp.component.ui.studyroom.StudyRoomsFragment
-import de.tum.`in`.tumcampusapp.component.ui.ticket.activity.EventsFragment
-import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.Utils
-import de.tum.`in`.tumcampusapp.utils.allItems
-import de.tum.`in`.tumcampusapp.utils.plusAssign
+import de.tum.`in`.tumcampusapp.utils.*
 
 class DrawerMenuHelper(
     private val activity: AppCompatActivity,
@@ -43,7 +36,7 @@ class DrawerMenuHelper(
     private val allItems = mutableListOf<NavItem>()
 
     fun populateMenu() {
-        val hasTumOnlineAccess = AccessTokenManager.hasValidAccessToken(activity)
+        val hasLMSAccess = ConfigUtils.getAuthManager(activity).hasAccess()
         val isChatEnabled = Utils.getSettingBool(activity, Const.GROUP_CHAT_ENABLED, false)
         val isEmployeeMode = Utils.getSettingBool(activity, Const.EMPLOYEE_MODE, false)
 
@@ -53,20 +46,22 @@ class DrawerMenuHelper(
         navigationMenu += HOME
         allItems += HOME
 
-        val myTumMenu = navigationMenu.addSubMenu(R.string.my_tum)
-        if (hasTumOnlineAccess) {
-            val candidates = MY_TUM
-                .filterNot { !isChatEnabled && it.needsChatAccess }
-                .filterNot { isEmployeeMode && it.hideForEmployees }
+        val myCampusMenu = navigationMenu.addSubMenu(R.string.my_campus)
+        val myCampusCandidates = MY_CAMPUS
+            .filterNot { !isComponentEnabled(it.component) }
+            .filterNot { it.needsLMSAccess && !hasLMSAccess }
+            .filterNot { !isChatEnabled && it.needsChatAccess }
+            .filterNot { isEmployeeMode && it.hideForEmployees }
 
-            for (candidate in candidates) {
-                myTumMenu += candidate
-                allItems += candidate
-            }
+        for (candidate in myCampusCandidates) {
+            myCampusMenu += candidate
+            allItems += candidate
         }
 
         val generalMenu = navigationMenu.addSubMenu(R.string.common_info)
-        val generalCandidates = GENERAL.filterNot { it.needsTUMOAccess && !hasTumOnlineAccess }
+        val generalCandidates = GENERAL
+            .filterNot { !isComponentEnabled(it.component) }
+            .filterNot { it.needsLMSAccess && !hasLMSAccess }
         for (candidate in generalCandidates) {
             generalMenu += candidate
             allItems += candidate
@@ -81,12 +76,16 @@ class DrawerMenuHelper(
         highlightCurrentItem()
     }
 
+    private fun isComponentEnabled(component: Component?): Boolean {
+        return component?.let { ConfigUtils.isComponentEnabled(activity, component) } ?: true
+    }
+
     fun findNavItem(menuItem: MenuItem): NavItem {
         if (menuItem.title == activity.getString(HOME.titleRes)) {
             return HOME
         }
 
-        for (item in MY_TUM + GENERAL) {
+        for (item in MY_CAMPUS + GENERAL) {
             if (menuItem.title == activity.getString(item.titleRes)) {
                 return item
             }
@@ -121,29 +120,27 @@ class DrawerMenuHelper(
 
     private companion object {
 
-        private val HOME = NavItem.FragmentDestination(R.string.home, R.drawable.ic_outline_home_24px, MainFragment::class.java)
+        private val HOME = NavItem.FragmentDestination(R.string.home, R.drawable.ic_outline_home_24px, MainFragment::class.java, Component.OVERVIEW)
 
-        private val MY_TUM = arrayOf(
-                NavItem.FragmentDestination(R.string.calendar, R.drawable.ic_outline_event_24px, CalendarFragment::class.java, true),
-                NavItem.FragmentDestination(R.string.my_lectures, R.drawable.ic_outline_school_24px, LecturesFragment::class.java, true, hideForEmployees = true),
-                NavItem.FragmentDestination(R.string.chat_rooms, R.drawable.ic_outline_chat_bubble_outline_24px, ChatRoomsFragment::class.java, true, true),
-                NavItem.FragmentDestination(R.string.my_grades, R.drawable.ic_outline_insert_chart_outlined_24px, GradesFragment::class.java, true, hideForEmployees = true),
-                NavItem.FragmentDestination(R.string.tuition_fees, R.drawable.ic_money, TuitionFeesFragment::class.java, true, hideForEmployees = true)
+        private val MY_CAMPUS = arrayOf(
+                NavItem.FragmentDestination(R.string.calendar, R.drawable.ic_outline_event_24px, CalendarFragment::class.java, Component.CALENDAR, true),
+                NavItem.FragmentDestination(R.string.my_lectures, R.drawable.ic_outline_school_24px, LecturesFragment::class.java, Component.LECTURES,true, hideForEmployees = true),
+                NavItem.FragmentDestination(R.string.chat_rooms, R.drawable.ic_outline_chat_bubble_outline_24px, ChatRoomsFragment::class.java, Component.CHAT, true, true),
+                NavItem.FragmentDestination(R.string.my_grades, R.drawable.ic_outline_insert_chart_outlined_24px, GradesFragment::class.java, Component.GRADES, true, hideForEmployees = true),
+                NavItem.FragmentDestination(R.string.tuition_fees, R.drawable.ic_money, TuitionFeesFragment::class.java, Component.TUTIONFEES, hideForEmployees = true)
         )
 
         private val GENERAL = arrayOf(
-                NavItem.FragmentDestination(R.string.menues, R.drawable.ic_cutlery, CafeteriaFragment::class.java),
-                NavItem.FragmentDestination(R.string.study_rooms, R.drawable.ic_outline_group_work_24px, StudyRoomsFragment::class.java),
-                NavItem.FragmentDestination(R.string.roomfinder, R.drawable.ic_outline_location_on_24px, RoomFinderFragment::class.java),
-                NavItem.FragmentDestination(R.string.person_search, R.drawable.ic_outline_people_outline_24px, PersonSearchFragment::class.java, true),
-                NavItem.FragmentDestination(R.string.news, R.drawable.ic_rss, NewsFragment::class.java),
-                NavItem.FragmentDestination(R.string.events_tickets, R.drawable.tickets, EventsFragment::class.java),
-                NavItem.FragmentDestination(R.string.barrier_free, R.drawable.ic_outline_accessible_24px, BarrierFreeInfoFragment::class.java),
-                NavItem.FragmentDestination(R.string.opening_hours, R.drawable.ic_outline_access_time_24px, OpeningHoursListFragment::class.java)
+                NavItem.FragmentDestination(R.string.menues, R.drawable.ic_cutlery, CafeteriaFragment::class.java, Component.CAFETERIA),
+                NavItem.FragmentDestination(R.string.roomfinder, R.drawable.ic_outline_location_on_24px, RoomFinderFragment::class.java, Component.ROOMFINDER, true),
+                NavItem.FragmentDestination(R.string.person_search, R.drawable.ic_outline_people_outline_24px, PersonSearchFragment::class.java, Component.PERSON, true),
+                NavItem.FragmentDestination(R.string.news, R.drawable.ic_rss, NewsFragment::class.java, Component.NEWS, true),
+                // NavItem.FragmentDestination(R.string.barrier_free, R.drawable.ic_outline_accessible_24px, BarrierFreeInfoFragment::class.java),
+                NavItem.FragmentDestination(R.string.opening_hours, R.drawable.ic_outline_access_time_24px, OpeningHoursListFragment::class.java, Component.OPENINGHOUR)
         )
 
         private val ABOUT = arrayOf(
-                NavItem.ActivityDestination(R.string.show_feedback, R.drawable.ic_outline_feedback_24px, FeedbackActivity::class.java),
+                // NavItem.ActivityDestination(R.string.show_feedback, R.drawable.ic_outline_feedback_24px, FeedbackActivity::class.java),
                 NavItem.ActivityDestination(R.string.about_tca, R.drawable.ic_action_info, InformationActivity::class.java),
                 NavItem.ActivityDestination(R.string.settings, R.drawable.ic_outline_settings_24px, SettingsActivity::class.java)
         )

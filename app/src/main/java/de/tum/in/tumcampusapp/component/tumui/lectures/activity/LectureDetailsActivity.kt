@@ -5,12 +5,11 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
-import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingTumOnline
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LectureDetails
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LectureDetailsResponse
+import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.tumui.lectures.api.LecturesAPI
+import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 import de.tum.`in`.tumcampusapp.databinding.ActivityLecturedetailsBinding
 import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.Utils
 
 /**
  * This Activity will show all details found on the TUMOnline web service
@@ -27,9 +26,9 @@ import de.tum.`in`.tumcampusapp.utils.Utils
  *
  * NEEDS: stp_sp_nr set in incoming bundle (lecture id)
  */
-class LectureDetailsActivity : ActivityForAccessingTumOnline<LectureDetailsResponse>(R.layout.activity_lecturedetails) {
+class LectureDetailsActivity : ActivityForAccessingLMS<AbstractLecture>(R.layout.activity_lecturedetails) {
 
-    private lateinit var currentItem: LectureDetails
+    private lateinit var currentItem: AbstractLecture
     private lateinit var mLectureId: String
 
     private lateinit var binding: ActivityLecturedetailsBinding
@@ -44,7 +43,7 @@ class LectureDetailsActivity : ActivityForAccessingTumOnline<LectureDetailsRespo
         binding.appointmentsButton.setOnClickListener {
             // LectureAppointments need the name and id of the facing lecture
             val bundle = Bundle()
-            bundle.putString("stp_sp_nr", currentItem.stp_sp_nr)
+            bundle.putString(AbstractLecture.Lecture_ID, currentItem.id)
             bundle.putString(Const.TITLE_EXTRA, currentItem.title)
 
             val intent = Intent(this, LecturesAppointmentsActivity::class.java)
@@ -52,7 +51,7 @@ class LectureDetailsActivity : ActivityForAccessingTumOnline<LectureDetailsRespo
             startActivity(intent)
         }
 
-        mLectureId = intent.getStringExtra("stp_sp_nr")!!
+        mLectureId = intent.getStringExtra(AbstractLecture.Lecture_ID)!!
         loadLectureDetails(mLectureId, CacheControl.USE_CACHE)
     }
 
@@ -61,36 +60,55 @@ class LectureDetailsActivity : ActivityForAccessingTumOnline<LectureDetailsRespo
     }
 
     private fun loadLectureDetails(lectureId: String, cacheControl: CacheControl) {
-        val apiCall = apiClient.getLectureDetails(lectureId, cacheControl)
-        fetch(apiCall)
+        fetch { (apiClient as LecturesAPI).getLectureDetails(lectureId) }
     }
 
-    override fun onDownloadSuccessful(response: LectureDetailsResponse) {
-        val lectureDetails = response.lectureDetails
-        if (lectureDetails.isEmpty()) {
-            Utils.showToast(this, R.string.error_no_data_to_show)
-            finish()
-            return
-        }
-        currentItem = lectureDetails[0]
+    override fun onDownloadSuccessful(response: AbstractLecture) {
+        currentItem = response
 
         with(binding) {
             lectureNameTextView.text = currentItem.title
 
-            val strLectureLanguage = StringBuilder(currentItem.semesterName ?: getString(R.string.unknown))
-            if (currentItem.mainLanguage != null) {
+            val strLectureLanguage = StringBuilder(currentItem.semester ?: getString(R.string.unknown))
+            if (!currentItem.mainLanguage.isNullOrBlank()) {
                 strLectureLanguage.append(" - ").append(currentItem.mainLanguage)
             }
             semesterTextView.text = strLectureLanguage
 
-            swsTextView.text = getString(R.string.lecture_details_format_string, currentItem.lectureType, currentItem.duration)
-            professorTextView.text = currentItem.lecturers
-            orgTextView.text = currentItem.chairName
-            contentTextView.text = currentItem.lectureContent
-            dateTextView.text = currentItem.firstAppointment
+            val strSws = StringBuilder(currentItem.lectureType ?: getString(R.string.unknown))
+            if (!currentItem.duration.isNullOrBlank()) {
+                strLectureLanguage.append(" - ").append("${currentItem.duration} SWS")
+            }
+            swsTextView.text = strSws
+
+            val lecturers = currentItem.lecturers
+            if (lecturers.isNullOrEmpty()) {
+                professorTextView.isVisible = false
+            } else {
+                professorTextView.text = lecturers.joinToString(", ")
+            }
+
+            val institute = currentItem.institute
+            if (institute.isNullOrBlank()) {
+                orgTextView.isVisible = false
+            } else {
+                orgTextView.text = institute
+            }
+
+            if (institute.isNullOrBlank() && lecturers.isNullOrEmpty()) {
+                contributorsHeaderTextView.isVisible = false
+            }
+
+            val lectureContent = currentItem.lectureContent
+            if (lectureContent.isNullOrBlank()) {
+                contentHeaderTextView.isVisible = false
+                contentTextView.isVisible = false
+            } else {
+                contentTextView.text = lectureContent
+            }
 
             val teachingMethod = currentItem.teachingMethod
-            if (teachingMethod == null || teachingMethod.isEmpty()) {
+            if (teachingMethod.isNullOrBlank()) {
                 methodHeaderTextView.isVisible = false
                 methodTextView.isVisible = false
             } else {
@@ -98,19 +116,11 @@ class LectureDetailsActivity : ActivityForAccessingTumOnline<LectureDetailsRespo
             }
 
             val targets = currentItem.teachingTargets
-            if (targets == null || targets.isEmpty()) {
+            if (targets.isNullOrBlank()) {
                 targetsHeaderTextView.isVisible = false
                 targetsTextView.isVisible = false
             } else {
                 targetsTextView.text = targets
-            }
-
-            val aids = currentItem.examinationAids
-            if (aids == null || aids.isEmpty()) {
-                examinationAidsHeaderTextView.isVisible = false
-                examinationAidsTextView.isVisible = false
-            } else {
-                examinationAidsTextView.text = aids
             }
 
             appointmentsButton.isEnabled = true

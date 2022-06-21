@@ -1,43 +1,33 @@
 package de.tum.`in`.tumcampusapp.component.tumui.person.model
 
-import com.tickaroo.tikxml.annotation.PropertyElement
-import com.tickaroo.tikxml.annotation.Xml
 import de.tum.`in`.tumcampusapp.component.other.general.model.Recent
-import java.io.Serializable
 
-/**
- * A person, often an [Employee] working at TUM.
- *
- *
- * Note: This model is based on the TUMOnline web service response format for a
- * corresponding request.
- */
-@Xml(name = "row")
-data class Person(
-    @PropertyElement(name = "geschlecht")
-    var gender: String = "",
-    @PropertyElement(name = "obfuscated_id")
-    var id: String = "",
-    @PropertyElement(name = "vorname")
-    var name: String = "",
-    @PropertyElement(name = "familienname")
-    var surname: String = ""
-) : Serializable {
-
-    fun getFullName() = "$name $surname"
+class Person : PersonInterface {
+    override var id: String = ""
+    override var firstName: String = ""
+    override var lastName: String = ""
+    override var username: String = ""
+    override var title: String = ""
+    override var fullName: String = ""
+    override var gender: String = ""
+    override var phoneNumbers: List<String>? = null
+    override var mobilephone: String = ""
+    override var email: String = ""
+    override var fax: String = ""
+    override var homepage: String = ""
+    override var institutes: List<InstituteInterface>? = null
+    override var consultationHours: String = ""
+    override var rooms: List<RoomInterface>? = null
+    override var address: String = ""
+    override var imageUrl: String = ""
+    override var additionalInfo: String = ""
 
     companion object {
-
-        private const val serialVersionUID = -5210814076506102292L
-
-        const val FEMALE = "W"
-        const val MALE = "M"
-
-        @JvmStatic fun fromRecent(r: Recent): Person {
+        @JvmStatic fun fromRecent(r: Recent): PersonInterface {
             val split = r.name.split("\\$".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val p = Person()
             p.id = split[0]
-            p.name = split[1]
+            p.fullName = split[1]
             return p
         }
     }

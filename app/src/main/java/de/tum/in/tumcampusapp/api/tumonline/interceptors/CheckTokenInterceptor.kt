@@ -1,7 +1,7 @@
 package de.tum.`in`.tumcampusapp.api.tumonline.interceptors
 
 import android.content.Context
-import de.tum.`in`.tumcampusapp.api.tumonline.exception.InvalidTokenException
+import de.tum.`in`.tumcampusapp.api.general.exception.UnauthorizedException
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import okhttp3.Interceptor
@@ -9,7 +9,7 @@ import okhttp3.Response
 
 class CheckTokenInterceptor(private val context: Context) : Interceptor {
 
-    @Throws(InvalidTokenException::class)
+    @Throws(UnauthorizedException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
@@ -22,7 +22,7 @@ class CheckTokenInterceptor(private val context: Context) : Interceptor {
         val isTumOnlineDisabled = Utils.getSettingBool(context, Const.TUMO_DISABLED, false)
 
         if (!isTokenRequest && !isTokenConfirmationCheck && isTumOnlineDisabled) {
-            throw InvalidTokenException()
+            throw UnauthorizedException()
         }
 
         return chain.proceed(request)

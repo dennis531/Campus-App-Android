@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.work.*
 import androidx.work.ListenableWorker.Result.*
 import androidx.work.NetworkType.CONNECTED
-import de.tum.`in`.tumcampusapp.api.app.AuthenticationManager
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
-import de.tum.`in`.tumcampusapp.api.app.exception.NoPrivateKey
+import de.tum.`in`.tumcampusapp.api.general.AuthenticationManager
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.exception.NoPrivateKey
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatMessageViewModel
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageLocalRepository
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageRemoteRepository

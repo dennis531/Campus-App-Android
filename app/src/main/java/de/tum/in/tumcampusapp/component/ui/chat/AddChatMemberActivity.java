@@ -17,13 +17,15 @@ import java.util.regex.Pattern;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import de.tum.in.tumcampusapp.R;
-import de.tum.in.tumcampusapp.api.app.ApiHelper;
-import de.tum.in.tumcampusapp.api.app.TUMCabeClient;
-import de.tum.in.tumcampusapp.api.app.model.TUMCabeVerification;
+import de.tum.in.tumcampusapp.api.general.ApiHelper;
+import de.tum.in.tumcampusapp.api.general.TUMCabeClient;
+import de.tum.in.tumcampusapp.api.general.model.TUMCabeVerification;
 import de.tum.in.tumcampusapp.component.other.generic.activity.BaseActivity;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMember;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoom;
 import de.tum.in.tumcampusapp.database.TcaDb;
+import de.tum.in.tumcampusapp.utils.Component;
+import de.tum.in.tumcampusapp.utils.ConfigConst;
 import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.Utils;
 import retrofit2.Call;
@@ -48,7 +50,7 @@ public class AddChatMemberActivity extends BaseActivity {
     private List<ChatMember> suggestions;
 
     public AddChatMemberActivity() {
-        super(R.layout.activity_add_chat_member);
+        super(R.layout.activity_add_chat_member, Component.CHAT);
     }
 
     @Override

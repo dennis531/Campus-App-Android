@@ -11,10 +11,12 @@ import com.alamkanak.weekview.WeekViewEvent
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import java.util.*
-import java.util.regex.Pattern
 
-enum class CalendarItemType {
-    CANCELED, LECTURE, EXERCISE, OTHER
+enum class CalendarItemType(val typeName: String) {
+    CANCELED(CalendarItem.CANCELED),
+    LECTURE(CalendarItem.LECTURE),
+    EXERCISE(CalendarItem.EXERCISE),
+    OTHER(CalendarItem.OTHER)
 }
 
 /**
@@ -23,14 +25,14 @@ enum class CalendarItemType {
 @Entity(tableName = "calendar")
 data class CalendarItem(
     @PrimaryKey
-    var nr: String = "",
-    var status: String = "",
-    var url: String = "",
+    var id: String = "",
     var title: String = "",
+    var typeName: String = LECTURE,
     var description: String = "",
     var dtstart: DateTime = DateTime(),
     var dtend: DateTime = DateTime(),
     var location: String = "",
+    var isEditable: Boolean = false,
     @Ignore
     var blacklisted: Boolean = false
 ) : WeekViewDisplayable<CalendarItem> {
@@ -40,57 +42,21 @@ data class CalendarItem(
 
     val type: CalendarItemType
         get() {
-            return if (isCanceled) {
-                CalendarItemType.CANCELED
-            } else if (title.endsWith("VO") || title.endsWith("VU")) {
-                CalendarItemType.LECTURE
-            } else if (title.endsWith("UE")) {
-                CalendarItemType.EXERCISE
-            } else {
-                CalendarItemType.OTHER
+            return when (typeName) {
+                CANCELED -> CalendarItemType.CANCELED
+                LECTURE -> CalendarItemType.LECTURE
+                EXERCISE -> CalendarItemType.EXERCISE
+                else -> CalendarItemType.OTHER
             }
         }
 
-    val isEditable: Boolean
-        get() = url.isBlank()
-
     val isCanceled: Boolean
-        get() = status == "CANCEL"
-
-    val eventStart
-        get() = dtstart
-
-    val eventEnd
-        get() = dtend
-
-    /**
-     * Formats title to exclude codes
-     */
-    fun getFormattedTitle(): String {
-        // remove lecture codes in round or square brackets e.g. (IN0003), [MA0902]
-        return Pattern.compile("[(\\[][A-Z0-9.]+[)\\]]")
-                // remove type of lecture (VO, UE, SE, PR) at the end of the line
-                .matcher(Pattern.compile(" (UE|VO|SE|PR)$")
-                        .matcher(title)
-                        .replaceAll(""))
-                .replaceAll("")
-                .trim { it <= ' ' }
-    }
-
-    /**
-     * Formats event's location
-     */
-    fun getEventLocation(): String {
-        return Pattern.compile("\\([A-Z0-9\\.]+\\)")
-                .matcher(location)
-                .replaceAll("")!!
-                .trim { it <= ' ' }
-    }
+        get() = type == CalendarItemType.CANCELED
 
     fun getEventDateString(): String {
         val timeFormat = DateTimeFormat.forPattern("HH:mm").withLocale(Locale.US)
         val dateFormat = DateTimeFormat.forPattern("EEE, dd.MM.yyyy").withLocale(Locale.US)
-        return String.format("%s %s - %s", dateFormat.print(eventStart), timeFormat.print(eventStart), timeFormat.print(eventEnd))
+        return String.format("%s %s - %s", dateFormat.print(dtstart), timeFormat.print(dtstart), timeFormat.print(dtend))
     }
 
     /**
@@ -101,8 +67,8 @@ data class CalendarItem(
 
         // Put the received values into a contentResolver to
         // transmit the to Google Calendar
-        values.put(CalendarContract.Events.DTSTART, eventStart.millis)
-        values.put(CalendarContract.Events.DTEND, eventEnd.millis)
+        values.put(CalendarContract.Events.DTSTART, dtstart.millis)
+        values.put(CalendarContract.Events.DTEND, dtend.millis)
         values.put(CalendarContract.Events.TITLE, title)
         values.put(CalendarContract.Events.DESCRIPTION, description)
         values.put(CalendarContract.Events.EVENT_LOCATION, location)
@@ -131,13 +97,20 @@ data class CalendarItem(
                 .build()
 
         return WeekViewEvent.Builder<CalendarItem>(this)
-                .setId(nr.toLong())
+                .setId(id.hashCode().toLong())
                 .setTitle(title)
-                .setStartTime(eventStart.toGregorianCalendar())
-                .setEndTime(eventEnd.toGregorianCalendar())
+                .setStartTime(dtstart.toGregorianCalendar())
+                .setEndTime(dtend.toGregorianCalendar())
                 .setLocation(location)
                 .setStyle(style)
                 .setAllDay(false)
                 .build()
+    }
+
+    companion object {
+        const val CANCELED = "canceled"
+        const val LECTURE = "lecture"
+        const val EXERCISE = "exercise"
+        const val OTHER = "other"
     }
 }

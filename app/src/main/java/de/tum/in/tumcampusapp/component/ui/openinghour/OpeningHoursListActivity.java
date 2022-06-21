@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import de.tum.in.tumcampusapp.R;
 import de.tum.in.tumcampusapp.component.other.generic.activity.BaseActivity;
+import de.tum.in.tumcampusapp.utils.Component;
 
 /**
  * An activity representing a list of Items. This activity has different
@@ -20,7 +21,7 @@ import de.tum.in.tumcampusapp.component.other.generic.activity.BaseActivity;
 public class OpeningHoursListActivity extends BaseActivity {
 
     public OpeningHoursListActivity() {
-        super(R.layout.activity_openinghourslist);
+        super(R.layout.activity_openinghourslist, Component.OPENINGHOUR);
     }
 
     @Override

@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import de.tum.in.tumcampusapp.R;
+import de.tum.in.tumcampusapp.utils.Component;
+import de.tum.in.tumcampusapp.utils.ConfigConst;
 import de.tum.in.tumcampusapp.utils.Utils;
 
 /**
@@ -50,10 +52,14 @@ public abstract class ActivityForSearching<T> extends ProgressActivity<T> {
      * @param auth     Authority for search suggestions declared in manifest file
      * @param minLen   Minimum text length that has to be entered by the user before a search quest can be submitted
      */
-    public ActivityForSearching(int layoutId, String auth, int minLen) {
-        super(layoutId);
+    public ActivityForSearching(int layoutId, Component component, String auth, int minLen) {
+        super(layoutId, component);
         authority = auth;
         minLength = minLen;
+    }
+
+    public ActivityForSearching(int layoutId, String auth, int minLen) {
+        this(layoutId, null, auth, minLen);
     }
 
     /**

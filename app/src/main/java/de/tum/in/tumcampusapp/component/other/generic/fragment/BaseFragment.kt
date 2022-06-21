@@ -22,32 +22,34 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.tumonline.exception.InactiveTokenException
-import de.tum.`in`.tumcampusapp.api.tumonline.exception.InvalidTokenException
-import de.tum.`in`.tumcampusapp.api.tumonline.exception.MissingPermissionException
-import de.tum.`in`.tumcampusapp.api.tumonline.exception.RequestLimitReachedException
-import de.tum.`in`.tumcampusapp.api.tumonline.exception.TokenLimitReachedException
+import de.tum.`in`.tumcampusapp.api.general.exception.UnauthorizedException
+import de.tum.`in`.tumcampusapp.api.general.exception.ForbiddenException
+import de.tum.`in`.tumcampusapp.api.general.exception.NotFoundException
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.BaseActivity
 import de.tum.`in`.tumcampusapp.component.other.generic.viewstates.EmptyViewState
 import de.tum.`in`.tumcampusapp.component.other.generic.viewstates.ErrorViewState
-import de.tum.`in`.tumcampusapp.component.other.generic.viewstates.FailedTokenViewState
+import de.tum.`in`.tumcampusapp.component.other.generic.viewstates.FailedLMSViewState
 import de.tum.`in`.tumcampusapp.component.other.generic.viewstates.NoInternetViewState
 import de.tum.`in`.tumcampusapp.component.other.generic.viewstates.UnknownErrorViewState
-import de.tum.`in`.tumcampusapp.utils.NetUtils
-import de.tum.`in`.tumcampusapp.utils.Utils
-import de.tum.`in`.tumcampusapp.utils.setImageResourceOrHide
-import de.tum.`in`.tumcampusapp.utils.setTextOrHide
+import de.tum.`in`.tumcampusapp.utils.*
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.connectivityManager
 import org.jetbrains.anko.support.v4.runOnUiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.net.UnknownHostException
+import java.util.concurrent.Callable
 
 abstract class BaseFragment<T>(
     @LayoutRes private val layoutId: Int,
     @StringRes private val titleResId: Int
 ) : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+
+    private val loadingDisposable = CompositeDisposable()
 
     private var apiCall: Call<T>? = null
     private var hadSuccessfulRequest = false
@@ -175,6 +177,24 @@ abstract class BaseFragment<T>(
         })
     }
 
+    protected fun fetch(single: Single<T>) {
+        showLoadingStart()
+        loadingDisposable += single
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
+                onDownloadSuccessful(response)
+                showLoadingEnded()
+            }, {
+                showLoadingEnded()
+                onDownloadFailure(it)
+            })
+    }
+
+    protected fun fetch(callable: Callable<T>) {
+        fetch(Single.fromCallable(callable))
+    }
+
     /**
      * Called if the response from the API call is successful. Provides the unwrapped response body.
      * Subclasses need to override this method to be alerted of successful responses after calling
@@ -231,11 +251,9 @@ abstract class BaseFragment<T>(
     private fun showErrorSnackbar(t: Throwable) {
         val messageResId = when (t) {
             is UnknownHostException -> R.string.no_internet_connection
-            is InactiveTokenException -> R.string.error_access_token_inactive
-            is InvalidTokenException -> R.string.error_invalid_access_token
-            is MissingPermissionException -> R.string.error_no_rights_to_access_function
-            is TokenLimitReachedException -> R.string.error_access_token_limit_reached
-            is RequestLimitReachedException -> R.string.error_request_limit_reached
+            is UnauthorizedException -> R.string.error_unauthorized
+            is ForbiddenException -> R.string.error_no_rights_to_access_function
+            is NotFoundException -> R.string.error_resource_not_found
             else -> R.string.error_unknown
         }
 
@@ -254,18 +272,16 @@ abstract class BaseFragment<T>(
     private fun showErrorLayout(throwable: Throwable) {
         when (throwable) {
             is UnknownHostException -> showNoInternetLayout()
-            is InactiveTokenException -> showFailedTokenLayout(R.string.error_access_token_inactive)
-            is InvalidTokenException -> showFailedTokenLayout(R.string.error_invalid_access_token)
-            is MissingPermissionException -> showFailedTokenLayout(R.string.error_no_rights_to_access_function)
-            is TokenLimitReachedException -> showFailedTokenLayout(R.string.error_access_token_limit_reached)
-            is RequestLimitReachedException -> showError(R.string.error_request_limit_reached)
+            is UnauthorizedException -> showFailedLMSLayout(R.string.error_unauthorized)
+            is ForbiddenException -> showFailedLMSLayout(R.string.error_no_rights_to_access_function)
+            is NotFoundException -> showFailedLMSLayout(R.string.error_resource_not_found)
             else -> showError(R.string.error_unknown)
         }
     }
 
-    private fun showFailedTokenLayout(messageResId: Int = R.string.error_accessing_tumonline_body) {
+    private fun showFailedLMSLayout(messageResId: Int = R.string.error_accessing_lms_body) {
         runOnUiThread {
-            showError(FailedTokenViewState(messageResId))
+            showError(FailedLMSViewState(messageResId))
         }
     }
 
@@ -401,6 +417,8 @@ abstract class BaseFragment<T>(
     }
 
     override fun onDestroy() {
+        loadingDisposable.dispose()
+
         if (registered) {
             baseActivity.connectivityManager.unregisterNetworkCallback(networkCallback)
             registered = false

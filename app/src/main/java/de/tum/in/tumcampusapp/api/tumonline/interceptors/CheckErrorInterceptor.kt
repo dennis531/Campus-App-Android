@@ -2,7 +2,7 @@ package de.tum.`in`.tumcampusapp.api.tumonline.interceptors
 
 import android.content.Context
 import com.tickaroo.tikxml.TikXml
-import de.tum.`in`.tumcampusapp.api.tumonline.exception.InvalidTokenException
+import de.tum.`in`.tumcampusapp.api.general.exception.UnauthorizedException
 import de.tum.`in`.tumcampusapp.api.tumonline.model.Error
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
@@ -30,7 +30,7 @@ class CheckErrorInterceptor(private val context: Context) : Interceptor {
         val error = tryOrNull { tikXml.read(peekBody.source(), Error::class.java) }
         error?.let {
             throw it.exception.also {
-                if (it is InvalidTokenException) {
+                if (it is UnauthorizedException) {
                     // If it is an InvalidTokenException, we disable interaction with TUMonline.
                     Utils.setSetting(context, Const.TUMO_DISABLED, true)
                 }

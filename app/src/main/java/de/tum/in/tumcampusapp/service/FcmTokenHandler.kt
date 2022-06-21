@@ -3,9 +3,9 @@ package de.tum.`in`.tumcampusapp.service
 import android.content.Context
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessaging
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
-import de.tum.`in`.tumcampusapp.api.app.model.DeviceUploadFcmToken
-import de.tum.`in`.tumcampusapp.api.app.model.TUMCabeStatus
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.model.DeviceUploadFcmToken
+import de.tum.`in`.tumcampusapp.api.general.model.TUMCabeStatus
 import de.tum.`in`.tumcampusapp.utils.Const.FCM_INSTANCE_ID
 import de.tum.`in`.tumcampusapp.utils.Const.FCM_REG_ID_LAST_TRANSMISSION
 import de.tum.`in`.tumcampusapp.utils.Const.FCM_REG_ID_SENT_TO_SERVER

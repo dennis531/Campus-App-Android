@@ -12,12 +12,13 @@ import android.view.ViewGroup
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Utils
 
 /**
  * Card that describes how to dismiss a card
  */
-class SupportCard(context: Context) : Card(CardManager.CARD_SUPPORT, context, "") {
+class SupportCard(context: Context) : Card(CardManager.CARD_SUPPORT, context,Component.OVERVIEW, "") {
 
     public override fun discard(editor: Editor) {
         Utils.setSetting(context, CardManager.SHOW_SUPPORT, false)

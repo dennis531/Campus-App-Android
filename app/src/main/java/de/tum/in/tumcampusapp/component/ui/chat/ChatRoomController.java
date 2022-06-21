@@ -15,12 +15,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import de.tum.in.tumcampusapp.api.app.TUMCabeClient;
-import de.tum.in.tumcampusapp.api.app.model.TUMCabeVerification;
+import de.tum.in.tumcampusapp.api.general.TUMCabeClient;
+import de.tum.in.tumcampusapp.api.general.model.TUMCabeVerification;
 import de.tum.in.tumcampusapp.api.tumonline.CacheControl;
 import de.tum.in.tumcampusapp.api.tumonline.TUMOnlineClient;
-import de.tum.in.tumcampusapp.component.tumui.lectures.model.Lecture;
-import de.tum.in.tumcampusapp.component.tumui.lectures.model.LecturesResponse;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoom;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoomAndLastMessage;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoomDbRow;
@@ -68,21 +66,21 @@ public class ChatRoomController implements ProvidesCard {
     /**
      * Saves the given lectures into database
      */
-    public void createLectureRooms(Iterable<Lecture> lectures) {
-        // Create a Set of all existing lectures
-        List<Integer> roomLvIds = chatRoomDao.getLvIds();
-        Collection<String> set = new HashSet<>();
-        for (Integer id : roomLvIds) {
-            set.add(String.valueOf(id));
-        }
-
-        // Add lectures that are not yet in DB
-        for (Lecture lecture : lectures) {
-            if (!set.contains(lecture.getLectureId())) {
-                chatRoomDao.replaceRoom(ChatRoomDbRow.Companion.fromLecture(lecture));
-            }
-        }
-    }
+//    public void createLectureRooms(Iterable<Lecture> lectures) {
+//        // Create a Set of all existing lectures
+//        List<Integer> roomLvIds = chatRoomDao.getLvIds();
+//        Collection<String> set = new HashSet<>();
+//        for (Integer id : roomLvIds) {
+//            set.add(String.valueOf(id));
+//        }
+//
+//        // Add lectures that are not yet in DB
+//        for (Lecture lecture : lectures) {
+//            if (!set.contains(lecture.getLectureId())) {
+//                chatRoomDao.replaceRoom(ChatRoomDbRow.Companion.fromLecture(lecture));
+//            }
+//        }
+//    }
 
     /**
      * Saves the given chat rooms into database
@@ -124,60 +122,61 @@ public class ChatRoomController implements ProvidesCard {
     @Override
     public List<Card> getCards(@NonNull CacheControl cacheControl) {
         List<Card> results = new ArrayList<>();
+        return null; // TODO: Remove
 
-        try {
-            Response<LecturesResponse> response = TUMOnlineClient
-                    .getInstance(mContext)
-                    .getPersonalLectures(cacheControl)
-                    .execute();
-
-            if (response != null) {
-                LecturesResponse lecturesResponse = response.body();
-
-                if (lecturesResponse != null) {
-                    List<Lecture> lectures = lecturesResponse.getLectures();
-                    createLectureRooms(lectures);
-                }
-            }
-
-            // Join all new chat rooms
-            if (Utils.getSettingBool(mContext, Const.AUTO_JOIN_NEW_ROOMS, false)) {
-                TUMCabeClient client = TUMCabeClient.getInstance(mContext);
-                List<String> newRooms = this.getNewUnjoined();
-
-                for (String roomId : newRooms) {
-                    // Join chat room
-                    try {
-                        ChatRoom currentChatRoom = new ChatRoom(roomId);
-                        TUMCabeVerification verification = TUMCabeVerification.create(mContext, null);
-                        if (verification == null) {
-                            return results;
-                        }
-
-                        currentChatRoom = client.createRoom(currentChatRoom, verification);
-                        if (currentChatRoom != null) {
-                            this.join(currentChatRoom);
-                        }
-                    } catch (IOException e) {
-                        Utils.log(e, " - error occured while creating the room!");
-                    }
-                }
-            }
-
-            // Get all rooms that have unread messages
-            List<ChatRoomDbRow> rooms = chatRoomDao.getUnreadRooms();
-            if (!rooms.isEmpty()) {
-                for (ChatRoomDbRow room : rooms) {
-                    ChatMessagesCard card = new ChatMessagesCard(mContext, room);
-                    results.add(card.getIfShowOnStart());
-                }
-            }
-
-            return results;
-        } catch (IOException e) {
-            Utils.log(e);
-            return results;
-        }
+//        try {
+//            Response<LecturesResponse> response = TUMOnlineClient
+//                    .getInstance(mContext)
+//                    .getPersonalLectures(cacheControl)
+//                    .execute();
+//
+//            if (response != null) {
+//                LecturesResponse lecturesResponse = response.body();
+//
+//                if (lecturesResponse != null) {
+//                    List<Lecture> lectures = lecturesResponse.getLectures();
+//                    createLectureRooms(lectures);
+//                }
+//            }
+//
+//            // Join all new chat rooms
+//            if (Utils.getSettingBool(mContext, Const.AUTO_JOIN_NEW_ROOMS, false)) {
+//                TUMCabeClient client = TUMCabeClient.getInstance(mContext);
+//                List<String> newRooms = this.getNewUnjoined();
+//
+//                for (String roomId : newRooms) {
+//                    // Join chat room
+//                    try {
+//                        ChatRoom currentChatRoom = new ChatRoom(roomId);
+//                        TUMCabeVerification verification = TUMCabeVerification.create(mContext, null);
+//                        if (verification == null) {
+//                            return results;
+//                        }
+//
+//                        currentChatRoom = client.createRoom(currentChatRoom, verification);
+//                        if (currentChatRoom != null) {
+//                            this.join(currentChatRoom);
+//                        }
+//                    } catch (IOException e) {
+//                        Utils.log(e, " - error occured while creating the room!");
+//                    }
+//                }
+//            }
+//
+//            // Get all rooms that have unread messages
+//            List<ChatRoomDbRow> rooms = chatRoomDao.getUnreadRooms();
+//            if (!rooms.isEmpty()) {
+//                for (ChatRoomDbRow room : rooms) {
+//                    ChatMessagesCard card = new ChatMessagesCard(mContext, room);
+//                    results.add(card.getIfShowOnStart());
+//                }
+//            }
+//
+//            return results;
+//        } catch (IOException e) {
+//            Utils.log(e);
+//            return results;
+//        }
     }
 
     private List<String> getNewUnjoined() {

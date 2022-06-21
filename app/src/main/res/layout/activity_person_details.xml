@@ -1,107 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/contentFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent" />
 
-        <include layout="@layout/toolbar" />
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <include
-                    layout="@layout/layout_all_errors"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <ScrollView
-                    android:id="@+id/scrollView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"
-                    tools:visibility="visible">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/pictureImageView"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="24dp"
-                            android:layout_marginBottom="16dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/photo_not_available"
-                            app:civ_border_width="0dp"
-                            app:civ_circle_background_color="@color/text_light_gray" />
-
-                        <TextView
-                            android:id="@+id/nameTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:gravity="center_horizontal"
-                            android:textColor="@color/text_primary"
-                            android:padding="@dimen/padding_default"
-                            android:textSize="@dimen/large_text_size"
-                            tools:text="Mr. Prof. Dr. Bernd Brügge" />
-
-                        <View
-                            android:id="@+id/dividerNameGroups"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:background="@color/list_divider" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/groupsRecyclerView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:nestedScrollingEnabled="false"
-                            android:overScrollMode="never" />
-
-                        <View
-                            android:id="@+id/dividerGroupsContactItems"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:background="@color/list_divider" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/contactItemsRecyclerView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:nestedScrollingEnabled="false"
-                            android:overScrollMode="never" />
-
-                    </LinearLayout>
-
-                </ScrollView>
-
-            </LinearLayout>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    </LinearLayout>
+    <!-- The navigation drawer -->
+    <include layout="@layout/navigation_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

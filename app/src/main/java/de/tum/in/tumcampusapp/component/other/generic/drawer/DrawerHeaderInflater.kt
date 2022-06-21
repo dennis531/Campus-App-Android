@@ -8,11 +8,13 @@ import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.tumonline.AccessTokenManager
+import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.OnboardingActivity
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import java.util.Locale
+import javax.inject.Inject
 
 class DrawerHeaderInflater(
     private val context: Context
@@ -25,7 +27,7 @@ class DrawerHeaderInflater(
         val emailTextView = headerView.findViewById<TextView>(R.id.emailTextView)
         val loginButton = headerView.findViewById<MaterialButton>(R.id.loginButton)
 
-        val isLoggedIn = AccessTokenManager.hasValidAccessToken(context)
+        val isLoggedIn = ConfigUtils.getAuthManager(context).hasAccess()
 
         if (isLoggedIn) {
             val name = Utils.getSetting(context, Const.CHAT_ROOM_DISPLAY_NAME, "")
@@ -35,8 +37,7 @@ class DrawerHeaderInflater(
                 nameTextView.visibility = View.INVISIBLE
             }
 
-            val lrzId = Utils.getSetting(context, Const.LRZ_ID, "")
-            val email = if (lrzId.isNotEmpty()) "$lrzId@mytum.de" else ""
+            val email = Utils.getSetting(context, Const.PROFILE_EMAIL, "")
             if (email.isNotEmpty()) {
                 emailTextView.text = email
             } else {
@@ -71,16 +72,10 @@ class DrawerHeaderInflater(
     }
 
     private fun fetchProfilePicture(headerView: View) {
-        val id = Utils.getSetting(context, Const.TUMO_PIDENT_NR, "")
-        val parts = id.split("\\*".toRegex()).toTypedArray()
-        if (parts.size != 2) {
+        val url = Utils.getSetting(context, Const.PROFILE_PICTURE_URL, "")
+        if (url.isEmpty()) {
             return
         }
-
-        val group = parts[0]
-        val personId = parts[1]
-        val url = String.format(Locale.getDefault(),
-            Const.TUM_ONLINE_PROFILE_PICTURE_URL_FORMAT_STRING, group, personId)
 
         val imageView = headerView.findViewById<CircleImageView>(R.id.profileImageView)
         Picasso.get()

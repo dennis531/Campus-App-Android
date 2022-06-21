@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import de.tum.`in`.tumcampusapp.api.app.model.TUMCabeVerification
+import de.tum.`in`.tumcampusapp.api.general.model.TUMCabeVerification
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMessage
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoom
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageLocalRepository

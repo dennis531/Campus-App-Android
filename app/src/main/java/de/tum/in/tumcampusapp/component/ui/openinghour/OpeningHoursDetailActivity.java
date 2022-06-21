@@ -7,6 +7,8 @@ import android.view.View;
 
 import de.tum.in.tumcampusapp.R;
 import de.tum.in.tumcampusapp.component.other.generic.activity.BaseActivity;
+import de.tum.in.tumcampusapp.utils.Component;
+import de.tum.in.tumcampusapp.utils.ConfigConst;
 
 /**
  * An activity representing a single Item detail screen. This activity is only
@@ -19,7 +21,7 @@ import de.tum.in.tumcampusapp.component.other.generic.activity.BaseActivity;
 public class OpeningHoursDetailActivity extends BaseActivity {
 
     public OpeningHoursDetailActivity() {
-        super(R.layout.activity_openinghoursdetails);
+        super(R.layout.activity_openinghoursdetails, Component.OPENINGHOUR);
     }
 
     @Override

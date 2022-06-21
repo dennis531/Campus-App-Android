@@ -28,7 +28,7 @@ data class WidgetCalendarItem(
                 .build()
 
         return WeekViewEvent.Builder<WidgetCalendarItem>(this)
-                .setId(id.toLong())
+                .setId(id.hashCode().toLong())
                 .setTitle(title)
                 .setStartTime(startTime.toGregorianCalendar())
                 .setEndTime(endTime.toGregorianCalendar())
@@ -43,11 +43,11 @@ data class WidgetCalendarItem(
         @JvmStatic
         fun create(calendarItem: CalendarItem): WidgetCalendarItem {
             return WidgetCalendarItem(
-                    calendarItem.nr,
-                    calendarItem.getFormattedTitle(),
-                    calendarItem.eventStart,
-                    calendarItem.eventEnd,
-                    calendarItem.getEventLocation()
+                    calendarItem.id,
+                    calendarItem.title,
+                    calendarItem.dtstart,
+                    calendarItem.dtend,
+                    calendarItem.location
             )
         }
 

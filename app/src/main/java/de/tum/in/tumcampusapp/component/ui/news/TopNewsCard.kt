@@ -19,12 +19,13 @@ import de.tum.`in`.tumcampusapp.component.ui.overview.CardInteractionListener
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
+import de.tum.`in`.tumcampusapp.utils.Component
 import org.jetbrains.anko.defaultSharedPreferences
 
 /**
  * Shows important news
  */
-class TopNewsCard(context: Context) : Card(CardManager.CARD_TOP_NEWS, context, "top_news") {
+class TopNewsCard(context: Context) : Card(CardManager.CARD_TOP_NEWS, context, Component.NEWS, "top_news") {
     private lateinit var imageView: ImageView
     private lateinit var progress: ProgressBar
     private val topNewsStore: TopNewsStore

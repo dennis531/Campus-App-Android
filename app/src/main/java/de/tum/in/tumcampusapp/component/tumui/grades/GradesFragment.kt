@@ -2,9 +2,7 @@ package de.tum.`in`.tumcampusapp.component.tumui.grades
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.animation.LayoutTransition
 import android.graphics.Color
-import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.util.ArrayMap
 import android.view.Menu
@@ -13,7 +11,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat.getColor
 import com.github.mikephil.charting.components.Legend
@@ -23,7 +20,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
-import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingTumOnline
+import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingLMS
 import de.tum.`in`.tumcampusapp.component.tumui.grades.model.Exam
 import de.tum.`in`.tumcampusapp.component.tumui.grades.model.ExamList
 import de.tum.`in`.tumcampusapp.databinding.FragmentGradesBinding
@@ -33,7 +30,7 @@ import org.jetbrains.anko.support.v4.defaultSharedPreferences
 import java.text.NumberFormat
 import java.util.*
 
-class GradesFragment : FragmentForAccessingTumOnline<ExamList>(
+class GradesFragment : FragmentForAccessingLMS<ExamList>(
         R.layout.fragment_grades,
         R.string.my_grades
 ) {
@@ -95,8 +92,8 @@ class GradesFragment : FragmentForAccessingTumOnline<ExamList>(
     }
 
     private fun loadGrades(cacheControl: CacheControl) {
-        val apiCall = apiClient.getGrades(cacheControl)
-        fetch(apiCall)
+//        val apiCall = apiClient.getGrades(cacheControl)
+//        fetch(apiCall)
     }
 
     override fun onDownloadSuccessful(response: ExamList) {

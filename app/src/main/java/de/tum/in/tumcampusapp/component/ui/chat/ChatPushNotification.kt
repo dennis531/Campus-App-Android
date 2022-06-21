@@ -14,8 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.Gson
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
-import de.tum.`in`.tumcampusapp.api.app.model.TUMCabeVerification
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.model.TUMCabeVerification
 import de.tum.`in`.tumcampusapp.component.other.generic.PushNotification
 import de.tum.`in`.tumcampusapp.component.ui.chat.activity.ChatActivity
 import de.tum.`in`.tumcampusapp.component.ui.chat.activity.ChatRoomsActivity

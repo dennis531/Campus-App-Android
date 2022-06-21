@@ -18,13 +18,14 @@ import de.tum.`in`.tumcampusapp.component.ui.overview.CardInteractionListener
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import org.jetbrains.anko.wifiManager
 
 /**
  * Card that can start [SetupEduroamActivity]
  */
-class EduroamCard(context: Context) : Card(CardManager.CARD_EDUROAM, context, "card_eduroam") {
+class EduroamCard(context: Context) : Card(CardManager.CARD_EDUROAM, context, Component.EDUROAM, "card_eduroam") {
 
     override val optionsMenuResId: Int
         get() = R.menu.card_popup_menu

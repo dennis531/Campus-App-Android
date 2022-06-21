@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.fragment.app.transaction
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.BaseActivity
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.di.OnboardingComponent
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.di.OnboardingComponentProvider
+import de.tum.`in`.tumcampusapp.utils.Component
 import javax.inject.Inject
 
-class OnboardingActivity : BaseActivity(R.layout.activity_onboarding), OnboardingComponentProvider {
+class OnboardingActivity : BaseActivity(R.layout.activity_onboarding, Component.ONBOARDING), OnboardingComponentProvider {
 
     private val onboardingComponent: OnboardingComponent by lazy {
         injector.onboardingComponent().create(this)
@@ -25,9 +25,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding), Onboardin
         onboardingComponent.inject(this)
 
         if (savedInstanceState == null) {
-            supportFragmentManager.transaction {
-                replace(R.id.contentFrame, OnboardingStartFragment.newInstance())
-            }
+            navigator.openFirst()
         }
     }
 
@@ -41,12 +39,17 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding), Onboardin
         }
     }
 
+    override fun onboardingComponent() = onboardingComponent
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+    }
+
     override fun onDestroy() {
         navigator.onClose()
         super.onDestroy()
     }
-
-    override fun onboardingComponent() = onboardingComponent
 
     companion object {
         fun newIntent(context: Context) = Intent(context, OnboardingActivity::class.java)

@@ -1,0 +1,38 @@
+package de.tum.`in`.tumcampusapp.api.studip.model.person
+
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.github.jasminb.jsonapi.annotations.Id
+import com.github.jasminb.jsonapi.annotations.Relationship
+import com.github.jasminb.jsonapi.annotations.Type
+import de.tum.`in`.tumcampusapp.App
+import de.tum.`in`.tumcampusapp.R
+import de.tum.`in`.tumcampusapp.component.tumui.person.model.InstituteInterface
+import java.io.Serializable
+
+@Type("institute-memberships")
+class StudipInstitute: InstituteInterface {
+    @Id
+    var id: String = ""
+    var location: String = ""
+    var phone: String = ""
+
+    @JsonIgnore
+    override var name: String = ""
+        get() = institute?.name ?: ""
+
+    @Relationship("institute")
+    var institute: InstituteRelationship? = null
+}
+
+@Type("institutes")
+class InstituteRelationship : Serializable {
+    @Id
+    var id: String = ""
+
+    var name: String = ""
+
+    companion object {
+        private const val serialVersionUID = 1120604090486967901L
+    }
+}

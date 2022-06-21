@@ -1,7 +1,7 @@
 package de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository
 
 import android.annotation.SuppressLint
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.utils.Utils
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers

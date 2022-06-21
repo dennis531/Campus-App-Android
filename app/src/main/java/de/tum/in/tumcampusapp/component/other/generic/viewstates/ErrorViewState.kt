@@ -28,8 +28,8 @@ class NoInternetViewState : ErrorViewState(
         messageResId = R.string.no_internet_connection
 )
 
-class FailedTokenViewState(messageResId: Int) : ErrorViewState(
-        headerResId = R.string.error_accessing_tumonline_header,
+class FailedLMSViewState(messageResId: Int) : ErrorViewState(
+        headerResId = R.string.error_accessing_lms_header,
         messageResId = messageResId
 )
 

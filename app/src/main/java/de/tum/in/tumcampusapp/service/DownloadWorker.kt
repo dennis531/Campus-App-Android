@@ -10,12 +10,12 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import de.tum.`in`.tumcampusapp.api.tumonline.AccessTokenManager
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl.BYPASS_CACHE
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl.USE_CACHE
 import de.tum.`in`.tumcampusapp.di.injector
 import de.tum.`in`.tumcampusapp.utils.CacheManager
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.NetUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import javax.inject.Inject
@@ -112,7 +112,7 @@ class DownloadWorker(
 
             service.downloadAll(force)
 
-            val hasValidToken = AccessTokenManager.hasValidAccessToken(service.applicationContext)
+            val hasValidToken = ConfigUtils.getAuthManager(service.applicationContext).hasAccess()
             val shouldFillCache = data.getBoolean(FILL_CACHE, false)
 
             if (hasValidToken && shouldFillCache) {

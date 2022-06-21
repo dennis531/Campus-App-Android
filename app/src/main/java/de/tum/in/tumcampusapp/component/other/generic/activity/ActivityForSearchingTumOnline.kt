@@ -1,6 +1,7 @@
 package de.tum.`in`.tumcampusapp.component.other.generic.activity
 
 import de.tum.`in`.tumcampusapp.api.tumonline.TUMOnlineClient
+import de.tum.`in`.tumcampusapp.utils.Component
 
 /**
  * Generic class which handles all basic tasks to communicate with TUMOnline and
@@ -14,9 +15,10 @@ import de.tum.`in`.tumcampusapp.api.tumonline.TUMOnlineClient
 @Deprecated("Use BaseActivity and a suitable BaseFragment class")
 abstract class ActivityForSearchingTumOnline<T>(
     layoutId: Int,
+    component: Component? = null,
     auth: String,
     minLen: Int
-) : ActivityForSearching<T>(layoutId, auth, minLen) {
+) : ActivityForSearching<T>(layoutId, component, auth, minLen) {
 
     protected val apiClient: TUMOnlineClient by lazy {
         TUMOnlineClient.getInstance(this)

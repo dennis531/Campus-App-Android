@@ -1,7 +1,7 @@
 package de.tum.`in`.tumcampusapp.component.ui.news
 
 import android.content.Context
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.notifications.NotificationScheduler
 import de.tum.`in`.tumcampusapp.component.notifications.ProvidesNotifications
@@ -9,7 +9,6 @@ import de.tum.`in`.tumcampusapp.component.ui.news.model.News
 import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsSources
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.ProvidesCard
-import de.tum.`in`.tumcampusapp.component.ui.tufilm.FilmCard
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.utils.Utils
 import de.tum.`in`.tumcampusapp.utils.sync.SyncManager
@@ -151,7 +150,7 @@ class NewsController @Inject constructor(
         }
 
         return news
-            .map { item -> if (item.isFilm) FilmCard(context, item) else NewsCard(context, item) }
+            .map { item ->  NewsCard(context, item) }
             .mapNotNull { it.getIfShowOnStart() }
     }
 

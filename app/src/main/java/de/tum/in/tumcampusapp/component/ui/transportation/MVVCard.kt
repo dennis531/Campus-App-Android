@@ -15,11 +15,12 @@ import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.Departure
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.StationResult
+import de.tum.`in`.tumcampusapp.utils.Component
 
 /**
  * Card that shows MVV departure times
  */
-class MVVCard(context: Context, val station: StationResult, val departures: List<Departure>) : Card(CARD_MVV, context, "card_mvv") {
+class MVVCard(context: Context, val station: StationResult, val departures: List<Departure>) : Card(CARD_MVV, context, Component.TRANSPORTATION, "card_mvv") {
 
     override val optionsMenuResId: Int
         get() = R.menu.card_popup_menu

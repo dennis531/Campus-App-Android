@@ -6,6 +6,7 @@ package de.tum.`in`.tumcampusapp.utils
 object Const {
     const val MENSA_FOR_FAVORITEDISH = "FavoriteDishCafeteriaID"
     const val ACCESS_TOKEN = "access_token"
+    const val ACCESS_TOKEN_SECRET = "access_token_secret"
     const val BACKGROUND_MODE = "background_mode"
     const val CAFETERIA_ID = "cafeteriasId"
     const val CAFETERIA_DATE = "cafeteriaDate"
@@ -26,9 +27,8 @@ object Const {
     const val SILENCE_SERVICE = "silent_mode"
     const val SILENCE_OLD_STATE = "silence_old_state"
     const val TITLE_EXTRA = "title"
-    const val LECTURE_ID_EXTRA = "stp_sp_nr"
 
-    const val API_HOSTNAME = "tumcabe.in.tum.de"
+    const val API_HOSTNAME = ""
     const val API_HOSTNAME_NEW = "app.tum.de"
     const val STUDY_ROOMS_HOSTNAME = "www.devapp.it.tum.de"
 
@@ -109,6 +109,7 @@ object Const {
     const val RAINBOW_MODE = "rainbow_enabled"
     const val REFRESH_CARDS = "refresh_cards"
     const val EDUROAM_SSID = "eduroam"
+    const val EDUROAM_DOMAIN = "eduroam.mwn.de"
     const val LRZ = "lrz"
 
     const val FCM_CHAT = "fcmChat"
@@ -143,6 +144,9 @@ object Const {
     const val TUM_CAMPUS_URL = "http://campus.tum.de"
 
     const val TUM_ONLINE_PROFILE_PICTURE_URL_FORMAT_STRING = "https://campus.tum.de/tumonline/visitenkarte.showImage?pPersonenGruppe=%s&pPersonenId=%s"
+    const val PROFILE_PICTURE_URL = "profile_picture_url"
+    const val PROFILE_EMAIL = "profile_email"
+    const val PROFILE_ID = "profile_id"
 
     const val CALENDAR_FILTER_CANCELED = "calendar_filter_canceled"
     const val CALENDAR_FILTER_HOUR_LIMIT_MIN = "calendar_filter_hour_limit_min"

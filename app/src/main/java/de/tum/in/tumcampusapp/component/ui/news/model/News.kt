@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.google.gson.annotations.SerializedName
-import de.tum.`in`.tumcampusapp.component.ui.tufilm.KinoActivity
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.DateTimeUtils
 import org.joda.time.DateTime
@@ -44,12 +43,6 @@ data class News(
         get() = setOf(7, 8, 9, 13).contains(src.toInt())
 
     fun getIntent(context: Context): Intent? {
-        return if (isFilm) {
-            Intent(context, KinoActivity::class.java).apply {
-                putExtra(Const.KINO_DATE, DateTimeUtils.getDateTimeString(date))
-            }
-        } else {
-            if (link.isBlank()) null else Intent(Intent.ACTION_VIEW, Uri.parse(link))
-        }
+        return if (link.isBlank()) null else Intent(Intent.ACTION_VIEW, Uri.parse(link))
     }
 }

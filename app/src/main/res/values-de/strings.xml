@@ -13,6 +13,7 @@
     <string name="save">Speichern</string>
     <string name="no">Nein</string>
     <string name="no_internet_connection">Keine Internetverbindung</string>
+    <string name="component_not_available_format" formatted="true">%s nicht verfügbar</string>
 
     <!-- Calendar -->
     <string name="ends_after">Ende nach</string>
@@ -22,7 +23,7 @@
     <string name="create_event_too_little_error">Serientermine müssen mindestens 2 Elemente enthalten.</string>
     <string name="create_event_some_failed">%1$s von %2$s Terminen konnten nicht erstellt werden.</string>
     <string name="delete_series">Serie löschen</string>
-    <string name="dialog_show_calendar">Exportieren erfolgreich.\nLokalen Kalender <i>TUM_CAMPUS_APP</i> in der <i>Google Calendar App</i> anzeigen?</string>
+    <string name="dialog_show_calendar">Exportieren erfolgreich.\nLokalen Kalender <i>AMPUS_APP</i> in der <i>Google Calendar App</i> anzeigen?</string>
     <string name="export_to_google">Exportiere nach Google</string>
     <string name="delete_from_google">Löschen aus Google</string>
     <string name="dialog_delete_calendar">Den lokalen <i>TUM_CAMPUS_APP</i> Kalender von deinem Gerät löschen?</string>
@@ -97,8 +98,9 @@
     <string name="dark">Dunkel</string>
 
     <!-- Startup Wizard -->
+    <string name="onboarding">Einrichtung</string>
     <string name="not_connected_to_tumonline">Nicht verbunden</string>
-    <string name="connect_to_tum_online">Mit TUMonline verbinden</string>
+    <string name="connect_to_tum_online">Mit Lernplattform verbinden</string>
     <string name="welcome_msg">Um den Zugriff auf TUMonline-Dienste zu ermöglichen, wird deine <b>TUM-Kennung</b> benötigt.\n\nDie Kennung hat das Format <i>ga12abc</i>.</string>
     <string name="button_skip">Überspringen</string>
     <string name="button_next">Weiter</string>
@@ -109,6 +111,7 @@
     <string name="set_silent_mode">Bei Aktivierung wird sich das Gerät bei einer aktuell stattfindenden Vorlesung lautlos schalten.</string>
     <string name="set_background_mode">Aktiviere oder deaktiviere den <i>Hintergrundmodus</i>. Bei Aktivierung werden einmal am Tag im Hintergrund alle Inhalte heruntergeladen, um deine TUM Campus App auf den neusten Stand zu halten.</string>
     <string name="goto_tumcampus">Starte TUM Campus App</string>
+    <string name="oauth_msg">Um den Zugriff auf alle Funktionen der App zu erhalten, musst du auf der nächsten Seite den Zugriff auf deine Lernplattform erlauben.\n\nDiese App speichert nicht dein Passwort.\n\nNach dem Einrichten kannst du:\n &#8226; auf deinen Kalender zugreifen\n &#8226; Details zu deinen Vorlesungen erfahren\n &#8226; deine Noten ansehen\n &#8226; deinen Studienbeitragsstatus prüfen\n &#8226; mit Komilitonen aus deinen Vorlesungen chatten</string>
 
     <!-- News -->
     <string name="no_link_existing">Kein Link gefunden.</string>
@@ -128,7 +131,7 @@
     <!-- Navigation drawer -->
     <string name="drawer_open">Öffnen</string>
     <string name="drawer_close">Schließen</string>
-    <string name="my_tum">Mein TUM</string>
+    <string name="my_campus">Mein Campus</string>
     <string name="calendar">Kalender</string>
     <string name="my_lectures">Meine Vorlesungen</string>
     <string name="chat_rooms">Chatrooms</string>
@@ -147,6 +150,7 @@
     <string name="person_information">Personeninformationen</string>
 
     <!-- Organisations -->
+    <string name="organisation">Universität Osnabrück</string>
     <string name="tum">Technische Universität München</string>
     <string name="contact_person">Kontaktperson</string>
     <string name="secretary">Sekretariat</string>
@@ -180,6 +184,7 @@
     <!-- Persons -->
     <string name="no_search_result">Keine Suchergebnisse</string>
     <string name="no_person_set">Keine Person ausgewählt!</string>
+    <string name="contact_information">Kontaktinformationen</string>
     <string name="email">E-Mail</string>
     <string name="phone">Telefon</string>
     <string name="fax">Fax</string>
@@ -188,6 +193,7 @@
     <string name="mrs">Frau</string>
     <string name="function">Funktion</string>
     <string name="group">Gruppe</string>
+    <string name="institute">Institut</string>
     <string name="mobile_phone">Handynummer</string>
     <string name="add_info">Zusatzinformationen</string>
     <string name="office_hours">Bürozeiten</string>
@@ -375,9 +381,9 @@ Signatur: %5$s</string>
     <string name="update_notification_description">Eine neue Version der Tum Campus App wurde am %s released. Hier tippen zum herunterladen.</string>
     <string name="support_us">Hilf uns, die TUM Campus App besser zu machen. Like uns auf Facebook, schlage neue Ideen auf GitHub vor oder sage uns deine Meinung per E-Mail.</string>
     <string name="support_us_title">Unterstütze uns</string>
-    <string name="permission_location_explanation">Die TUM Campus App braucht die Erlaubnis, auf deinen Standort zugreifen zu dürfen, um Mensa-Speisepläne in deiner Nähe oder Fahrpläne der nächstgelegenen MVV-Station anzeigen zu können. Wenn du das nicht willst, kannst du deinen Standort in den Einstellungen konfigurieren.</string>
-    <string name="permission_calendar_explanation">Die TUM Campus App braucht die Erlaubnis, auf deinen Kalender zugreifen zu dürfen, um diesen mit deinem TUM-Kalender abgleichen zu können.</string>
-    <string name="permission_contacts_explanation">Die TUM Campus App braucht die Erlaubnis, auf deine Kontakte zugreifen zu dürfen, um diese Person hinzufügen zu können.</string>
+    <string name="permission_location_explanation">Die Campus App braucht die Erlaubnis, auf deinen Standort zugreifen zu dürfen, um Mensa-Speisepläne in deiner Nähe oder Fahrpläne der nächstgelegenen MVV-Station anzeigen zu können. Wenn du das nicht willst, kannst du deinen Standort in den Einstellungen konfigurieren.</string>
+    <string name="permission_calendar_explanation">Die Campus App braucht die Erlaubnis, auf deinen Kalender zugreifen zu dürfen, um diesen mit deinem TUM-Kalender abgleichen zu können.</string>
+    <string name="permission_contacts_explanation">Die Campus App braucht die Erlaubnis, auf deine Kontakte zugreifen zu dürfen, um diese Person hinzufügen zu können.</string>
     <string name="cancel">Abbruch</string>
     <string name="grant_permission">Erlauben</string>
     <string name="ok">OK</string>
@@ -403,6 +409,7 @@ Signatur: %5$s</string>
     <string name="wifi_dns_name_not_set">DNS-Name ist nicht festgelegt</string>
     <string name="wifi_anonymous_identity_not_set">Anonyme Identität nicht korrekt</string>
 
+    <string name="transport">Verkehrsmittel</string>
     <string name="transport_action_usage">Hilfestellung</string>
     <string name="transport_help_text">Tippe deine favorisierten Verkehrslinien an um sie hervorzuheben. Tippe erneut und sie sind wieder normal.</string>
     <string name="mvv_widget_no_station">Keine Station ausgewählt</string>
@@ -561,7 +568,7 @@ Signatur: %5$s</string>
     <string name="event_title">Titel</string>
     <string name="calendar_refresh">Aktualisieren</string>
     <string name="event_delete_title">Termin löschen?</string>
-    <string name="delete_event_info">Der Termin wird in TUMonline gelöscht.</string>
+    <string name="delete_event_info">Der Termin wird in deinem LMS gelöscht.</string>
     <string name="delete_event_confirmation">Termin wurde gelöscht</string>
     <string name="delete_event_error">Fehler: Termin konnte nicht gelöscht werden</string>
     <string name="delete">Löschen</string>
@@ -640,20 +647,20 @@ Signatur: %5$s</string>
     <string name="open_settings">Einstellungen öffnen</string>
     <string name="not_available">Nicht verfügbar</string>
 
-    <string name="error_accessing_tumonline_header">Fehler beim Zugriff auf TUMonline</string>
-    <string name="error_accessing_tumonline_body">Bitte stelle sicher, dass das TUMonline-Access-Token akzeptiert und die entsprechenden Rechte aktiviert wurden.</string>
+    <string name="error_accessing_lms_header">Fehler beim Zugriff auf LMS</string>
+    <string name="error_accessing_lms_body">Bitte stelle sicher, dass das du authentifiziert bist und die entsprechenden Rechte besitzt.</string>
     <string name="error_no_access_token_setup_header">Kein TUMonline-Access-Token gefunden</string>
     <string name="error_no_access_token_setup_body">Bitte erzeuge ein TUMonline-Access-Token in den Einstellungen, um TUMonline-Funktionen nutzen zu können.</string>
     <string name="error_access_token_already_set_generate_new">Dein TUMonline-Access-Token ist bereits gesetzt. Wenn du ein neues Token generierst, wird das alte unbrauchbar.</string>
     <string name="error_invalid_tum_id">Deine TUM-Kennung ist ungültig</string>
-    <string name="error_invalid_access_token">Dein TUMonline-Access-Token ist ungültig.</string>
     <string name="error_access_token_could_not_be_generated">Dein TUMonline-Access-Token konnte nicht erstellt werden.</string>
     <string name="error_access_token_inactive">Dein TUMonline-Access-Token ist noch inaktiv. Gehe zu TUMonline, um es zu aktivieren.</string>
     <string name="error_no_internet_connection">Keine Internetverbindung</string>
     <string name="error_no_data_to_show">Es sind keine Daten vorhanden.</string>
-    <string name="error_no_rights_to_access_function">Dein TUMonline-Access-Token hat nicht die nötigte Berechtigung, um diese Funktion zu nutzen.</string>
+    <string name="error_no_rights_to_access_function">Du hast keine Berechtigung, um diese Funktion zu nutzen.</string>
     <string name="error_request_limit_reached">Du hast das Anfragelimit für TUMonline erreicht. Versuche es später erneut.</string>
-    <string name="error_access_token_limit_reached">Limit an Access-Tokens erreicht. Du musst einen Access-Token in TUMonline löschen, bevor du fortfahren kannst.</string>
+    <string name="error_unauthorized">Du kannst nicht authentifiziert werden.</string>
+    <string name="error_resource_not_found">Deine angefragte Ressource kann nicht gefunden werden.</string>
     <string name="error_unknown">Unbekannter Fehler.</string>
     <string name="export_to_google_error">Ein Fehler ist während des Kalender-Exports zu Google Kalender aufgetreten.</string>
     <string name="checking_if_token_enabled">Überprüfung, ob Token aktiviert ist …</string>
@@ -717,4 +724,8 @@ Signatur: %5$s</string>
     // for opening hours
     <string name="language">de</string>
     <string name="use_existing">Bestehendes verwenden</string>
+    <string name="error_function_not_available">Diese Funktion ist nicht verfügbar.</string>
+    <string name="error_oauth_communication_failed">Die Kommunikation mit dem Server ist fehlgeschlagen.</string>
+    <string name="error_oauth_not_authorized">Du bist nicht autorisiert.</string>
+    <string name="error_oauth_request_signing_failed">Deine Anfrage kann nicht signiert werden.</string>
 </resources>

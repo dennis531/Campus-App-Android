@@ -33,7 +33,7 @@
                     android:layout_marginStart="@dimen/material_small_padding"
                     android:layout_marginTop="@dimen/material_small_padding"
                     android:fontFamily="sans-serif-medium"
-                    android:text="@string/step_3"
+                    android:text="@string/step_2"
                     android:textAllCaps="false"
                     android:textColor="@color/color_primary"
                     android:textSize="15sp" />
@@ -75,7 +75,8 @@
                     android:layout_marginTop="16dp"
                     android:checked="true"
                     android:text="@string/bug_reports"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -83,7 +84,8 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_default"
                     android:text="@string/set_bug_reports"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:visibility="gone" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/privacyPolicyButton"
@@ -93,8 +95,10 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="@dimen/material_small_padding"
                     android:layout_marginTop="@dimen/material_default_padding"
+                    android:enabled="false"
                     android:text="@string/privacy_policy"
                     android:textAllCaps="false"
+                    android:visibility="gone"
                     app:cornerRadius="@dimen/material_corner_radius" />
 
             </LinearLayout>

@@ -15,17 +15,20 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.tumonline.exception.*
+import de.tum.`in`.tumcampusapp.api.general.exception.*
 import de.tum.`in`.tumcampusapp.component.other.generic.viewstates.*
+import de.tum.`in`.tumcampusapp.utils.*
 import de.tum.`in`.tumcampusapp.utils.NetUtils.internetCapability
-import de.tum.`in`.tumcampusapp.utils.Utils
-import de.tum.`in`.tumcampusapp.utils.setImageResourceOrHide
-import de.tum.`in`.tumcampusapp.utils.setTextOrHide
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.connectivityManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.net.UnknownHostException
+import java.util.concurrent.Callable
 
 /**
  * Generic class which handles can handle a long running background task
@@ -34,8 +37,11 @@ import java.net.UnknownHostException
  */
 @Deprecated("Use BaseActivity and a suitable BaseFragment class")
 abstract class ProgressActivity<T>(
-    layoutId: Int
-) : BaseActivity(layoutId), SwipeRefreshLayout.OnRefreshListener {
+    layoutId: Int,
+    component: Component? = null
+) : BaseActivity(layoutId, component), SwipeRefreshLayout.OnRefreshListener {
+
+    private val loadingDisposable = CompositeDisposable()
 
     private var apiCall: Call<T>? = null
     private var hadSuccessfulRequest = false
@@ -134,6 +140,25 @@ abstract class ProgressActivity<T>(
         })
     }
 
+    protected fun fetch(single: Single<T>) {
+        showLoadingStart()
+        Utils.log("fetching")
+        loadingDisposable += single
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
+                onDownloadSuccessful(response)
+                showLoadingEnded()
+            }, {
+                showLoadingEnded()
+                onDownloadFailure(it)
+            })
+    }
+
+    protected fun fetch(callable: Callable<T>) {
+        fetch(Single.fromCallable(callable))
+    }
+
     /**
      * Called if the response from the API call is successful. Provides the unwrapped response body.
      * Subclasses need to override this method to be alerted of successful responses after calling
@@ -190,11 +215,9 @@ abstract class ProgressActivity<T>(
     private fun showErrorSnackbar(t: Throwable) {
         val messageResId = when (t) {
             is UnknownHostException -> R.string.no_internet_connection
-            is InactiveTokenException -> R.string.error_access_token_inactive
-            is InvalidTokenException -> R.string.error_invalid_access_token
-            is MissingPermissionException -> R.string.error_no_rights_to_access_function
-            is TokenLimitReachedException -> R.string.error_access_token_limit_reached
-            is RequestLimitReachedException -> R.string.error_request_limit_reached
+            is UnauthorizedException -> R.string.error_unauthorized
+            is ForbiddenException -> R.string.error_no_rights_to_access_function
+            is NotFoundException -> R.string.error_resource_not_found
             else -> R.string.error_unknown
         }
 
@@ -213,18 +236,16 @@ abstract class ProgressActivity<T>(
     private fun showErrorLayout(throwable: Throwable) {
         when (throwable) {
             is UnknownHostException -> showNoInternetLayout()
-            is InactiveTokenException -> showFailedTokenLayout(R.string.error_access_token_inactive)
-            is InvalidTokenException -> showFailedTokenLayout(R.string.error_invalid_access_token)
-            is MissingPermissionException -> showFailedTokenLayout(R.string.error_no_rights_to_access_function)
-            is TokenLimitReachedException -> showFailedTokenLayout(R.string.error_access_token_limit_reached)
-            is RequestLimitReachedException -> showError(R.string.error_request_limit_reached)
+            is UnauthorizedException -> showFailedLMSLayout(R.string.error_unauthorized)
+            is ForbiddenException -> showFailedLMSLayout(R.string.error_no_rights_to_access_function)
+            is NotFoundException -> showFailedLMSLayout(R.string.error_resource_not_found)
             else -> showError(R.string.error_unknown)
         }
     }
 
-    private fun showFailedTokenLayout(messageResId: Int = R.string.error_accessing_tumonline_body) {
+    private fun showFailedLMSLayout(messageResId: Int = R.string.error_accessing_lms_body) {
         runOnUiThread {
-            showError(FailedTokenViewState(messageResId))
+            showError(FailedLMSViewState(messageResId))
         }
     }
 
@@ -334,6 +355,7 @@ abstract class ProgressActivity<T>(
 
     override fun onDestroy() {
         super.onDestroy()
+        loadingDisposable.dispose()
         apiCall?.cancel()
         if (registered) {
             connectivityManager.unregisterNetworkCallback(networkCallback)

@@ -20,18 +20,17 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.notifications.persistence.NotificationType
-import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingTumOnline
+import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItem
-import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.Event
-import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.EventsResponse
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.AbstractEvent
 import de.tum.`in`.tumcampusapp.component.ui.transportation.TransportController
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.databinding.FragmentCalendarBinding
 import de.tum.`in`.tumcampusapp.service.QueryLocationsService
-import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.Utils
-import de.tum.`in`.tumcampusapp.utils.plusAssign
+import de.tum.`in`.tumcampusapp.utils.*
 import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -40,7 +39,7 @@ import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import java.util.*
 
-class CalendarFragment : FragmentForAccessingTumOnline<EventsResponse>(
+class CalendarFragment : FragmentForAccessingLMS<List<AbstractEvent>>(
         R.layout.fragment_calendar,
         R.string.calendar
 ), CalendarDetailsFragment.OnEventInteractionListener {
@@ -127,18 +126,20 @@ class CalendarFragment : FragmentForAccessingTumOnline<EventsResponse>(
     }
 
     private fun loadEvents(cacheControl: CacheControl) {
-        val apiCall = apiClient.getCalendar(cacheControl)
-        fetch(apiCall)
+        if (apiClient !is CalendarAPI) {
+            showError(R.string.error_function_not_available)
+            return
+        }
+        fetch(Single.fromCallable { (apiClient as CalendarAPI).getCalendar() })
     }
 
-    override fun onDownloadSuccessful(response: EventsResponse) {
+    override fun onDownloadSuccessful(response: List<AbstractEvent>) {
         isFetched = true
 
-        val events = response.events ?: return
-        scheduleNotifications(events)
+        scheduleNotifications(response)
 
         compositeDisposable += Completable
-                .fromAction { calendarController.importCalendar(events) }
+                .fromAction { calendarController.importCalendar(response) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onCalendarImportedIntoDatabase)
@@ -150,14 +151,16 @@ class CalendarFragment : FragmentForAccessingTumOnline<EventsResponse>(
         QueryLocationsService.enqueueWork(requireContext())
     }
 
-    private fun scheduleNotifications(events: List<Event>) {
+    private fun scheduleNotifications(events: List<AbstractEvent>) {
         if (calendarController.hasNotificationsEnabled()) {
             calendarController.scheduleNotifications(events)
         }
 
-        val transportController = TransportController(requireContext())
-        if (transportController.hasNotificationsEnabled()) {
-            transportController.scheduleNotifications(events)
+        if (ConfigUtils.isComponentEnabled(requireContext(), Component.TRANSPORTATION)) {
+            val transportController = TransportController(requireContext())
+            if (transportController.hasNotificationsEnabled()) {
+                transportController.scheduleNotifications(events)
+            }
         }
     }
 
@@ -165,6 +168,7 @@ class CalendarFragment : FragmentForAccessingTumOnline<EventsResponse>(
         super.onPrepareOptionsMenu(menu)
         val menuItemExportGoogle = menu?.findItem(R.id.action_export_calendar)
         val menuItemDeleteCalendar = menu?.findItem(R.id.action_delete_calendar)
+        val menuItemCreateEvent = menu?.findItem(R.id.action_create_event)
 
         menuItemExportGoogle?.isEnabled = isFetched
         menuItemDeleteCalendar?.isEnabled = isFetched
@@ -172,6 +176,8 @@ class CalendarFragment : FragmentForAccessingTumOnline<EventsResponse>(
         val autoSyncCalendar = Utils.getSettingBool(requireContext(), Const.SYNC_CALENDAR, false)
         menuItemExportGoogle?.isVisible = !autoSyncCalendar
         menuItemDeleteCalendar?.isVisible = autoSyncCalendar
+
+        menuItemCreateEvent?.isVisible = ConfigUtils.isCalendarEditable()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -375,7 +381,7 @@ class CalendarFragment : FragmentForAccessingTumOnline<EventsResponse>(
     }
 
     private fun openEvent(event: CalendarItem) {
-        detailsFragment = CalendarDetailsFragment.newInstance(event.nr, true, this)
+        detailsFragment = CalendarDetailsFragment.newInstance(event.id, true, this)
         detailsFragment?.show(childFragmentManager, null)
     }
 
@@ -386,7 +392,7 @@ class CalendarFragment : FragmentForAccessingTumOnline<EventsResponse>(
             putString(Const.EVENT_COMMENT, calendarItem.description)
             putSerializable(Const.EVENT_START, calendarItem.dtstart)
             putSerializable(Const.EVENT_END, calendarItem.dtend)
-            putString(Const.EVENT_NR, calendarItem.nr)
+            putString(Const.EVENT_NR, calendarItem.id)
         }
 
         val intent = Intent(requireContext(), CreateEventActivity::class.java)
@@ -414,7 +420,7 @@ class CalendarFragment : FragmentForAccessingTumOnline<EventsResponse>(
         val db = TcaDb.getInstance(requireContext())
         db.calendarDao().delete(eventId)
 
-        val id = eventId.toInt()
+        val id = eventId.hashCode()
         db.scheduledNotificationsDao().delete(NotificationType.CALENDAR.id, id)
 
         refreshWeekView()

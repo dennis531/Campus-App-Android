@@ -7,10 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.tumui.person.model.Person
+import de.tum.`in`.tumcampusapp.component.tumui.person.model.PersonInterface
 
 class PersonSearchResultsAdapter(
-    private var items: List<Person>,
-    private val onItemClick: (Person) -> Unit
+    private var items: List<PersonInterface>,
+    private val onItemClick: (PersonInterface) -> Unit
 ) : RecyclerView.Adapter<PersonSearchResultsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,7 +26,7 @@ class PersonSearchResultsAdapter(
 
     override fun getItemCount() = items.size
 
-    fun update(items: List<Person>) {
+    fun update(items: List<PersonInterface>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -33,11 +34,11 @@ class PersonSearchResultsAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(
-            person: Person,
-            onItemClick: (Person) -> Unit
+            person: PersonInterface,
+            onItemClick: (PersonInterface) -> Unit
         ) = with(itemView) {
             val textView = findViewById<TextView>(R.id.textView)
-            textView.text = person.getFullName()
+            textView.text = person.fullName
             setOnClickListener { onItemClick(person) }
         }
     }

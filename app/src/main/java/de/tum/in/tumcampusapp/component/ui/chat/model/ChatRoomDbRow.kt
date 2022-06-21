@@ -3,7 +3,7 @@ package de.tum.`in`.tumcampusapp.component.ui.chat.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.RoomWarnings
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.Lecture
+import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 
 @Entity(tableName = "chat_room", primaryKeys = ["name", "_id"])
 @SuppressWarnings(RoomWarnings.DEFAULT_CONSTRUCTOR)
@@ -23,10 +23,10 @@ data class ChatRoomDbRow(
 ) {
 
     companion object {
-        fun fromLecture(lecture: Lecture): ChatRoomDbRow {
-            return ChatRoomDbRow(-1, lecture.title, lecture.semesterName,
-                    lecture.semesterId, -1, lecture.lectureId.toInt(),
-                    lecture.lecturers ?: "", 0, -1)
+        fun fromLecture(lecture: AbstractLecture): ChatRoomDbRow {
+            return ChatRoomDbRow(-1, lecture.title, lecture.semester!!,
+                    lecture.semester!!, -1, lecture.id.toInt(),
+                    lecture.lecturers?.joinToString() ?: "", 0, -1)
         }
     }
 }

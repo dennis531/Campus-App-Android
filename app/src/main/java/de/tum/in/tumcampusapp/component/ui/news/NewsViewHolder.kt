@@ -18,7 +18,6 @@ import de.tum.`in`.tumcampusapp.component.ui.news.model.News
 import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsSources
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardInteractionListener
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
-import de.tum.`in`.tumcampusapp.component.ui.tufilm.FilmCard
 import de.tum.`in`.tumcampusapp.utils.addCompoundDrawablesWithIntrinsicBounds
 import org.joda.time.format.DateTimeFormat
 import java.util.regex.Pattern
@@ -37,8 +36,8 @@ class NewsViewHolder(
     private val ticketsIcon: ImageView? by lazy { itemView.findViewById<ImageView>(R.id.tickets_icon) }
     private val ticketsTextView: TextView? by lazy { itemView.findViewById<TextView>(R.id.tickets_available) }
 
-    fun bind(newsItem: News, newsSource: NewsSources, hasEvent: Boolean) = with(itemView) {
-        val card = if (newsItem.isFilm) FilmCard(context, newsItem) else NewsCard(context = context, news = newsItem)
+    fun bind(newsItem: News, newsSource: NewsSources) = with(itemView) {
+        val card = NewsCard(context = context, news = newsItem)
         currentCard = card
 
         val dateFormatter = DateTimeFormat.mediumDate()
@@ -48,10 +47,7 @@ class NewsViewHolder(
 
         loadNewsSourceInformation(context, newsSource)
 
-        when (itemViewType) {
-            R.layout.card_news_film_item -> bindFilmItem(newsItem, hasEvent)
-            else -> bindNews(newsItem)
-        }
+        bindNews(newsItem)
     }
 
     private fun loadNewsSourceInformation(context: Context, newsSource: NewsSources) {
@@ -69,24 +65,6 @@ class NewsViewHolder(
 
                 override fun onPrepareLoad(placeHolderDrawable: Drawable?) = Unit
             })
-        }
-    }
-
-    private fun bindFilmItem(newsItem: News, hasEvent: Boolean) {
-        Picasso.get()
-                .load(newsItem.image)
-                .into(imageView)
-
-        titleTextView?.text = COMPILE.matcher(newsItem.title).replaceAll("")
-
-        if (ticketsTextView != null && ticketsIcon != null) {
-            if (hasEvent) {
-                ticketsTextView?.visibility = VISIBLE
-                ticketsIcon?.visibility = VISIBLE
-            } else {
-                ticketsTextView?.visibility = GONE
-                ticketsIcon?.visibility = GONE
-            }
         }
     }
 

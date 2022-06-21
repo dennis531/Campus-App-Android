@@ -16,20 +16,25 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.tumonline.exception.RequestLimitReachedException
-import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingTumOnline
+import de.tum.`in`.tumcampusapp.api.general.exception.ForbiddenException
+import de.tum.`in`.tumcampusapp.api.general.exception.NotFoundException
+import de.tum.`in`.tumcampusapp.api.general.exception.UnauthorizedException
+import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.*
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.databinding.ActivityCreateEventBinding
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
+import de.tum.`in`.tumcampusapp.utils.plusAssign
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.sdk27.coroutines.textChangedListener
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.net.UnknownHostException
 import java.util.*
 import kotlin.collections.ArrayList
@@ -37,7 +42,7 @@ import kotlin.collections.ArrayList
 /**
  * Allows the user to create (and edit) a private event in TUMonline.
  */
-class CreateEventActivity : ActivityForAccessingTumOnline<CreateEventResponse>(R.layout.activity_create_event) {
+class CreateEventActivity : ActivityForAccessingLMS<String>(R.layout.activity_create_event) {
 
     private lateinit var start: DateTime
     private lateinit var end: DateTime
@@ -46,6 +51,8 @@ class CreateEventActivity : ActivityForAccessingTumOnline<CreateEventResponse>(R
     private var events: ArrayList<CalendarItem> = ArrayList()
     private var apiCallsFetched = 0
     private var apiCallsFailed = 0
+
+    private val loadingDisposable = CompositeDisposable()
 
     private val repeatHelper = RepeatHelper()
     
@@ -279,36 +286,25 @@ class CreateEventActivity : ActivityForAccessingTumOnline<CreateEventResponse>(R
         // request), we use a short Toast to let the user know that something is happening.
         Toast.makeText(this, R.string.updating_event, Toast.LENGTH_SHORT).show()
 
-        apiClient
-                .deleteEvent(eventId)
-                .enqueue(object : Callback<DeleteEventResponse> {
-                    override fun onResponse(
-                        call: Call<DeleteEventResponse>,
-                        response: Response<DeleteEventResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            Utils.log("Event successfully deleted (now creating the edited version)")
-                            TcaDb.getInstance(this@CreateEventActivity).calendarDao().delete(eventId)
-                            createEvent()
-                        } else {
-                            Utils.showToast(this@CreateEventActivity, R.string.error_unknown)
-                        }
-                    }
-
-                    override fun onFailure(
-                        call: Call<DeleteEventResponse>,
-                        t: Throwable
-                    ) {
-                        Utils.log(t)
-                        displayErrorMessage(t)
-                    }
-                })
+        loadingDisposable += Single.fromCallable { (apiClient as CalendarAPI).deleteCalenderEvent(eventId) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Utils.log("Event successfully deleted (now creating the edited version)")
+                TcaDb.getInstance(this@CreateEventActivity).calendarDao().delete(eventId)
+                createEvent()
+            }, {
+                Utils.log(it)
+                displayErrorMessage(it)
+            })
     }
 
     private fun displayErrorMessage(throwable: Throwable) {
         val messageResId: Int = when (throwable) {
             is UnknownHostException -> R.string.error_no_internet_connection
-            is RequestLimitReachedException -> R.string.error_request_limit_reached
+            is UnauthorizedException -> R.string.error_unauthorized
+            is ForbiddenException -> R.string.error_no_rights_to_access_function
+            is NotFoundException -> R.string.error_resource_not_found
             else -> R.string.error_unknown
         }
         Utils.showToast(this, messageResId)
@@ -318,6 +314,7 @@ class CreateEventActivity : ActivityForAccessingTumOnline<CreateEventResponse>(R
         val event = CalendarItem()
         event.dtstart = start
         event.dtend = end
+        event.typeName = CalendarItem.OTHER
 
         var title = binding.eventTitleView.text.toString()
         if (title.length > 255) {
@@ -334,8 +331,7 @@ class CreateEventActivity : ActivityForAccessingTumOnline<CreateEventResponse>(R
         generateAdditionalEvents()
 
         for (curEvent in events) {
-            val apiCall = apiClient.createEvent(curEvent, null)
-            fetch(apiCall)
+            fetch(Single.fromCallable { (apiClient as CalendarAPI).createCalendarEvent(curEvent) })
         }
     }
 
@@ -352,7 +348,7 @@ class CreateEventActivity : ActivityForAccessingTumOnline<CreateEventResponse>(R
         // event ends after n times
         if (repeatHelper.isRepeatingNTimes()) {
             for (i in 1 until repeatHelper.times) {
-                events.add(CalendarItem("", "", "", baseEvent.title, baseEvent.description, baseEvent.dtstart.plusWeeks(i), baseEvent.dtend.plusWeeks(i), "", false))
+                events.add(CalendarItem("", baseEvent.title, CalendarItem.OTHER, baseEvent.description, baseEvent.dtstart.plusWeeks(i), baseEvent.dtend.plusWeeks(i), "", true, false))
             }
             // event ends after "last" date
         } else {
@@ -362,19 +358,20 @@ class CreateEventActivity : ActivityForAccessingTumOnline<CreateEventResponse>(R
             while (curDateStart.isBefore(repeatHelper.end!!)) {
                 curDateStart = curDateStart.plusWeeks(1)
                 curDateEnd = curDateEnd.plusWeeks(1)
-                events.add(CalendarItem("", "", "", baseEvent.title, baseEvent.description, curDateStart, curDateEnd, "", false))
+                events.add(CalendarItem("", baseEvent.title, CalendarItem.OTHER, baseEvent.description, curDateStart, curDateEnd, "", true, false))
+
             }
         }
     }
 
     @Synchronized
-    override fun onDownloadSuccessful(response: CreateEventResponse) {
+    override fun onDownloadSuccessful(response: String) {
         events[apiCallsFetched++].let {
-            it.nr = response.eventId
+            it.id = response
             TcaDb.getInstance(this).calendarDao().insert(it)
             if (!repeatHelper.isNotRepeating() || isEditing) {
                 if (repeatHelper.seriesId != null) {
-                    TcaDb.getInstance(this).calendarDao().insert(EventSeriesMapping(repeatHelper.seriesId!!, response.eventId))
+                    TcaDb.getInstance(this).calendarDao().insert(EventSeriesMapping(repeatHelper.seriesId!!, response))
                 }
             }
         }
@@ -466,5 +463,10 @@ class CreateEventActivity : ActivityForAccessingTumOnline<CreateEventResponse>(R
                 .create()
         dialog.window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
         dialog.show()
+    }
+
+    override fun onDestroy() {
+        loadingDisposable.dispose()
+        super.onDestroy()
     }
 }

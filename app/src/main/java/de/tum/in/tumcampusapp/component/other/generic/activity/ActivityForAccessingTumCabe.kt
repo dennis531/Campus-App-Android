@@ -1,6 +1,6 @@
 package de.tum.`in`.tumcampusapp.component.other.generic.activity
 
-import de.tum.`in`.tumcampusapp.api.app.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.api.tumonline.TUMOnlineClient
 
 /**

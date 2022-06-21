@@ -14,7 +14,6 @@ import de.tum.`in`.tumcampusapp.component.ui.news.TopNewsCard
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.LoginPromptCard
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
-import de.tum.`in`.tumcampusapp.component.ui.ticket.EventCard
 import de.tum.`in`.tumcampusapp.component.ui.transportation.MVVCard
 import de.tum.`in`.tumcampusapp.component.ui.updatenote.UpdateNoteCard
 import java.util.*
@@ -41,7 +40,6 @@ class CardAdapter(private val interactionListener: CardInteractionListener) : Re
             CardManager.CARD_SUPPORT -> return SupportCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_LOGIN -> return LoginPromptCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_TOP_NEWS -> return TopNewsCard.inflateViewHolder(viewGroup, interactionListener)
-            CardManager.CARD_EVENT -> return EventCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_UPDATE_NOTE -> return UpdateNoteCard.inflateViewHolder(viewGroup, interactionListener)
             else -> throw UnsupportedOperationException()
         }

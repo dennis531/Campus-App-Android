@@ -11,17 +11,15 @@ import androidx.core.app.ActivityCompat.checkSelfPermission
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.lifecycle.LiveDataReactiveStreams
-import com.google.firebase.crashlytics.FirebaseCrashlytics
-import de.tum.`in`.tumcampusapp.BuildConfig.DEBUG
 import de.tum.`in`.tumcampusapp.BuildConfig.VERSION_CODE
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.app.AuthenticationManager
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.BaseActivity
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.BaseNavigationActivity
 import de.tum.`in`.tumcampusapp.databinding.ActivityStartupBinding
 import de.tum.`in`.tumcampusapp.service.DownloadWorker
 import de.tum.`in`.tumcampusapp.service.StartSyncReceiver
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import de.tum.`in`.tumcampusapp.utils.observe
@@ -31,7 +29,7 @@ import org.jetbrains.anko.doAsync
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
-class StartupActivity : BaseActivity(R.layout.activity_startup) {
+class StartupActivity : BaseActivity(R.layout.activity_startup, Component.ONBOARDING) {
 
     private val initializationFinished = AtomicBoolean(false)
     private var tapCounter = 0 // for easter egg
@@ -39,8 +37,8 @@ class StartupActivity : BaseActivity(R.layout.activity_startup) {
     @Inject
     lateinit var workerActions: DownloadWorker.WorkerActions
 
-    @Inject
-    lateinit var authManager: AuthenticationManager
+//    @Inject
+//    lateinit var authManager: AuthenticationManager
 
     private lateinit var binding: ActivityStartupBinding
 
@@ -53,11 +51,11 @@ class StartupActivity : BaseActivity(R.layout.activity_startup) {
         injector.downloadComponent().inject(this)
 
         // Only use Crashlytics if we are not compiling debug
-        val isDebuggable = applicationInfo.isDebuggable
-        if (!DEBUG && !isDebuggable) {
-            FirebaseCrashlytics.getInstance().setCustomKey("TUMID", Utils.getSetting(this, Const.LRZ_ID, ""))
-            FirebaseCrashlytics.getInstance().setCustomKey("DeviceID", AuthenticationManager.getDeviceID(this))
-        }
+//        val isDebuggable = applicationInfo.isDebuggable
+//        if (!DEBUG && !isDebuggable) {
+//            FirebaseCrashlytics.getInstance().setCustomKey("TUMID", Utils.getSetting(this, Const.LRZ_ID, ""))
+//            FirebaseCrashlytics.getInstance().setCustomKey("DeviceID", AuthenticationManager.getDeviceID(this))
+//        }
 
         val savedAppVersion = Utils.getSettingInt(this, Const.SAVED_APP_VERSION, VERSION_CODE)
         if (savedAppVersion < VERSION_CODE) {
@@ -101,7 +99,7 @@ class StartupActivity : BaseActivity(R.layout.activity_startup) {
         Utils.migrateSharedPreferences(this)
 
         // Check that we have a private key setup in order to authenticate this device
-        authManager.generatePrivateKey(null)
+//        authManager.generatePrivateKey(null)
 
         // On first setup show remark that loading could last longer than normally
         runOnUiThread {
