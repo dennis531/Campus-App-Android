@@ -3,15 +3,12 @@ package de.tum.`in`.tumcampusapp.component.ui.news
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import de.tum.`in`.tumcampusapp.component.ui.news.model.News
+import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsItem
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardInteractionListener
 import de.tum.`in`.tumcampusapp.database.TcaDb
 
 class NewsInflater(context: Context) {
 
-    private val newsSourcesDao: NewsSourcesDao by lazy {
-        TcaDb.getInstance(context).newsSourcesDao()
-    }
     private val newsDao: NewsDao by lazy {
         TcaDb.getInstance(context).newsDao()
     }
@@ -27,8 +24,7 @@ class NewsInflater(context: Context) {
         return NewsViewHolder(view, interactionListener, showOptionsButton)
     }
 
-    fun onBindNewsView(viewHolder: NewsViewHolder, newsItem: News) {
-        val newsSource = newsSourcesDao.getNewsSource(newsItem.src.toInt())
-        viewHolder.bind(newsItem, newsSource)
+    fun onBindNewsView(viewHolder: NewsViewHolder, newsItem: NewsItem) {
+        viewHolder.bind(newsItem)
     }
 }

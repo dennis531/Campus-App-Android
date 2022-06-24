@@ -16,6 +16,7 @@ import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipCalendarEvent
 import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipCourseEvent
 import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLecture
 import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLectureAppointment
+import de.tum.`in`.tumcampusapp.api.studip.model.news.StudipNews
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipInstitute
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipPerson
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
@@ -26,6 +27,8 @@ import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LectureAppointmentInterface
 import de.tum.`in`.tumcampusapp.component.tumui.person.api.PersonAPI
 import de.tum.`in`.tumcampusapp.component.tumui.person.model.PersonInterface
+import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
+import de.tum.`in`.tumcampusapp.component.ui.news.model.AbstractNews
 import de.tum.`in`.tumcampusapp.utils.*
 import okhttp3.Request
 import retrofit2.Retrofit
@@ -33,17 +36,22 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.net.URL
 
 @Suppress("UNCHECKED_CAST")
-class StudipClient(private val apiService: StudipAPIService, val context: Context, val converter: ResourceConverter) :
+class StudipClient(private val apiService: StudipAPIService, context: Context, val converter: ResourceConverter) :
     LMSClient(),
     PersonAPI,
     CalendarAPI,
-    LecturesAPI {
-    private val userId
-        get() = Utils.getSetting(context, Const.PROFILE_ID, "")
+    LecturesAPI,
+    NewsAPI
+{
+    private var userId = Utils.getSetting(context, Const.PROFILE_ID, "")
 
     override fun getIdentity(): PersonInterface {
         // Institutes not required
-        return apiService.getIdentity().execute().body()!!
+        val identity = apiService.getIdentity().execute().body()!!
+        // update userId
+        userId = identity.id
+
+        return identity
     }
 
     override fun searchPerson(query: String): List<PersonInterface> {
@@ -98,6 +106,10 @@ class StudipClient(private val apiService: StudipAPIService, val context: Contex
         return apiService.searchLectures(query).execute().body()!!
     }
 
+    override fun getNews(): List<AbstractNews> {
+        return apiService.getNews().execute().body()!!
+    }
+
     companion object {
         private var client: StudipClient? = null
 
@@ -135,6 +147,7 @@ class StudipClient(private val apiService: StudipAPIService, val context: Contex
                 StudipCalendarEvent::class.java,
                 StudipCourseEvent::class.java,
                 StudipLecture::class.java,
+                StudipNews::class.java,
             )
 
             // Set up relationship resolver

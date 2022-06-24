@@ -10,10 +10,8 @@ import org.joda.time.DateTime;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import de.tum.in.tumcampusapp.api.general.exception.NoPrivateKey;
 import de.tum.in.tumcampusapp.api.general.model.DeviceRegister;
@@ -22,7 +20,6 @@ import de.tum.in.tumcampusapp.api.general.model.ObfuscatedIdsUpload;
 import de.tum.in.tumcampusapp.api.general.model.TUMCabeStatus;
 import de.tum.in.tumcampusapp.api.general.model.TUMCabeVerification;
 import de.tum.in.tumcampusapp.api.general.model.UploadStatus;
-import de.tum.in.tumcampusapp.component.other.locations.model.BuildingToGps;
 import de.tum.in.tumcampusapp.component.tumui.feedback.model.Feedback;
 import de.tum.in.tumcampusapp.component.tumui.feedback.model.FeedbackResult;
 import de.tum.in.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinate;
@@ -33,16 +30,11 @@ import de.tum.in.tumcampusapp.component.ui.cafeteria.model.Cafeteria;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMember;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMessage;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoom;
-import de.tum.in.tumcampusapp.component.ui.news.model.News;
-import de.tum.in.tumcampusapp.component.ui.news.model.NewsAlert;
-import de.tum.in.tumcampusapp.component.ui.news.model.NewsSources;
 import de.tum.in.tumcampusapp.component.ui.openinghour.model.Location;
 import de.tum.in.tumcampusapp.component.ui.updatenote.model.UpdateNote;
 import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.Utils;
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -277,21 +269,21 @@ public final class TUMCabeClient {
         return service.getCafeterias();
     }
 
-    public List<News> getNews(String lastNewsId) throws IOException {
-        return service.getNews(lastNewsId)
-                .execute()
-                .body();
-    }
+//    public List<NewsItem> getNews(String lastNewsId) throws IOException {
+//        return service.getNews(lastNewsId)
+//                .execute()
+//                .body();
+//    }
 
-    public List<NewsSources> getNewsSources() throws IOException {
-        return service.getNewsSources()
-                .execute()
-                .body();
-    }
+//    public List<NewsSources> getNewsSources() throws IOException {
+//        return service.getNewsSources()
+//                .execute()
+//                .body();
+//    }
 
-    public Observable<NewsAlert> getNewsAlert() {
-        return service.getNewsAlert();
-    }
+//    public Observable<NewsAlert> getNewsAlert() {
+//        return service.getNewsAlert();
+//    }
 
     public UpdateNote getUpdateNote(int version) throws IOException {
         return service.getUpdateNote(version).execute().body();

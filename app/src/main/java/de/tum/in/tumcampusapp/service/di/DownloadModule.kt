@@ -14,8 +14,6 @@ import de.tum.`in`.tumcampusapp.component.ui.cafeteria.controller.CafeteriaMenuM
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository.CafeteriaRemoteRepository
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsController
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsDownloadAction
-import de.tum.`in`.tumcampusapp.component.ui.news.TopNewsDownloadAction
-import de.tum.`in`.tumcampusapp.component.ui.news.repository.TopNewsRemoteRepository
 import de.tum.`in`.tumcampusapp.component.ui.openinghour.LocationImportAction
 import de.tum.`in`.tumcampusapp.component.ui.updatenote.UpdateNoteDownloadAction
 import de.tum.`in`.tumcampusapp.database.TcaDb
@@ -65,12 +63,6 @@ object DownloadModule {
 
     @JvmStatic
     @Provides
-    fun provideTopNewsDownloadAction(
-        remoteRepository: TopNewsRemoteRepository
-    ): TopNewsDownloadAction = TopNewsDownloadAction(remoteRepository)
-
-    @JvmStatic
-    @Provides
     fun provideUpdateNoteDownloadAction(
         context: Context
     ): UpdateNoteDownloadAction = UpdateNoteDownloadAction(context)
@@ -89,7 +81,6 @@ object DownloadModule {
         gradesDownloadAction: GradesDownloadAction,
         idUploadAction: IdUploadAction,
         newsDownloadAction: NewsDownloadAction,
-        topNewsDownloadAction: TopNewsDownloadAction,
         updateNoteDownloadAction: UpdateNoteDownloadAction
     ): DownloadWorker.WorkerActions = DownloadWorker.WorkerActions(
             cafeteriaDownloadAction,
@@ -97,7 +88,6 @@ object DownloadModule {
             gradesDownloadAction,
             idUploadAction,
             newsDownloadAction,
-            topNewsDownloadAction,
             updateNoteDownloadAction
     )
 }

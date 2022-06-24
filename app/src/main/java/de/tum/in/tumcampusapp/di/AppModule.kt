@@ -4,18 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.api.tumonline.TUMOnlineClient
-import de.tum.`in`.tumcampusapp.component.ui.news.RealTopNewsStore
-import de.tum.`in`.tumcampusapp.component.ui.news.TopNewsStore
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
-import de.tum.`in`.tumcampusapp.utils.Utils
 import javax.inject.Singleton
 
 /**
@@ -24,10 +20,6 @@ import javax.inject.Singleton
  */
 @Module
 abstract class AppModule {
-
-    @Singleton
-    @Binds
-    abstract fun bindTopNewsStore(impl: RealTopNewsStore): TopNewsStore
 
     @Module
     companion object {

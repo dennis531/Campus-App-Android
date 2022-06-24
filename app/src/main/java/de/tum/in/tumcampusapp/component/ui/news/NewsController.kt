@@ -1,12 +1,12 @@
 package de.tum.`in`.tumcampusapp.component.ui.news
 
 import android.content.Context
-import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.notifications.NotificationScheduler
 import de.tum.`in`.tumcampusapp.component.notifications.ProvidesNotifications
-import de.tum.`in`.tumcampusapp.component.ui.news.model.News
-import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsSources
+import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
+import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsItem
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.ProvidesCard
 import de.tum.`in`.tumcampusapp.database.TcaDb
@@ -22,8 +22,10 @@ class NewsController @Inject constructor(
     private val context: Context
 ) : ProvidesCard, ProvidesNotifications {
 
+    @Inject
+    lateinit var apiClient: LMSClient
+
     private val newsDao = TcaDb.getInstance(context).newsDao()
-    private val newsSourcesDao = TcaDb.getInstance(context).newsSourcesDao()
 
     /**
      * Get the index of the newest item that is older than 'now'
@@ -32,25 +34,8 @@ class NewsController @Inject constructor(
      */
     val todayIndex: Int
         get() {
-            val selectedNewspread = Utils.getSetting(context, "news_newspread", "7").toInt()
-            val news = newsDao.getNewer(selectedNewspread)
+            val news = newsDao.getNewer()
             return if (news.isEmpty()) 0 else news.size - 1
-        }
-
-    val newsSources: List<NewsSources>
-        get() {
-            val selectedNewspread = Utils.getSetting(context, "news_newspread", "7")
-            return newsSourcesDao.getNewsSources(selectedNewspread)
-        }
-
-    /**
-     * Gather all sources that should be displayed
-     */
-    val activeSources: Collection<Int>
-        get() {
-            return newsSources
-                .map { it.id }
-                .filter { Utils.getSettingBool(context, "card_news_source_$it", true) }
         }
 
     /**
@@ -67,28 +52,14 @@ class NewsController @Inject constructor(
         val latestNews = newsDao.last
         val latestNewsDate = latestNews?.date ?: DateTime.now()
 
-        // Delete all too old items
+        // Delete all items
         newsDao.cleanUp()
-
-        val api = TUMCabeClient.getInstance(context)
-
-        // Load all news sources
-        try {
-            val sources = api.getNewsSources()
-            if (sources != null) {
-                newsSourcesDao.insert(sources)
-            }
-        } catch (e: IOException) {
-            Utils.log(e)
-            return
-        }
 
         // Load all news since the last sync
         try {
-            val news = api.getNews(getLastId())
-            if (news != null) {
-                newsDao.insert(news)
-            }
+            val news = (apiClient as NewsAPI).getNews()
+                .map { it.toNewsItem() }
+            newsDao.insert(news)
             showNewsNotification(news, latestNewsDate)
         } catch (e: IOException) {
             Utils.log(e)
@@ -99,7 +70,7 @@ class NewsController @Inject constructor(
         sync.replaceIntoDb(this)
     }
 
-    private fun showNewsNotification(news: List<News>, latestNewsDate: DateTime) {
+    private fun showNewsNotification(news: List<NewsItem>, latestNewsDate: DateTime) {
         if (!hasNotificationsEnabled()) {
             return
         }
@@ -124,14 +95,8 @@ class NewsController @Inject constructor(
      *
      * @return List of News
      */
-    fun getAllFromDb(context: Context): List<News> {
-        val selectedNewspread = Utils.getSetting(this.context, "news_newspread", "7").toInt()
-
-        val ids = newsSources
-            .map { it.id }
-            .filter { Utils.getSettingBool(context, "news_source_$it", it <= 7) }
-
-        return newsDao.getAll(ids.toTypedArray(), selectedNewspread)
+    fun getAllFromDb(context: Context): List<NewsItem> {
+        return newsDao.getAll()
     }
 
     private fun getLastId(): String {
@@ -144,12 +109,13 @@ class NewsController @Inject constructor(
 
     override fun getCards(cacheControl: CacheControl): List<Card> {
         val news = if (Utils.getSettingBool(context, "card_news_latest_only", true)) {
-            newsDao.getBySourcesLatest(activeSources.toTypedArray())
+            listOf(newsDao.getLast())
         } else {
-            newsDao.getBySources(activeSources.toTypedArray())
+            newsDao.getAll()
         }
 
         return news
+            .filterNotNull()
             .map { item ->  NewsCard(context, item) }
             .mapNotNull { it.getIfShowOnStart() }
     }

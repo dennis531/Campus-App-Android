@@ -48,7 +48,7 @@
             app:constraint_referenced_ids="cardMoreIconBackground,cardMoreIcon" />
 
         <TextView
-            android:id="@+id/news_src_date"
+            android:id="@+id/news_date"
             style="@style/CardDetails"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             tools:text="Source Date" />
 
         <TextView
-            android:id="@+id/news_src_title"
+            android:id="@+id/news_content"
             style="@style/CardSource"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
             android:layout_marginStart="@dimen/material_default_padding"
             android:layout_marginEnd="@dimen/material_default_padding"
             android:layout_marginBottom="@dimen/material_default_padding"
-            android:drawableStart="@drawable/news_source_placeholder"
+            android:drawableStart="@drawable/news_date_placeholder"
             android:drawablePadding="@dimen/material_small_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +85,7 @@
             android:src="@drawable/tickets"
             android:tint="@color/color_primary"
             app:layout_constraintStart_toEndOf="@id/news_img"
-            app:layout_constraintTop_toBottomOf="@id/news_src_date" />
+            app:layout_constraintTop_toBottomOf="@id/news_date" />
 
         <TextView
             android:id="@+id/tickets_available"
@@ -100,7 +100,7 @@
             android:textColor="@color/color_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tickets_icon"
-            app:layout_constraintTop_toBottomOf="@id/news_src_date"/>
+            app:layout_constraintTop_toBottomOf="@id/news_date"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

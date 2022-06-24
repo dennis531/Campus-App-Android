@@ -6,7 +6,7 @@ import androidx.room.RoomWarnings
 import com.google.gson.annotations.SerializedName
 
 /**
- * This class contains information about the source of a [News] item.
+ * This class contains information about the source of a [NewsItem] item.
  *
  * Find the currently available news sources at [https://app.tum.de/api/news/sources].
  *

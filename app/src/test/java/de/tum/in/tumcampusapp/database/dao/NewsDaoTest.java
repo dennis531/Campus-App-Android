@@ -16,7 +16,7 @@ import java.util.List;
 
 import de.tum.in.tumcampusapp.TestApp;
 import de.tum.in.tumcampusapp.component.ui.news.NewsDao;
-import de.tum.in.tumcampusapp.component.ui.news.model.News;
+import de.tum.in.tumcampusapp.component.ui.news.model.NewsItem;
 import de.tum.in.tumcampusapp.database.TcaDb;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,17 +41,17 @@ public class NewsDaoTest {
         TcaDb.Companion.getInstance(RuntimeEnvironment.application).close();
     }
 
-    private News createNewsItem(String source, DateTime date) {
-        News news = new News(Integer.toString(newsIdx),
-                Integer.toString(newsIdx),
-                "dummy link",
-                source,
-                "dummy image",
-                date,
-                date,
-                0);
+    private NewsItem createNewsItem(String source, DateTime date) {
+        NewsItem newsItem = new NewsItem(Integer.toString(newsIdx),
+                                         Integer.toString(newsIdx),
+                                         "dummy link",
+                                         source,
+                                         "dummy image",
+                                         date,
+                                         date,
+                                         0);
         newsIdx++;
-        return news;
+        return newsItem;
     }
 
     /**
@@ -210,7 +210,7 @@ public class NewsDaoTest {
         dao.insert(createNewsItem("123", now.minusYears(1)));
         dao.insert(createNewsItem("123", now.minusHours(1)));
 
-        News last = dao.getLast();
+        NewsItem last = dao.getLast();
         assertThat(last.getId()).isEqualTo("3");
     }
 
@@ -226,7 +226,7 @@ public class NewsDaoTest {
         dao.insert(createNewsItem("125", now.plusYears(1)));
         dao.insert(createNewsItem("126", now.plusHours(1)));
 
-        assertThat(dao.getBySources(new Integer[]{123, 124, 125, 126})).hasSize(4);
+        assertThat(dao.getAll(new Integer[]{123, 124, 125, 126})).hasSize(4);
     }
 
     /**
@@ -241,7 +241,7 @@ public class NewsDaoTest {
         dao.insert(createNewsItem("125", now.plusYears(1)));
         dao.insert(createNewsItem("126", now.plusHours(1)));
 
-        assertThat(dao.getBySources(new Integer[]{123, 124})).hasSize(2);
+        assertThat(dao.getAll(new Integer[]{123, 124})).hasSize(2);
     }
 
     /**
@@ -256,7 +256,7 @@ public class NewsDaoTest {
         dao.insert(createNewsItem("125", now.plusYears(1)));
         dao.insert(createNewsItem("126", now.plusHours(1)));
 
-        assertThat(dao.getBySources(new Integer[]{127, 128})).hasSize(0);
+        assertThat(dao.getAll(new Integer[]{127, 128})).hasSize(0);
     }
 
     /**
@@ -271,8 +271,8 @@ public class NewsDaoTest {
         dao.insert(createNewsItem("125", now.minusYears(1)));
         dao.insert(createNewsItem("126", now.minusHours(1)));
 
-        List<News> news = dao.getBySources(new Integer[]{123, 124, 125, 126});
-        assertThat(news).hasSize(4);
+        List<NewsItem> newsItems = dao.getAll(new Integer[]{123, 124, 125, 126});
+        assertThat(newsItems).hasSize(4);
     }
 
     /**
@@ -287,10 +287,10 @@ public class NewsDaoTest {
         dao.insert(createNewsItem("124", now.minusYears(1)));
         dao.insert(createNewsItem("124", now.minusHours(100)));
 
-        List<News> news = dao.getBySourcesLatest(new Integer[]{123, 124, 125, 126});
-        assertThat(news).hasSize(2);
-        assertThat(news.get(0).getId()).isEqualTo("3");
-        assertThat(news.get(1).getId()).isEqualTo("0");
+        List<NewsItem> newsItems = dao.getLast(new Integer[]{123, 124, 125, 126});
+        assertThat(newsItems).hasSize(2);
+        assertThat(newsItems.get(0).getId()).isEqualTo("3");
+        assertThat(newsItems.get(1).getId()).isEqualTo("0");
     }
 
     /**
@@ -306,7 +306,7 @@ public class NewsDaoTest {
         dao.insert(createNewsItem("126", now.plusHours(30)));
 
         // before testing, make sure all items are there
-        assertThat(dao.getBySourcesLatest(new Integer[]{123, 124, 125, 126, 127})).hasSize(0);
+        assertThat(dao.getLast(new Integer[]{123, 124, 125, 126, 127})).hasSize(0);
     }
 
     /**
@@ -323,7 +323,7 @@ public class NewsDaoTest {
         dao.insert(createNewsItem("126", now.plusHours(1)));
 
         // before testing, make sure all items are there
-        assertThat(dao.getBySourcesLatest(new Integer[]{127, 2})).hasSize(1);
+        assertThat(dao.getLast(new Integer[]{127, 2})).hasSize(1);
     }
 
     /**
@@ -340,6 +340,6 @@ public class NewsDaoTest {
         dao.insert(createNewsItem("126", now.plusHours(27)));
 
         // before testing, make sure all items are there
-        assertThat(dao.getBySourcesLatest(new Integer[]{125, 126, 2})).hasSize(2);
+        assertThat(dao.getLast(new Integer[]{125, 126, 2})).hasSize(2);
     }
 }

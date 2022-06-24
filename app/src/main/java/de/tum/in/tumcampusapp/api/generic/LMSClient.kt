@@ -3,6 +3,7 @@ package de.tum.`in`.tumcampusapp.api.generic
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.api.LecturesAPI
 import de.tum.`in`.tumcampusapp.component.tumui.person.api.PersonAPI
+import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
 import de.tum.`in`.tumcampusapp.utils.Component
 
 abstract class LMSClient : BaseAPI {
@@ -11,6 +12,7 @@ abstract class LMSClient : BaseAPI {
             Component.ONBOARDING -> true // BaseAPI contains Onboarding's Interface
             Component.CALENDAR -> this is CalendarAPI
             Component.LECTURES -> this is LecturesAPI
+            Component.NEWS -> this is NewsAPI
             Component.PERSON -> this is PersonAPI
             else -> false
         }

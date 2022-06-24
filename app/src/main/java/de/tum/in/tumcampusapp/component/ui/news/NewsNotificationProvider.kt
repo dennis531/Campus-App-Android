@@ -9,12 +9,13 @@ import de.tum.`in`.tumcampusapp.component.notifications.NotificationProvider
 import de.tum.`in`.tumcampusapp.component.notifications.model.AppNotification
 import de.tum.`in`.tumcampusapp.component.notifications.model.InstantNotification
 import de.tum.`in`.tumcampusapp.component.notifications.persistence.NotificationType
-import de.tum.`in`.tumcampusapp.component.ui.news.model.News
+import de.tum.`in`.tumcampusapp.component.ui.news.model.AbstractNews
+import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsItem
 import de.tum.`in`.tumcampusapp.utils.Const
 
 class NewsNotificationProvider(
     context: Context,
-    private val newsItems: List<News>
+    private val newsItems: List<NewsItem>
 ) : NotificationProvider(context) {
 
     override fun getNotificationBuilder(): NotificationCompat.Builder {

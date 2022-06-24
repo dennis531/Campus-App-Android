@@ -15,7 +15,6 @@ object CardManager {
 
     const val SHOW_SUPPORT = "show_support"
     const val SHOW_LOGIN = "show_login"
-    const val SHOW_TOP_NEWS = "show_top_news"
 
     /**
      * Card typ constants
@@ -27,14 +26,11 @@ object CardManager {
     const val CARD_NO_INTERNET = R.layout.card_no_internet
     const val CARD_MVV = R.layout.card_mvv
     const val CARD_NEWS = R.layout.card_news_item
-    const val CARD_NEWS_FILM = R.layout.card_news_film_item
     const val CARD_EDUROAM = R.layout.card_eduroam
     const val CARD_CHAT = R.layout.card_chat_messages
     const val CARD_SUPPORT = R.layout.card_support
     const val CARD_LOGIN = R.layout.card_login_prompt
     const val CARD_EDUROAM_FIX = R.layout.card_eduroam_fix
-    const val CARD_TOP_NEWS = R.layout.card_top_news
-    const val CARD_EVENT = R.layout.card_events_item
     const val CARD_UPDATE_NOTE = R.layout.card_update_note
 
     /**
@@ -50,7 +46,6 @@ object CardManager {
                 .newsDao()
                 .restoreAllNews()
 
-        Utils.setSetting(context, SHOW_TOP_NEWS, true)
         restoreCardPositions(context)
     }
 

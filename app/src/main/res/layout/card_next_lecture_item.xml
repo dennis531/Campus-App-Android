@@ -7,13 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/cardMoreIcon"
-            style="@style/CardMoreIcon"
-            android:layout_marginTop="@dimen/material_small_padding"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,6 +52,13 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/cardMoreIcon"
+            style="@style/CardMoreIcon"
+            android:layout_marginTop="@dimen/material_small_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

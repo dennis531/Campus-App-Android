@@ -45,11 +45,6 @@ class NewsFragment : FragmentForDownloadingExternal(
         injector.newsComponent().inject(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
@@ -86,52 +81,6 @@ class NewsFragment : FragmentForDownloadingExternal(
 
 
         showLoadingEnded()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.menu_activity_news, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item?.itemId) {
-            R.id.action_disable_sources -> {
-                showNewsSourcesDialog()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun showNewsSourcesDialog() {
-        // Populate the settings dialog from the NewsController sources
-        val newsSources = newsController.newsSources
-        val items = newsSources.map { it.title }.toTypedArray()
-        val checked = newsSources.map {
-            Utils.getSettingBool(requireContext(), "news_source_${it.id}", true)
-        }.toTypedArray().toBooleanArray()
-
-        AlertDialog.Builder(requireContext())
-            .setMultiChoiceItems(items, checked, this::onNewsSourceToggled)
-            .create()
-            .apply {
-                window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
-            }
-            .show()
-    }
-
-    private fun onNewsSourceToggled(dialog: DialogInterface, index: Int, isChecked: Boolean) {
-        val newsSources = newsController.newsSources
-
-        if (index < newsSources.size) {
-            val key = "news_source_" + newsSources[index].id
-            Utils.setSetting(requireContext(), key, isChecked)
-
-            val layoutManager = binding.newsRecyclerView.layoutManager as LinearLayoutManager
-            firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-
-            requestDownload(USE_CACHE)
-        }
     }
 
     companion object {

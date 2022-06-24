@@ -71,7 +71,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         rootKey: String?
     ) {
         setPreferencesFromResource(R.xml.settings, rootKey)
-        populateNewsSources()
         setUpEmployeeSettings()
 
         // Disables silence service and logout if the app is used without TUMOnline access
@@ -109,29 +108,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         }
 
         requireContext().defaultSharedPreferences.registerOnSharedPreferenceChangeListener(this)
-    }
-
-    private fun populateNewsSources() {
-        val newsSourcesPreference = findPreference("card_news_sources") as? PreferenceCategory ?: return
-        val newsSources = newsController.newsSources
-
-        for (newsSource in newsSources) {
-            val pref = CheckBoxPreference(requireContext())
-            pref.key = "card_news_source_" + newsSource.id
-            pref.setDefaultValue(true)
-
-            // Reserve space so that when the icon is loaded the text is not moved again
-            pref.isIconSpaceReserved = true
-
-            // Load news source icon in background and set it
-            val url = newsSource.icon
-            if (url.isNotBlank()) {
-                loadNewsSourceIcon(pref, url)
-            }
-
-            pref.title = newsSource.title
-            newsSourcesPreference.addPreference(pref)
-        }
     }
 
     private fun loadNewsSourceIcon(

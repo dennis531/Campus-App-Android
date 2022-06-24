@@ -10,7 +10,6 @@ import de.tum.`in`.tumcampusapp.component.ui.chat.ChatMessagesCard
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.EduroamCard
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.EduroamFixCard
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsCard
-import de.tum.`in`.tumcampusapp.component.ui.news.TopNewsCard
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.LoginPromptCard
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
@@ -33,13 +32,12 @@ class CardAdapter(private val interactionListener: CardInteractionListener) : Re
             CardManager.CARD_RESTORE -> return RestoreCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_NO_INTERNET -> return NoInternetCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_MVV -> return MVVCard.inflateViewHolder(viewGroup, interactionListener)
-            CardManager.CARD_NEWS, CardManager.CARD_NEWS_FILM -> return NewsCard.inflateViewHolder(viewGroup, viewType, interactionListener)
+            CardManager.CARD_NEWS -> return NewsCard.inflateViewHolder(viewGroup, viewType, interactionListener)
             CardManager.CARD_EDUROAM -> return EduroamCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_EDUROAM_FIX -> return EduroamFixCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_CHAT -> return ChatMessagesCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_SUPPORT -> return SupportCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_LOGIN -> return LoginPromptCard.inflateViewHolder(viewGroup, interactionListener)
-            CardManager.CARD_TOP_NEWS -> return TopNewsCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_UPDATE_NOTE -> return UpdateNoteCard.inflateViewHolder(viewGroup, interactionListener)
             else -> throw UnsupportedOperationException()
         }

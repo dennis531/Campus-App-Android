@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.navigation.NavDestination
-import de.tum.`in`.tumcampusapp.component.ui.news.model.News
+import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsItem
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardInteractionListener
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
@@ -20,7 +20,7 @@ import org.joda.time.DateTime
  */
 open class NewsCard @JvmOverloads constructor(
     context: Context,
-    val news: News,
+    val news: NewsItem,
     type: Int = CardManager.CARD_NEWS
 ) : Card(type, context, Component.NEWS, "card_news") {
 
@@ -30,14 +30,11 @@ open class NewsCard @JvmOverloads constructor(
     val title: String
         get() = news.title
 
-    val source: String
-        get() = news.src
-
     val date: DateTime
         get() = news.date
 
     override fun getId(): Int {
-        return news.id.toInt()
+        return news.id.hashCode()
     }
 
     override fun updateViewHolder(viewHolder: RecyclerView.ViewHolder) {

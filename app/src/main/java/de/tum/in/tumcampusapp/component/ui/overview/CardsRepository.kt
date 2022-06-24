@@ -13,7 +13,6 @@ import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomController
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.EduroamCard
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.EduroamFixCard
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsController
-import de.tum.`in`.tumcampusapp.component.ui.news.TopNewsCard
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.LoginPromptCard
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.ProvidesCard
@@ -63,7 +62,6 @@ class CardsRepository @Inject constructor(
     private fun getCardsNow(cacheControl: CacheControl): List<Card> {
         val results = ArrayList<Card?>().apply {
             add(NoInternetCard(context).getIfShowOnStart())
-            add(TopNewsCard(context).getIfShowOnStart())
             add(LoginPromptCard(context).getIfShowOnStart())
             add(SupportCard(context).getIfShowOnStart())
             add(EduroamCard(context).getIfShowOnStart())

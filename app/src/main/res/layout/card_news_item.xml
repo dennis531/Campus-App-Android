@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- The background of the more icon, separate to allow for padding around the background -->
         <ImageView
             android:id="@+id/news_img"
             android:layout_width="match_parent"
@@ -18,10 +19,11 @@
             android:minHeight="100dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:background="@android:color/darker_gray" />
+            tools:background="@android:color/darker_gray"
+            tools:layout_editor_absoluteY="0dp" />
 
-        <!-- The background of the more icon, separate to allow for padding around the background -->
         <ImageView
             android:id="@+id/cardMoreIconBackground"
             android:layout_width="@dimen/icon_default"
@@ -61,35 +63,36 @@
             tools:text="News title" />
 
         <TextView
-            android:id="@+id/news_src_date"
+            android:id="@+id/news_date"
             style="@style/CardDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/material_default_padding"
             android:layout_marginStart="@dimen/material_default_padding"
             android:layout_marginTop="@dimen/material_small_padding"
-            android:layout_marginEnd="@dimen/material_default_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/news_title"
             tools:text="News source date" />
 
         <TextView
-            android:id="@+id/news_src_title"
-            style="@style/CardSource"
+            android:id="@+id/news_content"
+            style="@style/CardBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/material_default_padding"
+            android:layout_marginEnd="@dimen/material_default_padding"
             android:layout_marginStart="@dimen/material_default_padding"
             android:layout_marginTop="@dimen/material_small_padding"
-            android:layout_marginEnd="@dimen/material_default_padding"
-            android:layout_marginBottom="@dimen/material_default_padding"
-            android:drawableStart="@drawable/news_source_placeholder"
+            android:autoLink="all"
             android:drawablePadding="@dimen/material_small_padding"
+            android:linksClickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/news_src_date"
-            tools:text="News source title" />
+            app:layout_constraintTop_toBottomOf="@id/news_date"
+            tools:text="News content" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

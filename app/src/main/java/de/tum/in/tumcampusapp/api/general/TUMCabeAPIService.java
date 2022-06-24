@@ -1,6 +1,5 @@
 package de.tum.in.tumcampusapp.api.general;
 
-import java.util.HashMap;
 import java.util.List;
 
 import de.tum.in.tumcampusapp.api.general.model.DeviceRegister;
@@ -9,7 +8,6 @@ import de.tum.in.tumcampusapp.api.general.model.ObfuscatedIdsUpload;
 import de.tum.in.tumcampusapp.api.general.model.TUMCabeStatus;
 import de.tum.in.tumcampusapp.api.general.model.TUMCabeVerification;
 import de.tum.in.tumcampusapp.api.general.model.UploadStatus;
-import de.tum.in.tumcampusapp.component.other.locations.model.BuildingToGps;
 import de.tum.in.tumcampusapp.component.tumui.feedback.model.Feedback;
 import de.tum.in.tumcampusapp.component.tumui.feedback.model.FeedbackResult;
 import de.tum.in.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinate;
@@ -21,13 +19,8 @@ import de.tum.in.tumcampusapp.component.ui.openinghour.model.Location;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMember;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMessage;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoom;
-import de.tum.in.tumcampusapp.component.ui.news.model.News;
-import de.tum.in.tumcampusapp.component.ui.news.model.NewsAlert;
-import de.tum.in.tumcampusapp.component.ui.news.model.NewsSources;
 import de.tum.in.tumcampusapp.component.ui.updatenote.model.UpdateNote;
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -38,32 +31,19 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_BARRIER_FREE;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_BARRIER_FREE_BUILDINGS_TO_GPS;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_BARRIER_FREE_CONTACT;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_BARRIER_FREE_LIST_OF_ELEVATORS;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_BARRIER_FREE_LIST_OF_TOILETS;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_BARRIER_FREE_MORE_INFO;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_BARRIER_FREE_NERBY_FACILITIES;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_CAFETERIAS;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_CHAT_MEMBERS;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_CHAT_ROOMS;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_DEVICE;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_EVENTS;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_FEEDBACK;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_KINOS;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_LOCATIONS;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_MEMBERS;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_NEWS;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_NOTIFICATIONS;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_OPENING_HOURS;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_ROOM_FINDER;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_ROOM_FINDER_AVAILABLE_MAPS;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_ROOM_FINDER_COORDINATES;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_ROOM_FINDER_SCHEDULE;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_ROOM_FINDER_SEARCH;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_STUDY_ROOMS;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_TICKET;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_UPDATE_NOTE;
 
 public interface TUMCabeAPIService {
@@ -150,14 +130,14 @@ public interface TUMCabeAPIService {
     @GET(API_CAFETERIAS)
     Observable<List<Cafeteria>> getCafeterias();
 
-    @GET(API_NEWS + "{lastNewsId}")
-    Call<List<News>> getNews(@Path("lastNewsId") String lastNewsId);
+//    @GET(API_NEWS + "{lastNewsId}")
+//    Call<List<NewsItem>> getNews(@Path("lastNewsId") String lastNewsId);
 
-    @GET(API_NEWS + "sources")
-    Call<List<NewsSources>> getNewsSources();
+//    @GET(API_NEWS + "sources")
+//    Call<List<NewsSources>> getNewsSources();
 
-    @GET(API_NEWS + "alert")
-    Observable<NewsAlert> getNewsAlert();
+//    @GET(API_NEWS + "alert")
+//    Observable<NewsAlert> getNewsAlert();
 
     // Update note
     @GET(API_UPDATE_NOTE + "{version}")

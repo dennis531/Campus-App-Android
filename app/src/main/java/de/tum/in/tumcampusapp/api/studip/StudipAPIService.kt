@@ -2,6 +2,7 @@ package de.tum.`in`.tumcampusapp.api.studip
 
 import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipCourseEvent
 import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLecture
+import de.tum.`in`.tumcampusapp.api.studip.model.news.StudipNews
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipInstitute
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipPerson
 import okhttp3.ResponseBody
@@ -39,4 +40,7 @@ interface StudipAPIService {
 
     @GET("courses?include=institute,start-semester,end-semester")
     fun searchLectures(@Query("filter[q]") query: String): Call<List<StudipLecture>>
+
+    @GET("studip/news")
+    fun getNews(): Call<List<StudipNews>>
 }

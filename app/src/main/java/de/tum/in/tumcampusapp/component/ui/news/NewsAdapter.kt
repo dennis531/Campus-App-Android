@@ -4,11 +4,11 @@ import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.component.ui.news.model.News
+import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsItem
 
 class NewsAdapter(
     context: Context,
-    private val news: List<News>
+    private val news: List<NewsItem>
 ) : RecyclerView.Adapter<NewsViewHolder>() {
 
     private val newsInflater = NewsInflater(context)
@@ -23,13 +23,7 @@ class NewsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        val newsItem = news[position]
-
-        return if (newsItem.isFilm) {
-            R.layout.card_news_film_item
-        } else {
-            R.layout.card_news_item
-        }
+        return R.layout.card_news_item
     }
 
     override fun getItemCount() = news.size
