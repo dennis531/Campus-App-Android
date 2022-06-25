@@ -98,7 +98,7 @@
     <string name="no_grades">You don\'t have any grades yet.</string>
 
     <!-- Preferences -->
-    <string name="lrz_id">TUM Identification</string>
+    <string name="lrz_id">Identification</string>
 
     <string name="role">Role</string>
     <string name="role_summary">Your role at TUM. Either student, employee or guest.</string>
@@ -379,16 +379,17 @@
     <string name="pin_lock_desc">To set up the wireless access a PIN lock is required.\nIf you don’t already use PIN lock you can set it up here.</string>
     <string name="enable_pin_lock">Enable PIN-Lock</string>
     <string name="data_backup">Data-Backup</string>
-    <string name="data_backup_desc">For safety reasons, the data backup must be disabled to avoid that the TUM credentials are stored unencrypted on the Google servers.\nUnder ‘Backup &amp; restore’ > ‘Back up my data’ to disable.</string>
+    <string name="data_backup_desc">For safety reasons, the data backup must be disabled to avoid that your credentials are stored unencrypted on the Google servers.\nUnder ‘Backup &amp; restore’ > ‘Back up my data’ to disable.</string>
     <string name="disable_data_backup">Disable Data-Backup</string>
     <string name="eduroam_success">Eduroam successfully configured</string>
+    <string name="eduroam_refused">Eduroam refused</string>
     <string name="pin_lock_rem"><b>Configuration failed!</b>\nDo you have a manually created wifi profile? We cannot overwrite it so please delete it!</string>
     <string name="install_certificate">Install certificate</string>
     <string name="certificate">Certificate</string>
     <string name="certificate_desc">You have to install a CA-Root-certificate to enable secure connection with server. Just click ‘Install certificate’ and confirm with ‘OK’.</string>
     <string name="enable_wifi">Enable Wifi</string>
     <string name="loading_first_time">The first start may take a few minutes</string>
-    <string name="password_gets_not_saved">TUM Campus App does not save the password, but Android WifiManager does.</string>
+    <string name="password_gets_not_saved">Campus App does not save the password, but Android WifiManager does.</string>
     <string name="website">Website</string>
     <string name="switch_map">Switch map</string>
     <string name="navigate">Directions to</string>
@@ -485,7 +486,7 @@ Signature: %5$s</string>
     <string name="eduroam_fix">Fix it now</string>
     <string name="eduroam_insecure_configuration">We have detected an insecure eduroam wifi configuration. You are subject to leaking information about you and your account.</string>
     <string name="wifi_dns_name_not_set">DNS Name is not set</string>
-    <string name="wifi_identity_zone">You have configured eduroam without specifying the home institution (e.g. @eduroam.mwn.de) in your username. This means that eduroam won\'t work when you\'re not on the TUM campus.</string>
+    <string name="wifi_identity_zone">You have configured eduroam without specifying the home institution (e.g. @eduroam.de) in your username. This means that eduroam won\'t work when you\'re not on your campus.</string>
     <string name="wifi_anonymous_identity_not_set">Anonymous Identity not correct</string>
 
     <string name="transport">Transportation</string>
@@ -500,7 +501,7 @@ Signature: %5$s</string>
     <string name="timetable_widget">Timetable Widget TUM</string>
     <string name="timetable_widget_select_lectures">Select lectures</string>
     <string name="timetable_widget_no_lectures">No lectures planned :)</string>
-    <string name="eduroam_not_valid_id">Not a valid TUM-ID.</string>
+    <string name="eduroam_not_valid_id">Not a valid ID.</string>
     <string name="eduroam_please_enter_password">Please enter your password. It will not be saved.</string>
 
     <!-- Barrier-free  -->

@@ -1,6 +1,7 @@
 package de.tum.in.tumcampusapp.component.ui.eduroam;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.GroupCipher;
 import android.net.wifi.WifiConfiguration.KeyMgmt;
@@ -8,11 +9,20 @@ import android.net.wifi.WifiConfiguration.PairwiseCipher;
 import android.net.wifi.WifiConfiguration.Protocol;
 import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiManager;
+import android.net.wifi.WifiNetworkSuggestion;
+import android.os.Build;
+import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.RequiresApi;
 import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.Utils;
+
+import static android.provider.Settings.ACTION_WIFI_ADD_NETWORKS;
+import static android.provider.Settings.EXTRA_WIFI_NETWORK_LIST;
 
 /**
  * Eduroam manager, manages connecting to eduroam wifi network
@@ -49,14 +59,36 @@ public class EduroamController {
     }
 
     /**
-     * Configures eduroam wifi connection
+     * Configures eduroam wifi connection.
      *
-     * @param lrzId       User's LRZ-ID
-     * @param networkPass User's lrz password
+     * @param identity       User's identity
+     * @param networkPass User's password
      * @return Returns true if configuration was successful, false otherwise
      */
-    boolean configureEduroam(String lrzId, String networkPass) {
+    boolean configureEduroam(String identity, String networkPass) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            // Used functions are deprecated since api level 29.
+            return addWifiConfiguration(identity, networkPass);
+        } else {
+           return addNetworkSuggestion(identity, networkPass);
+        }
+    }
+
+    /**
+     * Adds or updates a eduroam wifi config to the wifi manager.
+     * Used wifi manager functions are deprecated since api level 29.
+     *
+     * @param identity       User's identity
+     * @param networkPass User's password
+     * @return true if successful
+     */
+    private boolean addWifiConfiguration(String identity, String networkPass) {
         // Configure Wifi
+        WifiManager wifiManager = (WifiManager) mContext.getApplicationContext()
+                                                        .getSystemService(Context.WIFI_SERVICE);
+
+        int networkId;
+
         boolean update = true;
         WifiConfiguration conf = getEduroamConfig(mContext);
 
@@ -74,18 +106,16 @@ public class EduroamController {
         conf.allowedProtocols.set(Protocol.RSN);
         conf.status = WifiConfiguration.Status.ENABLED;
 
-        setupEnterpriseConfigAPI18(conf, lrzId, networkPass);
+        setupEnterpriseConfigAPI18(conf, identity, networkPass);
 
         // Add eduroam to wifi networks
-        WifiManager wifiManager = (WifiManager) mContext.getApplicationContext()
-                                                        .getSystemService(Context.WIFI_SERVICE);
-        int networkId;
         if (update) {
             networkId = wifiManager.updateNetwork(conf);
             Utils.log("deleted " + conf.networkId);
         } else {
             networkId = wifiManager.addNetwork(conf);
         }
+
         Utils.log("added " + networkId);
 
         //Check if update successful
@@ -98,10 +128,75 @@ public class EduroamController {
         return true;
     }
 
-    private void setupEnterpriseConfigAPI18(WifiConfiguration conf, String lrzId, String networkPass) {
-        conf.enterpriseConfig.setIdentity(lrzId + "@" + Const.EDUROAM_DOMAIN);
+    private void setupEnterpriseConfigAPI18(WifiConfiguration conf, String identity, String networkPass) {
+        conf.enterpriseConfig.setIdentity(identity);
         conf.enterpriseConfig.setPassword(networkPass);
         conf.enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.PWD);
     }
 
+    /**
+     * Adds a eduroam network suggestion to the wifi manager. The suggestion is not visible in the
+     * wifi settings and only available when the app is installed and enabled.
+     *
+     * @param identity User's identity
+     * @param networkPass User's password
+     * @return true if successful
+     */
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private boolean addNetworkSuggestion(String identity, String networkPass) {
+        WifiManager wifiManager = (WifiManager) mContext.getApplicationContext()
+                                                        .getSystemService(Context.WIFI_SERVICE);
+
+        // remove all old network suggestions
+        wifiManager.removeNetworkSuggestions(Collections.emptyList());
+
+        // add new network suggestion
+        WifiNetworkSuggestion suggestion = getEduroamSuggestion(identity, networkPass);
+        int status = wifiManager.addNetworkSuggestions(Collections.singletonList(suggestion));
+        Utils.log("Status: " + status);
+
+        return status == WifiManager.STATUS_NETWORK_SUGGESTIONS_SUCCESS;
+    }
+
+    /**
+     * Creates a wifi network suggestion containing the eduroam wifi settings
+     *
+     * @param identity User's identity
+     * @param networkPass User's password
+     * @return wifi network suggestion
+     */
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private WifiNetworkSuggestion getEduroamSuggestion(String identity, String networkPass) {
+        WifiEnterpriseConfig enterpriseConfig = new WifiEnterpriseConfig();
+        enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.PWD);
+        enterpriseConfig.setIdentity(identity);
+        enterpriseConfig.setPassword(networkPass);
+
+        WifiNetworkSuggestion.Builder builder = new WifiNetworkSuggestion.Builder();
+        return builder
+                .setSsid(Const.EDUROAM_SSID)
+                .setWpa2EnterpriseConfig(enterpriseConfig)
+                .build();
+    }
+
+    /**
+     * Creates a wifi add networks intent including the eduroam wifi configurations
+     *
+     * @param identity User's identity
+     * @param networkPass User's password
+     * @return The wifi add networks intent
+     */
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public Intent getEduroamIntent(String identity, String networkPass) {
+        ArrayList<WifiNetworkSuggestion> suggestions = new ArrayList<WifiNetworkSuggestion>();
+
+        suggestions.add(getEduroamSuggestion(identity, networkPass));
+
+        // Create intent
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(EXTRA_WIFI_NETWORK_LIST, suggestions);
+        Intent intent = new Intent(ACTION_WIFI_ADD_NETWORKS);
+        intent.putExtras(bundle);
+        return intent;
+    }
 }

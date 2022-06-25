@@ -141,6 +141,7 @@
                 android:onClick="onClickCancel"
                 android:text="@android:string/cancel"
                 android:textAllCaps="false"
+                android:textColor="@color/color_primary"
                 app:cornerRadius="@dimen/material_corner_radius" />
 
             <com.google.android.material.button.MaterialButton
@@ -151,6 +152,7 @@
                 android:onClick="onClickSetup"
                 android:text="@string/setup"
                 android:textAllCaps="false"
+                android:textColor="@color/color_primary"
                 app:cornerRadius="@dimen/material_corner_radius" />
 
         </LinearLayout>

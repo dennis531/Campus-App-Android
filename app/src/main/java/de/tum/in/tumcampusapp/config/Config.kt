@@ -42,6 +42,7 @@ object Config {
     val CALENDAR_ENABLED = true
     val LECTURES_ENABLED = true
     val NEWS_ENABLED = true
+    val EDUROAM_ENABLED = true
     val TRANSPORTATION_ENABLED = false
     val OPENINGHOUR_ENABLED = false
     val CAFETERIA_ENABLED = true
@@ -49,6 +50,14 @@ object Config {
     val ROOMFINDER_ENABLED = false
     // const val EDUROAM_ENABLED = false // required?
 
-    // Calendar Options
+    // Calendar options
     val CALENDAR_EDITABLE = false
+
+    // Eduroam options
+    // Allows to check if the user's eduroam wifi setting is set for this campus. If settings are set for this campus, several checks are performed.
+    val EDUROAM_DOMAINS = listOf<String>("uos.de", "uni-osnabrueck.de")
+    // Allows to check if the correct authentication server is set in the wifi settings
+    val EDUROAM_RADIUS_SERVER = "radius.uni-osnabrueck.de"
+    // Allows to check if the anonymous identity is correct
+    val EDUROAM_ANONYMOUS_IDENTITIES = listOf<String>("eduroam@uos.de", "eduroam@uni-osnabrueck.de", "anonymous@uni-osnabrueck.de")
 }

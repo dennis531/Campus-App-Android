@@ -59,7 +59,7 @@
     <string name="no_grades">Du hast noch keine Noten, die angezeigt werden könnten.</string>
 
     <!-- Preferences -->
-    <string name="lrz_id">TUM Kennung</string>
+    <string name="lrz_id">Identität</string>
     <string name="role">Rolle</string>
     <string name="role_summary">Deine Rolle an der TUM. Entweder Student*in, Mitarbeiter*in oder Gast.</string>
     <string name="student">Student*in</string>
@@ -305,10 +305,11 @@
         Falls du noch keine PIN-Sperre verwendet kannst du hier eine einrichten.</string>
     <string name="enable_pin_lock">PIN-Sperre aktivieren</string>
     <string name="data_backup">Daten-Backup</string>
-    <string name="data_backup_desc">Aus Sicherheitsgründen muss das Daten-Backup deaktiviert werden, damit die TUM-Zugangsdaten nicht unverschlüsselt auf den Google Servern gespeichert werden.
+    <string name="data_backup_desc">Aus Sicherheitsgründen muss das Daten-Backup deaktiviert werden, damit deine Zugangsdaten nicht unverschlüsselt auf den Google Servern gespeichert werden.
         Dazu unter ‘Sichern &amp; zurücksetzen’ > ‘Meine Daten sichern’ deaktivieren.</string>
     <string name="disable_data_backup">Daten-Backup deaktivieren</string>
     <string name="eduroam_success">Eduroam wurde erfolgreich eingerichtet</string>
+    <string name="eduroam_refused">Eduroam abgelehnt</string>
     <string name="pin_lock_rem"><b>Konfiguration fehlgeschlagen!</b>\nHast du dein manuell angelegtes Profil gelöscht? Wir können wlan Profile nicht überschreiben!</string>
     <string name="install_certificate">Zertifikat installieren</string>
     <string name="certificate">Zertifikat</string>
@@ -316,7 +317,7 @@
 
     <string name="enable_wifi">WLAN aktivieren</string>
     <string name="loading_first_time">Der erste Start könnte ein paar Minuten dauern</string>
-    <string name="password_gets_not_saved">Das Passwort wird nicht von der TUM Campus App gespeichert, aber vom Android WLAN Manager.</string>
+    <string name="password_gets_not_saved">Das Passwort wird nicht von der Campus App gespeichert, aber vom Android WLAN Manager.</string>
     <string name="website">Website</string>
     <string name="switch_map">Karte wählen</string>
     <string name="navigate">Navigation starten</string>
@@ -405,7 +406,7 @@ Signatur: %5$s</string>
     <string name="eduroam_fix">Jetzt reparieren</string>
     <string name="eduroam_insecure_configuration">Wir haben eine unsichere WLAN-eduroam Konfiguration erkannt. Sie könnten möglicherweise Informationen über Sie und Ihr Konto in dritte Hände geben.</string>
     <string name="fix_eduroam">eduroam reparieren</string>
-    <string name="wifi_identity_zone">Du hast eduroam ohne Angabe der Heimateinrichtung (z.B. \“@eduroam.mwn.de\”) im Benutzernamen konfiguriert. Dadurch wird eduroam abseits der TUM nicht funktionieren.</string>
+    <string name="wifi_identity_zone">Du hast eduroam ohne Angabe der Heimateinrichtung (z.B. \“@eduroam.de\”) im Benutzernamen konfiguriert. Dadurch wird eduroam abseits deines Campus nicht funktionieren.</string>
     <string name="wifi_dns_name_not_set">DNS-Name ist nicht festgelegt</string>
     <string name="wifi_anonymous_identity_not_set">Anonyme Identität nicht korrekt</string>
 
@@ -420,7 +421,7 @@ Signatur: %5$s</string>
     <string name="timetable_widget">Stundenplan Widget TUM</string>
     <string name="timetable_widget_select_lectures">Vorlesungen auswählen</string>
     <string name="timetable_widget_no_lectures">Keine Vorlesungen geplant :)</string>
-    <string name="eduroam_not_valid_id">Keine gültige TUM-Kennung</string>
+    <string name="eduroam_not_valid_id">Keine gültige Kennung</string>
     <string name="eduroam_please_enter_password">Bitte Passwort eingeben. Dieses wird nicht gespeichert.</string>
     <string name="barrier_free">Barrierefreiheit</string>
     <string name="barrierfree_toilets">Berrierefreie Toiletten</string>

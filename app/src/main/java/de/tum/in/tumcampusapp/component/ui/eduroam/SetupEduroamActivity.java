@@ -1,22 +1,27 @@
 package de.tum.in.tumcampusapp.component.ui.eduroam;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import com.google.android.material.textfield.TextInputEditText;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.regex.Pattern;
+import java.util.ArrayList;
 
 import de.tum.in.tumcampusapp.R;
 import de.tum.in.tumcampusapp.component.other.generic.activity.BaseActivity;
 import de.tum.in.tumcampusapp.utils.Component;
-import de.tum.in.tumcampusapp.utils.ConfigConst;
 import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.Utils;
+
+import static android.provider.Settings.ADD_WIFI_RESULT_SUCCESS;
+import static android.provider.Settings.EXTRA_WIFI_NETWORK_RESULT_LIST;
 
 /**
  * Activity that allows the user to easily setup eduroam.
@@ -24,7 +29,7 @@ import de.tum.in.tumcampusapp.utils.Utils;
  */
 public class SetupEduroamActivity extends BaseActivity {
 
-    private TextInputEditText lrz;
+    private TextInputEditText id;
     private TextInputEditText password;
 
     public SetupEduroamActivity() {
@@ -42,13 +47,13 @@ public class SetupEduroamActivity extends BaseActivity {
         // Enable 'More Info' links
         ((TextView) findViewById(R.id.text_with_link_2)).setMovementMethod(LinkMovementMethod.getInstance());
 
-        lrz = findViewById(R.id.wifi_lrz_id);
-        lrz.setText(Utils.getSetting(this, Const.LRZ_ID, ""));
+        id = findViewById(R.id.wifi_lrz_id);
+        id.setText(Utils.getSetting(this, Const.PROFILE_EMAIL, ""));
         password = findViewById(R.id.wifi_password);
 
         //Set the focus for improved UX experience
-        if (lrz.getText() != null && lrz.getText().length() == 0) {
-            lrz.requestFocus();
+        if (id.getText() != null && id.getText().length() == 0) {
+            id.requestFocus();
         } else {
             password.requestFocus();
         }
@@ -83,26 +88,57 @@ public class SetupEduroamActivity extends BaseActivity {
      */
     @SuppressWarnings("UnusedParameters")
     public void onClickSetup(View v) {
-        //Verify that we have a valid LRZ / TUM ID
-        final Pattern pattern = Pattern.compile(Const.TUM_ID_PATTERN);
-        if (!pattern.matcher(lrz.getText())
-                    .matches()) {
+        //Identification can not be empty
+        if (id.getText().length() == 0) {
             Utils.showToast(this, getString(R.string.eduroam_not_valid_id));
             return;
         }
 
         //We need some sort of password
-        if (password.getText()
-                    .length() == 0) {
+        if (password.getText().length() == 0) {
             Utils.showToast(this, getString(R.string.eduroam_please_enter_password));
             return;
         }
 
         //Do Setup
         EduroamController manager = new EduroamController(getApplicationContext());
-        boolean success = manager.configureEduroam(lrz.getText()
-                                                      .toString(), password.getText()
-                                                                           .toString());
+
+        String identityString = id.getText().toString();
+        String passwordString = password.getText().toString();
+
+        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            // Invoke add wifi network intent
+            startActivityForResult(manager.getEduroamIntent(identityString, passwordString), 0);
+        } else {
+            // Add wifi network or suggestion explicit
+            boolean success = manager.configureEduroam(identityString, passwordString);
+            showResultToast(success);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // process add wifi network result
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            if (resultCode == RESULT_OK) {
+                // user agreed to save configurations: still need to check individual results
+                if (data != null && data.hasExtra(EXTRA_WIFI_NETWORK_RESULT_LIST)) {
+                    ArrayList<Integer> resultList = data.getIntegerArrayListExtra(EXTRA_WIFI_NETWORK_RESULT_LIST);
+
+                    boolean success = resultList.contains(ADD_WIFI_RESULT_SUCCESS);
+                    showResultToast(success);
+                }
+            } else {
+                // User refused to save configurations
+                Utils.showToast(this, R.string.eduroam_refused);
+                finish();
+            }
+        }
+    }
+
+    private void showResultToast(boolean success) {
         if (success) {
             Utils.showToast(this, R.string.eduroam_success);
             Utils.setSetting(this, Const.REFRESH_CARDS, true);

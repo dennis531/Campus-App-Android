@@ -18,12 +18,12 @@ import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
 import de.tum.`in`.tumcampusapp.utils.Component
-import de.tum.`in`.tumcampusapp.utils.Const
+import de.tum.`in`.tumcampusapp.utils.ConfigConst
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import org.jetbrains.anko.defaultSharedPreferences
 import org.jetbrains.anko.wifiManager
 import java.util.*
-import java.util.regex.Pattern
 
 class EduroamFixCard(
     context: Context
@@ -32,20 +32,30 @@ class EduroamFixCard(
     private val errors: MutableList<String> = ArrayList()
     private lateinit var eduroam: WifiConfiguration
 
+    private val radiusDNS: String = ConfigUtils.getConfig(ConfigConst.EDUROAM_RADIUS_SERVER, "")
+    private val domains: List<String> = ConfigUtils.getConfig(ConfigConst.EDUROAM_DOMAINS, listOf())
+    private val anonymousIdentities: List<String> = ConfigUtils.getConfig(ConfigConst.EDUROAM_ANONYMOUS_IDENTITIES, listOf())
+
     private fun isConfigValid(): Boolean {
         errors.clear()
         // If it is not configured then the config valid
         eduroam = EduroamController.getEduroamConfig(context) ?: return true
 
+        // No eduroam domains are available to check
+        if (domains.isEmpty()) {
+            Utils.log("No eduroam domains are set")
+            return true
+        }
+
         // Eduroam was configured by other university
-        if (!isTumEduroam(eduroam.enterpriseConfig.identity)) {
-            Utils.log("Eduroam wasn't configured at TUM")
+        if (!isCampusEduroam(eduroam.enterpriseConfig.identity)) {
+            Utils.log("Eduroam wasn't configured at this campus")
             return true
         }
 
         // Check attributes - check newer match for the radius server
         // for all configurations
-        // Check that the full quantifier is used (we already know it's a tum config)
+        // Check that the full quantifier is used (we already know it's a campus config)
         if (!eduroam.enterpriseConfig.identity.contains(AT_SIGN)) {
             errors.add(context.getString(R.string.wifi_identity_zone))
         }
@@ -85,42 +95,42 @@ class EduroamFixCard(
     }
 
     private fun checkAnonymousIdentity() {
+        if (anonymousIdentities.isEmpty()) {
+            return
+        }
+
         val anonymousIdentity = eduroam.enterpriseConfig.anonymousIdentity
-        if (anonymousIdentity != null &&
-                anonymousIdentity != "anonymous@mwn.de" &&
-                anonymousIdentity != "anonymous@eduroam.mwn.de" &&
-                anonymousIdentity != "anonymous@mytum.de") {
+        if (anonymousIdentity != null && !anonymousIdentities.contains(anonymousIdentity)) {
             errors.add(context.getString(R.string.wifi_anonymous_identity_not_set))
         }
     }
 
     private fun checkDNSName() {
+        // No radius server address is set
+        if (radiusDNS.isBlank()) {
+            return
+        }
+
         if (SDK_INT < M && !isValidSubjectMatchAPI18(eduroam)) {
             errors.add(context.getString(R.string.wifi_dns_name_not_set))
         } else if (SDK_INT >= M &&
-                (eduroam.enterpriseConfig.altSubjectMatch != "DNS:$RADIUS_DNS" || eduroam.enterpriseConfig.domainSuffixMatch != RADIUS_DNS) &&
+                (eduroam.enterpriseConfig.altSubjectMatch != "DNS:$radiusDNS" || eduroam.enterpriseConfig.domainSuffixMatch != radiusDNS) &&
                 !isValidSubjectMatchAPI18(eduroam)) {
             errors.add(context.getString(R.string.wifi_dns_name_not_set))
         }
     }
 
-    private fun isTumEduroam(identity: String): Boolean {
-        val pattern = Pattern.compile(Const.TUM_ID_PATTERN)
-        return (identity.endsWith("@mwn.de") ||
-                identity.endsWith("@mytum.de") ||
-                identity.endsWith("@tum.de") ||
-                (identity.endsWith(".mwn.de") || identity.endsWith(".tum.de")) && identity.contains(AT_SIGN) ||
-                pattern.matcher(identity).matches())
+    private fun isCampusEduroam(identity: String): Boolean {
+        return domains.any {identity.endsWith(it)}
     }
 
     private fun isValidSubjectMatchAPI18(eduroam: WifiConfiguration): Boolean {
         // AltSubjectMatch is not available for API18
         Utils.log("SubjectMatch: " + eduroam.enterpriseConfig.subjectMatch)
-        return eduroam.enterpriseConfig.subjectMatch == RADIUS_DNS
+        return eduroam.enterpriseConfig.subjectMatch == radiusDNS
     }
 
     companion object {
-        private const val RADIUS_DNS = "radius.lrz.de"
         private const val AT_SIGN = "@"
         @JvmStatic
         fun inflateViewHolder(parent: ViewGroup, interactionListener: CardInteractionListener): CardViewHolder {
