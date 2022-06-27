@@ -18,11 +18,14 @@ enum class OAuthSignatureMethod {
     OAUTH_HMAC_SHA256
 }
 
+/**
+ * Constants not allowed
+ */
 @Keep
 object Config {
     // API
     val API = Api.STUDIP
-    val API_BASE_URL = "http://192.168.0.250/studip/jsonapi.php/v1/" // Const not allowed
+    val API_BASE_URL = "http://192.168.0.250/studip/jsonapi.php/v1/"
 
     // Authentication
     val AUTH_METHOD = AuthMethod.OAUTH10A
@@ -45,10 +48,9 @@ object Config {
     val EDUROAM_ENABLED = true
     val TRANSPORTATION_ENABLED = false
     val OPENINGHOUR_ENABLED = false
-    val CAFETERIA_ENABLED = true
+    val CAFETERIA_ENABLED = false
     val TUTIONFEES_ENABLED = false
     val ROOMFINDER_ENABLED = false
-    // const val EDUROAM_ENABLED = false // required?
 
     // Calendar options
     val CALENDAR_EDITABLE = false
