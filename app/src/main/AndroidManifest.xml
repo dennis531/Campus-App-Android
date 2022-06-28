@@ -42,7 +42,7 @@
         android:description="@string/app_short_description"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:logo="@drawable/tum_logo"
+        android:logo="@drawable/campus_logo"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="false"
         android:usesCleartextTraffic="true"
