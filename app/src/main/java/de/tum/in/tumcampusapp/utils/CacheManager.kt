@@ -1,7 +1,12 @@
 package de.tum.`in`.tumcampusapp.utils
 
 import android.content.Context
+import com.stripe.android.exception.APIException
 import de.tum.`in`.tumcampusapp.api.generic.LMSClient
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
+import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
+import de.tum.`in`.tumcampusapp.component.tumui.lectures.api.LecturesAPI
+import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomController
 import de.tum.`in`.tumcampusapp.service.QueryLocationsService
 import okhttp3.Cache
 import org.jetbrains.anko.doAsync
@@ -23,21 +28,17 @@ class CacheManager @Inject constructor(private val context: Context) {
     }
 
     private fun syncCalendar() {
-//        (apiClient as? CalenderAPI)?.let {
-//            it.getCalendar(CacheControl.USE_CACHE)
-//            .enqueue(object : Callback<EventsResponse> {
-//                override fun onResponse(call: Call<EventsResponse>, response: Response<EventsResponse>) {
-//                    val eventsResponse = response.body() ?: return
-//                    val events = eventsResponse.events ?: return
-//                    CalendarController(context).importCalendar(events)
-//                    loadRoomLocations()
-//                }
-//
-//                override fun onFailure(call: Call<EventsResponse>, t: Throwable) {
-//                    Utils.log(t, "Error while loading calendar in CacheManager")
-//                }
-//            })
-//        }
+        if (!ConfigUtils.isComponentEnabled(context, Component.CALENDAR)) {
+            return
+        }
+
+        try {
+            val events = (apiClient as CalendarAPI).getCalendar() ?: return
+            CalendarController(context).importCalendar(events)
+            loadRoomLocations()
+        } catch (t: Throwable) {
+            Utils.log(t, "Error while loading calendar in CacheManager")
+        }
     }
 
     private fun loadRoomLocations() {
@@ -47,25 +48,18 @@ class CacheManager @Inject constructor(private val context: Context) {
     }
 
     private fun syncPersonalLectures() {
-//        (apiClient as? LecturesAPI)?.let {
-//            it.getInstance(context)
-//                .getPersonalLectures(CacheControl.USE_CACHE)
-//                .enqueue(object : Callback<LecturesResponse> {
-//                    override fun onResponse(
-//                        call: Call<LecturesResponse>,
-//                        response: Response<LecturesResponse>
-//                    ) {
-//                        Utils.log("Successfully updated personal lectures in background")
-//                        val lectures = response.body()?.lectures ?: return
-//                        val chatRoomController = ChatRoomController(context)
-//                        chatRoomController.createLectureRooms(lectures)
-//                    }
-//
-//                    override fun onFailure(call: Call<LecturesResponse>, t: Throwable) {
-//                        Utils.log(t, "Error loading personal lectures in background")
-//                    }
-//                })
-//        }
+        if(!ConfigUtils.isComponentEnabled(context, Component.LECTURES) || !ConfigUtils.isComponentEnabled(context, Component.CHAT)) {
+            return
+        }
+
+        try {
+            val lectures = (apiClient as LecturesAPI).getPersonalLectures()
+            val chatRoomController = ChatRoomController(context)
+//            chatRoomController.createLectureRooms(lectures) // TODO: Enable after chat is generalized
+            Utils.log("Successfully updated personal lectures in background")
+        } catch (t: Throwable) {
+            Utils.log(t, "Error loading personal lectures in background")
+        }
     }
 
     @Synchronized

@@ -17,10 +17,7 @@ import de.tum.`in`.tumcampusapp.component.ui.onboarding.di.OnboardingComponent
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.di.OnboardingComponentProvider
 import de.tum.`in`.tumcampusapp.databinding.FragmentOnboardingExtrasBinding
 import de.tum.`in`.tumcampusapp.service.SilenceService
-import de.tum.`in`.tumcampusapp.utils.CacheManager
-import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.NetUtils
-import de.tum.`in`.tumcampusapp.utils.Utils
+import de.tum.`in`.tumcampusapp.utils.*
 import org.jetbrains.anko.defaultSharedPreferences
 import org.jetbrains.anko.support.v4.browse
 import javax.inject.Inject
@@ -59,8 +56,29 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupSilentModeView()
+        setupGroupChatView()
+
+        if (authManager.hasAccess()) {
+            cacheManager.fillCache()
+        }
+
         with(binding) {
 //            bugReportsCheckBox.isChecked = Utils.getSettingBool(requireContext(), Const.BUG_REPORTS, true)
+
+            privacyPolicyButton.setOnClickListener { browse(getString(R.string.url_privacy_policy)) }
+            finishButton.setOnClickListener { startLoading() }
+        }
+
+    }
+
+    private fun setupSilentModeView() {
+        with(binding) {
+            if (!ConfigUtils.isComponentEnabled(requireContext(), Component.CALENDAR)) {
+                silentModeCheckBox.visibility = View.GONE
+                silentModeTextView.visibility = View.GONE
+                return
+            }
 
             if (authManager.hasAccess()) {
                 silentModeCheckBox.isChecked =
@@ -75,6 +93,16 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
                 silentModeCheckBox.isChecked = false
                 silentModeCheckBox.isEnabled = false
             }
+        }
+    }
+
+    private fun setupGroupChatView() {
+        with(binding) {
+            if (!ConfigUtils.isComponentEnabled(requireContext(), Component.CHAT)) {
+                groupChatCheckBox.visibility = View.GONE
+                groupChatTextView.visibility = View.GONE
+                return
+            }
 
             if (authManager.hasAccess()) {
                 groupChatCheckBox.isChecked =
@@ -83,14 +111,6 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
                 groupChatCheckBox.isChecked = false
                 groupChatCheckBox.isEnabled = false
             }
-
-            if (authManager.hasAccess()) {
-                // TODO: Enable after CacheManager is adopted
-//                cacheManager.fillCache()
-            }
-
-            privacyPolicyButton.setOnClickListener { browse(getString(R.string.url_privacy_policy)) }
-            finishButton.setOnClickListener { startLoading() }
         }
 
     }
