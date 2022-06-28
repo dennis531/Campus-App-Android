@@ -12,7 +12,6 @@ import de.tum.`in`.tumcampusapp.component.ui.cafeteria.activity.CafeteriaActivit
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.controller.CafeteriaManager
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.tum.`in`.tumcampusapp.database.TcaDb
-import de.tum.`in`.tumcampusapp.service.MensaWidgetService
 import de.tum.`in`.tumcampusapp.utils.Const
 import org.joda.time.format.DateTimeFormat
 

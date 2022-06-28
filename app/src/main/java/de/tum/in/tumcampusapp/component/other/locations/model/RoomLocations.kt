@@ -1,4 +1,4 @@
-package de.tum.`in`.tumcampusapp.component.tumui.lectures.model
+package de.tum.`in`.tumcampusapp.component.other.locations.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

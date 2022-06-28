@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
 import androidx.work.WorkManager
+import de.tum.`in`.tumcampusapp.utils.Component
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 
 /**
@@ -19,7 +21,7 @@ class StartSyncReceiver : BroadcastReceiver() {
         // Check intent if called from StartupActivity
         startBackground(context)
 
-        startSendMessage()
+        startSendMessage(context)
 
         // Also start the SilenceService. It checks if it is enabled, so we don't need to
         // SilenceService also needs accurate timings, so we can't use WorkManager
@@ -30,7 +32,10 @@ class StartSyncReceiver : BroadcastReceiver() {
         private const val UNIQUE_BACKGROUND = "START_SYNC_BACKGROUND"
         private const val UNIQUE_SEND_MESSAGE = "START_SYNC_SEND_MESSAGE"
 
-        fun startSendMessage() {
+        fun startSendMessage(context: Context) {
+            if (!ConfigUtils.isComponentEnabled(context, Component.CHAT)) {
+                return
+            }
             WorkManager.getInstance()
                     .enqueueUniquePeriodicWork(
                             UNIQUE_SEND_MESSAGE, KEEP, SendMessageWorker.getPeriodicWorkRequest())

@@ -10,8 +10,10 @@ import androidx.core.content.ContextCompat
 import de.tum.`in`.tumcampusapp.component.other.locations.LocationManager
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItem
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.RoomLocations
+import de.tum.`in`.tumcampusapp.component.other.locations.model.RoomLocations
 import de.tum.`in`.tumcampusapp.database.TcaDb
+import de.tum.`in`.tumcampusapp.utils.Component
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import de.tum.`in`.tumcampusapp.utils.sync.SyncManager
@@ -33,6 +35,11 @@ class QueryLocationsService : JobIntentService() {
     }
 
     private fun loadGeo() {
+        if (!ConfigUtils.isComponentEnabled(applicationContext, Component.CALENDAR) ||
+            !ConfigUtils.isComponentEnabled(applicationContext, Component.ROOMFINDER)) { // TODO: Roomfinder or Locations?
+            return
+        }
+
         val calendarDao = TcaDb.getInstance(this).calendarDao()
         val roomLocationsDao = TcaDb.getInstance(this).roomLocationsDao()
 

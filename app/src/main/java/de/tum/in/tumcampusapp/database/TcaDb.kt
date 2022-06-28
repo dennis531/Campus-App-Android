@@ -20,7 +20,7 @@ import de.tum.`in`.tumcampusapp.component.tumui.calendar.WidgetsTimetableBlackli
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItem
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.EventSeriesMapping
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.WidgetsTimetableBlacklist
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.RoomLocations
+import de.tum.`in`.tumcampusapp.component.other.locations.model.RoomLocations
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaDao
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaMenuDao
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.FavoriteDishDao

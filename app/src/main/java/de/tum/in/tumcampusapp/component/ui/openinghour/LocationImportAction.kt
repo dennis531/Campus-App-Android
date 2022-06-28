@@ -6,6 +6,8 @@ import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.service.DownloadWorker
+import de.tum.`in`.tumcampusapp.utils.Component
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import java.io.IOException
 import javax.inject.Inject
 
@@ -20,6 +22,10 @@ class LocationImportAction @Inject constructor(
 
     @Throws(IOException::class)
     override fun execute(cacheBehaviour: CacheControl) {
+        if (!ConfigUtils.isComponentEnabled(context, Component.OPENINGHOUR)) {
+            return
+        }
+
         val openingHours = tumCabeClient.fetchOpeningHours(context.getString(R.string.language))
         database.locationDao().removeCache()
         database.locationDao().replaceInto(openingHours)

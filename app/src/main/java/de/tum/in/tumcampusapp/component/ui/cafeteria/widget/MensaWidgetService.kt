@@ -1,4 +1,4 @@
-package de.tum.`in`.tumcampusapp.service
+package de.tum.`in`.tumcampusapp.component.ui.cafeteria.widget
 
 import android.content.Intent
 import android.widget.RemoteViewsService

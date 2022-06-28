@@ -11,11 +11,13 @@ import de.tum.`in`.tumcampusapp.component.ui.chat.ChatMessageViewModel
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageLocalRepository
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageRemoteRepository
 import de.tum.`in`.tumcampusapp.database.TcaDb
+import de.tum.`in`.tumcampusapp.utils.Component
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import java.util.concurrent.TimeUnit
 
 /**
- * Service used to send chat messages.
+ * Service used to send chat messages. TODO: Need to be generalized with the chat component
  */
 class SendMessageWorker(context: Context, workerParams: WorkerParameters) :
         Worker(context, workerParams) {

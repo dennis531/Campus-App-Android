@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.res.AssetManager
 import dagger.Module
 import dagger.Provides
-import de.tum.`in`.tumcampusapp.api.general.AuthenticationManager
-import de.tum.`in`.tumcampusapp.api.general.IdUploadAction
 import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.component.tumui.grades.GradesBackgroundUpdater
 import de.tum.`in`.tumcampusapp.component.tumui.grades.GradesDownloadAction
@@ -35,9 +33,10 @@ object DownloadModule {
     @JvmStatic
     @Provides
     fun provideCafeteriaDownloadAction(
+        context: Context,
         menuManager: CafeteriaMenuManager,
         remoteRepository: CafeteriaRemoteRepository
-    ): CafeteriaDownloadAction = CafeteriaDownloadAction(menuManager, remoteRepository)
+    ): CafeteriaDownloadAction = CafeteriaDownloadAction(context, menuManager, remoteRepository)
 
     @JvmStatic
     @Provides
@@ -49,17 +48,10 @@ object DownloadModule {
 
     @JvmStatic
     @Provides
-    fun provideIdUploadAction(
-        context: Context,
-        authManager: AuthenticationManager,
-        tumCabeClient: TUMCabeClient
-    ): IdUploadAction = IdUploadAction(context, authManager, tumCabeClient)
-
-    @JvmStatic
-    @Provides
     fun provideNewsDownloadAction(
+        context: Context,
         newsController: NewsController
-    ): NewsDownloadAction = NewsDownloadAction(newsController)
+    ): NewsDownloadAction = NewsDownloadAction(context, newsController)
 
     @JvmStatic
     @Provides
@@ -70,8 +62,9 @@ object DownloadModule {
     @JvmStatic
     @Provides
     fun provideGradesDownloadAction(
+        context: Context,
         updater: GradesBackgroundUpdater
-    ): GradesDownloadAction = GradesDownloadAction(updater)
+    ): GradesDownloadAction = GradesDownloadAction(context, updater)
 
     @JvmStatic
     @Provides
@@ -79,15 +72,13 @@ object DownloadModule {
         cafeteriaDownloadAction: CafeteriaDownloadAction,
         locationImportAction: LocationImportAction,
         gradesDownloadAction: GradesDownloadAction,
-        idUploadAction: IdUploadAction,
         newsDownloadAction: NewsDownloadAction,
-        updateNoteDownloadAction: UpdateNoteDownloadAction
+        // updateNoteDownloadAction: UpdateNoteDownloadAction
     ): DownloadWorker.WorkerActions = DownloadWorker.WorkerActions(
             cafeteriaDownloadAction,
             locationImportAction,
             gradesDownloadAction,
-            idUploadAction,
             newsDownloadAction,
-            updateNoteDownloadAction
+            // updateNoteDownloadAction
     )
 }
