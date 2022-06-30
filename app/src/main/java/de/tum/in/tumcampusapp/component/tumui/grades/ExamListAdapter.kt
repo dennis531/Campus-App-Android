@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.generic.adapter.SimpleStickyListHeadersAdapter
-import de.tum.`in`.tumcampusapp.component.tumui.grades.model.Exam
+import de.tum.`in`.tumcampusapp.component.tumui.grades.model.AbstractExam
 import org.joda.time.format.DateTimeFormat
 
 /**
  * Custom UI adapter for a list of exams.
  */
-class ExamListAdapter(context: Context, results: List<Exam>) : SimpleStickyListHeadersAdapter<Exam>(context, results.toMutableList()) {
+class ExamListAdapter(context: Context, results: List<AbstractExam>) : SimpleStickyListHeadersAdapter<AbstractExam>(context, results.toMutableList()) {
 
     init {
         itemList.sort()
@@ -33,7 +33,7 @@ class ExamListAdapter(context: Context, results: List<Exam>) : SimpleStickyListH
 
         val exam = itemList[position]
         holder.nameTextView.text = exam.course
-        holder.gradeTextView.text = exam.grade
+        holder.gradeTextView.text = exam.gradeString
 
         val gradeColor = exam.getGradeColor(context)
         holder.gradeTextView.background.setTint(gradeColor)
@@ -46,20 +46,13 @@ class ExamListAdapter(context: Context, results: List<Exam>) : SimpleStickyListH
         holder.examDateTextView.text = String.format("%s: %s", context.getString(R.string.date), date)
 
         holder.additionalInfoTextView.text = String.format("%s: %s, %s: %s",
-                context.getString(R.string.examiner), exam.examiner,
-                context.getString(R.string.mode), exam.modus)
+                context.getString(R.string.examiner),
+                exam.examiner ?: context.getString(R.string.not_specified),
+                context.getString(R.string.type),
+                exam.type ?: context.getString(R.string.not_specified)
+        )
 
         return view
-    }
-
-    override fun generateHeaderName(item: Exam): String {
-        val headerText = super.generateHeaderName(item)
-        val year = Integer.parseInt(headerText.substring(0, 2))
-        return if (headerText[2] == 'W') {
-            context.getString(R.string.winter_semester, year, year + 1)
-        } else {
-            context.getString(R.string.summer_semester, year)
-        }
     }
 
     override fun getItemId(position: Int): Long {

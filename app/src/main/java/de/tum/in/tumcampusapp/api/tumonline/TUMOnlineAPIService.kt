@@ -2,7 +2,6 @@ package de.tum.`in`.tumcampusapp.api.tumonline
 
 import de.tum.`in`.tumcampusapp.api.tumonline.model.AccessToken
 import de.tum.`in`.tumcampusapp.api.tumonline.model.TokenConfirmation
-import de.tum.`in`.tumcampusapp.component.tumui.grades.model.ExamList
 import de.tum.`in`.tumcampusapp.component.tumui.tutionfees.model.TuitionList
 import io.reactivex.Single
 import retrofit2.Call
@@ -71,10 +70,10 @@ interface TUMOnlineAPIService {
 //        @Query("pSuche") query: String
 //    ): Call<PersonList>
 
-    @GET("wbservicesbasic.noten")
-    fun getGrades(
-        @Header("Cache-Control") cacheControl: String
-    ): Call<ExamList>
+//    @GET("wbservicesbasic.noten")
+//    fun getGrades(
+//        @Header("Cache-Control") cacheControl: String
+//    ): Call<ExamList>
 
     @GET("wbservicesbasic.requestToken")
     fun requestToken(

@@ -51,7 +51,7 @@ class GradesNotificationProvider(
     }
 
     companion object {
-        private const val GROUP_KEY_GRADES = "de.tum.in.tumcampus.GRADES"
+        private const val GROUP_KEY_GRADES = "de.tum.in.tumcampus.GRADES" // TODO: Rename
         private const val DELETE_REQUEST_CODE = 0
     }
 }

@@ -21,16 +21,16 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingLMS
-import de.tum.`in`.tumcampusapp.component.tumui.grades.model.Exam
-import de.tum.`in`.tumcampusapp.component.tumui.grades.model.ExamList
+import de.tum.`in`.tumcampusapp.component.tumui.grades.api.GradesAPI
+import de.tum.`in`.tumcampusapp.component.tumui.grades.model.AbstractExam
 import de.tum.`in`.tumcampusapp.databinding.FragmentGradesBinding
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import org.jetbrains.anko.support.v4.defaultSharedPreferences
-import java.text.NumberFormat
-import java.util.*
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
-class GradesFragment : FragmentForAccessingLMS<ExamList>(
+class GradesFragment : FragmentForAccessingLMS<List<AbstractExam>>(
         R.layout.fragment_grades,
         R.string.my_grades
 ) {
@@ -43,8 +43,8 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
 
     private var showBarChartAfterRotate = false
 
-    private val grades: Array<String> by lazy {
-        resources.getStringArray(R.array.grades)
+    private val grades: List<Double> by lazy {
+        resources.getStringArray(R.array.grades).map { it.toDouble() }
     }
 
     private val animationDuration: Long by lazy {
@@ -92,13 +92,12 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
     }
 
     private fun loadGrades(cacheControl: CacheControl) {
-//        val apiCall = apiClient.getGrades(cacheControl)
-//        fetch(apiCall)
+        fetch { (apiClient as GradesAPI).getGrades() }
     }
 
-    override fun onDownloadSuccessful(response: ExamList) {
-        initSpinner(response.exams)
-        showExams(response.exams)
+    override fun onDownloadSuccessful(response: List<AbstractExam>) {
+        initSpinner(response)
+        showExams(response)
 
         barMenuItem?.isEnabled = true
         pieMenuItem?.isEnabled = true
@@ -106,10 +105,10 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
         isFetched = true
         requireActivity().invalidateOptionsMenu()
 
-        storeGradedCourses(response.exams)
+        storeGradedCourses(response)
     }
 
-    private fun storeGradedCourses(exams: List<Exam>) {
+    private fun storeGradedCourses(exams: List<AbstractExam>) {
         val gradesStore = GradesStore(defaultSharedPreferences)
         val courses = exams.map { it.course }
         gradesStore.store(courses)
@@ -120,10 +119,13 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
      *
      * @param gradeDistribution An [ArrayMap] mapping grades to number of occurrences
      */
-    private fun displayPieChart(gradeDistribution: ArrayMap<String, Int>) {
+    private fun displayPieChart(gradeDistribution: ArrayMap<Double, Int>) {
+        val decimalFormat = DecimalFormat("0.0").apply { roundingMode = RoundingMode.HALF_UP }
+
         val entries = grades.map { grade ->
+            val label = if (grade != 0.0) decimalFormat.format(grade) else getString(R.string.no_grade_legend)
             val count = gradeDistribution[grade] ?: 0
-            PieEntry(count.toFloat(), grade)
+            PieEntry(count.toFloat(), label)
         }
 
         val set = PieDataSet(entries, getString(R.string.grades_without_weight)).apply {
@@ -158,7 +160,7 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
      *
      * @param gradeDistribution An [ArrayMap] mapping grades to number of occurrence
      */
-    private fun displayBarChart(gradeDistribution: ArrayMap<String, Int>) {
+    private fun displayBarChart(gradeDistribution: ArrayMap<Double, Int>) {
         val entries = grades.mapIndexed { index, grade ->
             val value = gradeDistribution[grade] ?: 0
             BarEntry(index.toFloat(), value.toFloat())
@@ -166,7 +168,7 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
 
         val set = BarDataSet(entries, getString(R.string.grades_without_weight)).apply {
             setColors(GRADE_COLORS, requireContext())
-            valueTextColor = resources.getColor(R.color.text_primary)
+            valueTextColor = getColor(R.color.text_primary)
         }
 
         with(binding) {
@@ -182,9 +184,6 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
                         return ""
                     }
                 })
-
-                description = null
-                setTouchEnabled(false)
 
                 axisLeft.granularity = 1f
                 axisRight.granularity = 1f
@@ -217,14 +216,14 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
     /**
      * Calculates the average grade of the provided exams.
      *
-     * @param exams List of [Exam] objects
+     * @param exams List of [AbstractExam] objects
      * @return Average grade
      */
-    private fun calculateAverageGrade(exams: List<Exam>): Double {
-        val numberFormat = NumberFormat.getInstance(Locale.GERMAN)
+    private fun calculateAverageGrade(exams: List<AbstractExam>): Double {
         val grades = exams
                 .filter { it.isPassed }
-                .map { numberFormat.parse(it.grade).toDouble() }
+                .map { it.grade }
+                .filterNotNull()
 
         val gradeSum = grades.sum()
         return gradeSum / grades.size.toDouble()
@@ -233,17 +232,15 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
     /**
      * Calculates the grade distribution.
      *
-     * @param exams List of [Exam] objects
+     * @param exams List of [AbstractExam] objects
      * @return An [ArrayMap] mapping grades to number of occurrence
      */
-    private fun calculateGradeDistribution(exams: List<Exam>): ArrayMap<String, Int> {
-        val gradeDistribution = ArrayMap<String, Int>()
+    private fun calculateGradeDistribution(exams: List<AbstractExam>): ArrayMap<Double, Int> {
+        val gradeDistribution = ArrayMap<Double, Int>()
         exams.forEach { exam ->
             // The grade distribution now takes grades with more than one decimal place into account as well
-            var cleanGrade = exam.grade!!
-            if (cleanGrade.contains(longGradeRe)) {
-                cleanGrade = cleanGrade.subSequence(0, 3) as String
-            }
+            val grade = exam.grade ?: 0.0
+            val cleanGrade = (grade * 10.0).toInt() / 10.0
             val count = gradeDistribution[cleanGrade] ?: 0
             gradeDistribution[cleanGrade] = count + 1
         }
@@ -254,11 +251,12 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
      * Initialize the spinner for choosing between the study programs. It determines all study
      * programs by iterating through the provided exams.
      *
-     * @param exams List of [Exam] objects
+     * @param exams List of [AbstractExam] objects
      */
-    private fun initSpinner(exams: List<Exam>) {
+    private fun initSpinner(exams: List<AbstractExam>) {
         val programIds = exams
-                .map { it.programID }
+                .map { it.program }
+                .filterNotNull()
                 .distinct()
                 .map { getString(R.string.study_program_format_string, it) }
 
@@ -269,7 +267,7 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
                 requireContext(), R.layout.simple_spinner_item_actionbar, filters)
 
         with(binding) {
-            filterSpinner?.apply {
+            filterSpinner.apply {
                 adapter = spinnerArrayAdapter
                 setSelection(spinnerPosition)
                 visibility = View.VISIBLE
@@ -284,7 +282,9 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
 
                 val examsToShow = when (position) {
                     0 -> exams
-                    else -> exams.filter { filter.contains(it.programID) }
+                    else -> exams.filter { exam ->
+                        exam.program?.let { filter.contains(it) } ?: false
+                    }
                 }
 
                 showExams(examsToShow)
@@ -298,9 +298,9 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
      * Displays all exams in the list view and chart view. If there are no exams, it displays a
      * placeholder instead.
      *
-     * @param exams List of [Exam] object
+     * @param exams List of [AbstractExam] object
      */
-    private fun showExams(exams: List<Exam>) {
+    private fun showExams(exams: List<AbstractExam>) {
         if (exams.isEmpty()) {
             showError(R.string.no_grades)
             return
@@ -368,9 +368,9 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.menu_activity_grades, menu)
-        barMenuItem = menu?.findItem(R.id.bar_chart_menu)
-        pieMenuItem = menu?.findItem(R.id.pie_chart_menu)
+        inflater.inflate(R.menu.menu_activity_grades, menu)
+        barMenuItem = menu.findItem(R.id.bar_chart_menu)
+        pieMenuItem = menu.findItem(R.id.pie_chart_menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -443,8 +443,7 @@ class GradesFragment : FragmentForAccessingLMS<ExamList>(
 
         fun newInstance() = GradesFragment()
 
-        private val uncommonGradeRe = Regex("[1-5],[1245689][0-9]*")
-        private val longGradeRe = Regex("[1-4],[0-9][0-9]+")
+        private val uncommonGradeRe = Regex("[1-5][,.][1245689][0-9]*")
 
         private val GRADE_COLORS = intArrayOf(
                 R.color.grade_1_0, R.color.grade_1_1, R.color.grade_1_2, R.color.grade_1_3,

@@ -14,6 +14,7 @@ import de.tum.`in`.tumcampusapp.api.studip.interceptors.CheckErrorInterceptor
 import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipBaseEvent
 import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipCalendarEvent
 import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipCourseEvent
+import de.tum.`in`.tumcampusapp.api.studip.model.grades.StudipExam
 import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLecture
 import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLectureAppointment
 import de.tum.`in`.tumcampusapp.api.studip.model.news.StudipNews
@@ -22,6 +23,8 @@ import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipPerson
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItem
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.AbstractEvent
+import de.tum.`in`.tumcampusapp.component.tumui.grades.api.GradesAPI
+import de.tum.`in`.tumcampusapp.component.tumui.grades.model.AbstractExam
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.api.LecturesAPI
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LectureAppointmentInterface
@@ -31,6 +34,7 @@ import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
 import de.tum.`in`.tumcampusapp.component.ui.news.model.AbstractNews
 import de.tum.`in`.tumcampusapp.utils.*
 import okhttp3.Request
+import org.joda.time.DateTime
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.net.URL
@@ -41,9 +45,52 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     PersonAPI,
     CalendarAPI,
     LecturesAPI,
-    NewsAPI
-{
+    NewsAPI,
+    GradesAPI {
     private var userId = Utils.getSetting(context, Const.PROFILE_ID, "")
+
+    override fun getGrades(): List<AbstractExam> {
+        val exam1 = StudipExam(
+            "123",
+            "Info A",
+            "WS 2016",
+        )
+
+        val exam2 = StudipExam(
+            "456",
+            "Info D",
+            "SS 2018",
+            DateTime(2018, 6, 23, 10, 0),
+            "Prof. Dr. Chimani",
+            3.0,
+            "Klausur",
+            "B.Sc. Informatik"
+        )
+
+        val exam3 = StudipExam(
+            "789",
+            "Info C",
+            "SS 2018",
+            DateTime(2018, 6, 23, 10, 0),
+            "Prof. Dr. Porrmann",
+            1.0,
+            "Klausur",
+            "B.Sc. Informatik"
+        )
+
+        val exam4 = StudipExam(
+            "789",
+            "Info B",
+            "SS 2018",
+            DateTime(2018, 6, 23, 10, 0),
+            "Prof. Dr. Pulvermüller",
+            1.0,
+            "Klausur",
+            "B.Sc. Informatik"
+        )
+
+        return listOf(exam1, exam2, exam3, exam4)
+    }
 
     override fun getIdentity(): PersonInterface {
         // Institutes not required

@@ -85,17 +85,18 @@
 
     <!-- Exam/Grades -->
     <string name="average_grade">Average grade</string>
-    <string name="average_grade_hint">Estimated average. Please refer to TUMOnline for the precise one.</string>
+    <string name="average_grade_hint">Estimated average. Please refer to your LMS for the precise one.</string>
     <string name="show_column_chart">Show Column Chart</string>
     <string name="show_pie_chart">Show Pie Chart</string>
     <string name="result_extra">Result:&#160;</string>
     <string name="semester">Semester</string>
     <string name="examiner">Examiner</string>
-    <string name="mode">Mode</string>
+    <string name="type">Type</string>
     <string name="all_programs">All Grades</string>
     <string name="date">Date</string>
     <string name="credits" translatable="false">ECTS</string>
     <string name="no_grades">You don\'t have any grades yet.</string>
+    <string name="no_grade_legend" translatable="false">B</string>
 
     <!-- Preferences -->
     <string name="lrz_id">Identification</string>

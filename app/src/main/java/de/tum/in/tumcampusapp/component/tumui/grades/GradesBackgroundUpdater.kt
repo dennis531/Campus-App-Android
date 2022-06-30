@@ -1,44 +1,48 @@
 package de.tum.`in`.tumcampusapp.component.tumui.grades
 
 import android.content.Context
-import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
-import de.tum.`in`.tumcampusapp.api.tumonline.TUMOnlineClient
+import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.notifications.NotificationScheduler
-import de.tum.`in`.tumcampusapp.component.tumui.grades.model.ExamList
-import de.tum.`in`.tumcampusapp.utils.Const
+import de.tum.`in`.tumcampusapp.component.tumui.grades.api.GradesAPI
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
 class GradesBackgroundUpdater @Inject constructor(
     private val context: Context,
-    private val tumOnlineClient: TUMOnlineClient,
+    private val apiClient: LMSClient,
     private val notificationScheduler: NotificationScheduler,
     private val gradesStore: GradesStore
-) : Callback<ExamList> {
+) {
 
     fun fetchGradesAndNotifyIfNecessary() {
-        if (Utils.getSetting(context, Const.LRZ_ID, "").isNotEmpty()) {
-            tumOnlineClient.getGrades(CacheControl.BYPASS_CACHE).enqueue(this)
+        if (ConfigUtils.getAuthManager(context).hasAccess()) {
+            doAsync {
+                fetchGrades()
+            }
         }
     }
 
-    override fun onResponse(call: Call<ExamList>, response: Response<ExamList>) {
-        val newCourses = response.body()?.exams.orEmpty().map { it.course }
-        val existingCourses = gradesStore.gradedCourses
-        val diff = newCourses - existingCourses
+    private fun fetchGrades() {
+        try {
+            val exams = (apiClient as GradesAPI).getGrades()
+            val newCourses = exams.map { it.course }
+            val existingCourses = gradesStore.gradedCourses
+            val diff = newCourses - existingCourses
 
-        if (diff.size > NOTIFICATION_THRESHOLD) {
-            // We assume that this is the first time the user's grades are fetched and stored. Since
-            // this likely includes old grades, we don't display a notification.
-            gradesStore.store(newCourses)
-            return
-        }
+            if (diff.size > NOTIFICATION_THRESHOLD) {
+                // We assume that this is the first time the user's grades are fetched and stored. Since
+                // this likely includes old grades, we don't display a notification.
+                gradesStore.store(newCourses)
+                return
+            }
 
-        if (diff.isNotEmpty()) {
-            showGradesNotification(diff)
+            if (diff.isNotEmpty()) {
+                showGradesNotification(diff)
+            }
+        } catch (t: Throwable) {
+            Utils.log(t)
         }
     }
 
@@ -46,10 +50,6 @@ class GradesBackgroundUpdater @Inject constructor(
         val provider = GradesNotificationProvider(context, newGrades)
         val notification = provider.buildNotification() ?: return
         notificationScheduler.schedule(notification)
-    }
-
-    override fun onFailure(call: Call<ExamList>, t: Throwable) {
-        Utils.log(t)
     }
 
     companion object {

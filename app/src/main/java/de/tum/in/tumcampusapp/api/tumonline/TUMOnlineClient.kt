@@ -6,7 +6,6 @@ import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import de.tum.`in`.tumcampusapp.api.general.ApiHelper
 import de.tum.`in`.tumcampusapp.api.tumonline.model.AccessToken
 import de.tum.`in`.tumcampusapp.api.tumonline.model.TokenConfirmation
-import de.tum.`in`.tumcampusapp.component.tumui.grades.model.ExamList
 import de.tum.`in`.tumcampusapp.component.tumui.tutionfees.model.TuitionList
 import de.tum.`in`.tumcampusapp.utils.CacheManager
 import io.reactivex.Single
@@ -60,9 +59,9 @@ class TUMOnlineClient(private val apiService: TUMOnlineAPIService) {
 //        return apiService.searchPerson(query)
 //    }
 
-    fun getGrades(cacheControl: CacheControl): Call<ExamList> {
-        return apiService.getGrades(cacheControl.header)
-    }
+//    fun getGrades(cacheControl: CacheControl): Call<ExamList> {
+//        return apiService.getGrades(cacheControl.header)
+//    }
 
     fun requestToken(username: String, tokenName: String): Single<AccessToken> {
         return apiService.requestToken(username, tokenName)

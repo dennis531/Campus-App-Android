@@ -46,6 +46,7 @@ object Config {
     val LECTURES_ENABLED = true
     val NEWS_ENABLED = true
     val EDUROAM_ENABLED = true
+    val GRADES_ENABLED = true
     val TRANSPORTATION_ENABLED = false
     val OPENINGHOUR_ENABLED = false
     val CAFETERIA_ENABLED = false

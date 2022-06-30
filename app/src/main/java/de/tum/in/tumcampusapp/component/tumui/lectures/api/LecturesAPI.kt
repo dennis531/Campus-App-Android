@@ -1,9 +1,10 @@
 package de.tum.`in`.tumcampusapp.component.tumui.lectures.api
 
+import de.tum.`in`.tumcampusapp.api.generic.BaseAPI
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LectureAppointmentInterface
 
-interface LecturesAPI {
+interface LecturesAPI: BaseAPI {
     fun getPersonalLectures(): List<AbstractLecture>
     fun getLectureDetails(id: String): AbstractLecture
     fun getLectureAppointments(id: String): List<LectureAppointmentInterface>
