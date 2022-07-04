@@ -7,15 +7,15 @@ import android.widget.TextView
 
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.generic.adapter.SimpleStickyListHeadersAdapter
-import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoom
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
 
 /**
  * Custom UI adapter for a list of employees.
  */
 class RoomFinderListAdapter(
     context: Context,
-    items: List<RoomFinderRoom>
-) : SimpleStickyListHeadersAdapter<RoomFinderRoom>(context, items.toMutableList()) {
+    items: List<RoomFinderRoomInterface>
+) : SimpleStickyListHeadersAdapter<RoomFinderRoomInterface>(context, items.toMutableList()) {
 
     internal class ViewHolder {
         var tvRoomTitle: TextView? = null
@@ -39,8 +39,8 @@ class RoomFinderListAdapter(
 
         val room = itemList[position]
         // Setting all values in listView
-        holder.tvRoomTitle?.text = room.info
-        holder.tvBuildingTitle?.text = room.formattedAddress
+        holder.tvRoomTitle?.text = room.info ?: context.getString(R.string.no_info_available)
+        holder.tvBuildingTitle?.text = room.address ?: context.getString(R.string.no_address_available)
         return view
     }
 }

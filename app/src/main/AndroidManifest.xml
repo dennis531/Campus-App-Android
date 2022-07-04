@@ -80,7 +80,7 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="de.tum.in.tumcampusapp.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true" >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fileprovider" />
@@ -89,7 +89,7 @@
         <activity
             android:name=".component.ui.onboarding.StartupActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -118,7 +118,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/news"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
+            android:parentActivityName=".component.ui.overview.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.overview.MainActivity" />
@@ -127,7 +127,7 @@
             android:name=".component.tumui.grades.GradesActivity"
             android:label="@string/empty_string"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
+            android:parentActivityName=".component.ui.overview.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.overview.MainActivity" />
@@ -137,7 +137,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/settings"
             android:parentActivityName=".component.ui.overview.MainActivity"
-            android:theme="@style/AppTheme.NoDrawerLayout">
+            android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.overview.MainActivity" />
@@ -146,7 +146,7 @@
             android:name=".component.ui.openinghour.OpeningHoursDetailActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/opening_hours"
-            android:parentActivityName=".component.ui.openinghour.OpeningHoursListActivity">
+            android:parentActivityName=".component.ui.openinghour.OpeningHoursListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.openinghour.OpeningHoursListActivity" />
@@ -155,7 +155,7 @@
             android:name=".component.ui.openinghour.OpeningHoursListActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/opening_hours"
-            android:parentActivityName=".component.ui.overview.MainActivity">
+            android:parentActivityName=".component.ui.overview.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.overview.MainActivity" />
@@ -165,7 +165,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/mvv"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
+            android:parentActivityName=".component.ui.overview.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -186,7 +186,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/lectures_appointments"
             android:parentActivityName=".component.tumui.lectures.activity.LectureDetailsActivity"
-            android:theme="@style/AppTheme.NoDrawerLayout">
+            android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.tum.in.tumcampusapp.component.tumui.lectures.activity.LectureDetailsActivity" />
@@ -196,7 +196,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/lectures_information"
             android:parentActivityName=".component.tumui.lectures.activity.LecturesPersonalActivity"
-            android:theme="@style/AppTheme.NoDrawerLayout">
+            android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.tum.in.tumcampusapp.component.tumui.lectures.activity.LecturesPersonalActivity" />
@@ -206,7 +206,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/my_lectures"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
+            android:parentActivityName=".component.ui.overview.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -223,7 +223,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/empty_string"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
+            android:parentActivityName=".component.ui.overview.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.overview.MainActivity" />
@@ -233,7 +233,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/cafeteria_notification_settings"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.cafeteria.activity.CafeteriaActivity">
+            android:parentActivityName=".component.ui.cafeteria.activity.CafeteriaActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.tum.in.tumcampusapp.component.ui.cafeteria.activity.CafeteriaActivity" />
@@ -243,7 +243,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/person_search"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
+            android:parentActivityName=".component.ui.overview.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -259,7 +259,7 @@
             android:name=".component.tumui.person.PersonDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/person_information"
-            android:theme="@style/AppTheme.NoDrawerLayout">
+            android:theme="@style/AppTheme.NoDrawerLayout" >
             android:parentActivityName=".component.tumui.person.PersonSearchActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -270,7 +270,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/roomfinder"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
+            android:parentActivityName=".component.ui.overview.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.overview.MainActivity" />
@@ -288,7 +288,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/roomfinder"
             android:parentActivityName=".component.tumui.roomfinder.RoomFinderActivity"
-            android:theme="@style/AppTheme.NoDrawerLayout">
+            android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.tum.in.tumcampusapp.component.tumui.roomfinder.RoomFinderActivity" />
@@ -298,7 +298,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/tuition_fees"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
+            android:parentActivityName=".component.ui.overview.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.overview.MainActivity" />
@@ -309,7 +309,7 @@
             android:label="@string/about_tca"
             android:launchMode="singleTop"
             android:parentActivityName=".component.other.settings.SettingsActivity"
-            android:theme="@style/AppTheme.NoDrawerLayout">
+            android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.other.settings.SettingsActivity" />
@@ -320,7 +320,7 @@
             android:label="@string/setup_eduroam"
             android:launchMode="singleTop"
             android:parentActivityName=".component.ui.overview.MainActivity"
-            android:theme="@style/AppTheme.NoDrawerLayout">
+            android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.overview.MainActivity" />
@@ -331,7 +331,7 @@
             android:label="@string/connect_to_tum_online"
             android:launchMode="singleTop"
             android:parentActivityName=".component.other.generic.activity.BaseNavigationActivity"
-            android:theme="@style/AppTheme.NoDrawerLayout">
+            android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.other.generic.activity.BaseNavigationActivity" />
@@ -341,9 +341,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:scheme="@string/oauth_callback_scheme"
                     android:host="@string/oauth_callback_host"
-                    android:pathPrefix="@string/oauth_callback_path_prefix" />
+                    android:pathPrefix="@string/oauth_callback_path_prefix"
+                    android:scheme="@string/oauth_callback_scheme" />
             </intent-filter>
         </activity>
         <activity
@@ -351,24 +351,22 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/calendar"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
+            android:parentActivityName=".component.ui.overview.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.overview.MainActivity" />
         </activity>
-
         <activity
             android:name=".component.tumui.calendar.CreateEventActivity"
             android:label="@string/activity_create_event_title"
-            android:parentActivityName=".component.tumui.calendar.CalendarActivity">
+            android:parentActivityName=".component.tumui.calendar.CalendarActivity" >
         </activity>
-
         <activity
             android:name=".component.ui.chat.activity.ChatRoomsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/my_chat_rooms"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.overview.MainActivity">
+            android:parentActivityName=".component.ui.overview.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.overview.MainActivity" />
@@ -378,7 +376,7 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/my_chat_rooms"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.ui.chat.activity.ChatRoomsActivity">
+            android:parentActivityName=".component.ui.chat.activity.ChatRoomsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.tum.in.tumcampusapp.component.ui.chat.activity.ChatRoomsActivity" />
@@ -389,7 +387,7 @@
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:parentActivityName=".component.ui.chat.activity.ChatRoomsActivity"
-            android:theme="@style/AppThemeFullscreen">
+            android:theme="@style/AppThemeFullscreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.tum.in.tumcampusapp.component.ui.chat.activity.ChatRoomsActivity" />
@@ -405,14 +403,14 @@
             android:name=".component.ui.chat.AddChatMemberActivity"
             android:label="Add Participant"
             android:parentActivityName=".component.ui.chat.activity.ChatActivity"
-            android:theme="@style/AppTheme.NoDrawerLayout">
+            android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".component.ui.chat.activity.ChatActivity" />
         </activity> <!-- receiver for the mensaWidget -->
         <receiver
             android:name=".component.ui.cafeteria.widget.MensaWidget"
-            android:label="@string/mensa_widget">
+            android:label="@string/mensa_widget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -427,7 +425,7 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" /> <!-- receiver for the MVVWidget -->
         <receiver
             android:name=".component.ui.transportation.widget.MVVWidget"
-            android:label="@string/mvv_widget">
+            android:label="@string/mvv_widget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="de.tum.in.newtumcampus.intent.action.MVV_WIDGET_FORCE_RELOAD" />
@@ -449,7 +447,7 @@
             android:excludeFromRecents="true"
             android:label="@string/mvv_widget_select_station"
             android:launchMode="singleTop"
-            android:taskAffinity="">
+            android:taskAffinity="" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -464,7 +462,7 @@
         </activity> <!-- receiver for the TimetableWidget -->
         <receiver
             android:name=".component.tumui.calendar.widget.TimetableWidget"
-            android:label="@string/timetable_widget">
+            android:label="@string/timetable_widget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -485,12 +483,12 @@
             android:excludeFromRecents="true"
             android:label="@string/timetable_widget_select_lectures"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoDrawerLayout">
+            android:theme="@style/AppTheme.NoDrawerLayout" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity> <!-- Used to restart alarm when device has been restarted -->
-        <receiver android:name=".service.StartSyncReceiver">
+        <receiver android:name=".service.StartSyncReceiver" >
             <intent-filter>
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -513,7 +511,7 @@
             android:name=".service.FcmReceiverService"
             android:enabled="true"
             android:exported="true"
-            android:stopWithTask="false">
+            android:stopWithTask="false" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -523,7 +521,7 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver android:name=".service.GeofencingUpdateReceiver" />
-        <receiver android:name=".service.GeofencingStartupReceiver">
+        <receiver android:name=".service.GeofencingStartupReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.location.MODE_CHANGED" />
@@ -531,7 +529,6 @@
                 <action android:name="android.location.PROVIDERS_CHANGED" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".component.notifications.receivers.NotificationReceiver" />
         <receiver android:name=".component.notifications.receivers.NotificationAlarmReceiver" />
         <receiver android:name=".component.tumui.grades.GradeNotificationDeleteReceiver" />

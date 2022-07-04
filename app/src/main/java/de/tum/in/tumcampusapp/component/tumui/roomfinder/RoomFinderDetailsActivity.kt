@@ -1,85 +1,66 @@
 package de.tum.`in`.tumcampusapp.component.tumui.roomfinder
 
 import android.content.ActivityNotFoundException
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.general.ApiHelper
-import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
-import de.tum.`in`.tumcampusapp.component.other.generic.ImageViewTouchFragment
-import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForLoadingInBackground
-import de.tum.`in`.tumcampusapp.component.other.locations.LocationManager
-import de.tum.`in`.tumcampusapp.component.other.locations.model.Geo
-import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinate
-import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderMap
-import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoom
+import de.tum.`in`.tumcampusapp.api.generic.LMSClient
+import de.tum.`in`.tumcampusapp.component.other.generic.activity.ProgressActivity
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.api.RoomFinderAPI
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinateInterface
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
 import de.tum.`in`.tumcampusapp.utils.Component
-import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.NetUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 /**
  * Displays the map regarding the searched room.
  */
-class RoomFinderDetailsActivity : ActivityForLoadingInBackground<Void, String>(R.layout.activity_roomfinderdetails, Component.ROOMFINDER), DialogInterface.OnClickListener {
+class RoomFinderDetailsActivity : ProgressActivity<RoomFinderCoordinateInterface?>(R.layout.activity_roomfinderdetails, Component.ROOMFINDER) {
 
     @Inject
-    lateinit var tumCabeClient: TUMCabeClient
+    lateinit var apiClient: LMSClient
 
-    private lateinit var imageFragment: ImageViewTouchFragment
+    private lateinit var detailsFragment: RoomFinderDetailsFragment
     private var weekViewFragment: Fragment? = null
 
-    private var mapsLoaded: Boolean = false
-
-    private var mapId: String = ""
-    private var mapsList: List<RoomFinderMap> = ArrayList()
-    private val infoLoaded: Boolean = false
-
-    private var roomFinderCoordinateCall: Call<RoomFinderCoordinate>? = null
-    private var roomFinderMapsCall: Call<List<RoomFinderMap>>? = null
-
-    private val room: RoomFinderRoom by lazy {
-        intent.getSerializableExtra(EXTRA_ROOM_INFO) as RoomFinderRoom
+    private val room: RoomFinderRoomInterface by lazy {
+        intent.getSerializableExtra(EXTRA_ROOM_INFO) as RoomFinderRoomInterface
     }
+
+    private var roomCoordinates: RoomFinderCoordinateInterface? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         injector.roomFinderComponent().inject(this)
 
-        imageFragment = ImageViewTouchFragment.newInstance()
+        supportActionBar?.title = room.name
+
+        detailsFragment = RoomFinderDetailsFragment.newInstance(room)
         supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, imageFragment)
+                .add(R.id.fragment_container, detailsFragment)
                 .commit()
 
-        startLoading()
+        loadGeo()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_roomfinder_detail, menu)
 
-        val switchMap = menu.findItem(R.id.action_switch_map)
-        switchMap.isVisible = "10" != mapId && mapsLoaded && weekViewFragment == null
-
         val timetable = menu.findItem(R.id.action_room_timetable)
-        timetable.isVisible = infoLoaded
+//        timetable.isVisible = infoLoaded
         timetable.setIcon(
                 if (weekViewFragment == null) R.drawable.ic_outline_event_note_24px
-                else R.drawable.ic_outline_map_24px
+                else R.drawable.ic_action_info
         )
 
-        menu.findItem(R.id.action_directions).isVisible = infoLoaded && weekViewFragment == null
+        menu.findItem(R.id.action_directions).isVisible = weekViewFragment == null && roomCoordinates != null
         return true
     }
 
@@ -91,11 +72,7 @@ class RoomFinderDetailsActivity : ActivityForLoadingInBackground<Void, String>(R
                 return true
             }
             R.id.action_directions -> {
-                loadGeo()
-                return true
-            }
-            R.id.action_switch_map -> {
-                showMapSwitch()
+                openDirections()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -103,7 +80,7 @@ class RoomFinderDetailsActivity : ActivityForLoadingInBackground<Void, String>(R
     }
 
     override fun onBackPressed() {
-        // Remove weekViewFragment with room timetable if present and show map again
+        // Remove weekViewFragment with room timetable if present and show details again
         if (weekViewFragment != null) {
             toggleRoomTimetable()
             invalidateOptionsMenu()
@@ -117,159 +94,54 @@ class RoomFinderDetailsActivity : ActivityForLoadingInBackground<Void, String>(R
         val ft = supportFragmentManager.beginTransaction()
         // Remove if weekViewFragment is already present
         if (weekViewFragment != null) {
-            ft.replace(R.id.fragment_container, imageFragment)
+            ft.replace(R.id.fragment_container, detailsFragment)
             ft.commit()
             weekViewFragment = null
             return
         }
 
-        val roomApiCode = room.room_id
-        weekViewFragment = WeekViewFragment.newInstance(roomApiCode)
+        weekViewFragment = WeekViewFragment.newInstance(room)
         ft.replace(R.id.fragment_container, weekViewFragment!!)
         ft.commit()
     }
 
-    private fun showMapSwitch() {
-        val descriptions = mapsList.map { it.description }
-        val currentPosition = mapsList.indexOfFirst { it.map_id == mapId }
-
-        AlertDialog.Builder(this)
-                .setSingleChoiceItems(descriptions.toTypedArray(), currentPosition, this)
-                .show()
+    private fun loadGeo() {
+        fetch { (apiClient as RoomFinderAPI).fetchRoomCoordinates(room) }
     }
 
-    override fun onClick(dialog: DialogInterface, whichButton: Int) {
-        dialog.dismiss()
-        val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
-        mapId = mapsList[selectedPosition].map_id
-        startLoading()
-    }
-
-    override fun onLoadInBackground(vararg arg: Void): String? {
-        val encodedArchId = ApiHelper.encodeUrl(room.arch_id)
-
-        return if (mapId.isEmpty()) {
-            Const.URL_DEFAULT_MAP_IMAGE + encodedArchId
-        } else {
-            Const.URL_MAP_IMAGE + encodedArchId + '/'.toString() + ApiHelper.encodeUrl(mapId)
-        }
-    }
-
-    override fun onLoadFinished(url: String?) {
-        if (url == null) {
-            showImageLoadingError()
-        } else {
-            imageFragment.loadImage(url) { showImageLoadingError() }
-        }
-
-        supportActionBar?.title = room.info
-        supportActionBar?.subtitle = room.formattedAddress
-
-        showLoadingEnded()
-        loadMapList()
-    }
-
-    private fun loadMapList() {
-        showLoadingStart()
-
-        roomFinderMapsCall = tumCabeClient.fetchAvailableMaps(room.arch_id)
-        roomFinderMapsCall?.enqueue(object : Callback<List<RoomFinderMap>> {
-            override fun onResponse(
-                call: Call<List<RoomFinderMap>>,
-                response: Response<List<RoomFinderMap>>
-            ) {
-                val data = response.body()
-                roomFinderMapsCall = null
-
-                if (!response.isSuccessful || data == null) {
-                    onMapListLoadFailed()
-                    return
-                }
-                onMapListLoadFinished(data)
-            }
-
-            override fun onFailure(
-                call: Call<List<RoomFinderMap>>,
-                throwable: Throwable
-            ) {
-                if (call.isCanceled) {
-                    return
-                }
-
-                onMapListLoadFailed()
-                roomFinderMapsCall = null
-            }
-        })
-    }
-
-    private fun onMapListLoadFailed() {
-        onMapListLoadFinished(null)
-    }
-
-    private fun onMapListLoadFinished(result: List<RoomFinderMap>?) {
-        showLoadingEnded()
-        if (result == null) {
-            if (NetUtils.isConnected(this)) {
-                showErrorLayout()
-            } else {
-                showNoInternetLayout()
-            }
+    override fun onDownloadSuccessful(response: RoomFinderCoordinateInterface?) {
+        super.onDownloadSuccessful(response)
+        if (response == null) {
+            onLoadGeoFailed()
             return
         }
-        mapsList = result
-        if (mapsList.size > 1) {
-            mapsLoaded = true
-        }
 
-        invalidateOptionsMenu()
+        onGeoLoadFinished(response)
     }
 
-    private fun loadGeo() {
-        showLoadingStart()
-        roomFinderCoordinateCall = tumCabeClient.fetchRoomFinderCoordinates(room.arch_id)
-        roomFinderCoordinateCall?.enqueue(object : Callback<RoomFinderCoordinate> {
-            override fun onResponse(
-                call: Call<RoomFinderCoordinate>,
-                response: Response<RoomFinderCoordinate>
-            ) {
-                val data = response.body()
-                roomFinderCoordinateCall = null
-
-                if (!response.isSuccessful || data == null) {
-                    onLoadGeoFailed()
-                    return
-                }
-
-                onGeoLoadFinished(LocationManager.convertRoomFinderCoordinateToGeo(data))
-            }
-
-            override fun onFailure(
-                call: Call<RoomFinderCoordinate>,
-                throwable: Throwable
-            ) {
-                if (call.isCanceled) {
-                    return
-                }
-
-                onLoadGeoFailed()
-                roomFinderCoordinateCall = null
-            }
-        })
+    override fun onDownloadFailure(throwable: Throwable) {
+        onLoadGeoFailed()
     }
 
     private fun onLoadGeoFailed() {
         onGeoLoadFinished(null)
     }
 
-    private fun onGeoLoadFinished(result: Geo?) {
+    private fun onGeoLoadFinished(result: RoomFinderCoordinateInterface?) {
         showLoadingEnded()
-        if (result == null) {
+        roomCoordinates = result
+        invalidateOptionsMenu()
+    }
+
+    private fun openDirections() {
+        val rCoordinates = roomCoordinates
+        if (rCoordinates == null) {
             Utils.showToastOnUIThread(this@RoomFinderDetailsActivity, R.string.no_map_available)
             return
         }
 
         // Build get directions intent and see if some app can handle it
-        val coordinates = "${result.latitude},${result.longitude}"
+        val coordinates = "${rCoordinates.latitude},${rCoordinates.longitude}"
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=$coordinates"))
         val pkgAppsList = applicationContext.packageManager
                 .queryIntentActivities(intent, PackageManager.GET_RESOLVED_FILTER)
@@ -287,20 +159,6 @@ class RoomFinderDetailsActivity : ActivityForLoadingInBackground<Void, String>(R
             Utils.log(e)
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.google.android.apps.maps")))
         }
-    }
-
-    private fun showImageLoadingError() {
-        if (NetUtils.isConnected(this)) {
-            showError(R.string.error_something_wrong)
-        } else {
-            showNoInternetLayout()
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        roomFinderMapsCall?.cancel()
-        roomFinderCoordinateCall?.cancel()
     }
 
     companion object {

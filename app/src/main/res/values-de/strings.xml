@@ -39,6 +39,9 @@
 
     <!-- Roomfinder -->
     <string name="no_map_available">Keine Karte verfügbar</string>
+    <string name="no_address_available">Keine Adresse verfügbar</string>
+    <string name="no_info_available">Keine Informationen verfügbar</string>
+    <string name="no_schedules_available">Keine Belegungen verfügbar</string>
     <string name="search_rooms">Suche nach Räumen</string>
 
     <!-- Auxiliary -->

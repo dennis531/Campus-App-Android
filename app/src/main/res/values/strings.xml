@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- START Translated, please do not change identifiers -->
@@ -44,6 +44,9 @@
 
     <!-- Roomfinder -->
     <string name="no_map_available">No map available</string>
+    <string name="no_address_available">No address available</string>
+    <string name="no_info_available">No info available</string>
+    <string name="no_schedules_available">No schedules available</string>
     <string name="search_rooms">Search rooms</string>
 
     <!-- TUMonline errors -->

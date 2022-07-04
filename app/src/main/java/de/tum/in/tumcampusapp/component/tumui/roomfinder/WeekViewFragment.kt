@@ -9,23 +9,22 @@ import androidx.fragment.app.Fragment
 import com.alamkanak.weekview.WeekView
 import com.alamkanak.weekview.WeekViewDisplayable
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.WidgetCalendarItem
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.api.RoomFinderAPI
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
+import org.jetbrains.anko.support.v4.runOnUiThread
 import java.util.*
 
 class WeekViewFragment : Fragment() {
 
-    private var roomApiCode: String? = null
-    private lateinit var weekView: WeekView<WidgetCalendarItem>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        roomApiCode = arguments?.getString(Const.ROOM_ID)
+    private val room: RoomFinderRoomInterface by lazy {
+        arguments?.getSerializable(Const.ROOM_ID) as RoomFinderRoomInterface
     }
+
+    private lateinit var weekView: WeekView<WidgetCalendarItem>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,18 +36,15 @@ class WeekViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         weekView = view.findViewById(R.id.weekView)
         weekView.goToHour(8)
+
+        loadEventsInBackground()
     }
 
-    private fun loadEventsInBackground(start: Calendar, end: Calendar) {
+    private fun loadEventsInBackground() {
         // Populate the week view with the events of the month to display
         Thread {
-            val format = DateTimeFormat.forPattern("yyyyMMdd").withLocale(Locale.getDefault())
-
-            val formattedStartTime = format.print(DateTime(start))
-            val formattedEndTime = format.print(DateTime(end))
-
             // Convert to the proper type
-            val events = fetchEventList(roomApiCode, formattedStartTime, formattedEndTime)
+            val events = fetchEventList(room)
 
             requireActivity().runOnUiThread {
                 weekView.submit(events)
@@ -57,11 +53,17 @@ class WeekViewFragment : Fragment() {
         }.start()
     }
 
-    private fun fetchEventList(roomId: String?, startDate: String, endDate: String): List<WeekViewDisplayable<WidgetCalendarItem>> {
+    private fun fetchEventList(room: RoomFinderRoomInterface): List<WeekViewDisplayable<WidgetCalendarItem>> {
         try {
-            val schedules = TUMCabeClient
-                    .getInstance(requireActivity())
-                    .fetchSchedule(roomId, startDate, endDate) ?: return emptyList()
+            val apiClient = ConfigUtils.getLMSClient(requireContext())
+            val schedules = (apiClient as RoomFinderAPI).fetchRoomSchedule(room)
+
+            if (schedules == null) {
+                runOnUiThread {
+                    Utils.showToast(requireContext(), R.string.no_schedules_available)
+                }
+                return emptyList()
+            }
 
             // Convert to the proper type
             val events = ArrayList<WeekViewDisplayable<WidgetCalendarItem>>()
@@ -81,9 +83,9 @@ class WeekViewFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(roomApiCode: String): WeekViewFragment {
+        fun newInstance(room: RoomFinderRoomInterface): WeekViewFragment {
             val fragment = WeekViewFragment()
-            fragment.arguments = Bundle().apply { putString(Const.ROOM_ID, roomApiCode) }
+            fragment.arguments = Bundle().apply { putSerializable(Const.ROOM_ID, room) }
             return fragment
         }
     }

@@ -22,10 +22,6 @@ import de.tum.in.tumcampusapp.api.general.model.TUMCabeVerification;
 import de.tum.in.tumcampusapp.api.general.model.UploadStatus;
 import de.tum.in.tumcampusapp.component.tumui.feedback.model.Feedback;
 import de.tum.in.tumcampusapp.component.tumui.feedback.model.FeedbackResult;
-import de.tum.in.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinate;
-import de.tum.in.tumcampusapp.component.tumui.roomfinder.model.RoomFinderMap;
-import de.tum.in.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoom;
-import de.tum.in.tumcampusapp.component.tumui.roomfinder.model.RoomFinderSchedule;
 import de.tum.in.tumcampusapp.component.ui.cafeteria.model.Cafeteria;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMember;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMessage;
@@ -212,31 +208,31 @@ public final class TUMCabeClient {
         }
     }
 
-    public Call<List<RoomFinderMap>> fetchAvailableMaps(final String archId) {
-        return service.fetchAvailableMaps(ApiHelper.encodeUrl(archId));
-    }
+//    public Call<List<RoomFinderMap>> fetchAvailableMaps(final String archId) {
+//        return service.fetchAvailableMaps(ApiHelper.encodeUrl(archId));
+//    }
 
-    public List<RoomFinderRoom> fetchRooms(String searchStrings) throws IOException {
-        return service.fetchRooms(ApiHelper.encodeUrl(searchStrings))
-                .execute()
-                .body();
-    }
+//    public List<RoomFinderRoom> fetchRooms(String searchStrings) throws IOException {
+//        return service.fetchRooms(ApiHelper.encodeUrl(searchStrings))
+//                .execute()
+//                .body();
+//    }
 
-    public RoomFinderCoordinate fetchCoordinates(String archId) throws IOException {
-        return fetchRoomFinderCoordinates(archId).execute().body();
-    }
+//    public RoomFinderCoordinateInterface fetchCoordinates(String archId) throws IOException {
+//        return fetchRoomFinderCoordinates(archId).execute().body();
+//    }
 
-    public Call<RoomFinderCoordinate> fetchRoomFinderCoordinates(String archId) {
-        return service.fetchCoordinates(archId);
-    }
+//    public Call<RoomFinderCoordinateInterface> fetchRoomFinderCoordinates(String archId) {
+//        return service.fetchCoordinates(archId);
+//    }
 
-    @Nullable
-    public List<RoomFinderSchedule> fetchSchedule(String roomId, String start, String end) throws IOException {
-        return service.fetchSchedule(ApiHelper.encodeUrl(roomId),
-                ApiHelper.encodeUrl(start), ApiHelper.encodeUrl(end))
-                .execute()
-                .body();
-    }
+//    @Nullable
+//    public List<RoomFinderScheduleInterface> fetchSchedule(String roomId, String start, String end) throws IOException {
+//        return service.fetchSchedule(ApiHelper.encodeUrl(roomId),
+//                ApiHelper.encodeUrl(start), ApiHelper.encodeUrl(end))
+//                .execute()
+//                .body();
+//    }
 
     public Call<FeedbackResult> sendFeedback(Feedback feedback) {
         return service.sendFeedback(feedback);

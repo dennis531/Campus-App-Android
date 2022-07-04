@@ -105,7 +105,7 @@ abstract class ProgressActivity<T>(
     }
 
     /**
-     * Fetches a call from TUMonline and uses the provided listener if the request was successful.
+     * Fetches a call and uses the provided listener if the request was successful.
      *
      * @param call The [Call] to fetch
      */
@@ -178,12 +178,7 @@ abstract class ProgressActivity<T>(
      * appropriate error message, either in an error layout, or as a dialog or Snackbar.
      */
     protected fun onDownloadUnsuccessful(statusCode: Int) {
-        if (statusCode == 503) {
-            // The service is unavailable
-            showError(R.string.error_tum_online_unavailable)
-        } else {
-            showErrorSnackbar(R.string.error_unknown)
-        }
+        showErrorSnackbar(R.string.error_unknown)
     }
 
     /**

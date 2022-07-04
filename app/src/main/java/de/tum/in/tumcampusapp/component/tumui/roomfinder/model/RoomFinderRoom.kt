@@ -1,48 +1,37 @@
 package de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model
 
 import de.tum.`in`.tumcampusapp.component.other.general.model.Recent
-import de.tum.`in`.tumcampusapp.component.other.generic.adapter.SimpleStickyListHeadersAdapter
-import java.io.Serializable
 
 /**
  * This class is used as a model for rooms in Roomfinder retrofit request.
  * @param name This is the campus name
  */
 data class RoomFinderRoom(
-    var campus: String = "",
-    var address: String = "",
-    var info: String = "",
-    var arch_id: String = "",
-    var room_id: String = "",
-    private val name: String = ""
-) : SimpleStickyListHeadersAdapter.SimpleStickyListItem, Serializable {
-
-    private val formattedName: String
-        get() {
-            return if (name == "null")
-                ""
-            else
-                name
-        }
-
-    val formattedAddress: String
-        get() = address.trim()
-                .replace("(", " (")
-                .replace("\\s+".toRegex(), " ")
-
-    override fun getHeadName() = formattedName
-
-    override fun getHeaderId() = getHeadName()
+    override val id: String = "",
+    override val buildingId: String = "",
+    override val name: String = "",
+    override val address: String? = "",
+    override val campus: String? = "",
+    override val info: String? = "",
+    override val imageUrl: String? = ""
+): RoomFinderRoomInterface {
 
     companion object {
-        private const val serialVersionUID = 6631656320611471476L
-
         fun fromRecent(r: Recent): RoomFinderRoom {
-            val values = r.name.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            if (values.size != 6) {
+            val values: Array<String?> = r.name.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+
+            if (values.size != 7) {
                 throw IllegalArgumentException()
             }
-            return RoomFinderRoom(values[0], values[1], values[2], values[3], values[4], values[5])
+
+            // convert null strings to null
+            for (i in 3 until values.size) {
+                if (values[i] == "null") {
+                    values[i] = null
+                }
+            }
+
+            return RoomFinderRoom(values[0]!!, values[1]!!, values[2]!!, values[3], values[4], values[5])
         }
     }
 }

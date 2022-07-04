@@ -10,10 +10,6 @@ import de.tum.in.tumcampusapp.api.general.model.TUMCabeVerification;
 import de.tum.in.tumcampusapp.api.general.model.UploadStatus;
 import de.tum.in.tumcampusapp.component.tumui.feedback.model.Feedback;
 import de.tum.in.tumcampusapp.component.tumui.feedback.model.FeedbackResult;
-import de.tum.in.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinate;
-import de.tum.in.tumcampusapp.component.tumui.roomfinder.model.RoomFinderMap;
-import de.tum.in.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoom;
-import de.tum.in.tumcampusapp.component.tumui.roomfinder.model.RoomFinderSchedule;
 import de.tum.in.tumcampusapp.component.ui.cafeteria.model.Cafeteria;
 import de.tum.in.tumcampusapp.component.ui.openinghour.model.Location;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMember;
@@ -37,13 +33,7 @@ import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_CHAT_ROOMS;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_DEVICE;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_FEEDBACK;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_MEMBERS;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_NEWS;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_OPENING_HOURS;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_ROOM_FINDER;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_ROOM_FINDER_AVAILABLE_MAPS;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_ROOM_FINDER_COORDINATES;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_ROOM_FINDER_SCHEDULE;
-import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_ROOM_FINDER_SEARCH;
 import static de.tum.in.tumcampusapp.api.general.TUMCabeClient.API_UPDATE_NOTE;
 
 public interface TUMCabeAPIService {
@@ -104,21 +94,21 @@ public interface TUMCabeAPIService {
     Call<UploadStatus> getUploadStatus(@Path("lrzId") String lrzId);
 
     //RoomFinder maps
-    @GET(API_ROOM_FINDER + API_ROOM_FINDER_AVAILABLE_MAPS + "{archId}")
-    Call<List<RoomFinderMap>> fetchAvailableMaps(@Path("archId") String archId);
+//    @GET(API_ROOM_FINDER + API_ROOM_FINDER_AVAILABLE_MAPS + "{archId}")
+//    Call<List<RoomFinderMap>> fetchAvailableMaps(@Path("archId") String archId);
 
     //RoomFinder maps
-    @GET(API_ROOM_FINDER + API_ROOM_FINDER_SEARCH + "{searchStrings}")
-    Call<List<RoomFinderRoom>> fetchRooms(@Path("searchStrings") String searchStrings);
+//    @GET(API_ROOM_FINDER + API_ROOM_FINDER_SEARCH + "{searchStrings}")
+//    Call<List<RoomFinderRoom>> fetchRooms(@Path("searchStrings") String searchStrings);
 
     //RoomFinder cordinates
-    @GET(API_ROOM_FINDER + API_ROOM_FINDER_COORDINATES + "{archId}")
-    Call<RoomFinderCoordinate> fetchCoordinates(@Path("archId") String archId);
+//    @GET(API_ROOM_FINDER + API_ROOM_FINDER_COORDINATES + "{archId}")
+//    Call<RoomFinderCoordinateInterface> fetchCoordinates(@Path("archId") String archId);
 
     //RoomFinder schedule
-    @GET(API_ROOM_FINDER + API_ROOM_FINDER_SCHEDULE + "{roomId}" + "/" + "{start}" + "/" + "{end}")
-    Call<List<RoomFinderSchedule>> fetchSchedule(@Path("roomId") String archId,
-                                                 @Path("start") String start, @Path("end") String end);
+//    @GET(API_ROOM_FINDER + API_ROOM_FINDER_SCHEDULE + "{roomId}" + "/" + "{start}" + "/" + "{end}")
+//    Call<List<RoomFinderScheduleInterface>> fetchSchedule(@Path("roomId") String archId,
+//                                                          @Path("start") String start, @Path("end") String end);
 
     @POST(API_FEEDBACK)
     Call<FeedbackResult> sendFeedback(@Body Feedback feedback);

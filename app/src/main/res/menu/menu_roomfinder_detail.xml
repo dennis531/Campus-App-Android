@@ -16,11 +16,4 @@
         app:iconTint="@color/color_primary"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_switch_map"
-        android:icon="@drawable/ic_outline_map_24px"
-        android:title="@string/switch_map"
-        app:iconTint="@color/color_primary"
-        app:showAsAction="ifRoom" />
-
 </menu>

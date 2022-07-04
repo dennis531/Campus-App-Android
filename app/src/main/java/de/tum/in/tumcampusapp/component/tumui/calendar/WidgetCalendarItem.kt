@@ -3,8 +3,7 @@ package de.tum.`in`.tumcampusapp.component.tumui.calendar
 import com.alamkanak.weekview.WeekViewDisplayable
 import com.alamkanak.weekview.WeekViewEvent
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItem
-import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderSchedule
-import de.tum.`in`.tumcampusapp.utils.DateTimeUtils
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderScheduleInterface
 import org.joda.time.DateTime
 
 /**
@@ -52,11 +51,8 @@ data class WidgetCalendarItem(
         }
 
         @JvmStatic
-        fun create(schedule: RoomFinderSchedule): WidgetCalendarItem {
-            val id = java.lang.Long.toString(schedule.event_id)
-            val start = DateTimeUtils.getDateTime(schedule.start)
-            val end = DateTimeUtils.getDateTime(schedule.end)
-            return WidgetCalendarItem(id, schedule.title, start, end, "")
+        fun create(schedule: RoomFinderScheduleInterface): WidgetCalendarItem {
+            return WidgetCalendarItem(schedule.id, schedule.title, schedule.start, schedule.end, "")
         }
     }
 }

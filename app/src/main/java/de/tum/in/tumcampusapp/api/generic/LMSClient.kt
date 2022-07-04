@@ -4,6 +4,7 @@ import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
 import de.tum.`in`.tumcampusapp.component.tumui.grades.api.GradesAPI
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.api.LecturesAPI
 import de.tum.`in`.tumcampusapp.component.tumui.person.api.PersonAPI
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.api.RoomFinderAPI
 import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
 import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Utils
@@ -28,10 +29,11 @@ abstract class LMSClient : BaseAPI {
     companion object {
         private val COMPONENT_API = mapOf(
             Component.CALENDAR to CalendarAPI::class.java,
+            Component.GRADES to GradesAPI::class.java,
             Component.LECTURES to LecturesAPI::class.java,
             Component.NEWS to NewsAPI::class.java,
             Component.PERSON to PersonAPI::class.java,
-            Component.GRADES to GradesAPI::class.java,
+            Component.ROOMFINDER to RoomFinderAPI::class.java,
         )
     }
 }

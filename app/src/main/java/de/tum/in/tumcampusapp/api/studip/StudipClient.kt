@@ -20,6 +20,8 @@ import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLectureAppointme
 import de.tum.`in`.tumcampusapp.api.studip.model.news.StudipNews
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipInstitute
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipPerson
+import de.tum.`in`.tumcampusapp.api.studip.model.roomfinder.StudipRoomCoordinate
+import de.tum.`in`.tumcampusapp.api.studip.model.roomfinder.StudipRoomSchedule
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItem
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.AbstractEvent
@@ -30,6 +32,11 @@ import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LectureAppointmentInterface
 import de.tum.`in`.tumcampusapp.component.tumui.person.api.PersonAPI
 import de.tum.`in`.tumcampusapp.component.tumui.person.model.PersonInterface
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.api.RoomFinderAPI
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinateInterface
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoom
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderScheduleInterface
 import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
 import de.tum.`in`.tumcampusapp.component.ui.news.model.AbstractNews
 import de.tum.`in`.tumcampusapp.utils.*
@@ -46,7 +53,8 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     CalendarAPI,
     LecturesAPI,
     NewsAPI,
-    GradesAPI {
+    GradesAPI,
+    RoomFinderAPI {
     private var userId = Utils.getSetting(context, Const.PROFILE_ID, "")
 
     override fun getGrades(): List<AbstractExam> {
@@ -90,6 +98,39 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         )
 
         return listOf(exam1, exam2, exam3, exam4)
+    }
+
+    override fun searchRooms(query: String): List<RoomFinderRoomInterface> {
+        val room1 = RoomFinderRoom(
+            "123",
+            "12",
+            "42/E04",
+            "Heger-Tor-Wall 12",
+            "Campus Innenstadt",
+            "Zentrum für Digitale Lehre, Campus-Management und Hochschuldidaktik (virtUOS)",
+            "https://www.uni-osnabrueck.de/fileadmin/documents/public/6_presse_oeffentlichkeit/6.6_lageplaene/Lageplaene_Innenstadt_2022-04.pdf"
+        )
+
+        val room2 = RoomFinderRoom(
+            "456",
+            "12",
+            "42/E01",
+            null,
+            null,
+            null,
+            null
+        )
+        return listOf(room1, room2)
+    }
+
+    override fun fetchRoomSchedule(room: RoomFinderRoomInterface): List<RoomFinderScheduleInterface>? {
+        val schedule1 = StudipRoomSchedule("1", "Präsentation", DateTime.now(), DateTime.now().plusHours(2))
+        val schedule2 = StudipRoomSchedule("2", "Versammlung", DateTime.now().plusHours(4), DateTime.now().plusHours(6))
+        return listOf(schedule1, schedule2)
+    }
+
+    override fun fetchRoomCoordinates(room: RoomFinderRoomInterface): RoomFinderCoordinateInterface? {
+        return StudipRoomCoordinate("52.2725028", "8.041081")
     }
 
     override fun getIdentity(): PersonInterface {

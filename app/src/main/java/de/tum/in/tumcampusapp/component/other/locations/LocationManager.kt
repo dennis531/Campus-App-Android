@@ -9,17 +9,19 @@ import android.preference.PreferenceManager
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.other.locations.model.BuildingToGps
 import de.tum.`in`.tumcampusapp.component.other.locations.model.Geo
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
-import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinate
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.api.RoomFinderAPI
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinateInterface
+import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.Cafeteria
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.StationResult
 import de.tum.`in`.tumcampusapp.database.TcaDb
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
-import de.tum.`in`.tumcampusapp.utils.tryOrNull
 import org.jetbrains.anko.doAsync
 import java.io.IOException
 import java.lang.Double.parseDouble
@@ -34,6 +36,7 @@ class LocationManager @Inject constructor(c: Context) {
     private val mContext: Context = c.applicationContext
     private val buildingToGpsDao: BuildingToGpsDao
     private var manager: android.location.LocationManager? = null
+    private val apiClient: LMSClient = ConfigUtils.getLMSClient(mContext)
 
     init {
         val db = TcaDb.getInstance(c)
@@ -284,17 +287,17 @@ class LocationManager @Inject constructor(c: Context) {
     /**
      * Get the geo information for a room
      *
-     * @param archId arch_id of the room
+     * @param buildingId arch_id of the room
      * @return Location or null on failure
      */
-    private fun fetchRoomGeo(archId: String): Geo? {
+    private fun fetchRoomGeo(room: RoomFinderRoomInterface): Geo? {
         return try {
-            val coordinate = TUMCabeClient.getInstance(mContext).fetchCoordinates(archId)
-            if (coordinate.error.isNotEmpty()) {
-                Utils.log("Coordinate api error: " + coordinate.error)
+            val coordinate = (apiClient as RoomFinderAPI).fetchRoomCoordinates(room)
+            if (coordinate == null) {
+                Utils.log("Coordinate api error")
                 return null
             }
-            coordinate?.let { convertRoomFinderCoordinateToGeo(it) }
+            convertRoomFinderCoordinateToGeo(coordinate)
         } catch (e: IOException) {
             Utils.log(e)
             null
@@ -309,17 +312,11 @@ class LocationManager @Inject constructor(c: Context) {
      * @return Location or null on failure
      */
     fun roomLocationStringToGeo(roomTitle: String): Geo? {
-        var loc = roomTitle
-        if (loc.contains("(")) {
-            loc = loc.substring(0, loc.indexOf('('))
-                    .trim { it <= ' ' }
-        }
-
         try {
-            val rooms = TUMCabeClient.getInstance(mContext).fetchRooms(loc)
+            val rooms = (apiClient as RoomFinderAPI).searchRooms(roomTitle)
 
-            if (rooms != null && !rooms.isEmpty()) {
-                val room = rooms[0].arch_id
+            if (!rooms.isEmpty()) {
+                val room = rooms[0]
                 return fetchRoomGeo(room)
             }
         } catch (e: Exception) {
@@ -427,7 +424,8 @@ class LocationManager @Inject constructor(c: Context) {
         /**
          * Converts UTM based coordinates to latitude and longitude based format
          */
-        private fun convertUTMtoLL(north: Double, east: Double, zone: Double): Geo {
+        @JvmStatic
+        fun convertUTMtoLL(north: Double, east: Double, zone: Double): Geo {
             val d = 0.99960000000000004
             val d1 = 6378137
             val d2 = 0.0066943799999999998
@@ -451,17 +449,8 @@ class LocationManager @Inject constructor(c: Context) {
         }
 
         @JvmStatic
-        fun convertRoomFinderCoordinateToGeo(roomFinderCoordinate: RoomFinderCoordinate): Geo? {
-            return try {
-                val zone = parseDouble(roomFinderCoordinate.utm_zone)
-                val easting = parseDouble(roomFinderCoordinate.utm_easting)
-                val northing = parseDouble(roomFinderCoordinate.utm_northing)
-
-                convertUTMtoLL(northing, easting, zone)
-            } catch (e: Exception) {
-                Utils.log(e)
-                null
-            }
+        fun convertRoomFinderCoordinateToGeo(coordinate: RoomFinderCoordinateInterface): Geo? {
+            return Geo(coordinate.latitude, coordinate.longitude)
         }
     }
 }
