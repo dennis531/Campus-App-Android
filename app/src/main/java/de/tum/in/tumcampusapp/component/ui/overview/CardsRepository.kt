@@ -7,7 +7,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
-import de.tum.`in`.tumcampusapp.component.tumui.tutionfees.TuitionFeeManager
+import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.TuitionFeeManager
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.controller.CafeteriaManager
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomController
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.EduroamCard
@@ -74,7 +74,7 @@ class CardsRepository @Inject constructor(
                 addIfEnabled(Component.CALENDAR, CalendarController(context))
                 addIfEnabled(Component.CHAT, ChatRoomController(context))
             }
-            addIfEnabled(Component.TUTIONFEES, TuitionFeeManager(context))
+            addIfEnabled(Component.TUITIONFEES, TuitionFeeManager(context))
             addIfEnabled(Component.CAFETERIA, CafeteriaManager(context))
             addIfEnabled(Component.TRANSPORTATION, TransportController(context))
             addIfEnabled(Component.NEWS, NewsController(context))

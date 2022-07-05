@@ -71,6 +71,8 @@ object Const {
     const val URL_MAP_IMAGE = "https://$API_HOSTNAME${URL_ROOM_FINDER_API}map/"
     const val ROOM_ID = "room_id"
 
+    const val TUITION_PAID = "tuition_paid"
+
     const val KEY_NOTIFICATION_ID = "notificationID"
     const val KEY_NOTIFICATION = "notification"
 

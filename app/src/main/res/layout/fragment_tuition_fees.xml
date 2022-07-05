@@ -47,9 +47,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/material_default_padding"
                         android:layout_marginStart="@dimen/material_default_padding"
                         android:layout_marginTop="@dimen/material_default_padding"
-                        android:layout_marginEnd="@dimen/material_default_padding"
                         android:text="@string/outstanding_balance"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
@@ -69,21 +69,32 @@
                         android:id="@+id/deadlineTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/material_default_padding"
                         android:layout_marginEnd="@dimen/material_default_padding"
+                        android:layout_marginStart="@dimen/material_default_padding"
                         android:fontFamily="sans-serif-medium"
                         android:textSize="16sp"
                         tools:text="Due on Aug 15, 2018" />
 
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/paidSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/material_default_padding"
+                        android:layout_marginStart="@dimen/material_default_padding"
+                        android:layout_marginTop="@dimen/material_default_padding"
+                        android:text="@string/mark_as_paid"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/text_secondary" />
+
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/financialAidButton"
+                        android:id="@+id/additionalInfoButton"
                         style="@style/BlueButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/material_default_padding"
                         android:layout_marginStart="@dimen/material_default_padding"
                         android:layout_marginTop="@dimen/material_default_padding"
-                        android:layout_marginBottom="@dimen/material_default_padding"
-                        android:text="@string/student_financial_aid"
+                        android:text="@string/additional_info"
                         android:textAllCaps="false"
                         app:cornerRadius="@dimen/material_corner_radius" />
 

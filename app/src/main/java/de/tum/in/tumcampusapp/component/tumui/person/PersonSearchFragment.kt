@@ -87,7 +87,7 @@ class PersonSearchFragment : FragmentForSearching<List<PersonInterface>>(
             return
         }
 
-        fetch(Single.fromCallable { (apiClient as PersonAPI).searchPerson(query) })
+        fetch { (apiClient as PersonAPI).searchPerson(query) }
     }
 
     override fun onDownloadSuccessful(response: List<PersonInterface>) {

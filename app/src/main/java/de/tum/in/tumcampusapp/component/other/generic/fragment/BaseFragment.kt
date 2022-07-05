@@ -32,7 +32,7 @@ import de.tum.`in`.tumcampusapp.component.other.generic.viewstates.FailedLMSView
 import de.tum.`in`.tumcampusapp.component.other.generic.viewstates.NoInternetViewState
 import de.tum.`in`.tumcampusapp.component.other.generic.viewstates.UnknownErrorViewState
 import de.tum.`in`.tumcampusapp.utils.*
-import io.reactivex.Single
+import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -177,9 +177,9 @@ abstract class BaseFragment<T>(
         })
     }
 
-    protected fun fetch(single: Single<T>) {
+    protected fun fetch(maybe: Maybe<T>) {
         showLoadingStart()
-        loadingDisposable += single
+        loadingDisposable += maybe
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->
@@ -188,11 +188,14 @@ abstract class BaseFragment<T>(
             }, {
                 showLoadingEnded()
                 onDownloadFailure(it)
+            }, {
+                showLoadingEnded()
+                onEmptyDownloadResponse()
             })
     }
 
     protected fun fetch(callable: Callable<T>) {
-        fetch(Single.fromCallable(callable))
+        fetch(Maybe.fromCallable(callable))
     }
 
     /**
@@ -205,7 +208,7 @@ abstract class BaseFragment<T>(
     /**
      * Called if the response from the API call is successful, but empty.
      */
-    protected fun onEmptyDownloadResponse() {
+    protected open fun onEmptyDownloadResponse() {
         showError(R.string.error_no_data_to_show)
     }
 

@@ -1,4 +1,4 @@
-package de.tum.`in`.tumcampusapp.component.tumui.tutionfees
+package de.tum.`in`.tumcampusapp.component.tumui.tuitionfees
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.navigation.NavDestination
-import de.tum.`in`.tumcampusapp.component.tumui.tutionfees.model.Tuition
+import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.model.AbstractTuition
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardInteractionListener
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
@@ -24,8 +24,8 @@ import org.joda.time.format.DateTimeFormat
  */
 class TuitionFeesCard(
     context: Context,
-    private val tuition: Tuition
-) : Card(CardManager.CARD_TUITION_FEE, context, Component.TUTIONFEES, "card_tuition_fee") {
+    private val tuition: AbstractTuition
+) : Card(CardManager.CARD_TUITION_FEE, context, Component.TUITIONFEES, "card_tuition_fee") {
 
     override val optionsMenuResId: Int
         get() = R.menu.card_popup_menu
@@ -47,7 +47,7 @@ class TuitionFeesCard(
         val reregisterInfoTextView = viewHolder.itemView.findViewById<TextView>(R.id.reregister_info_text_view)
         val outstandingBalanceTextView = viewHolder.itemView.findViewById<TextView>(R.id.outstanding_balance_text_view)
 
-        if (tuition.isPaid) {
+        if (tuition.isPaid(context)) {
             val placeholderText = context.getString(R.string.reregister_success)
             val text = String.format(placeholderText, tuition.semester)
             reregisterInfoTextView.text = text
@@ -67,18 +67,20 @@ class TuitionFeesCard(
 
     override fun shouldShow(prefs: SharedPreferences): Boolean {
         val prevDeadline = prefs.getString(LAST_FEE_FRIST, "")!!
-        val prevAmount = prefs.getString(LAST_FEE_SOLL, java.lang.Float.toString(tuition.amount))!!
+        val prevAmount = prefs.getString(LAST_FEE_SOLL, java.lang.Double.toString(tuition.amount))!!
 
         // If app gets started for the first time and fee is already paid don't annoy user
         // by showing him that he has been re-registered successfully
         val deadline = DateTimeUtils.getDateString(tuition.deadline)
-        val amount = java.lang.Float.toString(tuition.amount)
-        return !(prevDeadline.isEmpty() && tuition.isPaid) && (prevDeadline < deadline || prevAmount > amount)
+        val amount = java.lang.Double.toString(tuition.amount)
+        return !(prevDeadline.isEmpty() && tuition.isPaid(context))
+                && tuition.hasStarted
+                && (prevDeadline < deadline || prevAmount > amount)
     }
 
     public override fun discard(editor: Editor) {
         val deadline = DateTimeUtils.getDateString(tuition.deadline)
-        val amount = java.lang.Float.toString(tuition.amount)
+        val amount = java.lang.Double.toString(tuition.amount)
         editor.putString(LAST_FEE_FRIST, deadline)
         editor.putString(LAST_FEE_SOLL, amount)
     }

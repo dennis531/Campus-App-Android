@@ -108,7 +108,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             "Heger-Tor-Wall 12",
             "Campus Innenstadt",
             "Zentrum für Digitale Lehre, Campus-Management und Hochschuldidaktik (virtUOS)",
-            "https://www.uni-osnabrueck.de/fileadmin/documents/public/6_presse_oeffentlichkeit/6.6_lageplaene/Lageplaene_Innenstadt_2022-04.pdf"
+            "https://www.uni-osnabrueck.de/fileadmin/documents/public/6_presse_oeffentlichkeit/6.6_lageplaene/Lageplaene_Innenstadt_2022-04.jpg"
         )
 
         val room2 = RoomFinderRoom(

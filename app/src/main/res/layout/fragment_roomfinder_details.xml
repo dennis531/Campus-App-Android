@@ -60,7 +60,7 @@
             app:drawableTint="#99000000"
             tools:text="Information" />
 
-        <ImageView
+        <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/roomImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

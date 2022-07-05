@@ -65,11 +65,11 @@ class LecturesFragment : FragmentForSearching<List<AbstractLecture>>(
     }
 
     private fun loadPersonalLectures(cacheControl: CacheControl) {
-        fetch(Single.fromCallable { (apiClient as LecturesAPI).getPersonalLectures() })
+        fetch { (apiClient as LecturesAPI).getPersonalLectures() }
     }
 
     private fun searchLectures(query: String) {
-        fetch(Single.fromCallable { (apiClient as LecturesAPI).searchLectures(query) })
+        fetch { (apiClient as LecturesAPI).searchLectures(query) }
     }
 
     override fun onDownloadSuccessful(response: List<AbstractLecture>) {

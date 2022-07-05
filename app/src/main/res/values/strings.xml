@@ -235,6 +235,8 @@
     <string name="outstanding_balance">Outstanding balance</string>
     <string name="deadline_dots">Deadline:</string>
     <string name="amount_dots_card">Outstanding balance: %s</string>
+    <string name="mark_as_paid">Mark as paid</string>
+    <string name="no_tuition_fees">No tuition fees available</string>
 
     <!-- Persons -->
     <string name="no_search_result">No search result</string>
@@ -749,7 +751,6 @@ Signature: %5$s</string>
     <string name="home">Home</string>
     <string name="about">About</string>
     <string name="due_on_format_string">Due on %s</string>
-    <string name="student_financial_aid">Fees + Financial Aid</string>
     <string name="released">Released</string>
 
     <string name="including_format_string">including %s</string>

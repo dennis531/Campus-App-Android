@@ -1,4 +1,4 @@
-package de.tum.`in`.tumcampusapp.component.tumui.tutionfees
+package de.tum.`in`.tumcampusapp.component.tumui.tuitionfees
 
 import android.os.Bundle
 import de.tum.`in`.tumcampusapp.R
@@ -8,7 +8,7 @@ import de.tum.`in`.tumcampusapp.utils.Component
 /**
  * Activity to show the user's tuition fees status
  */
-class TuitionFeesActivity : BaseActivity(R.layout.activity_tuitionfees, Component.TUTIONFEES) {
+class TuitionFeesActivity : BaseActivity(R.layout.activity_tuitionfees, Component.TUITIONFEES) {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

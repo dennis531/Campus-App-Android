@@ -19,7 +19,7 @@ import de.tum.`in`.tumcampusapp.api.general.exception.*
 import de.tum.`in`.tumcampusapp.component.other.generic.viewstates.*
 import de.tum.`in`.tumcampusapp.utils.*
 import de.tum.`in`.tumcampusapp.utils.NetUtils.internetCapability
-import io.reactivex.Single
+import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -140,10 +140,9 @@ abstract class ProgressActivity<T>(
         })
     }
 
-    protected fun fetch(single: Single<T>) {
+    protected fun fetch(maybe: Maybe<T>) {
         showLoadingStart()
-        Utils.log("fetching")
-        loadingDisposable += single
+        loadingDisposable += maybe
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->
@@ -152,11 +151,14 @@ abstract class ProgressActivity<T>(
             }, {
                 showLoadingEnded()
                 onDownloadFailure(it)
+            }, {
+                showLoadingEnded()
+                onEmptyDownloadResponse()
             })
     }
 
     protected fun fetch(callable: Callable<T>) {
-        fetch(Single.fromCallable(callable))
+        fetch(Maybe.fromCallable(callable))
     }
 
     /**
@@ -169,7 +171,7 @@ abstract class ProgressActivity<T>(
     /**
      * Called if the response from the API call is successful, but empty.
      */
-    protected fun onEmptyDownloadResponse() {
+    protected open fun onEmptyDownloadResponse() {
         showError(R.string.error_no_data_to_show)
     }
 

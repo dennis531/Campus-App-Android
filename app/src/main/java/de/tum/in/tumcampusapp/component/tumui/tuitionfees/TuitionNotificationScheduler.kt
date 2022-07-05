@@ -1,6 +1,6 @@
-package de.tum.`in`.tumcampusapp.component.tumui.tutionfees
+package de.tum.`in`.tumcampusapp.component.tumui.tuitionfees
 
-import de.tum.`in`.tumcampusapp.component.tumui.tutionfees.model.Tuition
+import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.model.AbstractTuition
 import org.joda.time.DateTime
 import org.joda.time.Days
 
@@ -15,10 +15,18 @@ object TuitionNotificationScheduler {
      * Returns the timestamp of when the next reminder about tuition fees should be scheduled. It
      * takes into account the remaining time until the tuition fees deadline.
      *
-     * @param tuition The [Tuition] with its deadline
+     * @param tuition The [AbstractTuition] with its deadline
      * @return The timestamp of the next reminder in milliseconds
      */
-    fun getNextNotificationTime(tuition: Tuition): DateTime {
+    fun getNextNotificationTime(tuition: AbstractTuition): DateTime {
+        // Trigger notification on start date
+        if (!tuition.hasStarted) {
+            return tuition.start
+                .withHourOfDay(10)
+                .withMinuteOfHour(0)
+                .withSecondOfMinute(0)
+        }
+
         // As the tuition fees deadline comes closer, we show notifications more often to make
         // sure that the user does not miss it. We begin a month before the deadline, as this
         // ensures that the user has enough time to make the transaction.

@@ -1,8 +1,8 @@
 package de.tum.`in`.tumcampusapp.config
 
 import androidx.annotation.Keep
-import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.studip.StudipClient
+import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.model.Tuition
+import de.tum.`in`.tumcampusapp.utils.DateTimeUtils
 
 enum class Api {
     STUDIP
@@ -50,7 +50,7 @@ object Config {
     val TRANSPORTATION_ENABLED = false
     val OPENINGHOUR_ENABLED = false
     val CAFETERIA_ENABLED = false
-    val TUTIONFEES_ENABLED = false
+    val TUITIONFEES_ENABLED = true
     val ROOMFINDER_ENABLED = true
 
     // Calendar options
@@ -63,4 +63,15 @@ object Config {
     val EDUROAM_RADIUS_SERVER = "radius.uni-osnabrueck.de"
     // Allows to check if the anonymous identity is correct
     val EDUROAM_ANONYMOUS_IDENTITIES = listOf<String>("eduroam@uos.de", "eduroam@uni-osnabrueck.de", "anonymous@uni-osnabrueck.de")
+
+    // Tuition fees options
+    // if true and tuition api is provided, the tuition will be loaded from the selected api
+    val TUITIONFEES_FROM_API = false
+    val TUITIONFEES_TUITION = Tuition(
+        start = DateTimeUtils.getDate("2022-07-01"),
+        deadline = DateTimeUtils.getDate("2022-07-31"),
+        semester = "Wintersemester 2022/23",
+        amount = 321.03
+    )
+    val TUITIONFEES_LINK = "https://www.uni-osnabrueck.de/studium/organisatorisches/rueckmeldung/"
 }

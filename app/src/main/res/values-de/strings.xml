@@ -183,6 +183,8 @@
     <string name="outstanding_balance">Offener Betrag</string>
     <string name="deadline_dots">Deadline:</string>
     <string name="amount_dots_card">Offener Betrag: %s</string>
+    <string name="mark_as_paid">Als bezahlt markieren</string>
+    <string name="no_tuition_fees">Keine Rückmeldung vorhanden</string>
 
     <!-- Persons -->
     <string name="no_search_result">Keine Suchergebnisse</string>
@@ -682,7 +684,6 @@ Signatur: %5$s</string>
     <string name="about">Über</string>
     <string name="due_on_format_string">Fällig am %s</string>
     <string name="home">Übersicht</string>
-    <string name="student_financial_aid">Studienfinanzierung und Beiträge</string>
     <string name="released">Veröffentlicht</string>
 
     <string name="new_items_format_string">%d neue Meldungen</string>

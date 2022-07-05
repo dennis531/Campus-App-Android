@@ -1,4 +1,4 @@
-package de.tum.`in`.tumcampusapp.component.tumui.tutionfees
+package de.tum.`in`.tumcampusapp.component.tumui.tuitionfees
 
 import android.app.PendingIntent
 import android.content.Context
@@ -24,7 +24,7 @@ class TuitionFeesNotificationProvider(context: Context) : NotificationProvider(c
         val tuitionFeeManager = TuitionFeeManager(context)
         val tuition = tuitionFeeManager.loadTuition(CacheControl.USE_CACHE)
 
-        if (tuition == null || tuition.isPaid) {
+        if (tuition == null || tuition.isPaid(context)) {
             return null
         }
 

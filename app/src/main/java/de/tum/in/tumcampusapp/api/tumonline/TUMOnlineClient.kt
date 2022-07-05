@@ -6,7 +6,6 @@ import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import de.tum.`in`.tumcampusapp.api.general.ApiHelper
 import de.tum.`in`.tumcampusapp.api.tumonline.model.AccessToken
 import de.tum.`in`.tumcampusapp.api.tumonline.model.TokenConfirmation
-import de.tum.`in`.tumcampusapp.component.tumui.tutionfees.model.TuitionList
 import de.tum.`in`.tumcampusapp.utils.CacheManager
 import io.reactivex.Single
 import retrofit2.Call
@@ -31,9 +30,9 @@ class TUMOnlineClient(private val apiService: TUMOnlineAPIService) {
 //        return apiService.deleteCalendarEvent(eventId)
 //    }
 
-    fun getTuitionFeesStatus(cacheControl: CacheControl): Call<TuitionList> {
-        return apiService.getTuitionFeesStatus(cacheControl.header)
-    }
+//    fun getTuitionFeesStatus(cacheControl: CacheControl): Call<TuitionList> {
+//        return apiService.getTuitionFeesStatus(cacheControl.header)
+//    }
 
 //    fun getPersonalLectures(cacheControl: CacheControl): Call<LecturesResponse> {
 //        return apiService.getPersonalLectures(cacheControl.header)

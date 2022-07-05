@@ -1,16 +1,17 @@
-package de.tum.`in`.tumcampusapp.component.tumui.tutionfees
+package de.tum.`in`.tumcampusapp.component.tumui.tuitionfees
 
 import android.content.Context
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
-import de.tum.`in`.tumcampusapp.api.tumonline.TUMOnlineClient
 import de.tum.`in`.tumcampusapp.component.notifications.NotificationScheduler
 import de.tum.`in`.tumcampusapp.component.notifications.ProvidesNotifications
 import de.tum.`in`.tumcampusapp.component.notifications.persistence.NotificationType
-import de.tum.`in`.tumcampusapp.component.tumui.tutionfees.model.Tuition
+import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.api.TuitionFeesAPI
+import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.model.AbstractTuition
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.ProvidesCard
+import de.tum.`in`.tumcampusapp.utils.ConfigConst
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
-import java.io.IOException
 import java.util.*
 
 /**
@@ -31,33 +32,31 @@ class TuitionFeeManager(private val context: Context) : ProvidesCard, ProvidesNo
         return Utils.getSettingBool(context, "card_tuition_fee_phone", true)
     }
 
-    fun loadTuition(cacheControl: CacheControl): Tuition? {
+    fun loadTuition(cacheControl: CacheControl): AbstractTuition? {
         try {
-            val response = TUMOnlineClient
-                    .getInstance(context)
-                    .getTuitionFeesStatus(cacheControl)
-                    .execute()
-            if (!response.isSuccessful) {
+            // Indicates if tuition is loaded from api
+            val tuition = if (ConfigUtils.shouldTuitionLoadedFromApi(context)) {
+                (ConfigUtils.getLMSClient(context) as TuitionFeesAPI).getTuitionFeesStatus()
+            } else {
+                ConfigUtils.getConfig(ConfigConst.TUITIONFEES_TUITION, null)
+            }
+
+            if (tuition == null) {
                 return null
             }
 
-            val tuitionList = response.body()
-            if (tuitionList == null || tuitionList.tuitions.isEmpty()) {
-                return null
-            }
-
-            val tuition = tuitionList.tuitions[0]
-            if (!tuition.isPaid && hasNotificationsEnabled()) {
+            if (!tuition.isPaid(context) && hasNotificationsEnabled()) {
                 scheduleNotificationAlarm(tuition)
             }
+
             return tuition
-        } catch (e: IOException) {
-            Utils.log(e)
+        } catch (t: Throwable) {
+            Utils.log(t)
             return null
         }
     }
 
-    private fun scheduleNotificationAlarm(tuition: Tuition) {
+    private fun scheduleNotificationAlarm(tuition: AbstractTuition) {
         val notificationTime = TuitionNotificationScheduler.getNextNotificationTime(tuition)
         val scheduler = NotificationScheduler(context)
         scheduler.scheduleAlarm(NotificationType.TUITION_FEES, notificationTime)

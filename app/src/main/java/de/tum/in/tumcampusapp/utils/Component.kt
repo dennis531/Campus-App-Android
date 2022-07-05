@@ -9,7 +9,7 @@ enum class Component(val titleResId: Int, val requiresLMS: Boolean) {
     LECTURES(R.string.my_lectures, true),
     PERSON(R.string.person_search, true),
     ROOMFINDER(R.string.roomfinder, true),
-    TUTIONFEES(R.string.tuition_fees, false),
+    TUITIONFEES(R.string.tuition_fees, false),
     CAFETERIA(R.string.cafeteria, false),
     CHAT(R.string.chat, true),
     EDUROAM(R.string.eduroam, false),

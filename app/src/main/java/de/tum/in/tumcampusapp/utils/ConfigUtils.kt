@@ -68,7 +68,7 @@ object ConfigUtils {
             Component.LECTURES -> getConfig(ConfigConst.LECTURES_ENABLED, defaultVal)
             Component.PERSON -> getConfig(ConfigConst.PERSON_ENABLED, defaultVal)
             Component.ROOMFINDER -> getConfig(ConfigConst.ROOMFINDER_ENABLED, defaultVal)
-            Component.TUTIONFEES -> getConfig(ConfigConst.TUTIONFEES_ENABLED, defaultVal)
+            Component.TUITIONFEES -> getConfig(ConfigConst.TUITIONFEES_ENABLED, defaultVal)
             Component.CAFETERIA -> getConfig(ConfigConst.CAFETERIA_ENABLED, defaultVal)
             Component.CHAT -> getConfig(ConfigConst.CHAT_ENABLED, defaultVal)
             Component.EDUROAM -> getConfig(ConfigConst.EDUROAM_ENABLED, defaultVal)
@@ -77,5 +77,22 @@ object ConfigUtils {
             Component.TRANSPORTATION -> getConfig(ConfigConst.TRANSPORTATION_ENABLED, defaultVal)
             else -> true // Remaining components can not be disabled manually
         }
+    }
+
+    /**
+     * Checks if the tuition fees should be loaded from the api
+     */
+    @JvmStatic
+    fun shouldTuitionLoadedFromApi(context: Context): Boolean {
+        if (!getConfig(ConfigConst.TUITIONFEES_FROM_API, false)) {
+            return false
+        }
+
+        // check if tuition api is provided
+        if (!getLMSClient(context).hasAPI(Component.TUITIONFEES)) {
+            return false
+        }
+
+        return true
     }
 }

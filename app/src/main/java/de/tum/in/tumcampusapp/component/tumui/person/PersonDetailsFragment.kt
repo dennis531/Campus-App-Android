@@ -72,7 +72,7 @@ class PersonDetailsFragment : BaseFragment<PersonInterface>(
             return
         }
 
-        (apiClient as? PersonAPI)?.let { fetch(Single.fromCallable { it.getPersonDetails(personId) }) }
+        (apiClient as? PersonAPI)?.let { fetch { it.getPersonDetails(personId) } }
     }
 
     override fun onDownloadSuccessful(response: PersonInterface) {

@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.NextLectureCard
-import de.tum.`in`.tumcampusapp.component.tumui.tutionfees.TuitionFeesCard
+import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.TuitionFeesCard
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaMenuCard
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatMessagesCard
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.EduroamCard

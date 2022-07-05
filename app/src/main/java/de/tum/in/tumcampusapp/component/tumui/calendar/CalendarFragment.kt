@@ -130,7 +130,7 @@ class CalendarFragment : FragmentForAccessingLMS<List<AbstractEvent>>(
             showError(R.string.error_function_not_available)
             return
         }
-        fetch(Single.fromCallable { (apiClient as CalendarAPI).getCalendar() })
+        fetch { (apiClient as CalendarAPI).getCalendar() }
     }
 
     override fun onDownloadSuccessful(response: List<AbstractEvent>) {

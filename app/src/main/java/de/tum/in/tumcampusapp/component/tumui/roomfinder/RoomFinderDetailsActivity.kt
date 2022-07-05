@@ -21,7 +21,7 @@ import javax.inject.Inject
 /**
  * Displays the map regarding the searched room.
  */
-class RoomFinderDetailsActivity : ProgressActivity<RoomFinderCoordinateInterface?>(R.layout.activity_roomfinderdetails, Component.ROOMFINDER) {
+class RoomFinderDetailsActivity : ProgressActivity<RoomFinderCoordinateInterface>(R.layout.activity_roomfinderdetails, Component.ROOMFINDER) {
 
     @Inject
     lateinit var apiClient: LMSClient
@@ -54,7 +54,6 @@ class RoomFinderDetailsActivity : ProgressActivity<RoomFinderCoordinateInterface
         menuInflater.inflate(R.menu.menu_roomfinder_detail, menu)
 
         val timetable = menu.findItem(R.id.action_room_timetable)
-//        timetable.isVisible = infoLoaded
         timetable.setIcon(
                 if (weekViewFragment == null) R.drawable.ic_outline_event_note_24px
                 else R.drawable.ic_action_info
@@ -109,17 +108,15 @@ class RoomFinderDetailsActivity : ProgressActivity<RoomFinderCoordinateInterface
         fetch { (apiClient as RoomFinderAPI).fetchRoomCoordinates(room) }
     }
 
-    override fun onDownloadSuccessful(response: RoomFinderCoordinateInterface?) {
-        super.onDownloadSuccessful(response)
-        if (response == null) {
-            onLoadGeoFailed()
-            return
-        }
-
+    override fun onDownloadSuccessful(response: RoomFinderCoordinateInterface) {
         onGeoLoadFinished(response)
     }
 
     override fun onDownloadFailure(throwable: Throwable) {
+        onLoadGeoFailed()
+    }
+
+    override fun onEmptyDownloadResponse() {
         onLoadGeoFailed()
     }
 
