@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -154,4 +156,8 @@ fun <T1, T2> List<T1>.splitOnChanged(transform: (T1) -> T2): List<List<T1>> {
         }
     }
     return results.toList()
+}
+
+fun FragmentManager.instantiate(className: String): Fragment {
+    return fragmentFactory.instantiate(ClassLoader.getSystemClassLoader(), className)
 }

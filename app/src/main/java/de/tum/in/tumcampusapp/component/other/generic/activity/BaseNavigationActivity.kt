@@ -141,6 +141,15 @@ class BaseNavigationActivity : BaseActivity(
         return handled || super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        // Always show home/overview when back is pressed
+        while (supportFragmentManager.backStackEntryCount > 0) {
+            super.onBackPressed()
+        }
+    }
+
     override fun onDestroy() {
         defaultSharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         super.onDestroy()

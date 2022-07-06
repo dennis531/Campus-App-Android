@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.BaseNavigationActivity
 import de.tum.`in`.tumcampusapp.component.other.generic.drawer.NavItem
+import de.tum.`in`.tumcampusapp.utils.instantiate
 
 object NavigationManager {
 
@@ -18,9 +19,11 @@ object NavigationManager {
         }
     }
 
+    //Use FragmentManager.getFragmentFactory() and FragmentFactory.instantiate(ClassLoader, String)
+
     private fun open(context: Context, navItem: NavItem.FragmentDestination) {
-        val fragment = Fragment.instantiate(context, navItem.fragment.name)
         val activity = context as? BaseNavigationActivity ?: return
+        val fragment = activity.supportFragmentManager.instantiate(navItem.fragment.name)
         openFragment(activity, fragment)
     }
 
@@ -34,7 +37,8 @@ object NavigationManager {
         when (destination) {
             is NavDestination.Fragment -> {
                 val baseNavigationActivity = context as? BaseNavigationActivity ?: return
-                val fragment = Fragment.instantiate(context, destination.clazz.name, destination.args)
+                val fragment = baseNavigationActivity.supportFragmentManager.instantiate(destination.clazz.name)
+                fragment.arguments = destination.args
                 openFragment(baseNavigationActivity, fragment)
             }
             is NavDestination.Activity -> {
@@ -55,7 +59,8 @@ object NavigationManager {
             .beginTransaction()
             .setCustomAnimations(R.anim.fadein, R.anim.fadeout)
             .replace(R.id.contentFrame, fragment)
-            .ensureBackToHome(activity)
+//            .ensureBackToHome(activity)
+            .addToBackStack(null)
             .commit()
     }
 
