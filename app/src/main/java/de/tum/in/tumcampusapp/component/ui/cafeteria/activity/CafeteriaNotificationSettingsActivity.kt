@@ -1,6 +1,8 @@
 package de.tum.`in`.tumcampusapp.component.ui.cafeteria.activity
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.BaseActivity
@@ -24,11 +26,13 @@ class CafeteriaNotificationSettingsActivity : BaseActivity(
     private lateinit var binding: ActivityCafeteriaNotificationSettingsBinding
     
     
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
+    override fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
         binding = ActivityCafeteriaNotificationSettingsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL

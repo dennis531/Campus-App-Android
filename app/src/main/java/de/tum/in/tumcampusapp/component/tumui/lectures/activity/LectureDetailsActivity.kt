@@ -2,6 +2,8 @@ package de.tum.`in`.tumcampusapp.component.tumui.lectures.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import androidx.core.view.isVisible
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
@@ -33,12 +35,13 @@ class LectureDetailsActivity : ActivityForAccessingLMS<AbstractLecture>(R.layout
 
     private lateinit var binding: ActivityLecturedetailsBinding
 
-
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
+    override fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
         binding = ActivityLecturedetailsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.appointmentsButton.setOnClickListener {
             // LectureAppointments need the name and id of the facing lecture

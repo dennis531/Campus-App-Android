@@ -1,6 +1,8 @@
 package de.tum.`in`.tumcampusapp.component.tumui.lectures.activity
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingLMS
@@ -28,11 +30,13 @@ class LecturesAppointmentsActivity : ActivityForAccessingLMS<List<LectureAppoint
     private lateinit var binding: ActivityLecturesappointmentsBinding
 
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
         binding = ActivityLecturesappointmentsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

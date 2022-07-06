@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.preference.PreferenceManager
 import android.text.format.DateUtils
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TableLayout
@@ -32,11 +33,13 @@ class InformationActivity : BaseActivity(R.layout.activity_information, Componen
     private lateinit var binding: ActivityInformationBinding
     private val rowParams = TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
         binding = ActivityInformationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFacebook.setOnClickListener {
             openFacebook()

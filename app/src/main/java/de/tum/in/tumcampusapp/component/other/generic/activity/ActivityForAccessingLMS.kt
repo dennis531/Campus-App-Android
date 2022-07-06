@@ -1,10 +1,8 @@
 package de.tum.`in`.tumcampusapp.component.other.generic.activity
 
 import de.tum.`in`.tumcampusapp.api.generic.LMSClient
-import de.tum.`in`.tumcampusapp.api.studip.StudipClient
 import de.tum.`in`.tumcampusapp.api.tumonline.TUMOnlineClient
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
-import javax.inject.Inject
 
 /**
  * This Activity can be extended by concrete Activities that access information from TUMonline. It

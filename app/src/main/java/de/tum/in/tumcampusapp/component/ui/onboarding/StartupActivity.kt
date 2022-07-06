@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat.checkSelfPermission
 import androidx.core.app.ActivityCompat.requestPermissions
@@ -45,9 +47,6 @@ class StartupActivity : BaseActivity(R.layout.activity_startup, Component.ONBOAR
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        binding = ActivityStartupBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        
         injector.downloadComponent().inject(this)
 
         // Only use Crashlytics if we are not compiling debug
@@ -70,6 +69,11 @@ class StartupActivity : BaseActivity(R.layout.activity_startup, Component.ONBOAR
         doAsync {
             initApp()
         }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
+        binding = ActivityStartupBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     private fun initEasterEgg() {

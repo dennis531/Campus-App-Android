@@ -10,13 +10,15 @@ import de.tum.`in`.tumcampusapp.di.AppComponent
 import de.tum.`in`.tumcampusapp.di.app
 import java.util.Locale
 import android.content.pm.PackageManager
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.preference.PreferenceManager
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
-import de.tum.`in`.tumcampusapp.utils.Utils
+import org.jetbrains.anko.contentView
 
 abstract class BaseActivity(
     @LayoutRes private val layoutId: Int,
@@ -27,9 +29,6 @@ abstract class BaseActivity(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutId)
-
-        Utils.log("Activity: ${this.javaClass.name}") // TODO: REMOVE
 
         component?.let {
             if (!ConfigUtils.isComponentEnabled(this, component)) {
@@ -39,6 +38,17 @@ abstract class BaseActivity(
             }
         }
 
+        val view = onCreateView(layoutInflater, savedInstanceState)
+        setContentView(view)
+
+        onViewCreated(contentView!!, savedInstanceState)
+    }
+
+    open fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(layoutId, null)
+    }
+
+    open fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
         // TODO Refactor
