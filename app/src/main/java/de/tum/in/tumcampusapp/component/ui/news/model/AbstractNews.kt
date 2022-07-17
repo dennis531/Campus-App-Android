@@ -8,7 +8,7 @@ abstract class AbstractNews {
     abstract val link: String?
     abstract val imageUrl: String?
     abstract val content: String? // HTML Text allowed
-    abstract val date: DateTime // publication-start
+    abstract val date: DateTime
 
     open fun toNewsItem(): NewsItem {
         return NewsItem(id, title, link ?: "", imageUrl ?: "", content ?: "", date)

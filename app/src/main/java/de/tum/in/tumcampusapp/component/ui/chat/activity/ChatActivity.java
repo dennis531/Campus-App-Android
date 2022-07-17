@@ -9,6 +9,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.Menu;
@@ -32,13 +34,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.work.WorkManager;
 import de.tum.in.tumcampusapp.R;
-import de.tum.in.tumcampusapp.api.general.TUMCabeClient;
-import de.tum.in.tumcampusapp.api.general.model.TUMCabeVerification;
 import de.tum.in.tumcampusapp.component.other.generic.activity.ActivityForDownloadingExternal;
-import de.tum.in.tumcampusapp.component.ui.chat.AddChatMemberActivity;
 import de.tum.in.tumcampusapp.component.ui.chat.ChatMessageViewModel;
 import de.tum.in.tumcampusapp.component.ui.chat.ChatRoomController;
-import de.tum.in.tumcampusapp.component.ui.chat.FcmChat;
+import de.tum.in.tumcampusapp.component.ui.chat.api.ChatAPI;
 import de.tum.in.tumcampusapp.component.ui.chat.adapter.ChatHistoryAdapter;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMember;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMessage;
@@ -49,13 +48,17 @@ import de.tum.in.tumcampusapp.component.ui.overview.CardManager;
 import de.tum.in.tumcampusapp.database.TcaDb;
 import de.tum.in.tumcampusapp.service.DownloadWorker;
 import de.tum.in.tumcampusapp.service.SendMessageWorker;
+import de.tum.in.tumcampusapp.utils.Component;
+import de.tum.in.tumcampusapp.utils.ConfigConst;
+import de.tum.in.tumcampusapp.utils.ConfigUtils;
 import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.Utils;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static android.os.Build.VERSION.SDK_INT;
 
@@ -82,6 +85,8 @@ public class ChatActivity extends ActivityForDownloadingExternal
     private ChatMember currentChatMember;
     private boolean isLoadingMore;
 
+    private Handler pollingHandler;
+
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -90,7 +95,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
     };
 
     public ChatActivity() {
-        super(R.layout.activity_chat);
+        super(R.layout.activity_chat, Component.CHAT);
         // TODO(pfent): Const.CURRENT_CHAT_ROOM was previously non-existent
     }
 
@@ -126,7 +131,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
         TcaDb tcaDb = TcaDb.Companion.getInstance(this);
 
         ChatMessageRemoteRepository remoteRepository = ChatMessageRemoteRepository.INSTANCE;
-        remoteRepository.setTumCabeClient(TUMCabeClient.getInstance(this));
+        remoteRepository.setApiClient((ChatAPI) ConfigUtils.getLMSClient(this));
 
         ChatMessageLocalRepository localRepository = ChatMessageLocalRepository.INSTANCE;
         localRepository.setDb(tcaDb);
@@ -143,18 +148,46 @@ public class ChatActivity extends ActivityForDownloadingExternal
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
-            notificationManager.cancel((currentChatRoom.getId() << 4) + CardManager.CARD_CHAT);
+            notificationManager.cancel((currentChatRoom.getId().hashCode() << 4) + CardManager.CARD_CHAT);
         }
+
+        // Start message polling
+        HandlerThread handlerThread = new HandlerThread("PollingMessagesThread");
+        handlerThread.start();
+
+        pollingHandler = new Handler(handlerThread.getLooper());
+        pollingHandler.postDelayed(this::pollNewMessages, 30000);
 
         IntentFilter filter = new IntentFilter(Const.CHAT_BROADCAST_NAME);
         LocalBroadcastManager.getInstance(this)
                              .registerReceiver(receiver, filter);
     }
 
+    private void pollNewMessages() {
+        Utils.log("Poll new messages");
+
+        Observable<List<ChatMessage>> observable = chatMessageViewModel.getNewMessages(currentChatRoom);
+        disposables.add(observable.subscribe(this::processNewMessages, Utils::log));
+    }
+
+    private void processNewMessages(List<ChatMessage> newMessages) {
+        // poll messages every 30 seconds
+        pollingHandler.postDelayed(this::pollNewMessages, 30000);
+
+        // No new messages available
+        if (chatMessageViewModel.getNumberUnread(currentChatRoom.getId()) == 0 || chatHistoryAdapter == null) {
+            return;
+        }
+
+        isLoadingMore = true;
+        startAudio();
+        showMessages(newMessages, true);
+    }
+
     private void handleBroadcastReceive(Intent intent) {
         Utils.logVerbose("Message sent. Trying to parse...");
 
-        FcmChat chat = (FcmChat) intent.getSerializableExtra(Const.FCM_CHAT);
+        ChatMessage chat = intent.getParcelableExtra(Const.CHAT_MESSAGE);
         if (chat != null) {
             handleSuccessBroadcast(chat);
         } else {
@@ -167,28 +200,32 @@ public class ChatActivity extends ActivityForDownloadingExternal
         getNextHistoryFromServer(true);
     }
 
-    private void handleSuccessBroadcast(FcmChat chat) {
-        if (chat.getRoom() != currentChatRoom.getId() || chatHistoryAdapter == null) {
+    private void handleSuccessBroadcast(ChatMessage chat) {
+        if (!chat.getRoomId().equals(currentChatRoom.getId()) || chatHistoryAdapter == null) {
             return;
         }
 
-        if (chat.getMember() != currentChatMember.getId() && chat.getMessage() == -1) {
+        if (!chat.getMember().getId().equals(currentChatMember.getId())) {
             // This is a new message from a different user
-            AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            if (am != null && am.getRingerMode() == AudioManager.RINGER_MODE_NORMAL) {
-                // Play a notification sound
-                MediaPlayer mediaPlayer = MediaPlayer.create(ChatActivity.this, R.raw.message);
-                mediaPlayer.start();
-            } else if (am != null && am.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
-                // Possibly only vibration is enabled
-                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                if (vibrator != null) {
-                    vibrate(vibrator);
-                }
-            }
+            startAudio();
         }
 
         getNextHistoryFromServer(true);
+    }
+
+    private void startAudio() {
+        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (am != null && am.getRingerMode() == AudioManager.RINGER_MODE_NORMAL) {
+            // Play a notification sound
+            MediaPlayer mediaPlayer = MediaPlayer.create(ChatActivity.this, R.raw.message);
+            mediaPlayer.start();
+        } else if (am != null && am.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
+            // Possibly only vibration is enabled
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            if (vibrator != null) {
+                vibrate(vibrator);
+            }
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -205,40 +242,10 @@ public class ChatActivity extends ActivityForDownloadingExternal
         super.onPause();
         chatMessageViewModel.markAsRead(currentChatRoom.getId());
         mCurrentOpenChatRoom = null;
+        pollingHandler.removeCallbacksAndMessages(null);
         LocalBroadcastManager.getInstance(this)
                              .unregisterReceiver(receiver);
     }
-
-    /*
-     * Method to handle any incoming GCM/Firebase notifications
-     *
-     * @param extras model that contains infos about the message we should get
-     */
-    /*
-    private void handleRoomBroadcast(FcmChat extras) {
-        if (extras.getRoom() != currentChatRoom.getId() || chatHistoryAdapter == null) {
-            return;
-        }
-
-        if (extras.getMember() != currentChatMember.getId() && extras.getMessage() == -1) {
-            // This is a new message from a different user
-            AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            if (am != null && am.getRingerMode() == AudioManager.RINGER_MODE_NORMAL) {
-                // Play a notification sound
-                MediaPlayer mediaPlayer = MediaPlayer.create(ChatActivity.this, R.raw.message);
-                mediaPlayer.start();
-            } else if (am != null && am.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
-                // Possibly only vibration is enabled
-                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                if (vibrator != null) {
-                    vibrator.vibrate(500);
-                }
-            }
-        }
-
-        getNextHistoryFromServer(true);
-    }
-    */
 
     /**
      * User pressed on the notification and wants to view the room with the new messages
@@ -258,7 +265,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
         }
 
         // Check, maybe it wasn't there
-        if (room != null && room.getId() != currentChatRoom.getId()) {
+        if (room != null && !room.getId().equals(currentChatRoom.getId())) {
             // If currently in a room which does not match the one from the notification --> Switch
             currentChatRoom = room;
             if (getSupportActionBar() != null) {
@@ -277,9 +284,18 @@ public class ChatActivity extends ActivityForDownloadingExternal
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int itemId = item.getItemId();
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuItemAddMember = menu.findItem(R.id.action_add_chat_member);
+        MenuItem menuItemLeaveRoom = menu.findItem(R.id.action_leave_chat_room);
 
+        menuItemAddMember.setVisible(ConfigUtils.getConfig(ConfigConst.CHAT_ROOM_MEMBER_ADDABLE, true));
+        menuItemLeaveRoom.setVisible(ConfigUtils.getConfig(ConfigConst.CHAT_ROOM_LEAVEABLE, true));
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_chat_member:
                 openAddChatMemberActivity();
@@ -294,8 +310,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
 
     private void openAddChatMemberActivity() {
         Intent intent = new Intent(this, AddChatMemberActivity.class);
-        intent.putExtra(Const.CURRENT_CHAT_ROOM, currentChatRoom.getId());
-        intent.putExtra(Const.CHAT_ROOM_NAME, currentChatRoom.getCombinedName());
+        intent.putExtra(Const.CURRENT_CHAT_ROOM, new Gson().toJson(currentChatRoom));
         startActivity(intent);
     }
 
@@ -316,34 +331,24 @@ public class ChatActivity extends ActivityForDownloadingExternal
     }
 
     private void leaveChatRoom() {
-        TUMCabeVerification verification = TUMCabeVerification.create(this, null);
-        if (verification == null) {
-            return;
-        }
+        ChatRoom leaveRoom = currentChatRoom;
 
-        TUMCabeClient.getInstance(this)
-                     .leaveChatRoom(currentChatRoom, verification, new Callback<ChatRoom>() {
-                         @Override
-                         public void onResponse(@NonNull Call<ChatRoom> call,
-                                                @NonNull Response<ChatRoom> response) {
-                             ChatRoom room = response.body();
-                             if (response.isSuccessful() && room != null) {
-                                 new ChatRoomController(ChatActivity.this).leave(currentChatRoom);
+        Disposable leaveRoomDisposable =
+                Completable.fromAction(() -> ((ChatAPI) ConfigUtils.getLMSClient(this)).leaveChatRoom(leaveRoom))
+                      .subscribeOn(Schedulers.io())
+                      .observeOn(AndroidSchedulers.mainThread())
+                      .subscribe(() -> {
+                          new ChatRoomController(ChatActivity.this).leave(leaveRoom);
 
-                                 Intent intent = new Intent(ChatActivity.this, ChatRoomsActivity.class);
-                                 startActivity(intent);
-                                 finish();
-                             } else {
-                                 Utils.showToast(ChatActivity.this, R.string.error_something_wrong);
-                             }
-                         }
+                          Intent intent = new Intent(ChatActivity.this, ChatRoomsActivity.class);
+                          startActivity(intent);
+                          finish();
+                      }, t -> {
+                         Utils.log(t, "Failure leaving chat room");
+                         Utils.showToast(ChatActivity.this, R.string.error_something_wrong);
+                      });
 
-                         @Override
-                         public void onFailure(@NonNull Call<ChatRoom> call, @NonNull Throwable t) {
-                             Utils.log(t, "Failure leaving chat room");
-                             Utils.showToast(ChatActivity.this, R.string.error_something_wrong);
-                         }
-                     });
+        disposables.add(leaveRoomDisposable);
     }
 
     private void sendMessage(String text) {
@@ -352,8 +357,8 @@ public class ChatActivity extends ActivityForDownloadingExternal
             return;
         }
 
-        final ChatMessage message = new ChatMessage(text, currentChatMember);
-        message.setRoom(currentChatRoom.getId());
+        ChatMessage message = new ChatMessage(text, currentChatMember);
+        message.setRoomId(currentChatRoom.getId());
         message.setSendingStatus(ChatMessage.STATUS_SENDING);
         chatHistoryAdapter.add(message);
         chatMessageViewModel.addToUnsent(message);
@@ -391,21 +396,19 @@ public class ChatActivity extends ActivityForDownloadingExternal
 
         ImageButton sendButton = findViewById(R.id.btnSend);
         sendButton.setOnClickListener(view -> {
-            if (messageEditText.getText()
-                               .toString()
-                               .isEmpty()) {
+            if (messageEditText.getText().toString().isEmpty()) {
                 return;
             }
 
-            sendMessage(messageEditText.getText()
-                                       .toString());
-            messageEditText.getText()
-                           .clear();
+            sendMessage(messageEditText.getText().toString());
+            messageEditText.getText().clear();
         });
     }
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+        Utils.log("Scroll State changed:" + scrollState);
         // Noop
     }
 
@@ -423,83 +426,44 @@ public class ChatActivity extends ActivityForDownloadingExternal
     private void getNextHistoryFromServer(boolean hasNewMessage) {
         isLoadingMore = true;
 
-        TUMCabeVerification verification = TUMCabeVerification.create(this, null);
-        if (verification == null) {
-            return;
-        }
-
         Observable<List<ChatMessage>> observable;
 
         if (hasNewMessage || chatHistoryAdapter.isEmpty()) {
-            observable = chatMessageViewModel.getNewMessages(currentChatRoom, verification);
-            //chatMessageViewModel.getNewMessages(currentChatRoom.getId(), verification, this::onMessagesLoaded);
+            observable = chatMessageViewModel.getNewMessages(currentChatRoom);
         } else {
             ChatMessage latestMessage = chatHistoryAdapter.getItem(0);
-            long latestId = latestMessage.getId();
-            observable = chatMessageViewModel.getOlderMessages(currentChatRoom, latestId, verification);
-            //chatMessageViewModel.getOlderMessages(currentChatRoom.getId(), latestId, verification, this::onMessagesLoaded);
+            observable = chatMessageViewModel.getOlderMessages(currentChatRoom, latestMessage);
         }
 
-        disposables.add(observable.subscribe(this::showMessages, Utils::log));
-
-        /*
-        new Thread(() -> {
-            // If currently nothing has been shown, load newest messages from server
-            if (chatHistoryAdapter == null || chatHistoryAdapter.getCount() == 0 || hasNewMessage) {
-                chatMessageViewModel.getNewMessages(currentChatRoom.getId(), verification, this::onMessagesLoaded);
-            } else {
-                long id = chatHistoryAdapter.getItemId(0);
-                chatMessageViewModel.getOlderMessages(currentChatRoom.getId(), id, verification, this::onMessagesLoaded);
-            }
-        }).start();
-        */
+        disposables.add(observable.subscribe(messages -> showMessages(messages, hasNewMessage), Utils::log));
     }
 
-    private void showMessages(List<ChatMessage> messages) {
-        List<ChatMessage> unsent = chatMessageViewModel.getUnsentInChatRoom(currentChatRoom);
-        messages.addAll(unsent);
-
-        Collections.sort(messages, (lhs, rhs) -> lhs.getTimestamp()
-                                                    .compareTo(rhs.getTimestamp()));
-        chatHistoryAdapter.updateHistory(messages);
+    private void showMessages(List<ChatMessage> messages, boolean hasNewMessages) {
+        if (hasNewMessages) {
+            List<ChatMessage> unsent = chatMessageViewModel.getUnsentInChatRoom(currentChatRoom);
+            messages.addAll(unsent);
+        }
 
         if (messages.isEmpty()) {
             messagesListView.removeHeaderView(progressbar);
             return;
         }
 
+        if (hasNewMessages) {
+            chatHistoryAdapter.updateHistory(messages);
+        } else {
+            chatHistoryAdapter.addHistory(messages);
+        }
+
         // We remove the progress indicator in the header view if all messages are loaded
-        ChatMessage firstMessage = messages.get(0);
-        if (firstMessage.getPrevious() == 0 || chatHistoryAdapter.isEmpty()) {
+        if (chatHistoryAdapter.isEmpty()) {
             messagesListView.removeHeaderView(progressbar);
         } else {
             isLoadingMore = false;
         }
+
+        chatMessageViewModel.markAsRead(currentChatRoom.getId());
     }
-
-    /*
-    private void onMessagesLoaded() {
-        final List<ChatMessage> messages = chatMessageViewModel.getAll(currentChatRoom.getId());
-
-        // Update results in UI
-        runOnUiThread(() -> {
-            if (chatHistoryAdapter == null) {
-                chatHistoryAdapter = new ChatHistoryAdapter(ChatActivity.this, messages, currentChatMember);
-                messagesListView.setAdapter(chatHistoryAdapter);
-            } else {
-                chatHistoryAdapter.updateHistory(chatMessageViewModel.getAll(currentChatRoom.getId()));
-            }
-
-            // If all messages are loaded hide header view
-            if ((!messages.isEmpty() && messages.get(0)
-                                        .getPrevious() == 0) || chatHistoryAdapter.getCount() == 0) {
-                messagesListView.removeHeaderView(progressbar);
-            } else {
-                isLoadingMore = false;
-            }
-        });
-    }
-    */
 
     @Override
     protected void onDestroy() {

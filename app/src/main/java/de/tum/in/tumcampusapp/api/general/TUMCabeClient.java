@@ -138,13 +138,13 @@ public final class TUMCabeClient {
     }
 
     public void leaveChatRoom(ChatRoom chatRoom, TUMCabeVerification verification, Callback<ChatRoom> cb) {
-        service.leaveChatRoom(chatRoom.getId(), verification)
-                .enqueue(cb);
+//        service.leaveChatRoom(chatRoom.getId(), verification)
+//                .enqueue(cb);
     }
 
     public void addUserToChat(ChatRoom chatRoom, ChatMember member, TUMCabeVerification verification, Callback<ChatRoom> cb) {
-        service.addUserToChat(chatRoom.getId(), member.getId(), verification)
-                .enqueue(cb);
+//        service.addUserToChat(chatRoom.getId(), member.getId(), verification)
+//                .enqueue(cb);
     }
 
     public Observable<ChatMessage> sendMessage(int roomId, TUMCabeVerification verification) {

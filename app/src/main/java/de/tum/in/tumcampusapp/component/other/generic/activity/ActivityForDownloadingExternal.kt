@@ -7,6 +7,7 @@ import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl.BYPASS_CACHE
 import de.tum.`in`.tumcampusapp.service.DownloadWorker
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.NetUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import io.reactivex.Flowable
@@ -23,7 +24,7 @@ import io.reactivex.schedulers.Schedulers
  * @param layoutId Resource id of the xml layout that should be used to inflate the activity
  */
 @Deprecated("Use BaseActivity and a suitable BaseFragment class")
-abstract class ActivityForDownloadingExternal(layoutId: Int) : ProgressActivity<Void>(layoutId) {
+abstract class ActivityForDownloadingExternal(layoutId: Int, component: Component? = null) : ProgressActivity<Void>(layoutId, component) {
 
     /**
      * The [DownloadWorker.Action] to be executed

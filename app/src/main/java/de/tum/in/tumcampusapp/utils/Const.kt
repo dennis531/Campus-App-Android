@@ -18,7 +18,7 @@ object Const {
     const val DATE = "date"
     const val ERROR = "error"
     const val MESSAGE = "message"
-    const val LRZ_ID = "lrz_id"
+    const val USERNAME = "username"
     const val NEWS = "news"
     const val EVENTS = "events"
     const val STUDY_ROOM_GROUP_ID = "study_room_group_id"
@@ -114,7 +114,6 @@ object Const {
     const val EDUROAM_DOMAIN = "eduroam.mwn.de"
     const val LRZ = "lrz"
 
-    const val FCM_CHAT = "fcmChat"
     const val CHAT_MESSAGE = "chatMessage"
     const val CHAT_BROADCAST_NAME = "chat-message-received"
 

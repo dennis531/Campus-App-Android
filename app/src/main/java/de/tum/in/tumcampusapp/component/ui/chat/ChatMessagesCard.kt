@@ -33,8 +33,7 @@ class ChatMessagesCard(
     private var mUnread: List<ChatMessage> = ArrayList()
     private var nrUnread = 0
     private var mRoomName = ""
-    private var mRoomId = 0
-    private var mRoomIdString = ""
+    private var mRoomId = "0"
 
     private val chatMessageDao: ChatMessageDao
 
@@ -44,13 +43,13 @@ class ChatMessagesCard(
     init {
         val tcaDb = TcaDb.getInstance(context)
         chatMessageDao = tcaDb.chatMessageDao()
-        setChatRoom(room.name, room.room, "${room.semesterId}:${room.name}")
+        setChatRoom(room.name, room.id)
     }
 
     override fun updateViewHolder(viewHolder: RecyclerView.ViewHolder) {
         super.updateViewHolder(viewHolder)
         val chatMessagesViewHolder = viewHolder as? ChatMessagesCardViewHolder
-        chatMessagesViewHolder?.bind(mRoomName, mRoomId, mRoomIdString, mUnread)
+        chatMessagesViewHolder?.bind(mRoomName, mRoomId, mUnread)
     }
 
     /**
@@ -59,28 +58,24 @@ class ChatMessagesCard(
      * @param roomName Name of the chat room
      * @param roomId Id of the chat room
      */
-    private fun setChatRoom(roomName: String, roomId: Int, roomIdString: String) {
-        mRoomName = listOf("[A-Z, 0-9(LV\\.Nr)=]+$", "\\([A-Z]+[0-9]+\\)", "\\[[A-Z]+[0-9]+\\]")
-                .map { it.toRegex() }
-                .fold(roomName) { name, regex -> name.replace(regex, "") }
-                .trim()
+    private fun setChatRoom(roomName: String, roomId: String) {
+        mRoomName = roomName
         chatMessageDao.deleteOldEntries()
         nrUnread = chatMessageDao.getNumberUnread(roomId)
         mUnread = chatMessageDao.getLastUnread(roomId).asReversed()
-        mRoomIdString = roomIdString
         mRoomId = roomId
     }
 
     override fun getNavigationDestination(): NavDestination? {
         val bundle = Bundle().apply {
-            val chatRoom = ChatRoom(mRoomIdString).apply { id = mRoomId }
+            val chatRoom = ChatRoom(mRoomId, mRoomName)
             val value = Gson().toJson(chatRoom)
             putString(Const.CURRENT_CHAT_ROOM, value)
         }
         return NavDestination.Activity(ChatActivity::class.java, bundle)
     }
 
-    override fun getId() = mRoomId
+    override fun getId() = mRoomId.hashCode()
 
     override fun discard(editor: Editor) = chatMessageDao.markAsRead(mRoomId)
 

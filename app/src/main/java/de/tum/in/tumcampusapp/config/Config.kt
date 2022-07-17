@@ -47,11 +47,12 @@ object Config {
     val NEWS_ENABLED = true
     val EDUROAM_ENABLED = true
     val GRADES_ENABLED = true
+    val TUITIONFEES_ENABLED = true
+    val ROOMFINDER_ENABLED = true
+    val CHAT_ENABLED = true
     val TRANSPORTATION_ENABLED = false
     val OPENINGHOUR_ENABLED = false
     val CAFETERIA_ENABLED = false
-    val TUITIONFEES_ENABLED = true
-    val ROOMFINDER_ENABLED = true
 
     // Calendar options
     val CALENDAR_EDITABLE = false
@@ -74,4 +75,10 @@ object Config {
         amount = 321.03
     )
     val TUITIONFEES_LINK = "https://www.uni-osnabrueck.de/studium/organisatorisches/rueckmeldung/"
+
+    // Chat options
+    val CHAT_ROOM_CREATEABLE = false // Default: True
+    val CHAT_ROOM_JOINABLE = false // Default: True
+    val CHAT_ROOM_LEAVEABLE = false // Default: True
+    val CHAT_ROOM_MEMBER_ADDABLE = false // Allows to add members to a chat room by other users; Default: True
 }

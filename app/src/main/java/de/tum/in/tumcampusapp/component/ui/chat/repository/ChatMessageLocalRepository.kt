@@ -11,7 +11,7 @@ object ChatMessageLocalRepository {
 
     lateinit var db: TcaDb
 
-    fun markAsRead(room: Int) = db.chatMessageDao().markAsRead(room)
+    fun markAsRead(room: String) = db.chatMessageDao().markAsRead(room)
 
     fun deleteOldEntries() = db.chatMessageDao().deleteOldEntries()
 
@@ -19,11 +19,13 @@ object ChatMessageLocalRepository {
         executor.execute { db.chatMessageDao().replaceMessage(message) }
     }
 
-    fun getAllChatMessagesList(room: Int): List<ChatMessage> = db.chatMessageDao().getAll(room)
+    fun getAllChatMessagesList(room: String): List<ChatMessage> = db.chatMessageDao().getAll(room)
+
+    fun getNumberUnread(room: String): Int = db.chatMessageDao().getNumberUnread(room)
 
     fun getUnsent(): List<ChatMessage> = db.chatMessageDao().unsent
 
-    fun getUnsentInChatRoom(roomId: Int): List<ChatMessage> = db.chatMessageDao().getUnsentInChatRoom(roomId)
+    fun getUnsentInChatRoom(roomId: String): List<ChatMessage> = db.chatMessageDao().getUnsentInChatRoom(roomId)
 
     fun replaceMessages(chatMessages: List<ChatMessage>) {
         chatMessages.forEach { replaceMessage(it) }

@@ -1,4 +1,4 @@
-package de.tum.in.tumcampusapp.component.ui.chat;
+package de.tum.in.tumcampusapp.component.ui.chat.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,9 +10,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -21,13 +22,21 @@ import de.tum.in.tumcampusapp.api.general.ApiHelper;
 import de.tum.in.tumcampusapp.api.general.TUMCabeClient;
 import de.tum.in.tumcampusapp.api.general.model.TUMCabeVerification;
 import de.tum.in.tumcampusapp.component.other.generic.activity.BaseActivity;
+import de.tum.in.tumcampusapp.component.ui.chat.adapter.MemberSuggestionsListAdapter;
+import de.tum.in.tumcampusapp.component.ui.chat.api.ChatAPI;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMember;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoom;
 import de.tum.in.tumcampusapp.database.TcaDb;
 import de.tum.in.tumcampusapp.utils.Component;
-import de.tum.in.tumcampusapp.utils.ConfigConst;
+import de.tum.in.tumcampusapp.utils.ConfigUtils;
 import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.Utils;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,8 +48,8 @@ public class AddChatMemberActivity extends BaseActivity {
     private static final int THRESHOLD = 3; // min number of characters before getting suggestions
     private static final int DELAY = 1000; // millis after user stopped typing before getting suggestions
     private ChatRoom room;
-    private TUMCabeClient tumCabeClient;
-    private Pattern tumIdPattern;
+    private ChatAPI apiClient;
+    private CompositeDisposable compositeDisposable;
     private AutoCompleteTextView searchView;
 
     // for delayed suggestions
@@ -58,13 +67,14 @@ public class AddChatMemberActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         suggestions = new ArrayList<>();
         delayHandler = new Handler();
-        tumIdPattern = Pattern.compile(Const.TUM_ID_PATTERN);
 
-        room = new ChatRoom(getIntent().getStringExtra(Const.CHAT_ROOM_NAME));
-        room.setId(getIntent().getIntExtra(Const.CURRENT_CHAT_ROOM, -1));
+        String encodedRoom = getIntent().getStringExtra(Const.CURRENT_CHAT_ROOM);
+        room = new Gson().fromJson(encodedRoom, ChatRoom.class);
         Utils.log("ChatRoom: " + room.getTitle() + " (roomId: " + room.getId() + ")");
 
-        tumCabeClient = TUMCabeClient.getInstance(this);
+        apiClient = (ChatAPI) ConfigUtils.getLMSClient(this);
+
+        compositeDisposable = new CompositeDisposable();
 
         searchView = findViewById(R.id.chat_user_search);
         searchView.setThreshold(THRESHOLD);
@@ -103,25 +113,25 @@ public class AddChatMemberActivity extends BaseActivity {
                 }
 
                 // backend call, add to adapter
-                if (tumIdPattern.matcher(charSequence)
-                                .matches()) {
-                    // query matches TUM-ID
-                    tumCabeClient.getChatMemberByLrzId(charSequence.toString(), new Callback<ChatMember>() {
-                        @Override
-                        public void onResponse(Call<ChatMember> call, Response<ChatMember> response) {
-                            searchView.setError(null);
-                            suggestions = new ArrayList<>();
-                            suggestions.add(response.body());
-                            ((MemberSuggestionsListAdapter) searchView.getAdapter()).updateSuggestions(suggestions);
-                        }
-
-                        @Override
-                        public void onFailure(Call<ChatMember> call, Throwable t) {
-                            onError();
-                        }
-                    });
-                    return;
-                }
+                //                if (tumIdPattern.matcher(charSequence)
+                //                                .matches()) {
+                //                    // query matches TUM-ID
+                //                    apiClient.getChatMemberByLrzId(charSequence.toString(), new Callback<ChatMember>() {
+                //                        @Override
+                //                        public void onResponse(Call<ChatMember> call, Response<ChatMember> response) {
+                //                            searchView.setError(null);
+                //                            suggestions = new ArrayList<>();
+                //                            suggestions.add(response.body());
+                //                            ((MemberSuggestionsListAdapter) searchView.getAdapter()).updateSuggestions(suggestions);
+                //                        }
+                //
+                //                        @Override
+                //                        public void onFailure(Call<ChatMember> call, Throwable t) {
+                //                            onError();
+                //                        }
+                //                    });
+                //                    return;
+                //                }
 
                 boolean containsDigit = false;
                 for (int i = 0; i < charSequence.length(); i++) {
@@ -131,13 +141,8 @@ public class AddChatMemberActivity extends BaseActivity {
                     }
                 }
                 if (containsDigit) {
-                    // don't try to get new suggestions (we don't autocomplete TUM-IDs)
-                    if (charSequence.length() > 7) {
-                        searchView.setError(getString(R.string.error_invalid_tum_id_format));
-                    } else {
-                        // unfinished TUM-ID
-                        searchView.setError(null);
-                    }
+                    // don't try to get new suggestions (we don't autocomplete IDs)
+                    searchView.setError(null);
                     return;
                 }
 
@@ -151,27 +156,24 @@ public class AddChatMemberActivity extends BaseActivity {
         });
 
         ImageView qrCode = findViewById(R.id.join_chat_qr_code);
-        qrCode.setImageBitmap(ApiHelper.createQRCode(room.getCombinedName()));
+        qrCode.setImageBitmap(ApiHelper.createQRCode(new Gson().toJson(room)));
     }
 
     private void getSuggestions() {
         String input = searchView.getText()
                                  .toString();
-        Utils.log("Get suggestions for " + input);
-        tumCabeClient.searchChatMember(input, new Callback<List<ChatMember>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<ChatMember>> call,
-                                   @NonNull Response<List<ChatMember>> response) {
-                searchView.setError(null);
-                suggestions = response.body();
-                ((MemberSuggestionsListAdapter) searchView.getAdapter()).updateSuggestions(suggestions);
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<List<ChatMember>> call, @NonNull Throwable t) {
-                onError();
-            }
-        });
+        Utils.log("Get suggestions for " + input);
+        Disposable disposable = Single.fromCallable(() -> apiClient.searchChatMember(input))
+                                      .subscribeOn(Schedulers.io())
+                                      .observeOn(AndroidSchedulers.mainThread())
+                                      .subscribe(response -> {
+                                          searchView.setError(null);
+                                          suggestions = response;
+                                          ((MemberSuggestionsListAdapter) searchView.getAdapter()).updateSuggestions(suggestions);
+                                      }, t -> onError());
+
+        compositeDisposable.add(disposable);
     }
 
     private void onError() {
@@ -180,7 +182,7 @@ public class AddChatMemberActivity extends BaseActivity {
 
     private void showConfirmDialog(ChatMember member) {
         String message = getString(R.string.add_user_to_chat_message,
-                member.getDisplayName(), room.getTitle());
+                                   member.getDisplayName(), room.getTitle());
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setMessage(message)
                 .setPositiveButton(R.string.add, (dialogInterface, i) -> {
@@ -191,7 +193,8 @@ public class AddChatMemberActivity extends BaseActivity {
                 .create();
 
         if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawableResource(R.drawable.rounded_corners_background);
+            dialog.getWindow()
+                  .setBackgroundDrawableResource(R.drawable.rounded_corners_background);
         }
 
         dialog.show();
@@ -207,33 +210,28 @@ public class AddChatMemberActivity extends BaseActivity {
     }
 
     private void joinRoom(ChatMember member) {
-        TUMCabeVerification verification = TUMCabeVerification.create(this, null);
-        if (verification == null) {
-            Utils.showToast(this, R.string.error);
-            return;
-        }
+        Disposable disposable = Single.fromCallable(() -> apiClient.addMemberToChatRoom(room, member))
+                                      .subscribeOn(Schedulers.io())
+                                      .observeOn(AndroidSchedulers.mainThread())
+                                      .subscribe(response -> {
+                                          if (response != null) {
+                                              if (response.getMembers() != null) {
+                                                  TcaDb.Companion.getInstance(getBaseContext())
+                                                                 .chatRoomDao()
+                                                                 .updateMemberCount(response.getMembers(), response.getId());
+                                              }
+                                              Utils.showToast(getBaseContext(), R.string.chat_member_added);
+                                          } else {
+                                              Utils.showToast(getBaseContext(), R.string.error_something_wrong);
+                                          }
+                                      }, t -> Utils.showToast(getBaseContext(), R.string.error));
 
-        TUMCabeClient.getInstance(this)
-                .addUserToChat(room, member, verification, new Callback<ChatRoom>() {
-                    @Override
-                    public void onResponse(@NonNull Call<ChatRoom> call,
-                                           @NonNull Response<ChatRoom> response) {
-                        ChatRoom room = response.body();
-                        if (room != null) {
-                            TcaDb.Companion.getInstance(getBaseContext())
-                                           .chatRoomDao()
-                                           .updateMemberCount(room.getMembers(), room.getId());
-                            Utils.showToast(getBaseContext(), R.string.chat_member_added);
-                        } else {
-                            Utils.showToast(getBaseContext(), R.string.error_something_wrong);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<ChatRoom> call, @NonNull Throwable t) {
-                        Utils.showToast(getBaseContext(), R.string.error);
-                    }
-                });
+        compositeDisposable.add(disposable);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
 }

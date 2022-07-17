@@ -67,7 +67,7 @@ class OnboardingStartFragment : BaseFragment<Unit>(
         disableRefresh()
         setCustomCloseIcon()
 
-        val lrzId = Utils.getSetting(requireContext(), Const.LRZ_ID, "")
+        val lrzId = Utils.getSetting(requireContext(), Const.USERNAME, "")
 
         with(binding) {
             lrzIdTextView.setText(lrzId)
@@ -107,7 +107,7 @@ class OnboardingStartFragment : BaseFragment<Unit>(
             return
         }
 
-        Utils.setSetting(requireContext(), Const.LRZ_ID, enteredId)
+        Utils.setSetting(requireContext(), Const.USERNAME, enteredId)
         hideKeyboard()
 
 //        if (AccessTokenManager.hasValidAccessToken(requireContext())) {

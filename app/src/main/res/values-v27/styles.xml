@@ -21,5 +21,7 @@
         <item name="android:navigationBarDividerColor">@color/list_divider</item>
 
         <item name="android:listDivider">@color/list_divider</item>
+
+        <item name="alertDialogTheme">@style/AlertDialog</item>
     </style>
 </resources>

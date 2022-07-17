@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
@@ -40,7 +41,18 @@ public class ChatHistoryAdapter extends BaseAdapter {
 
     public void updateHistory(List<ChatMessage> newHistory) {
         chatHistoryList = newHistory;
+        sortHistory();
         notifyDataSetChanged();
+    }
+
+    public void addHistory(List<ChatMessage> newHistory) {
+        chatHistoryList.addAll(newHistory);
+        sortHistory();
+        notifyDataSetChanged();
+    }
+
+    private void sortHistory() {
+        Collections.sort(chatHistoryList, (lhs, rhs) -> lhs.getTimestamp().compareTo(rhs.getTimestamp()));
     }
 
     @Override
@@ -55,7 +67,7 @@ public class ChatHistoryAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return chatHistoryList.get(position).getId();
+        return chatHistoryList.get(position).getId().hashCode();
     }
 
     public boolean isEmpty() {
@@ -69,7 +81,7 @@ public class ChatHistoryAdapter extends BaseAdapter {
     @Override
     public int getItemViewType(int position) {
         ChatMember member = getItem(position).getMember();
-        return currentChatMember.getId() == member.getId() ? OUTGOING_MESSAGE : INCOMING_MESSAGE;
+        return currentChatMember.getId().equals(member.getId()) ? OUTGOING_MESSAGE : INCOMING_MESSAGE;
     }
 
     @Override
@@ -137,12 +149,6 @@ public class ChatHistoryAdapter extends BaseAdapter {
             } else {
                 userTextView.setText(message.getMember().getDisplayName());
                 timestampTextView.setText(message.getFormattedTimestamp(context));
-            }
-
-            String lrzId = message.getMember().getLrzId();
-            if (lrzId != null && lrzId.equals("bot")) {
-                userTextView.setText("");
-                timestampTextView.setText("");
             }
 
             containerLayout.setOnClickListener(view -> resendIfError(context, message, retryListener));

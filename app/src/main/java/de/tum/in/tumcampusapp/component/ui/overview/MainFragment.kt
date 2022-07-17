@@ -7,9 +7,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -113,7 +111,7 @@ class MainFragment : BaseFragment<Unit>(
         val lastReviewDate = Utils.getSetting(requireContext(), Const.LAST_REVIEW_PROMPT, "0").toLong()
 
         if (DateTime.now().minusMonths(6).isAfter(lastReviewDate) &&
-                Utils.getSetting(requireContext(), Const.LRZ_ID, "").isNotEmpty() &&
+                Utils.getSetting(requireContext(), Const.USERNAME, "").isNotEmpty() &&
                 Utils.getSettingBool(requireContext(), Const.HAS_VISITED_GRADES, false) &&
                 Utils.getSettingBool(requireContext(), Const.HAS_VISITED_CALENDAR, false)) {
             triggerReviewPrompt()

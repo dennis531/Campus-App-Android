@@ -162,7 +162,7 @@
 
     <!-- Startup Wizard -->
     <string name="onboarding">Onboarding</string>
-    <string name="not_connected_to_tumonline">Not connected</string>
+    <string name="not_connected_to_lms">Not connected</string>
     <string name="connect_to_tum_online">Connect to LMS</string>
     <string name="welcome_msg">To setup TUMonline access, you need to provide your <b>TUM ID</b>.\n\nThe ID has the format <i>ga12abc</i>.</string>
     <string name="button_skip">Skip</string>
@@ -403,12 +403,13 @@
     <string name="news_sources">News sources</string>
     <string name="only_latest_article">Only latest article</string>
     <string name="only_latest_article_summary">Shows only the latest article. Otherwise all articles of the selected sources are shown.</string>
-    <string name="lecture_chat">Lecture Chat</string>
-    <string name="set_lecture_chat">If activated, you will be able to join lecture chat rooms, where you and your fellow students can discuss.</string>
+    <string name="set_chat">If activated, you will be able to join chat rooms, where you and your fellow students can discuss.</string>
     <string name="open_chat_terms">Chat terms</string>
     <string name="have_to_accept_terms">Terms must be accepted to use group chat!</string>
     <string name="activate_key">Please activate your public key first</string>
     <string name="joined_chat_room">You joined the chat room!</string>
+    <string name="chat_room_join_error">The chat room could not be joined</string>
+    <string name="chat_room_create_error">The chat room could not be created</string>
     <string name="view_mode">Change view mode</string>
     <string name="bug_reports">Anonymous Bug Reports</string>
     <string name="set_bug_reports">Support the TCA team by sending anonymous bug reports which include: stack trace, logfile, Android version, app version and screen resolution.</string>
@@ -624,7 +625,7 @@ Signature: %5$s</string>
     <string name="dialog_add_to_contacts">Add to Contacts?</string>
 
     <!-- Add user to chat via search -->
-    <string name="user_search_hint">Search Name or TUM Identification</string>
+    <string name="user_search_hint">Search Name or Identification</string>
     <string name="error_invalid_tum_id_format">Invalid TUM-ID format</string>
     <string name="error_user_not_found">No user found</string>
     <string name="add_user_to_chat_message">Add <b>%s</b> to chat room <b>%s</b>?</string>

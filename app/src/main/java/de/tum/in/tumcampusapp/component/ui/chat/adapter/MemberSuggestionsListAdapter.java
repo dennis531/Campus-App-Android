@@ -1,4 +1,4 @@
-package de.tum.in.tumcampusapp.component.ui.chat;
+package de.tum.in.tumcampusapp.component.ui.chat.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,7 +21,7 @@ public class MemberSuggestionsListAdapter extends BaseAdapter implements Filtera
     private Context mContext;
 
     // constructor
-    MemberSuggestionsListAdapter(Context context, List<ChatMember> members) {
+    public MemberSuggestionsListAdapter(Context context, List<ChatMember> members) {
         originalData = members;
         this.members = members;
         mContext = context;
@@ -37,7 +37,7 @@ public class MemberSuggestionsListAdapter extends BaseAdapter implements Filtera
         ((TextView) view.findViewById(android.R.id.text1)).setText(members.get(position)
                                                                           .getDisplayName());
         ((TextView) view.findViewById(android.R.id.text2)).setText(members.get(position)
-                                                                          .getLrzId());
+                                                                          .getUsername());
         return view;
     }
 
@@ -56,7 +56,8 @@ public class MemberSuggestionsListAdapter extends BaseAdapter implements Filtera
             return -1;
         }
         return members.get(i)
-                      .getId();
+                      .getId()
+                      .hashCode();
     }
 
     @Override

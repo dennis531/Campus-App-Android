@@ -2,23 +2,15 @@ package de.tum.`in`.tumcampusapp.component.ui.chat.model
 
 import de.tum.`in`.tumcampusapp.R.string.name
 
-data class ChatRoom(
-    var title: String = "",
-    var semester: String = "ZZZ"
+open class ChatRoom(
+    open var id: String = "0",
+    open var title: String = "",
+    open var joined: Boolean = true
 ) {
-    var id: Int = 0
-    var members = -1
+    open var members: Int? = null
 
-    constructor(combined: String) : this() {
-        if (combined.contains(":")) {
-            semester = combined.substring(0, 3)
-            title = combined.substring(4)
-        }
-    }
-
-    fun getCombinedName(): String {
-        return "$semester:$title"
-    }
+    val mode: Int
+        get() = if (joined) MODE_JOINED else MODE_UNJOINED
 
     override fun toString() = "$id: $name"
 
@@ -27,5 +19,9 @@ data class ChatRoom(
         val MODE_JOINED = 1
         @JvmField
         val MODE_UNJOINED = 0
+
+        fun fromChatRoomDbRow(chatRoomDbRow: ChatRoomDbRow): ChatRoom {
+            return ChatRoom(chatRoomDbRow.id, chatRoomDbRow.name, chatRoomDbRow.joined)
+        }
     }
 }

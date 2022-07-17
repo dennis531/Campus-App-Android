@@ -4,10 +4,11 @@ enum class NotificationType(val id: Int) {
 
     CAFETERIA(0),
     CALENDAR(1),
-    NEWS(2),
-    TRANSPORT(3),
-    TUITION_FEES(4),
-    GRADES(5);
+    CHAT(2),
+    NEWS(3),
+    TRANSPORT(4),
+    TUITION_FEES(5),
+    GRADES(6);
 
     companion object {
         private val map = NotificationType.values().associateBy(NotificationType::id)

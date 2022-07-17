@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import de.tum.`in`.tumcampusapp.api.general.model.TUMCabeVerification
+import de.tum.`in`.tumcampusapp.component.ui.chat.legacy.FcmChat
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMessage
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoom
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageLocalRepository
@@ -21,13 +22,15 @@ class ChatMessageViewModel(
     private val remoteRepository: ChatMessageRemoteRepository
 ) : ViewModel() {
 
-    fun markAsRead(room: Int) = localRepository.markAsRead(room)
+    fun markAsRead(room: String) = localRepository.markAsRead(room)
 
     fun deleteOldEntries() = localRepository.deleteOldEntries()
 
     fun addToUnsent(message: ChatMessage) = localRepository.addToUnsent(message)
 
-    fun getAll(room: Int): List<ChatMessage> = localRepository.getAllChatMessagesList(room)
+    fun getAll(room: String): List<ChatMessage> = localRepository.getAllChatMessagesList(room)
+
+    fun getNumberUnread(room: String): Int = localRepository.getNumberUnread(room)
 
     fun getUnsent(): List<ChatMessage> = localRepository.getUnsent()
 
@@ -37,11 +40,10 @@ class ChatMessageViewModel(
 
     fun getOlderMessages(
         room: ChatRoom,
-        messageId: Long,
-        verification: TUMCabeVerification
+        message: ChatMessage,
     ): Observable<List<ChatMessage>> {
         return remoteRepository
-                .getMessages(room.id, messageId, verification)
+                .getMessages(room, message)
                 .subscribeOn(Schedulers.io())
                 .doOnNext { localRepository.replaceMessages(it) }
                 .observeOn(AndroidSchedulers.mainThread())
@@ -49,20 +51,18 @@ class ChatMessageViewModel(
 
     fun getNewMessages(
         room: ChatRoom,
-        verification: TUMCabeVerification
     ): Observable<List<ChatMessage>> {
         return remoteRepository
-                .getNewMessages(room.id, verification)
+                .getNewMessages(room)
                 .subscribeOn(Schedulers.io())
                 .doOnNext { localRepository.replaceMessages(it) }
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun sendMessage(roomId: Int, chatMessage: ChatMessage, context: Context): Disposable {
+    fun sendMessage(room: ChatRoom, chatMessage: ChatMessage, context: Context): Disposable {
         val broadcastManager = LocalBroadcastManager.getInstance(context)
-        val verification = TUMCabeVerification.create(context, chatMessage)
 
-        return remoteRepository.sendMessage(roomId, verification)
+        return remoteRepository.sendMessage(room, chatMessage)
                 .subscribeOn(Schedulers.io())
                 .subscribe({ message ->
                     message.sendingStatus = ChatMessage.STATUS_SENT
@@ -71,8 +71,7 @@ class ChatMessageViewModel(
 
                     // Send broadcast to eventually open ChatActivity
                     val intent = Intent(Const.CHAT_BROADCAST_NAME).apply {
-                        val fcmChat = FcmChat(message.room, message.member.id, 0)
-                        putExtra(Const.FCM_CHAT, fcmChat)
+                        putExtra(Const.CHAT_MESSAGE, message)
                     }
                     broadcastManager.sendBroadcast(intent)
                 }, { t ->

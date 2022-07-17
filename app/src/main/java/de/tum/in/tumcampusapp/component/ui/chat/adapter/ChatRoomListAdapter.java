@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import de.tum.in.tumcampusapp.R;
 import de.tum.in.tumcampusapp.component.tumui.lectures.activity.LecturesPersonalActivity;
 import de.tum.in.tumcampusapp.component.ui.chat.activity.ChatRoomsActivity;
@@ -55,27 +56,15 @@ public class ChatRoomListAdapter extends BaseAdapter implements StickyListHeader
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
         }
-        //set header text as first char in name
-        ChatRoomAndLastMessage item = getItem(pos);
-        String semester = item.getChatRoomDbRow()
-                              .getSemester();
 
-        if (semester.isEmpty()) {
-            semester = mContext.getString(R.string.my_chat_rooms);
-        }
-        holder.textView.setText(semester);
+        holder.textView.setText(mContext.getString(R.string.my_chat_rooms));
+
         return convertView;
     }
 
     @Override
     public long getHeaderId(int i) {
-        ChatRoomAndLastMessage item = getItem(i);
-        String semester = item.getChatRoomDbRow()
-                              .getSemester();
-        if (!filters.contains(semester)) {
-            filters.add(semester);
-        }
-        return filters.indexOf(semester);
+        return 0;
     }
 
     @Override
@@ -83,6 +72,7 @@ public class ChatRoomListAdapter extends BaseAdapter implements StickyListHeader
         return rooms.size();
     }
 
+    @Nullable
     @Override
     public ChatRoomAndLastMessage getItem(int position) {
         if (rooms != null) {
@@ -97,7 +87,7 @@ public class ChatRoomListAdapter extends BaseAdapter implements StickyListHeader
         if (rooms != null) {
             return rooms.get(position)
                         .getChatRoomDbRow()
-                        .getLvId();
+                        .getId().hashCode();
         } else {
             return -1;
         }
@@ -140,8 +130,8 @@ public class ChatRoomListAdapter extends BaseAdapter implements StickyListHeader
         if (showDateAndNumber) {
             holder.additionalInfoLayout.setVisibility(View.VISIBLE);
 
-            String membersText = Integer.toString(chatRoom.getMembers());
-            if (!membersText.isEmpty()) {
+            if (chatRoom.getMembers() != null) {
+                String membersText = Integer.toString(chatRoom.getMembers());
                 holder.membersTextView.setVisibility(View.VISIBLE);
                 holder.membersTextView.setText(membersText);
             } else {
@@ -152,7 +142,6 @@ public class ChatRoomListAdapter extends BaseAdapter implements StickyListHeader
             String lastMessageText = "";
 
             if (timestamp != null) {
-                // TODO(pfent): Switch to DateTime in ChatRoomAndLastMessage
                 lastMessageText = DateTimeUtils.INSTANCE.formatTimeOrDay(timestamp, mContext);
             }
 
@@ -164,14 +153,6 @@ public class ChatRoomListAdapter extends BaseAdapter implements StickyListHeader
             }
         } else {
             holder.additionalInfoLayout.setVisibility(View.GONE);
-
-            String contributor = chatRoom.getContributor();
-            if (!contributor.isEmpty()) {
-                holder.professorTextView.setVisibility(View.VISIBLE);
-                holder.professorTextView.setText(contributor);
-            } else {
-                holder.professorTextView.setVisibility(View.GONE);
-            }
         }
 
         return convertView;

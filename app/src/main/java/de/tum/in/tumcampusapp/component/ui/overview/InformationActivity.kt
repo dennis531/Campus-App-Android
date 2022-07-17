@@ -89,7 +89,7 @@ class InformationActivity : BaseActivity(R.layout.activity_information, Componen
             } catch (ignore: NameNotFoundException) {
             }
 
-            addDebugRow(debugInfos, "TUM ID", sp.getString(Const.LRZ_ID, ""))
+            addDebugRow(debugInfos, "TUM ID", sp.getString(Const.USERNAME, ""))
             val token = sp.getString(Const.ACCESS_TOKEN, "")
             if (token == "") {
                 addDebugRow(debugInfos, "TUM access token", "")

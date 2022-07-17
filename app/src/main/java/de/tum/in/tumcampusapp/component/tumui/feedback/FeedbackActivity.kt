@@ -31,7 +31,6 @@ import de.tum.`in`.tumcampusapp.component.tumui.feedback.FeedbackPresenter.Compa
 import de.tum.`in`.tumcampusapp.component.tumui.feedback.FeedbackPresenter.Companion.REQUEST_GALLERY
 import de.tum.`in`.tumcampusapp.component.tumui.feedback.FeedbackPresenter.Companion.REQUEST_TAKE_PHOTO
 import de.tum.`in`.tumcampusapp.databinding.ActivityFeedbackBinding
-import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import io.reactivex.Observable
@@ -56,7 +55,7 @@ class FeedbackActivity : BaseActivity(R.layout.activity_feedback), FeedbackContr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val lrzId = Utils.getSetting(this, Const.LRZ_ID, "")
+        val lrzId = Utils.getSetting(this, Const.USERNAME, "")
         injector.feedbackComponent()
                 .lrzId(lrzId)
                 .build()

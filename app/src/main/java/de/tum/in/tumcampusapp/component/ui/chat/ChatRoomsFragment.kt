@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -18,29 +20,27 @@ import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
-import de.tum.`in`.tumcampusapp.api.general.model.TUMCabeVerification
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl.BYPASS_CACHE
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl.USE_CACHE
 import de.tum.`in`.tumcampusapp.component.other.generic.adapter.NoResultsAdapter
 import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingLMS
-import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 import de.tum.`in`.tumcampusapp.component.ui.chat.activity.ChatActivity
 import de.tum.`in`.tumcampusapp.component.ui.chat.activity.JoinRoomScanActivity
 import de.tum.`in`.tumcampusapp.component.ui.chat.adapter.ChatRoomListAdapter
+import de.tum.`in`.tumcampusapp.component.ui.chat.api.ChatAPI
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMember
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoom
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoomAndLastMessage
 import de.tum.`in`.tumcampusapp.databinding.FragmentChatRoomsBinding
-import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.Utils
+import de.tum.`in`.tumcampusapp.utils.*
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.support.v4.runOnUiThread
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class ChatRoomsFragment : FragmentForAccessingLMS<List<AbstractLecture>>(
+class ChatRoomsFragment : FragmentForAccessingLMS<List<ChatRoom>>(
     R.layout.fragment_chat_rooms,
     R.string.chat_rooms
 ) {
@@ -55,6 +55,8 @@ class ChatRoomsFragment : FragmentForAccessingLMS<List<AbstractLecture>>(
 
     private lateinit var chatRoomsAdapter: ChatRoomListAdapter
 
+    private val compositeDisposable = CompositeDisposable()
+
     private val binding by viewBinding(FragmentChatRoomsBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,12 +68,21 @@ class ChatRoomsFragment : FragmentForAccessingLMS<List<AbstractLecture>>(
         super.onViewCreated(view, savedInstanceState)
         binding.chatRoomsListView.setOnItemClickListener(this::onItemClick)
 
+        setupTabs()
+    }
+
+    private fun setupTabs() {
         with(binding) {
+            if (!ConfigUtils.getConfig(ConfigConst.CHAT_ROOM_JOINABLE, true)) {
+                chatRoomTabs.visibility = View.GONE
+                return
+            }
+
             chatRoomTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     // show the given tab
                     currentMode = 1 - tab.position
-                    loadPersonalLectures(USE_CACHE)
+                    loadChatRooms(USE_CACHE)
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) = Unit
@@ -84,70 +95,47 @@ class ChatRoomsFragment : FragmentForAccessingLMS<List<AbstractLecture>>(
             chatRoomTabs.addTab(chatRoomTabs.newTab().setText(R.string.joined))
             chatRoomTabs.addTab(chatRoomTabs.newTab().setText(R.string.not_joined))
         }
-
     }
 
     override fun onStart() {
         super.onStart()
-        loadPersonalLectures(USE_CACHE)
+        loadChatRooms(USE_CACHE)
     }
 
     override fun onRefresh() {
-        loadPersonalLectures(BYPASS_CACHE)
+        loadChatRooms(BYPASS_CACHE)
     }
 
-    private fun loadPersonalLectures(cacheControl: CacheControl) {
-//        val apiCall = apiClient.getPersonalLectures(cacheControl)
-//        fetch(apiCall)
+    private fun loadChatRooms(cacheControl: CacheControl) {
+        fetch { (apiClient as ChatAPI).getChatRooms() }
     }
 
-//    override fun onDownloadSuccessful(response: LecturesResponse) {
-//        val lectures = response.lectures
-//
-//        // We're starting more background work, so we show a loading indicator again
-//        showLoadingStart()
-//
-//        val handlerThread = HandlerThread("UpdateDatabaseThread")
-//        handlerThread.start()
-//
-//        val handler = Handler(handlerThread.looper)
-//        handler.post { createLectureRoomsAndUpdateDatabase(lectures) }
-//    }
+    override fun onDownloadSuccessful(response: List<ChatRoom>) {
+        val chatRooms = response
 
-    private fun createLectureRoomsAndUpdateDatabase(lectures: List<AbstractLecture>) {
-//        manager.createLectureRooms(lectures)
-//
-//        populateCurrentChatMember()
-//
-//        val currentChatMember = currentChatMember
-//        if (currentChatMember != null) {
-//            try {
-//                val verification = TUMCabeVerification.create(requireContext(), null)
-//                if (verification == null) {
-//                    requireActivity().finish()
-//                    return
-//                }
-//
-//                val rooms = TUMCabeClient
-//                    .getInstance(requireContext())
-//                    .getMemberRooms(currentChatMember.id, verification)
-//                manager.replaceIntoRooms(rooms)
-//            } catch (e: IOException) {
-//                Utils.log(e)
-//
-//                if (e is UnknownHostException) {
-//                    showErrorSnackbar(R.string.error_no_internet_connection)
-//                } else {
-//                    showErrorSnackbar(R.string.error_something_wrong)
-//                }
-//            }
-//        }
-//
-//        val chatRoomAndLastMessages = manager.getAllByStatus(currentMode)
-//        runOnUiThread {
-//            displayChatRoomsAndMessages(chatRoomAndLastMessages)
-//            showLoadingEnded()
-//        }
+        // We're starting more background work, so we show a loading indicator again
+        showLoadingStart()
+
+        val handlerThread = HandlerThread("UpdateDatabaseThread")
+        handlerThread.start()
+
+        val handler = Handler(handlerThread.looper)
+        handler.post { updateDatabase(chatRooms) }
+    }
+
+    private fun updateDatabase(chatRooms: List<ChatRoom>) {
+        populateCurrentChatMember()
+
+        val currentChatMember = currentChatMember
+        if (currentChatMember != null) {
+            manager.replaceIntoRooms(chatRooms)
+        }
+
+        val chatRoomAndLastMessages = manager.getAllByStatus(currentMode)
+        runOnUiThread {
+            displayChatRoomsAndMessages(chatRoomAndLastMessages)
+            showLoadingEnded()
+        }
     }
 
     private fun displayChatRoomsAndMessages(results: List<ChatRoomAndLastMessage>) {
@@ -175,52 +163,47 @@ class ChatRoomsFragment : FragmentForAccessingLMS<List<AbstractLecture>>(
     private fun onItemClick(adapterView: AdapterView<*>, v: View, position: Int, id: Long) {
         val item = binding.chatRoomsListView.getItemAtPosition(position) as ChatRoomAndLastMessage
 
-        // set bundle for LectureDetails and show it
-        val bundle = Bundle()
-        val intent = Intent(requireContext(), ChatActivity::class.java)
-        intent.putExtras(bundle)
+        val room = ChatRoom.fromChatRoomDbRow(item.chatRoomDbRow!!)
 
-        val chatRoomUid = item.chatRoomDbRow!!
-            .semesterId + ':'.toString() + item.chatRoomDbRow!!
-            .name
-        createOrJoinChatRoom(chatRoomUid)
+        if (room.joined) {
+            moveToChatActivity(room)
+        } else {
+            joinChatRoom(room)
+        }
     }
 
     /**
      * Creates a given chat room if it does not exist and joins it
      * Works asynchronously.
      */
-    private fun createOrJoinChatRoom(name: String) {
-        Utils.logVerbose("create or join chat room $name")
+    private fun joinChatRoom(room: ChatRoom) {
+        Utils.logVerbose("join chat room ${room.title}")
         if (this.currentChatMember == null) {
             Utils.showToast(requireContext(), getString(R.string.chat_not_setup))
             return
         }
 
-        currentChatRoom = ChatRoom(name)
+        currentChatRoom = room
 
-        val verification = TUMCabeVerification.create(requireContext(), null)
-        if (verification == null) {
-            requireActivity().finish()
-            return
-        }
-
-        val callback = object : Callback<ChatRoom> {
-            override fun onResponse(call: Call<ChatRoom>, response: Response<ChatRoom>) {
-                if (!response.isSuccessful) {
-                    Utils.logVerbose("Error creating&joining chat room: " + response.message())
-                    return
+        compositeDisposable += Single.fromCallable { (apiClient as ChatAPI).addMemberToChatRoom(currentChatRoom!!, currentChatMember!!) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
+                if (response == null) {
+                    Utils.logVerbose("Error joining chat room")
+                    Utils.showToastOnUIThread(requireActivity(), R.string.chat_room_join_error)
+                    return@subscribe
                 }
 
                 // The POST request is successful: go to room. API should have auto joined it
-                Utils.logVerbose("Success creating&joining chat room: " + response.body()!!)
-                currentChatRoom = response.body()
+                Utils.logVerbose("Success joining chat room: " + response)
+                currentChatRoom = response
 
                 manager.join(currentChatRoom)
 
                 // When we show joined chat rooms open chat room directly
                 if (currentMode == ChatRoom.MODE_JOINED) {
-                    moveToChatActivity()
+                    moveToChatActivity(currentChatRoom!!)
                 } else { // Otherwise show a nice information, that we added the room
                     val rooms = manager.getAllByStatus(currentMode)
 
@@ -229,32 +212,36 @@ class ChatRoomsFragment : FragmentForAccessingLMS<List<AbstractLecture>>(
                         Utils.showToast(requireContext(), R.string.joined_chat_room)
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<ChatRoom>, t: Throwable) {
-                Utils.log(t, "Failure creating/joining chat room - trying to GET it from the server")
-                Utils.showToastOnUIThread(requireActivity(), R.string.activate_key)
-            }
-        }
-
-        TUMCabeClient
-            .getInstance(requireContext())
-            .createRoom(currentChatRoom, verification, callback)
+            }, {
+                Utils.log(it, "Failure joining chat room - trying to GET it from the server")
+                Utils.showToastOnUIThread(requireActivity(), R.string.chat_room_join_error)
+            })
     }
 
     /**
      * Opens [ChatActivity]
      */
-    private fun moveToChatActivity() {
+    private fun moveToChatActivity(room: ChatRoom) {
         // We are sure that both currentChatRoom and currentChatMember exist at this point
         val intent = Intent(requireContext(), ChatActivity::class.java)
-        intent.putExtra(Const.CURRENT_CHAT_ROOM, Gson().toJson(currentChatRoom))
+        intent.putExtra(Const.CURRENT_CHAT_ROOM, Gson().toJson(room))
         startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.menu_activity_chat_rooms, menu)
+        inflater.inflate(R.menu.menu_activity_chat_rooms, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        val menuItemAddRoom = menu.findItem(R.id.action_add_chat_room)
+        val menuItemJoinRoom = menu.findItem(R.id.action_join_chat_room)
+
+        menuItemAddRoom?.isVisible = ConfigUtils.getConfig(ConfigConst.CHAT_ROOM_CREATEABLE, true)
+        menuItemJoinRoom?.isVisible = ConfigUtils.getConfig(ConfigConst.CHAT_ROOM_MEMBER_ADDABLE, true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -264,7 +251,7 @@ class ChatRoomsFragment : FragmentForAccessingLMS<List<AbstractLecture>>(
                 true
             }
             R.id.action_join_chat_room -> {
-                joinChatRoom()
+                openJoinChatRoom()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -284,10 +271,8 @@ class ChatRoomsFragment : FragmentForAccessingLMS<List<AbstractLecture>>(
             .setMessage(R.string.new_chat_room_desc)
             .setView(view)
             .setPositiveButton(R.string.create) { dialogInterface, whichButton ->
-                val value = input.text
-                    .toString()
-                val randId = Integer.toHexString((Math.random() * 4096).toInt())
-                createOrJoinChatRoom("$randId:$value")
+                val name = input.text.toString()
+                createChatRoom(name)
             }
             .setNegativeButton(android.R.string.cancel, null)
             .create()
@@ -297,7 +282,50 @@ class ChatRoomsFragment : FragmentForAccessingLMS<List<AbstractLecture>>(
             .show()
     }
 
-    private fun joinChatRoom() {
+    private fun createChatRoom(name: String) {
+        Utils.logVerbose("create chat room ${name}")
+        if (this.currentChatMember == null) {
+            Utils.showToast(requireContext(), getString(R.string.chat_not_setup))
+            return
+        }
+
+        currentChatRoom = ChatRoom(title = name)
+
+        compositeDisposable += Single.fromCallable { (apiClient as ChatAPI).createChatRoom(currentChatRoom!!) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
+                if (response == null) {
+                    Utils.logVerbose("Error creating chat room")
+                    Utils.showToastOnUIThread(requireActivity(), R.string.chat_room_create_error)
+                    return@subscribe
+                }
+
+                // The POST request is successful: go to room. API should have auto joined it
+                Utils.logVerbose("Success creating chat room: " + response)
+                currentChatRoom = response
+
+                manager.join(currentChatRoom)
+
+                // When we show joined chat rooms open chat room directly
+                if (currentMode == ChatRoom.MODE_JOINED) {
+                    moveToChatActivity(currentChatRoom!!)
+                } else { // Otherwise show a nice information, that we added the room
+                    val rooms = manager.getAllByStatus(currentMode)
+
+                    runOnUiThread {
+                        chatRoomsAdapter.updateRooms(rooms)
+                        Utils.showToast(requireContext(), R.string.joined_chat_room)
+                    }
+                }
+
+            }, {
+                Utils.log(it, "Failure creating chat room - trying to GET it from the server")
+                Utils.showToastOnUIThread(requireActivity(), R.string.chat_room_create_error)
+            })
+    }
+
+    private fun openJoinChatRoom() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val permissionCheck = ActivityCompat
                 .checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
@@ -330,13 +358,15 @@ class ChatRoomsFragment : FragmentForAccessingLMS<List<AbstractLecture>>(
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == JOIN_ROOM_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            val name = data.getStringExtra("name") ?: return
-            if (name.getOrNull(3) == ':') {
-                createOrJoinChatRoom(name)
-            } else {
-                Utils.showToast(requireContext(), R.string.invalid_chat_room)
-            }
+            val roomJson = data.getStringExtra("room") ?: return
+
+            joinChatRoom(Gson().fromJson(roomJson, ChatRoom::class.java))
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
     }
 
     private companion object {

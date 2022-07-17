@@ -17,7 +17,7 @@ class ChatMessagesCardViewHolder(
     private val contentContainerLayout = itemView.findViewById<LinearLayout>(R.id.contentContainerLayout)
 
     @Suppress("UNUSED_PARAMETER")
-    fun bind(roomName: String, roomId: Int, roomIdStr: String, unreadMessages: List<ChatMessage>) {
+    fun bind(roomName: String, roomId: String, unreadMessages: List<ChatMessage>) {
         with(itemView) {
             chatRoomNameTextView.text = if (unreadMessages.size > 5) {
                 context.getString(R.string.card_message_title, roomName, unreadMessages.size)

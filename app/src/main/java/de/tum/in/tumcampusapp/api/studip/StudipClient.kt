@@ -14,6 +14,8 @@ import de.tum.`in`.tumcampusapp.api.studip.interceptors.CheckErrorInterceptor
 import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipBaseEvent
 import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipCalendarEvent
 import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipCourseEvent
+import de.tum.`in`.tumcampusapp.api.studip.model.chat.StudipBlubberComment
+import de.tum.`in`.tumcampusapp.api.studip.model.chat.StudipBlubberThread
 import de.tum.`in`.tumcampusapp.api.studip.model.grades.StudipExam
 import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLecture
 import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLectureAppointment
@@ -37,6 +39,10 @@ import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoord
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoom
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderScheduleInterface
+import de.tum.`in`.tumcampusapp.component.ui.chat.api.ChatAPI
+import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMember
+import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMessage
+import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoom
 import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
 import de.tum.`in`.tumcampusapp.component.ui.news.model.AbstractNews
 import de.tum.`in`.tumcampusapp.utils.*
@@ -54,7 +60,9 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     LecturesAPI,
     NewsAPI,
     GradesAPI,
-    RoomFinderAPI {
+    RoomFinderAPI,
+    ChatAPI {
+
     private var userId = Utils.getSetting(context, Const.PROFILE_ID, "")
 
     override fun getGrades(): List<AbstractExam> {
@@ -198,6 +206,48 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return apiService.getNews().execute().body()!!
     }
 
+    override fun getChatRooms(): List<ChatRoom> {
+        return apiService.getChatRooms().execute().body()!!
+    }
+
+    override fun createChatRoom(chatRoom: ChatRoom): ChatRoom? {
+        // Not supported by the STUD.IP json api
+        return null
+    }
+
+    override fun leaveChatRoom(chatRoom: ChatRoom) {
+        // Not supported by the STUD.IP json api
+    }
+
+    override fun getMessages(chatRoom: ChatRoom, latestMessage: ChatMessage?): List<ChatMessage> {
+        if (latestMessage != null) {
+            val oldMessages =  apiService.getOlderMessages(chatRoom.id, latestMessage.timestamp.toString()).execute().body()!!.toMutableList()
+
+            // Remove duplicate lastMessage from response
+            if (oldMessages.isNotEmpty()) {
+                oldMessages.removeAt(0)
+            }
+
+            return oldMessages
+        }
+
+        return apiService.getMessages(chatRoom.id).execute().body()!!
+    }
+
+    override fun sendMessage(chatRoom: ChatRoom, message: ChatMessage): ChatMessage {
+        return apiService.sendMessage(chatRoom.id, StudipBlubberComment(message)).execute().body()!!
+    }
+
+    override fun searchChatMember(query: String): List<ChatMember>? {
+        // Not needed as chat member can not be added to chat rooms through the STUD.IP json api
+        return null
+    }
+
+    override fun addMemberToChatRoom(chatRoom: ChatRoom, member: ChatMember): ChatRoom? {
+        // Not supported by the STUD.IP json api
+        return null
+    }
+
     companion object {
         private var client: StudipClient? = null
 
@@ -236,6 +286,8 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
                 StudipCourseEvent::class.java,
                 StudipLecture::class.java,
                 StudipNews::class.java,
+                StudipBlubberThread::class.java,
+                StudipBlubberComment::class.java,
             )
 
             // Set up relationship resolver

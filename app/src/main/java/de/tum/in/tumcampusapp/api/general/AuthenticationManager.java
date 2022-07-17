@@ -30,7 +30,7 @@ import de.tum.in.tumcampusapp.api.general.model.UploadStatus;
 import de.tum.in.tumcampusapp.api.tumonline.TUMOnlineClient;
 import de.tum.in.tumcampusapp.api.tumonline.model.TokenConfirmation;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMember;
-import de.tum.in.tumcampusapp.service.FcmTokenHandler;
+import de.tum.in.tumcampusapp.service.legacy.FcmTokenHandler;
 import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.RSASigner;
 import de.tum.in.tumcampusapp.utils.Utils;
@@ -273,7 +273,7 @@ public class AuthenticationManager {
      */
     @SuppressLint("CheckResult")
     public void uploadObfuscatedIds(UploadStatus uploadStatus) {
-        String lrzId = Utils.getSetting(mContext, Const.LRZ_ID, "");
+        String lrzId = Utils.getSetting(mContext, Const.USERNAME, "");
         if (lrzId.isEmpty()) {
             Utils.log("Can't upload obfuscated ids: no lrz id");
             return;

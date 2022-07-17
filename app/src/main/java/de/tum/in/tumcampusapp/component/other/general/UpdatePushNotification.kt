@@ -1,24 +1,12 @@
 package de.tum.`in`.tumcampusapp.component.other.general
 
 import android.app.Notification
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 
 import com.google.gson.Gson
 
-import de.tum.`in`.tumcampusapp.BuildConfig
-import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.component.other.generic.PushNotification
-import de.tum.`in`.tumcampusapp.component.ui.overview.MainActivity
-import de.tum.`in`.tumcampusapp.service.FcmReceiverService.Companion.UPDATE
-import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.tryOrNull
+import de.tum.`in`.tumcampusapp.service.legacy.FcmReceiverService.Companion.UPDATE
 
 class UpdatePushNotification(
     payload: String,

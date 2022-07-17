@@ -102,7 +102,7 @@
 
     <!-- Startup Wizard -->
     <string name="onboarding">Einrichtung</string>
-    <string name="not_connected_to_tumonline">Nicht verbunden</string>
+    <string name="not_connected_to_lms">Nicht verbunden</string>
     <string name="connect_to_tum_online">Mit Lernplattform verbinden</string>
     <string name="welcome_msg">Um den Zugriff auf TUMonline-Dienste zu ermöglichen, wird deine <b>TUM-Kennung</b> benötigt.\n\nDie Kennung hat das Format <i>ga12abc</i>.</string>
     <string name="button_skip">Überspringen</string>
@@ -330,12 +330,13 @@
     <string name="news_sources">News Quellen</string>
     <string name="only_latest_article">Nur neusten Artikel</string>
     <string name="only_latest_article_summary">Zeigt jeweils nur den neusten Artikel. Ansonsten werden alle Artikel der ausgewählten Quellen angezeigt.</string>
-    <string name="lecture_chat">Vorlesungs-Chat</string>
-    <string name="set_lecture_chat">Wenn es aktiviert ist, kannst du Vorlesungs-Chatrooms beitreten und mit deinen Kommilitonen diskutieren.</string>
+    <string name="set_chat">Wenn es aktiviert ist, kannst du Chatrooms beitreten und mit deinen Kommilitonen diskutieren.</string>
     <string name="open_chat_terms">Chatbedingungen</string>
     <string name="have_to_accept_terms">Chatbedingungen müssen akzeptiert werden, damit du den Vorlesungs-Chat verwenden kannst!</string>
     <string name="activate_key">Bitte aktiviere zuerst deinen Public Key</string>
     <string name="joined_chat_room">Du bist dem Chatroom beigetreten!</string>
+    <string name="chat_room_join_error">Der Chatroom konnte nicht beigetreten werden</string>
+    <string name="chat_room_create_error">Der Chatroom konnte nicht erstellt werden</string>
     <string name="view_mode">Ansicht wechseln</string>
     <string name="Refresh">Aktualisieren</string>
     <string name="bug_reports">Anonyme Fehlerberichte</string>
@@ -614,7 +615,7 @@ Signatur: %5$s</string>
     <string name="additional_info">Zusätzliche Infos</string>
 
     <!-- Add user to chat via search -->
-    <string name="user_search_hint">Suche Name oder TUM Kennung</string>
+    <string name="user_search_hint">Suche Name oder Kennung</string>
     <string name="error_invalid_tum_id_format">Inkorrekte TUM Kennung</string>
     <string name="error_user_not_found">Niemand gefunden</string>
     <string name="add_user_to_chat_message"><b>%s</b> zum Chatroom <b>%s</b> hinzufügen?</string>

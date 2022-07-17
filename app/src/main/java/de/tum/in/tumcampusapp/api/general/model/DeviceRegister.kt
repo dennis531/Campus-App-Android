@@ -29,7 +29,7 @@ data class DeviceRegister(
                     if (member == null)
                         am.sign(date + rand + device)
                     else
-                        am.sign(date + rand + device + member.lrzId + member.id)
+                        am.sign(date + rand + device + member.username + member.id)
             )
         }
     }

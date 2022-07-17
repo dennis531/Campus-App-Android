@@ -190,7 +190,7 @@ class OnboardingOAuth10aFragment : BaseFragment<String>(
 
     private fun handleIdentity(person: PersonInterface) {
         // Collect personal data
-        Utils.setSetting(requireContext(), Const.LRZ_ID, person.username)
+        Utils.setSetting(requireContext(), Const.USERNAME, person.username)
         Utils.setSetting(requireContext(), Const.EMPLOYEE_MODE, false)
 
         Utils.setSetting(requireContext(), Const.PROFILE_ID, person.id)

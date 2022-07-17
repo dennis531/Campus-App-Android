@@ -2,32 +2,23 @@ package de.tum.`in`.tumcampusapp.component.ui.chat.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 
-class ChatMember() : Parcelable {
+open class ChatMember() : Parcelable {
 
-    var id: Int = 0
-    @SerializedName("lrz_id")
-    var lrzId: String? = null
-    @SerializedName("display_name")
-    var displayName: String? = null
-    var signature: String? = null
+    open var id: String = "0"
+    open var username: String = ""
+    open var displayName: String = ""
 
-    constructor(lrzId: String) : this() {
-        this.lrzId = lrzId
-    }
-
-    constructor(id: Int, lrzId: String, displayName: String) : this() {
+    constructor(id: String, username: String, displayName: String) : this() {
         this.id = id
-        this.lrzId = lrzId
+        this.username = username
         this.displayName = displayName
     }
 
     constructor(parcel: Parcel) : this() {
-        id = parcel.readInt()
-        lrzId = parcel.readString()
-        displayName = parcel.readString()
-        signature = parcel.readString()
+        id = parcel.readString()!!
+        username = parcel.readString()!!
+        displayName = parcel.readString()!!
     }
 
     override fun toString(): String {
@@ -35,10 +26,9 @@ class ChatMember() : Parcelable {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
-        parcel.writeString(lrzId)
+        parcel.writeString(id)
+        parcel.writeString(username)
         parcel.writeString(displayName)
-        parcel.writeString(signature)
     }
 
     override fun describeContents() = 0

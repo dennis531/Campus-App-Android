@@ -1,15 +1,15 @@
 package de.tum.`in`.tumcampusapp.api.studip
 
 import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipCourseEvent
+import de.tum.`in`.tumcampusapp.api.studip.model.chat.StudipBlubberComment
+import de.tum.`in`.tumcampusapp.api.studip.model.chat.StudipBlubberThread
 import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLecture
 import de.tum.`in`.tumcampusapp.api.studip.model.news.StudipNews
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipInstitute
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipPerson
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface StudipAPIService {
 
@@ -43,4 +43,16 @@ interface StudipAPIService {
 
     @GET("studip/news")
     fun getNews(): Call<List<StudipNews>>
+
+    @GET("blubber-threads?include=context,mentions")
+    fun getChatRooms(): Call<List<StudipBlubberThread>>
+
+    @GET("blubber-threads/{id}/comments?include=author")
+    fun getMessages(@Path("id") id: String): Call<List<StudipBlubberComment>>
+
+    @GET("blubber-threads/{id}/comments?include=author")
+    fun getOlderMessages(@Path("id") id: String, @Query("filter[before]") before: String): Call<List<StudipBlubberComment>>
+
+    @POST("blubber-threads/{id}/comments")
+    fun sendMessage(@Path("id") roomId: String, @Body message: StudipBlubberComment): Call<StudipBlubberComment>
 }

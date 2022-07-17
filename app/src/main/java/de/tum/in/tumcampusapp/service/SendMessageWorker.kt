@@ -4,30 +4,30 @@ import android.content.Context
 import androidx.work.*
 import androidx.work.ListenableWorker.Result.*
 import androidx.work.NetworkType.CONNECTED
-import de.tum.`in`.tumcampusapp.api.general.AuthenticationManager
-import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
-import de.tum.`in`.tumcampusapp.api.general.exception.NoPrivateKey
+import de.tum.`in`.tumcampusapp.api.auth.exception.AuthException
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatMessageViewModel
+import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomController
+import de.tum.`in`.tumcampusapp.component.ui.chat.api.ChatAPI
+import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoom
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageLocalRepository
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageRemoteRepository
 import de.tum.`in`.tumcampusapp.database.TcaDb
-import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import java.util.concurrent.TimeUnit
 
 /**
- * Service used to send chat messages. TODO: Need to be generalized with the chat component
+ * Service used to send chat messages.
  */
 class SendMessageWorker(context: Context, workerParams: WorkerParameters) :
         Worker(context, workerParams) {
 
     private val tcaDb by lazy { TcaDb.getInstance(applicationContext) }
-    private val tumCabeClient by lazy { TUMCabeClient.getInstance(applicationContext) }
-    private val authenticationManager by lazy { AuthenticationManager(applicationContext) }
+    private val apiClient: ChatAPI by lazy { ConfigUtils.getLMSClient(applicationContext) as ChatAPI }
+    private val roomController: ChatRoomController by lazy { ChatRoomController(applicationContext) }
 
     override fun doWork(): ListenableWorker.Result {
-        ChatMessageRemoteRepository.tumCabeClient = tumCabeClient
+        ChatMessageRemoteRepository.apiClient = apiClient
         ChatMessageLocalRepository.db = tcaDb
 
         val viewModel = ChatMessageViewModel(ChatMessageLocalRepository, ChatMessageRemoteRepository)
@@ -36,10 +36,12 @@ class SendMessageWorker(context: Context, workerParams: WorkerParameters) :
         return try {
             viewModel.getUnsent()
                     .asSequence()
-                    .onEach { it.signature = authenticationManager.sign(it.text) }
-                    .forEach { viewModel.sendMessage(it.room, it, applicationContext) }
+                    .forEach {
+                        val room = ChatRoom.fromChatRoomDbRow(roomController.getRoomById(it.roomId))
+                        viewModel.sendMessage(room, it, applicationContext)
+                    }
             success()
-        } catch (noPrivateKey: NoPrivateKey) {
+        } catch (authException: AuthException) {
             // Retrying doesn't make any sense
             failure()
         } catch (e: Exception) {

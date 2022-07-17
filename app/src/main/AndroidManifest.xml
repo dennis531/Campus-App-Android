@@ -400,7 +400,7 @@
             android:parentActivityName=".component.tumui.feedback.FeedbackActivity"
             android:theme="@style/AppTheme.NoDrawerLayout" />
         <activity
-            android:name=".component.ui.chat.AddChatMemberActivity"
+            android:name=".component.ui.chat.activity.AddChatMemberActivity"
             android:label="Add Participant"
             android:parentActivityName=".component.ui.chat.activity.ChatActivity"
             android:theme="@style/AppTheme.NoDrawerLayout" >
@@ -507,15 +507,15 @@
             android:name=".service.QueryLocationsService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name=".service.FcmReceiverService"
-            android:enabled="true"
-            android:exported="true"
-            android:stopWithTask="false" >
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+<!--        <service-->
+<!--            android:name=".service.FcmReceiverService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true"-->
+<!--            android:stopWithTask="false" >-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
         <service
             android:name=".service.GeofencingRegistrationService"
             android:permission="android.permission.BIND_JOB_SERVICE" />

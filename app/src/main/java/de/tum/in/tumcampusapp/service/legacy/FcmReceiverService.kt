@@ -1,11 +1,10 @@
-package de.tum.`in`.tumcampusapp.service
+package de.tum.`in`.tumcampusapp.service.legacy
 
 import android.os.Bundle
 import androidx.annotation.IntDef
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.component.other.general.UpdatePushNotification
 import de.tum.`in`.tumcampusapp.component.other.generic.PushNotification
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatPushNotification
@@ -21,7 +20,7 @@ import java.io.IOException
  * service is finished, it calls `completeWakefulIntent()` to release the
  * wake lock.
  */
-class FcmReceiverService : FirebaseMessagingService() {
+class FcmReceiverService : FirebaseMessagingService() { // TODO: REMOVE
 
     override fun onMessageReceived(message: RemoteMessage) {
         val data = message.data ?: return

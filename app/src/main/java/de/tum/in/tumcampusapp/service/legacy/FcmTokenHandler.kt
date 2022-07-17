@@ -1,4 +1,4 @@
-package de.tum.`in`.tumcampusapp.service
+package de.tum.`in`.tumcampusapp.service.legacy
 
 import android.content.Context
 import com.google.firebase.installations.FirebaseInstallations

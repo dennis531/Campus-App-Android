@@ -206,6 +206,14 @@
         </item>
     </style>
 
+    <style name="AlertDialog" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="buttonBarButtonStyle">@style/DialogButton</item>
+    </style>
+
+    <style name="DialogButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:backgroundTint">@color/default_button_background</item>
+    </style>
+
     <style name="InfoBox">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

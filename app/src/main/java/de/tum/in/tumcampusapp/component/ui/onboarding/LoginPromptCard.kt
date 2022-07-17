@@ -27,7 +27,7 @@ class LoginPromptCard(context: Context) : Card(CardManager.CARD_LOGIN, context, 
     override fun shouldShow(prefs: SharedPreferences): Boolean {
         // show on top as long as user hasn't swiped it away and isn't connected to TUMonline
         return Utils.getSettingBool(context, CardManager.SHOW_LOGIN, true) &&
-            Utils.getSetting(context, Const.LRZ_ID, "").isEmpty()
+            Utils.getSetting(context, Const.USERNAME, "").isEmpty()
     }
 
     override fun getId(): Int {
