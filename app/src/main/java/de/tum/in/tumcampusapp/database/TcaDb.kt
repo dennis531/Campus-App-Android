@@ -34,8 +34,8 @@ import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoomDbRow
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsDao
 import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsItem
 import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsSources
-import de.tum.`in`.tumcampusapp.component.ui.openinghour.LocationDao
-import de.tum.`in`.tumcampusapp.component.ui.openinghour.model.Location
+import de.tum.`in`.tumcampusapp.component.ui.openinghours.LocationDao
+import de.tum.`in`.tumcampusapp.component.ui.openinghours.model.Location
 import de.tum.`in`.tumcampusapp.component.ui.transportation.TransportDao
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.TransportFavorites
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.WidgetsTransport

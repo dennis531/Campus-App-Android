@@ -2,7 +2,7 @@ package de.tum.`in`.tumcampusapp.component.ui.cafeteria.details
 
 import android.content.Context
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.component.ui.openinghour.LocationDao
+import de.tum.`in`.tumcampusapp.component.ui.openinghours.LocationDao
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.utils.DateTimeUtils
 import org.joda.time.DateTime
@@ -23,8 +23,8 @@ class OpenHoursHelper(private val context: Context) {
      * @param date Relative date
      * @return Readable opening string
      */
-    fun getHoursByIdAsString(id: Int, date: DateTime): String {
-        val result = dao.getHoursByReferenceId(id) ?: return ""
+    fun getHoursByIdAsString(id: String, date: DateTime): String {
+        val result = dao.getHoursById(id) ?: return ""
 
         // Check which week day we have
         val dayOfWeek = date.dayOfWeek

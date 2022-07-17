@@ -16,7 +16,7 @@ import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.TuitionFeesFragment
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.fragment.CafeteriaFragment
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomsFragment
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsFragment
-import de.tum.`in`.tumcampusapp.component.ui.openinghour.OpeningHoursListFragment
+import de.tum.`in`.tumcampusapp.component.ui.openinghours.OpeningHoursListFragment
 import de.tum.`in`.tumcampusapp.component.ui.overview.InformationActivity
 import de.tum.`in`.tumcampusapp.component.ui.overview.MainFragment
 import de.tum.`in`.tumcampusapp.utils.*

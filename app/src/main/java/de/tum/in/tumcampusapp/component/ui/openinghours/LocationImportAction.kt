@@ -1,9 +1,11 @@
-package de.tum.`in`.tumcampusapp.component.ui.openinghour
+package de.tum.`in`.tumcampusapp.component.ui.openinghours
 
 import android.content.Context
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
+import de.tum.`in`.tumcampusapp.component.ui.openinghours.api.OpeningHoursApi
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.service.DownloadWorker
 import de.tum.`in`.tumcampusapp.utils.Component
@@ -17,7 +19,7 @@ import javax.inject.Inject
 class LocationImportAction @Inject constructor(
     private val context: Context,
     private val database: TcaDb,
-    private val tumCabeClient: TUMCabeClient
+    private val apiClient: LMSClient
 ) : DownloadWorker.Action {
 
     @Throws(IOException::class)
@@ -26,7 +28,7 @@ class LocationImportAction @Inject constructor(
             return
         }
 
-        val openingHours = tumCabeClient.fetchOpeningHours(context.getString(R.string.language))
+        val openingHours = (apiClient as OpeningHoursApi).getOpeningHours()
         database.locationDao().removeCache()
         database.locationDao().replaceInto(openingHours)
     }

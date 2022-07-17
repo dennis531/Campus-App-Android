@@ -5,6 +5,7 @@ import android.content.res.AssetManager
 import dagger.Module
 import dagger.Provides
 import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
+import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.tumui.grades.GradesBackgroundUpdater
 import de.tum.`in`.tumcampusapp.component.tumui.grades.GradesDownloadAction
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaDownloadAction
@@ -12,7 +13,7 @@ import de.tum.`in`.tumcampusapp.component.ui.cafeteria.controller.CafeteriaMenuM
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository.CafeteriaRemoteRepository
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsController
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsDownloadAction
-import de.tum.`in`.tumcampusapp.component.ui.openinghour.LocationImportAction
+import de.tum.`in`.tumcampusapp.component.ui.openinghours.LocationImportAction
 import de.tum.`in`.tumcampusapp.component.ui.updatenote.UpdateNoteDownloadAction
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.service.DownloadWorker
@@ -43,8 +44,8 @@ object DownloadModule {
     fun provideLocationImportAction(
         context: Context,
         database: TcaDb,
-        tumCabeClient: TUMCabeClient
-    ): LocationImportAction = LocationImportAction(context, database, tumCabeClient)
+        lmsClient: LMSClient
+    ): LocationImportAction = LocationImportAction(context, database, lmsClient)
 
     @JvmStatic
     @Provides

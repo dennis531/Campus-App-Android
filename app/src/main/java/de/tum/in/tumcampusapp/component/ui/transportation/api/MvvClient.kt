@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MvvClient {
     companion object {
-        private const val BASE_URL = "https://efa.mvv-muenchen.de/mobile/"
+        private const val BASE_URL = "https://efa.mvv-muenchen.de/mobile/" // VOSpilot nutzt eine API der hacon mbgh: webhost-10.hacon.de (213.83.5.140)
         private var service: MvvApiService? = null
 
         @JvmStatic

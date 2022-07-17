@@ -1,4 +1,4 @@
-package de.tum.in.tumcampusapp.component.ui.openinghour;
+package de.tum.in.tumcampusapp.component.ui.openinghours;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,7 +8,6 @@ import android.view.View;
 import de.tum.in.tumcampusapp.R;
 import de.tum.in.tumcampusapp.component.other.generic.activity.BaseActivity;
 import de.tum.in.tumcampusapp.utils.Component;
-import de.tum.in.tumcampusapp.utils.ConfigConst;
 
 /**
  * An activity representing a single Item detail screen. This activity is only
@@ -32,13 +31,12 @@ public class OpeningHoursDetailActivity extends BaseActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putInt(OpeningHoursDetailFragment.ARG_ITEM_ID,
-                             getIntent().getIntExtra(OpeningHoursDetailFragment.ARG_ITEM_ID, 0));
-            arguments.putString(OpeningHoursDetailFragment.ARG_ITEM_CONTENT,
-                                getIntent().getStringExtra(OpeningHoursDetailFragment.ARG_ITEM_CONTENT));
+            arguments.putString(OpeningHoursDetailFragment.ARG_ITEM_CATEGORY,
+                             getIntent().getStringExtra(OpeningHoursDetailFragment.ARG_ITEM_CATEGORY));
 
             arguments.putBoolean(OpeningHoursDetailFragment.TWO_PANE,
                                  getIntent().getBooleanExtra(OpeningHoursDetailFragment.TWO_PANE, false));
+
             OpeningHoursDetailFragment fragment = new OpeningHoursDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

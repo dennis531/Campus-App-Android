@@ -1,4 +1,4 @@
-package de.tum.in.tumcampusapp.component.ui.openinghour;
+package de.tum.in.tumcampusapp.component.ui.openinghours;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,11 @@ import android.widget.ListView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 import de.tum.in.tumcampusapp.R;
 import de.tum.in.tumcampusapp.component.other.generic.fragment.BaseFragment;
+import de.tum.in.tumcampusapp.database.TcaDb;
 import kotlin.Unit;
 
 public class OpeningHoursListFragment extends BaseFragment<Unit>
@@ -44,26 +47,22 @@ public class OpeningHoursListFragment extends BaseFragment<Unit>
 
         int layout = android.R.layout.simple_list_item_activated_1;
 
-        String[] names = {getString(R.string.libraries),
-                          getString(R.string.information),
-                          getString(R.string.mensa_garching),
-                          getString(R.string.mensa_großhadern),
-                          getString(R.string.mensa_city),
-                          getString(R.string.mensa_pasing),
-                          getString(R.string.mensa_weihenstephan)};
+        LocationDao locationDao = TcaDb.Companion.getInstance(requireContext())
+                                                 .locationDao();
+
+        List<String> names = locationDao.getCategories();
         adapter = new ArrayAdapter<>(requireContext(), layout, android.R.id.text1, names);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         String item = adapter.getItem(position);
-        onItemSelected(position, item);
+        onItemSelected(item);
     }
 
-    private void onItemSelected(int id, String name) {
+    private void onItemSelected(String name) {
         Bundle args = new Bundle();
-        args.putInt(OpeningHoursDetailFragment.ARG_ITEM_ID, id);
-        args.putString(OpeningHoursDetailFragment.ARG_ITEM_CONTENT, name);
+        args.putString(OpeningHoursDetailFragment.ARG_ITEM_CATEGORY, name);
 
         Intent intent = new Intent(requireContext(), OpeningHoursDetailActivity.class);
         intent.putExtras(args);

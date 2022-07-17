@@ -1,4 +1,4 @@
-package de.tum.in.tumcampusapp.component.ui.openinghour;
+package de.tum.in.tumcampusapp.component.ui.openinghours;
 
 import android.os.Bundle;
 import android.text.util.Linkify;
@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.tum.in.tumcampusapp.R;
 import de.tum.in.tumcampusapp.component.other.generic.adapter.EqualSpacingItemDecoration;
-import de.tum.in.tumcampusapp.component.ui.openinghour.model.Location;
+import de.tum.in.tumcampusapp.component.ui.openinghours.model.Location;
 import de.tum.in.tumcampusapp.database.TcaDb;
 
 /**
@@ -29,13 +29,10 @@ import de.tum.in.tumcampusapp.database.TcaDb;
  * NEEDS: ARG_ITEM_ID and ARG_ITEM_CONTENT set in arguments
  */
 public class OpeningHoursDetailFragment extends Fragment {
-    static final String ARG_ITEM_ID = "item_id";
-    static final String ARG_ITEM_CONTENT = "item_content";
+    static final String ARG_ITEM_CATEGORY = "item_category";
     static final String TWO_PANE = "two_pane";
-    private static final Pattern COMPILE = Pattern.compile("\\\\n");
 
-    private int mItemId;
-    private String mItemContent;
+    private String mItemCategory;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -49,12 +46,11 @@ public class OpeningHoursDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mItemId = getArguments().getInt(ARG_ITEM_ID);
-            mItemContent = getArguments().getString(ARG_ITEM_CONTENT);
+        if (getArguments().containsKey(ARG_ITEM_CATEGORY)) {
+            mItemCategory = getArguments().getString(ARG_ITEM_CATEGORY);
         }
-        if (getArguments().containsKey(TWO_PANE) && !getArguments().getBoolean(TWO_PANE)) {
-            getActivity().setTitle(mItemContent);
+        if (!getArguments().containsKey(TWO_PANE) || !getArguments().getBoolean(TWO_PANE)) {
+            getActivity().setTitle(mItemCategory);
         }
     }
 
@@ -62,11 +58,10 @@ public class OpeningHoursDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_item_detail, container, false);
 
-        // click on category in list
+        // load all locations from category
         LocationDao dao = TcaDb.Companion.getInstance(getActivity())
                                          .locationDao();
-        String[] categories = {"library", "info", "cafeteria_gar", "cafeteria_grh", "cafeteria", "cafeteria_pas", "cafeteria_wst"};
-        List<Location> locations = dao.getAllOfCategory(categories[mItemId]);
+        List<Location> locations = dao.getAllOfCategory(mItemCategory);
 
         RecyclerView recyclerView = rootView.findViewById(R.id.fragment_item_detail_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -86,11 +81,11 @@ public class OpeningHoursDetailFragment extends Fragment {
         TextView locationTextView = view.findViewById(R.id.headerTextView);
         locationTextView.setText(location.getName());
 
-        String transport = location.getTransport();
-        String address = location.getAddress();
         String hours = location.getHours();
-        String remark = location.getRemark();
+        String address = location.getAddress();
         String room = location.getRoom();
+        String transport = location.getTransport();
+        String info = location.getInfo();
 
         MaterialButton openLinkButton = view.findViewById(R.id.openLinkButton);
         if (location.getUrl()
@@ -104,29 +99,27 @@ public class OpeningHoursDetailFragment extends Fragment {
 
         TextView hoursView = view.findViewById(R.id.opening_hours_hours);
         hoursView.setVisibility(hours.isEmpty() ? View.GONE : View.VISIBLE);
-        hoursView.setText(hours.replace("/n", "\n"));
+        hoursView.setText(hours);
+
+        TextView locationView = view.findViewById(R.id.opening_hours_location);
+        locationView.setVisibility(address.isEmpty() ? View.GONE : View.VISIBLE);
+        locationView.setText(address);
 
         TextView roomView = view.findViewById(R.id.opening_hours_room);
         roomView.setVisibility(room.isEmpty() ? View.GONE : View.VISIBLE);
         roomView.setText(room);
 
-        TextView locationView = view.findViewById(R.id.opening_hours_location);
-        locationView.setVisibility(address.isEmpty() ? View.GONE : View.VISIBLE);
-        locationView.setText(address.replace("/n", "\n"));
-
         TextView transportView = view.findViewById(R.id.opening_hours_transport);
         transportView.setVisibility(transport.isEmpty() ? View.GONE : View.VISIBLE);
-        transportView.setText(transport.replace("/n", "\n"));
+        transportView.setText(transport);
 
         TextView infoView = view.findViewById(R.id.opening_hours_info);
-        infoView.setVisibility(remark.isEmpty() ? View.GONE : View.VISIBLE);
-        String infoText = remark.replace("/n", "\n")
-                                .replace("\\n", "\n");
-        infoView.setText(infoText);
+        infoView.setVisibility(info.isEmpty() ? View.GONE : View.VISIBLE);
+        infoView.setText(info);
 
         // link email addresses and phone numbers (e.g. 089-123456)
         Linkify.addLinks(infoView, Linkify.EMAIL_ADDRESSES | Linkify.WEB_URLS);
-        Linkify.addLinks(infoView, Pattern.compile("[0-9-]{6,}"), "tel:");
+        Linkify.addLinks(infoView, Pattern.compile("[0-9-]+"), "tel:");
     }
 
     private class OpeningHoursDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

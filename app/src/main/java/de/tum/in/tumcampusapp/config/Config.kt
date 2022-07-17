@@ -50,8 +50,8 @@ object Config {
     val TUITIONFEES_ENABLED = true
     val ROOMFINDER_ENABLED = true
     val CHAT_ENABLED = true
+    val OPENINGHOUR_ENABLED = true
     val TRANSPORTATION_ENABLED = false
-    val OPENINGHOUR_ENABLED = false
     val CAFETERIA_ENABLED = false
 
     // Calendar options

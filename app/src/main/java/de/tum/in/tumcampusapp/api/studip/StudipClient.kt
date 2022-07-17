@@ -45,6 +45,8 @@ import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMessage
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoom
 import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
 import de.tum.`in`.tumcampusapp.component.ui.news.model.AbstractNews
+import de.tum.`in`.tumcampusapp.component.ui.openinghours.api.OpeningHoursApi
+import de.tum.`in`.tumcampusapp.component.ui.openinghours.model.Location
 import de.tum.`in`.tumcampusapp.utils.*
 import okhttp3.Request
 import org.joda.time.DateTime
@@ -61,7 +63,8 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     NewsAPI,
     GradesAPI,
     RoomFinderAPI,
-    ChatAPI {
+    ChatAPI,
+    OpeningHoursApi {
 
     private var userId = Utils.getSetting(context, Const.PROFILE_ID, "")
 
@@ -246,6 +249,43 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     override fun addMemberToChatRoom(chatRoom: ChatRoom, member: ChatMember): ChatRoom? {
         // Not supported by the STUD.IP json api
         return null
+    }
+
+    override fun getOpeningHours(): List<Location> {
+        val location1 = Location(
+            "1",
+            "Bibliothek",
+            "Bibliothek Westerberg",
+            "12 - 14 Uhr",
+            "Barbara Straße 1",
+            "",
+            "",
+            "Bücher aus der Naturwissenschaft.",
+            "https://www.ub.uni-osnabrueck.de/startseite.html")
+
+        val location2 = Location(
+            "2",
+            "Bibliothek",
+            "Bibliothek Schlossgarten",
+            "12 - 14 Uhr",
+            "Schloss Straße 1",
+            "",
+            "",
+            "Bücher aus den Wirtschafswissenschaften.",
+            "https://www.ub.uni-osnabrueck.de/startseite.html")
+
+        val location3 = Location(
+            "3",
+            "Fachbereiche",
+            "Institut der Informatik",
+            "12 - 14 Uhr",
+            "Wachsbleiche 1",
+            "50/E01",
+            "Altstadt",
+            "",
+            "https://www.informatik.uni-osnabrueck.de/institut_fuer_informatik.html")
+
+        return listOf(location1, location2, location3)
     }
 
     companion object {

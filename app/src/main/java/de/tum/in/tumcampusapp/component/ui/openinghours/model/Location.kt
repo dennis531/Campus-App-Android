@@ -1,9 +1,8 @@
-package de.tum.`in`.tumcampusapp.component.ui.openinghour.model
+package de.tum.`in`.tumcampusapp.component.ui.openinghours.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.RoomWarnings
-import com.google.gson.annotations.SerializedName
 
 /**
  * New Location
@@ -15,25 +14,22 @@ import com.google.gson.annotations.SerializedName
  * @param room Room, e.g. MI 00.01.123
  * @param transport Transportation station name, e.g. U2 Königsplatz
  * @param hours Opening hours, e.g. Mo–Fr 8–24
- * @param remark Additional information, e.g. Tel: 089-11111
+ * @param info Additional information, e.g. Tel: 089-11111
  * @param url Location URL, e.g. http://stud.ub.uni-muenchen.de/
  */
 @Entity
 @SuppressWarnings(RoomWarnings.DEFAULT_CONSTRUCTOR)
-data class Location(
+open class Location(
     @PrimaryKey
-    var id: Int = -1,
-    var category: String = "",
-    var name: String = "",
-    var address: String = "",
-    var room: String = "",
-    @SerializedName("transport_station")
-    var transport: String = "",
-    @SerializedName("opening_hours")
-    var hours: String = "",
-    @SerializedName("infos")
-    var remark: String = "",
-    var url: String = "",
-    @SerializedName("reference_id")
-    var reference: Int = -1
+    open var id: String = "",
+    open var category: String = "",
+    open var name: String = "",
+
+    // optional properties
+    open var hours: String = "",
+    open var address: String = "",
+    open var room: String = "",
+    open var transport: String = "",
+    open var info: String = "",
+    open var url: String = "",
 )

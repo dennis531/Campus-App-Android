@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "cc9814c6be97bde36aa08508c43f5c5b",
+    "identityHash": "412c17038f056cbfd9591f5e0b2d4883",
     "entities": [
       {
         "tableName": "Cafeteria",
@@ -214,49 +214,37 @@
       },
       {
         "tableName": "chat_message",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER NOT NULL, `previous` INTEGER NOT NULL, `room` INTEGER NOT NULL, `text` TEXT, `timestamp` TEXT, `signature` TEXT, `member` TEXT, `sending` INTEGER NOT NULL, PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `roomId` TEXT NOT NULL, `text` TEXT NOT NULL, `member` TEXT NOT NULL, `timestamp` TEXT NOT NULL, `sending` INTEGER NOT NULL, PRIMARY KEY(`_id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "_id",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "previous",
-            "columnName": "previous",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "room",
-            "columnName": "room",
-            "affinity": "INTEGER",
+            "fieldPath": "roomId",
+            "columnName": "roomId",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "text",
             "columnName": "text",
             "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "timestamp",
-            "columnName": "timestamp",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "signature",
-            "columnName": "signature",
-            "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "member",
             "columnName": "member",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "sendingStatus",
@@ -276,12 +264,12 @@
       },
       {
         "tableName": "Location",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `category` TEXT NOT NULL, `name` TEXT NOT NULL, `address` TEXT NOT NULL, `room` TEXT NOT NULL, `transport` TEXT NOT NULL, `hours` TEXT NOT NULL, `remark` TEXT NOT NULL, `url` TEXT NOT NULL, `reference` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `category` TEXT NOT NULL, `name` TEXT NOT NULL, `hours` TEXT NOT NULL, `address` TEXT NOT NULL, `room` TEXT NOT NULL, `transport` TEXT NOT NULL, `info` TEXT NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -293,6 +281,12 @@
           {
             "fieldPath": "name",
             "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hours",
+            "columnName": "hours",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -315,14 +309,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "hours",
-            "columnName": "hours",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "remark",
-            "columnName": "remark",
+            "fieldPath": "info",
+            "columnName": "info",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -330,12 +318,6 @@
             "fieldPath": "url",
             "columnName": "url",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "reference",
-            "columnName": "reference",
-            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -697,29 +679,17 @@
       },
       {
         "tableName": "chat_room",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`room` INTEGER NOT NULL, `name` TEXT NOT NULL, `semester` TEXT NOT NULL, `semester_id` TEXT NOT NULL, `joined` INTEGER NOT NULL, `_id` INTEGER NOT NULL, `contributor` TEXT NOT NULL, `members` INTEGER NOT NULL, `last_read` INTEGER NOT NULL, PRIMARY KEY(`name`, `_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `joined` INTEGER NOT NULL, `members` INTEGER, `last_read` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
-            "fieldPath": "room",
-            "columnName": "room",
-            "affinity": "INTEGER",
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "semester",
-            "columnName": "semester",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "semesterId",
-            "columnName": "semester_id",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -730,34 +700,21 @@
             "notNull": true
           },
           {
-            "fieldPath": "lvId",
-            "columnName": "_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "contributor",
-            "columnName": "contributor",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "members",
             "columnName": "members",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "lastRead",
             "columnName": "last_read",
-            "affinity": "INTEGER",
-            "notNull": true
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "name",
-            "_id"
+            "id"
           ],
           "autoGenerate": false
         },
@@ -820,7 +777,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc9814c6be97bde36aa08508c43f5c5b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '412c17038f056cbfd9591f5e0b2d4883')"
     ]
   }
 }

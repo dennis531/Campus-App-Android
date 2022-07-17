@@ -11,7 +11,7 @@ import de.tum.in.tumcampusapp.api.general.model.UploadStatus;
 import de.tum.in.tumcampusapp.component.tumui.feedback.model.Feedback;
 import de.tum.in.tumcampusapp.component.tumui.feedback.model.FeedbackResult;
 import de.tum.in.tumcampusapp.component.ui.cafeteria.model.Cafeteria;
-import de.tum.in.tumcampusapp.component.ui.openinghour.model.Location;
+import de.tum.in.tumcampusapp.component.ui.openinghours.model.Location;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMember;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMessage;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoom;

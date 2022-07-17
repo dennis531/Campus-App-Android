@@ -63,7 +63,7 @@ class CafeteriaDetailsSectionFragment : Fragment() {
         with(binding) {
             menuDateTextView.text = menuDateString
 
-            val hours = OpenHoursHelper(requireContext()).getHoursByIdAsString(cafeteriaId, menuDate)
+            val hours = OpenHoursHelper(requireContext()).getHoursByIdAsString(cafeteriaId.toString(), menuDate)
             menuOpeningHours.text = hours
             menuOpeningHours.isVisible = hours.isNotEmpty()
 

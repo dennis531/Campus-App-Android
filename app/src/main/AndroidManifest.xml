@@ -143,16 +143,16 @@
                 android:value=".component.ui.overview.MainActivity" />
         </activity>
         <activity
-            android:name=".component.ui.openinghour.OpeningHoursDetailActivity"
+            android:name=".component.ui.openinghours.OpeningHoursDetailActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/opening_hours"
-            android:parentActivityName=".component.ui.openinghour.OpeningHoursListActivity" >
+            android:parentActivityName=".component.ui.openinghours.OpeningHoursListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".component.ui.openinghour.OpeningHoursListActivity" />
+                android:value=".component.ui.openinghours.OpeningHoursListActivity" />
         </activity>
         <activity
-            android:name=".component.ui.openinghour.OpeningHoursListActivity"
+            android:name=".component.ui.openinghours.OpeningHoursListActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/opening_hours"
             android:parentActivityName=".component.ui.overview.MainActivity" >

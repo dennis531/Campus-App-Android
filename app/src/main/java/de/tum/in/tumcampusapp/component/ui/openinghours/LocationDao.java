@@ -1,4 +1,4 @@
-package de.tum.in.tumcampusapp.component.ui.openinghour;
+package de.tum.in.tumcampusapp.component.ui.openinghours;
 
 import java.util.List;
 
@@ -6,16 +6,19 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import de.tum.in.tumcampusapp.component.ui.openinghour.model.Location;
+import de.tum.in.tumcampusapp.component.ui.openinghours.model.Location;
 
 @Dao
 public interface LocationDao {
 
-    @Query("SELECT hours FROM location WHERE reference  = :id")
-    String getHoursByReferenceId(int id);
+    @Query("SELECT hours FROM location WHERE id = :id")
+    String getHoursById(String id);
 
-    @Query("SELECT * FROM location WHERE reference = :id")
-    Location getLocationByReferenceId(int id);
+    @Query("SELECT * FROM location WHERE id = :id")
+    Location getLocationByReferenceId(String id);
+
+    @Query("SELECT category FROM location GROUP BY category ORDER BY category")
+    List<String> getCategories();
 
     @Query("SELECT * FROM location WHERE category = :category ORDER BY name")
     List<Location> getAllOfCategory(String category);

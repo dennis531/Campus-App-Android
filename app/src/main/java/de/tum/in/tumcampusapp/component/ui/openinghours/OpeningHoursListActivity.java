@@ -1,4 +1,4 @@
-package de.tum.in.tumcampusapp.component.ui.openinghour;
+package de.tum.in.tumcampusapp.component.ui.openinghours;
 
 import android.os.Bundle;
 

@@ -26,7 +26,7 @@ import de.tum.in.tumcampusapp.component.ui.cafeteria.model.Cafeteria;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMember;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMessage;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoom;
-import de.tum.in.tumcampusapp.component.ui.openinghour.model.Location;
+import de.tum.in.tumcampusapp.component.ui.openinghours.model.Location;
 import de.tum.in.tumcampusapp.component.ui.updatenote.model.UpdateNote;
 import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.Utils;
