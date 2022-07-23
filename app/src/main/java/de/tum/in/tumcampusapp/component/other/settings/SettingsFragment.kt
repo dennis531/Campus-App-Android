@@ -24,6 +24,7 @@ import androidx.preference.SwitchPreferenceCompat
 import com.squareup.picasso.Picasso
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.auth.AuthManager
+import de.tum.`in`.tumcampusapp.component.other.locations.model.Campus
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.SetupEduroamActivity
@@ -33,9 +34,7 @@ import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.di.injector
 import de.tum.`in`.tumcampusapp.service.SilenceService
 import de.tum.`in`.tumcampusapp.service.StartSyncReceiver
-import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.Utils
-import de.tum.`in`.tumcampusapp.utils.plusAssign
+import de.tum.`in`.tumcampusapp.utils.*
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -71,15 +70,13 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         rootKey: String?
     ) {
         setPreferencesFromResource(R.xml.settings, rootKey)
-        setUpEmployeeSettings()
+//        setUpEmployeeSettings()
 
-        // Disables silence service and logout if the app is used without TUMOnline access
+        // Disables silence service and logout if the app is used without LMS access
         val silentSwitch = findPreference(Const.SILENCE_SERVICE) as? SwitchPreferenceCompat
         val logoutButton = findPreference(BUTTON_LOGOUT)
         if (!authManager.hasAccess()) {
-            if (silentSwitch != null) {
-                silentSwitch.isEnabled = false
-            }
+            silentSwitch?.isEnabled = false
             logoutButton?.isVisible = false
         }
 
@@ -90,19 +87,17 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
             findPreference(BUTTON_LOGOUT).onPreferenceClickListener = this
             setSummary("language_preference")
             setSummary(Const.DESIGN_THEME)
-            setSummary("card_default_campus")
             setSummary("silent_mode_set_to")
             setSummary("background_mode_set_to")
-        } else if (rootKey == "card_cafeteria") {
+            initDefaultCampusSelections()
+        } else if (rootKey == "card_cafeteria") { // TODO: Rework with Cafeteria component
             setSummary("card_cafeteria_default_G")
             setSummary("card_cafeteria_default_K")
             setSummary("card_cafeteria_default_W")
             setSummary("card_role")
             initCafeteriaCardSelections()
         } else if (rootKey == "card_transportation") {
-            setSummary("card_stations_default_G")
-            setSummary("card_stations_default_C")
-            setSummary("card_stations_default_K")
+            initTransportationCard()
         } else if (rootKey == "card_eduroam") {
             findPreference(SETUP_EDUROAM).onPreferenceClickListener = this
         }
@@ -124,6 +119,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
 
     /**
      * Disable setting for non-employees.
+     *
+     * TODO: Disable mode for students; Const.TUMO_EMPLOYEE_ID doesn't work anymore
      */
     private fun setUpEmployeeSettings() {
         val isEmployee = Utils.getSetting(requireContext(), Const.TUMO_EMPLOYEE_ID, "").isNotEmpty()
@@ -141,20 +138,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
             return
         }
         setSummary(key)
-
-        // When newspread selection changes
-        // deselect all newspread sources and select only the
-        // selected source if one of all was selected before
-        if (key == "news_newspread") {
-            val newspreadIds = 7..13
-            val value = newspreadIds.any { sharedPrefs.getBoolean("card_news_source_$it", false) }
-            val newSource = sharedPrefs.getString(key, "7")
-
-            sharedPrefs.edit {
-                newspreadIds.forEach { putBoolean("card_news_source_$it", false) }
-                putBoolean("card_news_source_$newSource", value)
-            }
-        }
 
         // If the silent mode was activated, start the service. This will invoke
         // the service to call onHandleIntent which checks available lectures
@@ -197,6 +180,23 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         }
     }
 
+    private fun initDefaultCampusSelections() {
+        val campuses = ConfigUtils.getConfig(ConfigConst.CAMPUS, emptyList<Campus>())
+
+        val noDefaultCampusName = getString(R.string.no_default_campus)
+        val campusNames = listOf(noDefaultCampusName) + campuses.map { it.getName(requireContext()) }
+
+        val noDefaultCampusId = Const.NO_DEFAULT_CAMPUS_ID
+        val campusIds = listOf(noDefaultCampusId) + campuses.map { it.id }
+
+        val preference = findPreference(Const.DEFAULT_CAMPUS) as ListPreference
+        preference.entries = campusNames.toTypedArray()
+        preference.entryValues = campusIds.toTypedArray()
+        preference.setDefaultValue(campusIds.firstOrNull() ?: noDefaultCampusId)
+
+        setSummary(preference.key)
+    }
+
     private fun initCafeteriaCardSelections() {
         val cafeterias = cafeteriaLocalRepository
                 .getAllCafeterias()
@@ -220,6 +220,30 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         }
 
         setCafeteriaCardsSummary(preference)
+    }
+
+    private fun initTransportationCard() {
+        val preferenceCategory = findPreference("station_defaults") as PreferenceCategory
+
+        val campuses = ConfigUtils.getConfig(ConfigConst.CAMPUS, emptyList<Campus>())
+
+        for (c in campuses) {
+            // Show default station selection if more than one station is available
+            if (!c.stations.isNullOrEmpty() && c.stations.size >= 2) {
+                val preference = ListPreference(preferenceCategory.context).apply {
+                    setDefaultValue(c.stations.first().name)
+                    entries = c.stations.map { it.name }.toTypedArray()
+                    entryValues = c.stations.map { it.name }.toTypedArray()
+                    key = "card_stations_default_${c.id}"
+                    title = c.getName(requireContext())
+                }
+
+                preferenceCategory.addPreference(preference)
+                setSummary(preference.key)
+            }
+        }
+
+        preferenceCategory.isVisible = preferenceCategory.preferenceCount > 0
     }
 
     private fun setSummary(key: CharSequence) {

@@ -60,10 +60,10 @@ class LocationManager @Inject constructor(c: Context) {
             return loc
         }
 
-        val selectedCampus = Utils.getSetting(mContext, Const.DEFAULT_CAMPUS, "X")
+        val selectedCampus = Utils.getSetting(mContext, Const.DEFAULT_CAMPUS, Const.NO_DEFAULT_CAMPUS_ID)
         val allCampi = ConfigUtils.getConfig(ConfigConst.CAMPUS, emptyList<Campus>())
 
-        if ("X" == selectedCampus) {
+        if (Const.NO_DEFAULT_CAMPUS_ID == selectedCampus) {
             return null
         }
 

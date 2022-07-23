@@ -60,7 +60,7 @@ object Const {
     const val GROUP_CHAT_ENABLED = "group_chat_enabled"
     const val BUG_REPORTS = "bug_reports"
     const val DEFAULT_CAMPUS = "card_default_campus"
-    const val AUTO_JOIN_NEW_ROOMS = "auto_join_new_rooms"
+    const val NO_DEFAULT_CAMPUS_ID = "X"
     const val CHAT_MEMBER = "chat_member"
     const val POSITION = "position"
 

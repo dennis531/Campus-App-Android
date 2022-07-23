@@ -118,7 +118,7 @@
     <string name="open_wizard_detail">The Startup-Wizard helps you in order to set the basic preferences for accessing TUMonline services and the layout of this App.</string>
     <string name="account" translatable="false">Account</string>
     <string name="logout">Log out</string>
-    <string name="logout_title">Disconnect from TUMonline</string>
+    <string name="logout_title">Disconnect from LMS</string>
     <string name="logout_message">Are you sure you want to log out?</string>
     <string name="logout_error_title">Logout failed</string>
     <string name="logout_try_again">Do you want to try again?</string>
@@ -133,7 +133,7 @@
     <string name="silence_phone">Silent Service</string>
     <string name="silence_phone_info">The device will be automatically put into silent mode during a lecture.</string>
     <string name="background_mode">Background Mode (Recommended)</string>
-    <string name="background_info">Content will automatically be updated once per day if you’re in the Munich area.</string>
+    <string name="background_info">Content will automatically be updated once per day if you’re in your campus area.</string>
     <string name="mode_background_mode">Background Mode activation</string>
     <string name="always">Always</string>
     <string name="wifi_only">WiFi only</string>

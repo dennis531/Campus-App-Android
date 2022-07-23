@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "412c17038f056cbfd9591f5e0b2d4883",
+    "identityHash": "a87af975be2c80d95b50a24b9f6d1d49",
     "entities": [
       {
         "tableName": "Cafeteria",
@@ -387,38 +387,6 @@
         "foreignKeys": []
       },
       {
-        "tableName": "news_sources",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `icon` TEXT NOT NULL, PRIMARY KEY(`id`))",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "title",
-            "columnName": "title",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "icon",
-            "columnName": "icon",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
         "tableName": "calendar",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `title` TEXT NOT NULL, `typeName` TEXT NOT NULL, `description` TEXT NOT NULL, `dtstart` TEXT NOT NULL, `dtend` TEXT NOT NULL, `location` TEXT NOT NULL, `isEditable` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
@@ -777,7 +745,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '412c17038f056cbfd9591f5e0b2d4883')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a87af975be2c80d95b50a24b9f6d1d49')"
     ]
   }
 }

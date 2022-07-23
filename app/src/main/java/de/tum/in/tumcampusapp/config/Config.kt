@@ -55,7 +55,7 @@ object Config {
 
     // API
     val API = Api.STUDIP
-    val API_BASE_URL = "http://192.168.0.250/studip/jsonapi.php/v1/"
+    val API_BASE_URL = "http://192.168.178.91/studip/jsonapi.php/v1/"
 
     // Authentication
     val AUTH_METHOD = AuthMethod.OAUTH10A
@@ -63,9 +63,9 @@ object Config {
     // OAUTH
     val OAUTH_CONSUMER_KEY = "20952562292527a0bfcc2bf4425bbc6b0626fbee5"
     val OAUTH_CONSUMER_SECRET = "140ffd7ed20cb5396fc15e44e3a3e426"
-    val OAUTH_REQUEST_TOKEN_URL = "http://192.168.0.250/studip/dispatch.php/api/oauth/request_token"
-    val OAUTH_ACCESS_TOKEN_URL = "http://192.168.0.250/studip/dispatch.php/api/oauth/access_token"
-    val OAUTH_AUTHORIZE_URL = "http://192.168.0.250/studip/dispatch.php/api/oauth/authorize"
+    val OAUTH_REQUEST_TOKEN_URL = "http://192.168.178.91/studip/dispatch.php/api/oauth/request_token"
+    val OAUTH_ACCESS_TOKEN_URL = "http://192.168.178.91/studip/dispatch.php/api/oauth/access_token"
+    val OAUTH_AUTHORIZE_URL = "http://192.168.178.91/studip/dispatch.php/api/oauth/authorize"
     // Callback URL is "campus://campus-app/oauth/callback". Configuration in R.values.strings.xml possible.
 
     val OAUTH_SIGNATURE_METHOD = OAuthSignatureMethod.OAUTH_PLAINTEXT

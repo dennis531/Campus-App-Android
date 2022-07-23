@@ -82,7 +82,7 @@
     <string name="silence_phone">Lautlos Service</string>
     <string name="silence_phone_info">Das Gerät wird während einer Vorlesung automatisch in den lautlosen Modus gestellt.</string>
     <string name="background_mode">Hintergrundmodus (empfohlen)</string>
-    <string name="background_info">Aktualisiert die Inhalte der App automatisch einmal täglich, wenn du dich im Großraum München aufhältst.</string>
+    <string name="background_info">Aktualisiert die Inhalte der App automatisch einmal täglich, wenn du dich im Raum deiner Hochschule aufhältst.</string>
     <string name="mode_background_mode">Aktivierung des Hintergrundmodus</string>
     <string name="always">Immer</string>
     <string name="wifi_only">Nur bei WLAN-Verbindung</string>
@@ -690,7 +690,7 @@ Signatur: %5$s</string>
     <string name="including_format_string">inklusive %s</string>
     <string name="logout">Abmelden</string>
     <string name="logout_message">Bist du sicher, dass du dich abmelden willst?</string>
-    <string name="logout_title">Verbindung zu TUMonline löschen</string>
+    <string name="logout_title">Verbindung zur Lernplattform löschen</string>
     <string name="logout_error_title">Logout ist fehlgeschlagen</string>
     <string name="logout_try_again">Erneut versuchen?</string>
     <string name="chat_message_send_error">Nachricht konnte nicht gesendet werden</string>

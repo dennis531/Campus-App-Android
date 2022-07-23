@@ -165,7 +165,6 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
 
                     if (result!= null && !result.username.isNullOrEmpty()) {
                         putBoolean(Const.GROUP_CHAT_ENABLED, groupChatCheckBox.isChecked)
-//                        putBoolean(Const.AUTO_JOIN_NEW_ROOMS, groupChatCheckBox.isChecked)
                         put(Const.CHAT_MEMBER, result)
                     }
                 }

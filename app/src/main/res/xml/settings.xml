@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="cards_pref_container">
 
     <androidx.preference.PreferenceCategory android:title="@string/appearance">
@@ -25,9 +26,6 @@
     <androidx.preference.PreferenceCategory android:title="@string/campus">
 
         <androidx.preference.ListPreference
-            android:defaultValue="G"
-            android:entries="@array/default_campus_entries"
-            android:entryValues="@array/default_campus_values"
             android:icon="@drawable/ic_outline_business_24px"
             android:key="card_default_campus"
             android:title="@string/default_campus" />
@@ -158,28 +156,9 @@
 
             </androidx.preference.PreferenceCategory>
 
-            <androidx.preference.PreferenceCategory android:title="@string/default_station">
-
-                <androidx.preference.ListPreference
-                    android:defaultValue="Garching-Forschungszentrum"
-                    android:entries="@array/stations_G"
-                    android:entryValues="@array/stations_G"
-                    android:key="card_stations_default_G"
-                    android:title="@string/campus_garching" />
-
-                <androidx.preference.ListPreference
-                    android:defaultValue="Theresienstraße"
-                    android:entries="@array/stations_C"
-                    android:entryValues="@array/stations_C"
-                    android:key="card_stations_default_C"
-                    android:title="@string/campus_main" />
-
-                <androidx.preference.ListPreference
-                    android:defaultValue="Klinikum Großhadern"
-                    android:entries="@array/stations_K"
-                    android:entryValues="@array/stations_K"
-                    android:key="card_stations_default_K"
-                    android:title="@string/campus_klinikum_großhadern" />
+            <androidx.preference.PreferenceCategory
+                android:title="@string/default_station"
+                android:key="station_defaults">
 
             </androidx.preference.PreferenceCategory>
 
@@ -252,12 +231,6 @@
 
             </androidx.preference.PreferenceCategory>
 
-            <androidx.preference.PreferenceCategory
-                android:key="card_news_sources"
-                android:title="@string/news_sources">
-                <!-- News sources get inserted here automatically -->
-            </androidx.preference.PreferenceCategory>
-
             <androidx.preference.PreferenceCategory android:title="@string/extra">
 
                 <androidx.preference.SwitchPreferenceCompat
@@ -265,14 +238,6 @@
                     android:key="card_news_latest_only"
                     android:summary="@string/only_latest_article_summary"
                     android:title="@string/only_latest_article" />
-
-                <androidx.preference.ListPreference
-                    android:defaultValue="7"
-                    android:entries="@array/newspread_entries"
-                    android:entryValues="@array/newspread_values"
-                    android:key="news_newspread"
-                    android:summary="@string/newspread_summary"
-                    android:title="@string/newspread" />
 
             </androidx.preference.PreferenceCategory>
 
@@ -363,12 +328,6 @@
             android:entryValues="@array/background_mode_values"
             android:key="background_mode_set_to"
             android:title="@string/mode_background_mode" />
-
-        <androidx.preference.SwitchPreferenceCompat
-            android:icon="@drawable/ic_outline_group_add_24px"
-            android:key="auto_join_new_rooms"
-            android:summary="@string/set_auto_join_chat"
-            android:title="@string/auto_join_chat" />
 
     </androidx.preference.PreferenceCategory>
 
