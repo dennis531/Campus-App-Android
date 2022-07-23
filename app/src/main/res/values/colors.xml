@@ -159,6 +159,16 @@
     <color name="location_color">#00A7DE</color>
     <color name="calendar_color">#0066CC</color>
 
+    <!--- Transportation colors -->
+    <color name="tram">#DC261C</color>
+    <color name="subway">#00D1A2</color>
+    <color name="regional_bahn">#00873F</color>
+    <color name="regional_express">#00ACE6</color>
+    <color name="interregio_express">#B6931D</color>
+
+    <color name="unknown_line">#757575</color>
+    <color name="reduced_opacity">#20ffffff</color>
+
     <!--- MVV colors -->
     <color name="s_1">#41C0FF</color>
     <color name="s_2">#71BF44</color>
@@ -181,17 +191,14 @@
     <color name="u_8">@color/u_3</color>
     <color name="u_8_accent">@color/u_2</color>
 
-    <color name="tram">#DC261C</color>
-
     <color name="night_line_font">#EBD22E</color>
 
     <color name="metro_bus">#FC6604</color>
     <color name="express_bus">#477F70</color>
     <color name="regular_bus">#004A5D</color>
-
-    <color name="unknown_line">#757575</color>
-    <color name="reduced_opacity">#20ffffff</color>
     <!--- End of MVV colors -->
+    <!--- End of transportation colors -->
+
 
 
 </resources>

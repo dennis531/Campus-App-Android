@@ -3,13 +3,11 @@ package de.tum.`in`.tumcampusapp.component.other.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.transaction
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceFragmentCompat.OnPreferenceStartScreenCallback
 import androidx.preference.PreferenceScreen
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.BaseActivity
-import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 
 class SettingsActivity : BaseActivity(R.layout.activity_user_preferences),
@@ -20,9 +18,10 @@ class SettingsActivity : BaseActivity(R.layout.activity_user_preferences),
 
         if (savedInstanceState == null) {
             val rootKey = intent.getStringExtra(Const.PREFERENCE_SCREEN)
-            supportFragmentManager.transaction {
-                replace(R.id.settings_frame, SettingsFragment.newInstance(rootKey))
-            }
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.settings_frame, SettingsFragment.newInstance(rootKey))
+                .commit()
         }
     }
 
@@ -30,10 +29,11 @@ class SettingsActivity : BaseActivity(R.layout.activity_user_preferences),
         preferenceFragment: PreferenceFragmentCompat,
         preferenceScreen: PreferenceScreen
     ): Boolean {
-        supportFragmentManager.transaction {
-            replace(R.id.settings_frame, SettingsFragment.newInstance(preferenceScreen.key))
-            addToBackStack(null)
-        }
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.settings_frame, SettingsFragment.newInstance(preferenceScreen.key))
+            .addToBackStack(null)
+            .commit()
 
         return true
     }

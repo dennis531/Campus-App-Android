@@ -144,7 +144,6 @@
     <string name="person_search">Personensuche</string>
     <string name="roomfinder">Roomfinder</string>
     <string name="opening_hours">Öffnungszeiten</string>
-    <string name="mvv">MVV</string>
     <string name="news">News</string>
 
     <!-- Activity titles -->
@@ -282,7 +281,7 @@
     <string name="campus_klinikum_großhadern">Klinikum Großhadern</string>
     <string name="cafeteria">Mensa</string>
     <string name="card_cafeteria_summary">Zeigt den Mensa-Speiseplan an</string>
-    <string name="card_mvv_summary">Zeigt die Abfahrtszeiten der öffentlich Verkehrmittel an</string>
+    <string name="card_transportation_summary">Zeigt die Abfahrtszeiten der öffentlich Verkehrmittel an</string>
     <string name="card_next_lecture_summary">Zeigt Informationen zur nächsten Vorlesung an</string>
     <string name="card_tuition_fee_summary">Erinnert dich, wenn du die Studiengebühren zahlen musst</string>
     <string name="card_news_summary">Schlägt ausgewählte News vor</string>

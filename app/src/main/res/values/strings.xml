@@ -194,7 +194,6 @@
     <string name="roomfinder">Roomfinder</string>
     <string name="study_rooms">Study Rooms</string>
     <string name="opening_hours">Opening Hours</string>
-    <string name="mvv">MVV</string>
     <string name="news">News</string>
     <string name="events" translatable="false">Events</string>
     <string name="barrier_free">Barrier-free Information</string>
@@ -344,7 +343,7 @@
     <string name="campus_klinikum_großhadern">Klinikum Großhadern</string>
     <string name="cafeteria">Cafeteria</string>
     <string name="card_cafeteria_summary">Displays the cafeteria menu</string>
-    <string name="card_mvv_summary">Shows you the departure times of public transport</string>
+    <string name="card_transportation_summary">Shows you the departure times of public transport</string>
     <string name="card_next_lecture_summary">Shows information about your next lecture</string>
     <string name="card_tuition_fee_summary">Reminds you when you have to pay your fees</string>
     <string name="card_news_summary">Advertises selected news</string>

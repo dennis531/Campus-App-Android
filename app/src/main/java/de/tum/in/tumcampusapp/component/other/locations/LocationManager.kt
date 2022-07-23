@@ -11,14 +11,16 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.other.locations.model.BuildingToGps
+import de.tum.`in`.tumcampusapp.component.other.locations.model.Campus
 import de.tum.`in`.tumcampusapp.component.other.locations.model.Geo
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.api.RoomFinderAPI
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinateInterface
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.Cafeteria
-import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.StationResult
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
 import de.tum.`in`.tumcampusapp.database.TcaDb
+import de.tum.`in`.tumcampusapp.utils.ConfigConst
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
@@ -58,13 +60,14 @@ class LocationManager @Inject constructor(c: Context) {
             return loc
         }
 
-        val selectedCampus = Utils.getSetting(mContext, Const.DEFAULT_CAMPUS, "G")
-        val allCampi = Campus.values().associateBy(Campus::short)
+        val selectedCampus = Utils.getSetting(mContext, Const.DEFAULT_CAMPUS, "X")
+        val allCampi = ConfigUtils.getConfig(ConfigConst.CAMPUS, emptyList<Campus>())
 
-        if ("X" != selectedCampus && allCampi.containsKey(selectedCampus)) {
-            return allCampi[selectedCampus]!!.getLocation()
+        if ("X" == selectedCampus) {
+            return null
         }
-        return null
+
+        return allCampi.find { it.id == selectedCampus }?.getLocation()
     }
 
     /**
@@ -149,20 +152,25 @@ class LocationManager @Inject constructor(c: Context) {
     /**
      * Returns the name of the station that is nearby and/or set by the user
      *
-     * @return Name of the station or null if the user is not near any campus
+     * @return Name of the station or null if the user is not near any campus or campus has no station
      */
-    fun getStation(): StationResult? {
+    fun getStation(): Station? {
         val campus = getCurrentCampus() ?: return null
 
-        // Try to find favorite station for current campus
-        val station = Utils.getSetting(mContext, "card_stations_default_" + campus.short, "")
-        if (station.isNotEmpty()) {
-            Stations.values().associateBy(Stations::station).values.find {
-                it.station.station == station
-            }?.let { return it.station }
+        // Campus has no associated station
+        if (campus.stations.isNullOrEmpty()) {
+            return null
         }
-        // Otherwise fallback to the default
-        return campus.defaultStation.station
+
+        // Try to find favorite station for current campus
+        val stationName = Utils.getSetting(mContext, "card_stations_default_" + campus.id, "")
+        if (stationName.isNotEmpty()) {
+            campus.stations.find {
+                it.name == stationName
+            }?.let { return it.apply { quality = Int.MAX_VALUE } }
+        }
+        // Otherwise fallback to first station as the default
+        return campus.stations.first().apply { quality = Int.MAX_VALUE }
     }
 
     /**
@@ -180,7 +188,8 @@ class LocationManager @Inject constructor(c: Context) {
         val campus = getCurrentOrNextCampus()
         if (campus != null) {
             val prefs = PreferenceManager.getDefaultSharedPreferences(mContext)
-            val cafeteria = prefs.getString("card_cafeteria_default_" + campus.short, campus.defaultMensa)
+//            val cafeteria = prefs.getString("card_cafeteria_default_" + campus.id, campus.defaultMensa) // TODO: Rework Cafeteria
+            val cafeteria = null
             if (cafeteria != null) {
                 return Integer.parseInt(cafeteria)
             }
@@ -205,7 +214,8 @@ class LocationManager @Inject constructor(c: Context) {
         val manager = CalendarController(mContext)
         val geo = manager.nextCalendarItemGeo
         if (geo == null) {
-            return Campus.GarchingForschungszentrum.getLocation()
+            val firstCampus = ConfigUtils.getConfig(ConfigConst.CAMPUS, emptyList<Campus>()).firstOrNull()
+            return firstCampus?.getLocation() ?: Location("defaultLocation")
         }
 
         val location = Location("roomfinder")
@@ -361,36 +371,32 @@ class LocationManager @Inject constructor(c: Context) {
     }
 
     companion object {
-        private enum class Campus(val short: String, val lat: Double, val lon: Double, val defaultMensa: String?, val defaultStation: Stations) {
-            GarchingForschungszentrum("G", 48.2648424, 11.6709511, "422", Stations.GarchingForschungszentrum),
-            GarchingHochbrueck("H", 48.249432, 11.633905, null, Stations.GarchingHochbrueck),
-            Weihenstephan("W", 48.397990, 11.722727, "423", Stations.Weihenstephan),
-            Stammgelaende("C", 48.149436, 11.567635, "421", Stations.Stammgelaende),
-            KlinikumGrosshadern("K", 48.110847, 11.4703001, "414", Stations.KlinikumGrosshadern),
-            KlinikumRechtsDerIsar("I", 48.137, 11.601119, null, Stations.KlinikumRechtsDerIsar),
-            Leopoldstrasse("L", 48.155916, 11.583095, "411", Stations.Leopoldstrasse),
-            GeschwisterSchollplatzAdalbertstrasse("S", 48.150244, 11.580665, null, Stations.GeschwisterSchollplatzAdalbertstrasse);
-
-            fun getLocation(): Location {
-                return Location("defaultLocation").apply { latitude = lat; longitude = lon }
-            }
-        }
-
-        private enum class Stations(val station: StationResult) {
-            GarchingForschungszentrum(StationResult("Garching-Forschungszentrum", "1000460", Integer.MAX_VALUE)),
-            GarchingHochbrueck(StationResult("Garching-Hochbrück", "1000480", Integer.MAX_VALUE)),
-            Weihenstephan(StationResult("Weihenstephan", "1002911", Integer.MAX_VALUE)),
-            Stammgelaende(StationResult("Theresienstraße", "1000120", Integer.MAX_VALUE)),
-            KlinikumGrosshadern(StationResult("Klinikum Großhadern", "1001540", Integer.MAX_VALUE)),
-            KlinikumRechtsDerIsar(StationResult("Max-Weber-Platz", "1000580", Integer.MAX_VALUE)),
-            Leopoldstrasse(StationResult("Giselastraße", "1000080", Integer.MAX_VALUE)),
-            GeschwisterSchollplatzAdalbertstrasse(StationResult("Universität", "1000070", Integer.MAX_VALUE)),
-            Pinakotheken(StationResult("Pinakotheken", "1000051", Integer.MAX_VALUE)),
-            TUM(StationResult("Technische Universität", "1000095", Integer.MAX_VALUE)),
-            Waldhueterstrasse(StationResult("Waldhüterstraße", "1001574", Integer.MAX_VALUE)),
-            Martinsried(StationResult("LMU Martinsried", "1002557", Integer.MAX_VALUE)),
-            GarchingTUM(StationResult("Garching-Technische Universität", "1002070", Integer.MAX_VALUE))
-        }
+//        private enum class Campus(val short: String, val lat: Double, val lon: Double, val defaultMensa: String?, val defaultStation: Stations) {
+//            GarchingForschungszentrum("G", 48.2648424, 11.6709511, "422", Stations.GarchingForschungszentrum),
+//            GarchingHochbrueck("H", 48.249432, 11.633905, null, Stations.GarchingHochbrueck),
+//            Weihenstephan("W", 48.397990, 11.722727, "423", Stations.Weihenstephan),
+//            Stammgelaende("C", 48.149436, 11.567635, "421", Stations.Stammgelaende),
+//            KlinikumGrosshadern("K", 48.110847, 11.4703001, "414", Stations.KlinikumGrosshadern),
+//            KlinikumRechtsDerIsar("I", 48.137, 11.601119, null, Stations.KlinikumRechtsDerIsar),
+//            Leopoldstrasse("L", 48.155916, 11.583095, "411", Stations.Leopoldstrasse),
+//            GeschwisterSchollplatzAdalbertstrasse("S", 48.150244, 11.580665, null, Stations.GeschwisterSchollplatzAdalbertstrasse);
+//        }
+//
+//        private enum class Stations(val station: Station) {
+//            GarchingForschungszentrum(Station("1000460", "Garching-Forschungszentrum", Integer.MAX_VALUE)),
+//            GarchingHochbrueck(Station("1000480", "Garching-Hochbrück", Integer.MAX_VALUE)),
+//            Weihenstephan(Station("1002911", "Weihenstephan", Integer.MAX_VALUE)),
+//            Stammgelaende(Station("1000120", "Theresienstraße", Integer.MAX_VALUE)),
+//            KlinikumGrosshadern(Station("1001540", "Klinikum Großhadern", Integer.MAX_VALUE)),
+//            KlinikumRechtsDerIsar(Station("1000580", "Max-Weber-Platz", Integer.MAX_VALUE)),
+//            Leopoldstrasse(Station("1000080", "Giselastraße", Integer.MAX_VALUE)),
+//            GeschwisterSchollplatzAdalbertstrasse(Station("1000070", "Universität", Integer.MAX_VALUE)),
+//            Pinakotheken(Station("1000051", "Pinakotheken", Integer.MAX_VALUE)),
+//            TUM(Station("1000095", "Technische Universität", Integer.MAX_VALUE)),
+//            Waldhueterstrasse(Station("1001574", "Waldhüterstraße", Integer.MAX_VALUE)),
+//            Martinsried(Station("1002557", "LMU Martinsried", Integer.MAX_VALUE)),
+//            GarchingTUM(Station("1002070", "Garching-Technische Universität", Integer.MAX_VALUE))
+//        }
 
         /**
          * Returns the "id" of the campus near the given location
@@ -405,8 +411,8 @@ class LocationManager @Inject constructor(c: Context) {
             val results = FloatArray(1)
             var bestDistance = java.lang.Float.MAX_VALUE
             var bestCampus: Campus? = null
-            for (l in Campus.values()) {
-                Location.distanceBetween(l.lat, l.lon, lat, lng, results)
+            for (l in ConfigUtils.getConfig(ConfigConst.CAMPUS, emptyList<Campus>())) {
+                Location.distanceBetween(l.latitude, l.longitude, lat, lng, results)
                 val distance = results[0]
                 if (distance < bestDistance) {
                     bestDistance = distance

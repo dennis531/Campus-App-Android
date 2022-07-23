@@ -65,7 +65,7 @@ object NotificationUtils {
         )
 
         val mvv = createChannel(
-                context, Const.NOTIFICATION_CHANNEL_MVV,
+                context, Const.NOTIFICATION_CHANNEL_TRANSPORTATION,
                 R.string.channel_mvv, R.string.channel_description_mvv,
                 NotificationManager.IMPORTANCE_LOW
         )

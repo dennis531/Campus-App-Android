@@ -99,7 +99,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
             setSummary("card_cafeteria_default_W")
             setSummary("card_role")
             initCafeteriaCardSelections()
-        } else if (rootKey == "card_mvv") {
+        } else if (rootKey == "card_transportation") {
             setSummary("card_stations_default_G")
             setSummary("card_stations_default_C")
             setSummary("card_stations_default_K")

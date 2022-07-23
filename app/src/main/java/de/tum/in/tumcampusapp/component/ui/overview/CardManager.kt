@@ -6,7 +6,6 @@ import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.utils.Const.CARD_POSITION_PREFERENCE_SUFFIX
 import de.tum.`in`.tumcampusapp.utils.Const.DISCARD_SETTINGS_START
-import de.tum.`in`.tumcampusapp.utils.Utils
 
 /**
  * Card manager, manages inserting, dismissing, updating and displaying of cards
@@ -24,7 +23,7 @@ object CardManager {
     const val CARD_NEXT_LECTURE = R.layout.card_next_lecture_item
     const val CARD_RESTORE = R.layout.card_restore
     const val CARD_NO_INTERNET = R.layout.card_no_internet
-    const val CARD_MVV = R.layout.card_mvv
+    const val CARD_TRANSPORTATION = R.layout.card_transportation
     const val CARD_NEWS = R.layout.card_news_item
     const val CARD_EDUROAM = R.layout.card_eduroam
     const val CARD_CHAT = R.layout.card_chat_messages

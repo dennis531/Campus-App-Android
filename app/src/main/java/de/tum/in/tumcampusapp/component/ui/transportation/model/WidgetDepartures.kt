@@ -1,8 +1,8 @@
-package de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa
+package de.tum.`in`.tumcampusapp.component.ui.transportation.model
 
 import android.content.Context
 import de.tum.`in`.tumcampusapp.component.ui.transportation.TransportController
-import de.tum.`in`.tumcampusapp.component.ui.transportation.widget.MVVWidget
+import de.tum.`in`.tumcampusapp.component.ui.transportation.widget.TransportationWidget
 import java.util.*
 
 /**
@@ -58,10 +58,10 @@ class WidgetDepartures(
      * @return The list of departures
      */
     fun getDepartures(context: Context, forceServerLoad: Boolean): List<Departure> {
-        // download only id there is no data or the last loading is more than X min ago
-        val shouldAutoReload = System.currentTimeMillis() - this.lastLoad > MVVWidget.DOWNLOAD_DELAY
+        // download only if there is no data or the last loading is more than X min ago
+        val shouldAutoReload = System.currentTimeMillis() - this.lastLoad > TransportationWidget.DOWNLOAD_DELAY
         if (this.departures.isEmpty() || forceServerLoad || this.autoReload && shouldAutoReload) {
-            val departures = TransportController.getDeparturesFromExternal(context, this.stationId).blockingFirst()
+            val departures = TransportController.getDeparturesFromExternal(context, Station(this.stationId, this.station)).blockingFirst()
             if (departures.isEmpty()) {
                 this.isOffline = true
             } else {

@@ -10,27 +10,27 @@ import androidx.recyclerview.widget.RecyclerView
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.navigation.NavDestination
 import de.tum.`in`.tumcampusapp.component.ui.overview.CardInteractionListener
-import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager.CARD_MVV
+import de.tum.`in`.tumcampusapp.component.ui.overview.CardManager.CARD_TRANSPORTATION
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
-import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.Departure
-import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.StationResult
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Departure
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
 import de.tum.`in`.tumcampusapp.utils.Component
 
 /**
  * Card that shows MVV departure times
  */
-class MVVCard(context: Context, val station: StationResult, val departures: List<Departure>) : Card(CARD_MVV, context, Component.TRANSPORTATION, "card_mvv") {
+class TransportationCard(context: Context, val station: Station, val departures: List<Departure>) : Card(CARD_TRANSPORTATION, context, Component.TRANSPORTATION, "card_transportation") {
 
     override val optionsMenuResId: Int
         get() = R.menu.card_popup_menu
 
     val title: String
-        get() = station.station
+        get() = station.name
 
     override fun updateViewHolder(viewHolder: RecyclerView.ViewHolder) {
         super.updateViewHolder(viewHolder)
-        if (viewHolder is MVVCardViewHolder) {
+        if (viewHolder is TransportationCardViewHolder) {
             viewHolder.bind(station, departures)
         }
     }
@@ -41,21 +41,21 @@ class MVVCard(context: Context, val station: StationResult, val departures: List
     }
 
     override fun discard(editor: Editor) {
-        editor.putLong(MVV_TIME, System.currentTimeMillis())
+        editor.putLong(TRANSPORTATION_TIME, System.currentTimeMillis())
     }
 
     override fun shouldShow(prefs: SharedPreferences): Boolean {
         // Card is only hidden for an hour when discarded
-        val prevDate = prefs.getLong(MVV_TIME, 0)
+        val prevDate = prefs.getLong(TRANSPORTATION_TIME, 0)
         return prevDate + DateUtils.HOUR_IN_MILLIS < System.currentTimeMillis()
     }
 
     companion object {
-        private const val MVV_TIME = "mvv_time"
+        private const val TRANSPORTATION_TIME = "transportation_time"
         @JvmStatic
         fun inflateViewHolder(parent: ViewGroup, interactionListener: CardInteractionListener): CardViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.card_mvv, parent, false)
-            return MVVCardViewHolder(view, interactionListener)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.card_transportation, parent, false)
+            return TransportationCardViewHolder(view, interactionListener)
         }
     }
 }

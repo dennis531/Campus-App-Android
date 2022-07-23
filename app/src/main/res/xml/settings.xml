@@ -145,15 +145,15 @@
         <!-- MVV card-->
         <androidx.preference.PreferenceScreen
             android:icon="@drawable/ic_outline_train_24px"
-            android:key="card_mvv"
-            android:summary="@string/card_mvv_summary"
-            android:title="@string/mvv">
+            android:key="card_transportation"
+            android:summary="@string/card_transportation_summary"
+            android:title="@string/transport">
 
             <androidx.preference.PreferenceCategory android:title="@string/display">
 
                 <androidx.preference.CheckBoxPreference
                     android:defaultValue="true"
-                    android:key="card_mvv_start"
+                    android:key="card_transportation_start"
                     android:title="@string/startpage" />
 
             </androidx.preference.PreferenceCategory>

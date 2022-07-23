@@ -13,7 +13,7 @@ import de.tum.`in`.tumcampusapp.component.ui.news.NewsCard
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.LoginPromptCard
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.CardViewHolder
-import de.tum.`in`.tumcampusapp.component.ui.transportation.MVVCard
+import de.tum.`in`.tumcampusapp.component.ui.transportation.TransportationCard
 import de.tum.`in`.tumcampusapp.component.ui.updatenote.UpdateNoteCard
 import java.util.*
 
@@ -31,7 +31,7 @@ class CardAdapter(private val interactionListener: CardInteractionListener) : Re
             CardManager.CARD_NEXT_LECTURE -> return NextLectureCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_RESTORE -> return RestoreCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_NO_INTERNET -> return NoInternetCard.inflateViewHolder(viewGroup, interactionListener)
-            CardManager.CARD_MVV -> return MVVCard.inflateViewHolder(viewGroup, interactionListener)
+            CardManager.CARD_TRANSPORTATION -> return TransportationCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_NEWS -> return NewsCard.inflateViewHolder(viewGroup, viewType, interactionListener)
             CardManager.CARD_EDUROAM -> return EduroamCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_EDUROAM_FIX -> return EduroamFixCard.inflateViewHolder(viewGroup, interactionListener)

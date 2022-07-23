@@ -1,6 +1,8 @@
 package de.tum.`in`.tumcampusapp.utils
 
 object ConfigConst {
+    const val CAMPUS = "CAMPUS"
+
     const val API = "API"
     const val API_BASE_URL = "API_BASE_URL"
 
@@ -40,4 +42,6 @@ object ConfigConst {
     const val CHAT_ROOM_JOINABLE = "CHAT_ROOM_JOINABLE"
     const val CHAT_ROOM_LEAVEABLE = "CHAT_ROOM_LEAVEABLE"
     const val CHAT_ROOM_MEMBER_ADDABLE = "CHAT_ROOM_MEMBER_ADDABLE"
+
+    const val TRANSPORTATION_API = "TRANSPORTATION_API"
 }

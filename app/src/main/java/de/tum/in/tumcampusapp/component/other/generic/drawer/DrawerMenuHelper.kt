@@ -19,6 +19,7 @@ import de.tum.`in`.tumcampusapp.component.ui.news.NewsFragment
 import de.tum.`in`.tumcampusapp.component.ui.openinghours.OpeningHoursListFragment
 import de.tum.`in`.tumcampusapp.component.ui.overview.InformationActivity
 import de.tum.`in`.tumcampusapp.component.ui.overview.MainFragment
+import de.tum.`in`.tumcampusapp.component.ui.transportation.TransportationActivity
 import de.tum.`in`.tumcampusapp.utils.*
 
 class DrawerMenuHelper(
@@ -121,7 +122,7 @@ class DrawerMenuHelper(
 
         private val HOME = NavItem.FragmentDestination(R.string.home, R.drawable.ic_outline_home_24px, MainFragment::class.java, Component.OVERVIEW)
 
-        private val MY_CAMPUS = arrayOf(
+        private val MY_CAMPUS: Array<NavItem> = arrayOf(
                 NavItem.FragmentDestination(R.string.calendar, R.drawable.ic_outline_event_24px, CalendarFragment::class.java, Component.CALENDAR, true),
                 NavItem.FragmentDestination(R.string.my_lectures, R.drawable.ic_outline_school_24px, LecturesFragment::class.java, Component.LECTURES,true, hideForEmployees = true),
                 NavItem.FragmentDestination(R.string.chat_rooms, R.drawable.ic_outline_chat_bubble_outline_24px, ChatRoomsFragment::class.java, Component.CHAT, true, true),
@@ -129,16 +130,17 @@ class DrawerMenuHelper(
                 NavItem.FragmentDestination(R.string.tuition_fees, R.drawable.ic_money, TuitionFeesFragment::class.java, Component.TUITIONFEES, hideForEmployees = true)
         )
 
-        private val GENERAL = arrayOf(
+        private val GENERAL: Array<NavItem> = arrayOf(
                 NavItem.FragmentDestination(R.string.menues, R.drawable.ic_cutlery, CafeteriaFragment::class.java, Component.CAFETERIA),
                 NavItem.FragmentDestination(R.string.roomfinder, R.drawable.ic_outline_location_on_24px, RoomFinderFragment::class.java, Component.ROOMFINDER, true),
                 NavItem.FragmentDestination(R.string.person_search, R.drawable.ic_outline_people_outline_24px, PersonSearchFragment::class.java, Component.PERSON, true),
                 NavItem.FragmentDestination(R.string.news, R.drawable.ic_rss, NewsFragment::class.java, Component.NEWS, true),
                 // NavItem.FragmentDestination(R.string.barrier_free, R.drawable.ic_outline_accessible_24px, BarrierFreeInfoFragment::class.java),
-                NavItem.FragmentDestination(R.string.opening_hours, R.drawable.ic_outline_access_time_24px, OpeningHoursListFragment::class.java, Component.OPENINGHOUR)
+                NavItem.FragmentDestination(R.string.opening_hours, R.drawable.ic_outline_access_time_24px, OpeningHoursListFragment::class.java, Component.OPENINGHOUR),
+                NavItem.ActivityDestination(R.string.transport, R.drawable.ic_outline_train_24px, TransportationActivity::class.java, Component.TRANSPORTATION)
         )
 
-        private val ABOUT = arrayOf(
+        private val ABOUT: Array<NavItem> = arrayOf(
                 // NavItem.ActivityDestination(R.string.show_feedback, R.drawable.ic_outline_feedback_24px, FeedbackActivity::class.java),
                 NavItem.ActivityDestination(R.string.about_tca, R.drawable.ic_action_info, InformationActivity::class.java),
                 NavItem.ActivityDestination(R.string.settings, R.drawable.ic_outline_settings_24px, SettingsActivity::class.java)

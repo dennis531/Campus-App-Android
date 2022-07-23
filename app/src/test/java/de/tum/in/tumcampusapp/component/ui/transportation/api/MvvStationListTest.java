@@ -9,7 +9,9 @@ import org.junit.Test;
 
 import java.util.List;
 
-import de.tum.in.tumcampusapp.component.ui.transportation.model.efa.StationResult;
+import de.tum.in.tumcampusapp.component.ui.transportation.api.mvv.MvvStationList;
+import de.tum.in.tumcampusapp.component.ui.transportation.api.mvv.MvvStationListSerializer;
+import de.tum.in.tumcampusapp.component.ui.transportation.model.Station;
 
 public class MvvStationListTest {
 
@@ -33,24 +35,24 @@ public class MvvStationListTest {
     @Test
     public void testEmptyValue() {
         MvvStationList stationList = gson.fromJson(emptyResultExample, MvvStationList.class);
-        List<StationResult> departureList = stationList.getStations();
+        List<Station> departureList = stationList.getStations();
         Assert.assertEquals(0, departureList.size());
     }
 
     @Test
     public void testSingletonValue() {
         MvvStationList stationList = gson.fromJson(singletonResultExample, MvvStationList.class);
-        List<StationResult> departureList = stationList.getStations();
+        List<Station> departureList = stationList.getStations();
         Assert.assertEquals(1, departureList.size());
-        StationResult result = departureList.get(0);
-        Assert.assertEquals("Garching (b München), Garching, Forschungszentrum", result.getStation());
+        Station result = departureList.get(0);
+        Assert.assertEquals("Garching (b München), Garching, Forschungszentrum", result.getName());
         Assert.assertEquals("1000460", result.getId());
     }
 
     @Test
     public void testMultiValue() {
         MvvStationList stationList = gson.fromJson(multiValueResultExample, MvvStationList.class);
-        List<StationResult> departureList = stationList.getStations();
+        List<Station> departureList = stationList.getStations();
         Assert.assertEquals(9, departureList.size());
     }
 }

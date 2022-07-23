@@ -14,10 +14,10 @@ import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.general.RecentsDao
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForSearching
 import de.tum.`in`.tumcampusapp.component.other.generic.adapter.NoResultsAdapter
-import de.tum.`in`.tumcampusapp.component.ui.transportation.MVVStationSuggestionProvider
+import de.tum.`in`.tumcampusapp.component.ui.transportation.TransportationSuggestionProvider
 import de.tum.`in`.tumcampusapp.component.ui.transportation.TransportController
-import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.StationResult
-import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.WidgetDepartures
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.WidgetDepartures
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Utils
@@ -25,12 +25,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class MVVWidgetConfigureActivity : ActivityForSearching<Unit>(
-        R.layout.activity_mvv_widget_configure, Component.TRANSPORTATION, MVVStationSuggestionProvider.AUTHORITY, 3) {
+class TransportationWidgetConfigureActivity : ActivityForSearching<Unit>(
+        R.layout.activity_transportation_widget_configure, Component.TRANSPORTATION, TransportationSuggestionProvider.AUTHORITY, 3) {
 
     private var appWidgetId: Int = 0
     private lateinit var listViewResults: ListView
-    private lateinit var adapterStations: ArrayAdapter<StationResult>
+    private lateinit var adapterStations: ArrayAdapter<Station>
     private lateinit var recentsDao: RecentsDao
 
     private lateinit var widgetDepartures: WidgetDepartures
@@ -68,9 +68,9 @@ class MVVWidgetConfigureActivity : ActivityForSearching<Unit>(
 
         listViewResults = findViewById(R.id.activity_transport_listview_result)
         listViewResults.setOnItemClickListener { adapterView, _, position, _ ->
-            val (station, stationId) = adapterView.adapter.getItem(position) as StationResult
-            widgetDepartures.station = station
-            widgetDepartures.stationId = stationId
+            val station = adapterView.adapter.getItem(position) as Station
+            widgetDepartures.station = station.name
+            widgetDepartures.stationId = station.id
             saveAndReturn()
         }
 
@@ -110,7 +110,7 @@ class MVVWidgetConfigureActivity : ActivityForSearching<Unit>(
                 })
     }
 
-    private fun displayStations(stations: List<StationResult>) {
+    private fun displayStations(stations: List<Station>) {
         showLoadingEnded()
 
         if (stations.isEmpty()) {
@@ -149,8 +149,8 @@ class MVVWidgetConfigureActivity : ActivityForSearching<Unit>(
         transportManager.addWidget(appWidgetId, widgetDepartures)
 
         // update widget
-        val reloadIntent = Intent(this, MVVWidget::class.java)
-        reloadIntent.action = MVVWidget.MVV_WIDGET_FORCE_RELOAD
+        val reloadIntent = Intent(this, TransportationWidget::class.java)
+        reloadIntent.action = TransportationWidget.TRANSPORTATION_WIDGET_FORCE_RELOAD
         reloadIntent.putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
         sendBroadcast(reloadIntent)
 

@@ -17,6 +17,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import de.tum.`in`.tumcampusapp.R
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Symbol
 import de.tum.`in`.tumcampusapp.utils.Utils
 import org.joda.time.DateTime
 import org.joda.time.Seconds
@@ -59,19 +60,21 @@ class DepartureView
     /**
      * Sets the line symbol name
      *
-     * @param symbol Symbol e.g. U6, S1, T14
+     * @param name Symbol e.g. U6, S1, T14
      */
-    fun setSymbol(symbol: String, highlight: Boolean) {
-        val mvvSymbol = MVVSymbol(symbol, context)
-        symbolView.setTextColor(mvvSymbol.textColor)
-        symbolView.text = symbol
-        symbolView.backgroundTintList = ColorStateList.valueOf(mvvSymbol.backgroundColor)
+    fun setSymbol(symbol: Symbol, highlight: Boolean) {
+        val symbolBackgroundColor = symbol.getBackgroundColor(context)
+        val textColor = symbol.getTextColor(context)
+
+        symbolView.setTextColor(textColor)
+        symbolView.text = symbol.name
+        symbolView.backgroundTintList = ColorStateList.valueOf(symbolBackgroundColor)
 
         if (highlight) {
             if (useCompactView) {
-                setBackgroundColor(mvvSymbol.getHighlight())
+                setBackgroundColor(symbol.getHighlightColor(context))
             } else {
-                setBackgroundColor(mvvSymbol.backgroundColor)
+                setBackgroundColor(symbolBackgroundColor)
                 lineView.setTextColor(ResourcesCompat.getColor(resources, R.color.text_primary_dark, null))
                 for (index in 0 until timeSwitcher.childCount) {
                     val tw = timeSwitcher.getChildAt(index) as TextView

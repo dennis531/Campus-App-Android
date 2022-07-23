@@ -5,9 +5,12 @@ import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.api.auth.OAuthManager
 import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.api.studip.StudipClient
+import de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv.MvvClient
 import de.tum.`in`.tumcampusapp.config.Api
 import de.tum.`in`.tumcampusapp.config.AuthMethod
 import de.tum.`in`.tumcampusapp.config.Config
+import de.tum.`in`.tumcampusapp.config.TransportationApi as TransportApiEnum
+import de.tum.`in`.tumcampusapp.component.ui.transportation.api.generic.TransportationApi
 
 object ConfigUtils {
     @JvmStatic
@@ -26,6 +29,14 @@ object ConfigUtils {
             // Add more api clients here
             Api.STUDIP -> StudipClient.getInstance(context)
             else -> throw IllegalStateException("API not known.")
+        }
+    }
+
+    fun getTransportationClient(context: Context): TransportationApi {
+        return when (getConfig(ConfigConst.TRANSPORTATION_API, TransportApiEnum.MVV)) {
+            // Add more transportation api clients here
+            TransportApiEnum.MVV -> MvvClient.getInstance(context)
+            else -> throw IllegalStateException("Transportation API not known.")
         }
     }
 

@@ -1,6 +1,6 @@
-package de.tum.`in`.tumcampusapp.component.ui.transportation.api
+package de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv
 
-import io.reactivex.Observable
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 import java.util.*
@@ -53,7 +53,7 @@ interface MvvApiService {
     fun getDepartures(
         @Query("name_dm") stationId: String,
         @Query("language") language: String = Locale.getDefault().language
-    ): Observable<MvvDepartureList>
+    ): Call<MvvDepartureList>
 
     /**
      * Find stations by station name prefix
@@ -72,5 +72,5 @@ interface MvvApiService {
         @Query("name_sf") namePrefix: String,
         @Query("anyMaxSizeHitList") maxResults: Int = 10,
         @Query("language") language: String = Locale.getDefault().language
-    ): Observable<MvvStationList>
+    ): Call<MvvStationList>
 }

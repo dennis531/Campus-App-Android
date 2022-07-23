@@ -17,9 +17,9 @@ import java.util.*
 
 /**
  * Implementation of App Widget functionality.
- * App Widget Configuration implemented in [MVVWidgetConfigureActivity]
+ * App Widget Configuration implemented in [TransportationWidgetConfigureActivity]
  */
-class MVVWidget : AppWidgetProvider() {
+class TransportationWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         updateAppWidgets(context, appWidgetManager, appWidgetIds)
@@ -55,7 +55,7 @@ class MVVWidget : AppWidgetProvider() {
             }
         }
 
-        val intent = Intent(context, MVVWidget::class.java)
+        val intent = Intent(context, TransportationWidget::class.java)
         val sender = PendingIntent.getBroadcast(context, 0, intent, 0)
         val alarmManager = context.alarmManager
         alarmManager.cancel(sender)
@@ -72,7 +72,7 @@ class MVVWidget : AppWidgetProvider() {
         for (i in 1..3) {
             timer.schedule(object : TimerTask() {
                 override fun run() {
-                    val reloadIntent = Intent(context, MVVWidget::class.java)
+                    val reloadIntent = Intent(context, TransportationWidget::class.java)
                     reloadIntent.action = BROADCAST_RELOAD_ALL
                     context.sendBroadcast(reloadIntent)
                 }
@@ -106,45 +106,45 @@ class MVVWidget : AppWidgetProvider() {
         val widgetDepartures = TransportController(context).getWidget(appWidgetId)
 
         // Instantiate the RemoteViews object for the app widget layout.
-        val remoteViews = RemoteViews(context.packageName, R.layout.mvv_widget)
-        remoteViews.setTextViewText(R.id.mvv_widget_station, widgetDepartures.station)
+        val remoteViews = RemoteViews(context.packageName, R.layout.transportation_widget)
+        remoteViews.setTextViewText(R.id.transportation_widget_station, widgetDepartures.station)
 
         // Set up the configuration activity listeners
-        val configIntent = Intent(context, MVVWidgetConfigureActivity::class.java).apply {
+        val configIntent = Intent(context, TransportationWidgetConfigureActivity::class.java).apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
         }
         val pendingIntent = PendingIntent.getActivity(
                 context, appWidgetId, configIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        remoteViews.setOnClickPendingIntent(R.id.mvv_widget_setting_button, pendingIntent)
+        remoteViews.setOnClickPendingIntent(R.id.transportation_widget_setting_button, pendingIntent)
 
         // Set up the reload functionality
-        val reloadIntent = Intent(context, MVVWidget::class.java).apply {
-            action = MVV_WIDGET_FORCE_RELOAD
+        val reloadIntent = Intent(context, TransportationWidget::class.java).apply {
+            action = TRANSPORTATION_WIDGET_FORCE_RELOAD
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
         }
         val pendingReloadIntent = PendingIntent.getBroadcast(
                 context, appWidgetId, reloadIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        remoteViews.setOnClickPendingIntent(R.id.mvv_widget_reload_button, pendingReloadIntent)
+        remoteViews.setOnClickPendingIntent(R.id.transportation_widget_reload_button, pendingReloadIntent)
 
         val isAutoReload = widgetDepartures.autoReload
-        remoteViews.setViewVisibility(R.id.mvv_widget_reload_button, if (isAutoReload) View.GONE else View.VISIBLE)
+        remoteViews.setViewVisibility(R.id.transportation_widget_reload_button, if (isAutoReload) View.GONE else View.VISIBLE)
 
-        // Set up the intent that starts the MVVWidgetService, which will
+        // Set up the intent that starts the TransportationWidgetService, which will
         // provide the departure times for this station
-        val intent = Intent(context, MVVWidgetService::class.java).apply {
+        val intent = Intent(context, TransportationWidgetService::class.java).apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            putExtra(MVV_WIDGET_FORCE_RELOAD, forceLoadData)
+            putExtra(TRANSPORTATION_WIDGET_FORCE_RELOAD, forceLoadData)
         }
         intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
-        remoteViews.setRemoteAdapter(R.id.mvv_widget_listview, intent)
+        remoteViews.setRemoteAdapter(R.id.transportation_widget_listview, intent)
 
         // The empty view is displayed when the collection has no items.
         // It should be in the same layout used to instantiate the RemoteViews
         // object above.
-        remoteViews.setEmptyView(R.id.mvv_widget_listview, R.id.empty_list_item)
+        remoteViews.setEmptyView(R.id.transportation_widget_listview, R.id.empty_list_item)
 
         // Instruct the widget manager to update the widget
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.mvv_widget_listview)
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.transportation_widget_listview)
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
     }
 
@@ -155,7 +155,7 @@ class MVVWidget : AppWidgetProvider() {
                 planUpdates(context)
                 updateAppWidgets(context, AppWidgetManager.getInstance(context), getActiveWidgetIds(context))
             }
-            MVV_WIDGET_FORCE_RELOAD -> {
+            TRANSPORTATION_WIDGET_FORCE_RELOAD -> {
                 val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
                 if (appWidgetId >= 0) {
                     updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, true)
@@ -167,9 +167,9 @@ class MVVWidget : AppWidgetProvider() {
 
     companion object {
 
-        private const val BROADCAST_RELOAD_ALL_ALARM = "de.tum.in.newtumcampus.intent.action.BROADCAST_MVV_WIDGET_RELOAD_ALL_ALARM"
-        private const val BROADCAST_RELOAD_ALL = "de.tum.in.newtumcampus.intent.action.BROADCAST_MVV_WIDGET_RELOAD_ALL"
-        internal const val MVV_WIDGET_FORCE_RELOAD = "de.tum.in.newtumcampus.intent.action.MVV_WIDGET_FORCE_RELOAD"
+        private const val BROADCAST_RELOAD_ALL_ALARM = "de.tum.in.newtumcampus.intent.action.BROADCAST_TRANSPORTATION_WIDGET_RELOAD_ALL_ALARM"
+        private const val BROADCAST_RELOAD_ALL = "de.tum.in.newtumcampus.intent.action.BROADCAST_TRANSPORTATION_WIDGET_RELOAD_ALL" // TODO: Rename
+        internal const val TRANSPORTATION_WIDGET_FORCE_RELOAD = "de.tum.in.newtumcampus.intent.action.TRANSPORTATION_WIDGET_FORCE_RELOAD"
 
         const val UPDATE_ALARM_DELAY = 60 * 1000
         const val UPDATE_TRIGGER_DELAY = 20 * 1000
@@ -179,7 +179,7 @@ class MVVWidget : AppWidgetProvider() {
 
         private fun getActiveWidgetIds(context: Context): IntArray {
             val appWidgetManager = AppWidgetManager.getInstance(context)
-            val thisWidget = ComponentName(context, MVVWidget::class.java)
+            val thisWidget = ComponentName(context, TransportationWidget::class.java)
             return appWidgetManager.getAppWidgetIds(thisWidget)
         }
     }

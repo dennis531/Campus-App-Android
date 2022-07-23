@@ -12,6 +12,10 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.List;
 
+import de.tum.in.tumcampusapp.component.ui.transportation.api.mvv.MvvDateSerializer;
+import de.tum.in.tumcampusapp.component.ui.transportation.api.mvv.MvvDeparture;
+import de.tum.in.tumcampusapp.component.ui.transportation.api.mvv.MvvDepartureList;
+
 @RunWith(RobolectricTestRunner.class)
 public class MvvDepartureListTest {
 

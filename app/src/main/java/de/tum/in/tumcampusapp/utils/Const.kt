@@ -80,7 +80,7 @@ object Const {
     const val NOTIFICATION_CHANNEL_CHAT = "chat"
     const val NOTIFICATION_CHANNEL_EDUROAM = "eduroam"
     const val NOTIFICATION_CHANNEL_CAFETERIA = "cafeteria"
-    const val NOTIFICATION_CHANNEL_MVV = "mvv"
+    const val NOTIFICATION_CHANNEL_TRANSPORTATION = "transportation"
     const val NOTIFICATION_CHANNEL_EMERGENCY = "emergency"
 
     const val SILENCE_SERVICE_JOB_ID = 1002

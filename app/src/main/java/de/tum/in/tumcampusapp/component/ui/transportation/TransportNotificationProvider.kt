@@ -14,7 +14,7 @@ import de.tum.`in`.tumcampusapp.utils.Const
 class TransportNotificationProvider(context: Context) : NotificationProvider(context) {
 
     override fun getNotificationBuilder(): NotificationCompat.Builder {
-        return NotificationCompat.Builder(context, Const.NOTIFICATION_CHANNEL_MVV)
+        return NotificationCompat.Builder(context, Const.NOTIFICATION_CHANNEL_TRANSPORTATION)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setColor(notificationColorAccent)
     }
@@ -23,14 +23,14 @@ class TransportNotificationProvider(context: Context) : NotificationProvider(con
         val locationManager = LocationManager(context)
         val station = locationManager.getStation() ?: return null
 
-        val title = context.getString(R.string.mvv)
-        val text = "Departures at ${station.station}"
+        val title = context.getString(R.string.transport)
+        val text = "Departures at ${station.name}"
 
         val inboxStyle = NotificationCompat.InboxStyle()
         TransportController
-                .getDeparturesFromExternal(context, station.id)
+                .getDeparturesFromExternal(context, station)
                 .blockingFirst()
-                .map { "${it.servingLine} (${it.direction}) in ${it.countDown} min" }
+                .map { "${it.means} (${it.direction}) in ${it.calculatedCountDown} min" }
                 .forEach { inboxStyle.addLine(it) }
 
         val intent = station.getIntent(context)

@@ -1,7 +1,10 @@
-package de.tum.`in`.tumcampusapp.component.ui.transportation
+package de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv
 
 import android.content.Context
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import de.tum.`in`.tumcampusapp.R
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Symbol
 
 /**
  * Encapsulates information about the symbol shown next to departure information. Contains the
@@ -9,17 +12,20 @@ import de.tum.`in`.tumcampusapp.R
  *
  * @param line Line symbol name e.g. U6, S1, T14
  */
-class MVVSymbol(line: String, val context: Context) {
+class MVVSymbol(override val name: String): Symbol {
 
-    val backgroundColor: Int
-    val textColor: Int
+    @ColorRes
+    val backgroundColorResId: Int
+
+    @ColorRes
+    val textColorResId: Int
 
     init {
         var textColor = R.color.white
         val backgroundColor: Int
 
-        val symbol = line.getOrNull(0) ?: 'X'
-        val lineNumber = line.substring(1).toIntOrNull() ?: 0
+        val symbol = name.getOrNull(0) ?: 'X'
+        val lineNumber = name.substring(1).toIntOrNull() ?: 0
 
         when (symbol) {
             'S' -> {
@@ -54,12 +60,20 @@ class MVVSymbol(line: String, val context: Context) {
             }
         }
 
-        this.textColor = context.resources.getColor(textColor)
-        this.backgroundColor = context.resources.getColor(backgroundColor)
+        this.textColorResId = textColor
+        this.backgroundColorResId = backgroundColor
     }
 
-    fun getHighlight(): Int {
-        return context.resources.getColor(R.color.reduced_opacity) and backgroundColor
+    override fun getBackgroundColor(context: Context): Int {
+        return ContextCompat.getColor(context, backgroundColorResId)
+    }
+
+    override fun getTextColor(context: Context): Int {
+        return ContextCompat.getColor(context, textColorResId)
+    }
+
+    override fun getHighlightColor(context: Context): Int {
+        return ContextCompat.getColor(context, R.color.reduced_opacity) and ContextCompat.getColor(context, backgroundColorResId)
     }
 
     companion object {

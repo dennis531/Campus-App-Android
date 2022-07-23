@@ -1,4 +1,4 @@
-package de.tum.`in`.tumcampusapp.component.ui.transportation.api
+package de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv
 
 import com.google.gson.*
 import org.joda.time.DateTime

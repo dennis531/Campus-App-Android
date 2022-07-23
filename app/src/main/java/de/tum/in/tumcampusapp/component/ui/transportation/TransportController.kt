@@ -10,21 +10,20 @@ import de.tum.`in`.tumcampusapp.component.other.locations.LocationManager
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.AbstractEvent
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.ProvidesCard
-import de.tum.`in`.tumcampusapp.component.ui.transportation.api.MvvClient
-import de.tum.`in`.tumcampusapp.component.ui.transportation.api.MvvDepartureList
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.TransportFavorites
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.WidgetsTransport
-import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.Departure
-import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.StationResult
-import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.WidgetDepartures
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Departure
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.WidgetDepartures
 import de.tum.`in`.tumcampusapp.database.TcaDb
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.NetUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import io.reactivex.Observable
 import java.util.*
 
 /**
- * Transport Manager, handles querying data from mvv and card creation
+ * Transport Manager, handles querying data from api and card creation
  */
 class TransportController(private val context: Context) : ProvidesCard, ProvidesNotifications {
 
@@ -116,12 +115,12 @@ class TransportController(private val context: Context) : ProvidesCard, Provides
         val locMan = LocationManager(context)
         val station = locMan.getStation() ?: return emptyList()
 
-        val departures = getDeparturesFromExternal(context, station.id).blockingFirst()
+        val departures = getDeparturesFromExternal(context, station).blockingFirst()
         if (departures.isEmpty()) {
             return emptyList()
         }
 
-        val card = MVVCard(context, station, departures)
+        val card = TransportationCard(context, station, departures)
         card.getIfShowOnStart()?.let {
             results.add(it)
         }
@@ -130,7 +129,7 @@ class TransportController(private val context: Context) : ProvidesCard, Provides
     }
 
     override fun hasNotificationsEnabled(): Boolean {
-        return Utils.getSettingBool(context, "card_mvv_phone", false)
+        return Utils.getSettingBool(context, "card_transportation_phone", false) // TODO: Seems not to be used
     }
 
     fun scheduleNotifications(events: List<AbstractEvent>) {
@@ -145,16 +144,16 @@ class TransportController(private val context: Context) : ProvidesCard, Provides
 
         // Schedule a notification alarm for every last calendar item of a day
         val notificationCandidates = events
-                .dropLast(1)
-                .filterIndexed { index, current ->
-                    val next = events[index + 1]
-                    if (current.dtstart == null || next.dtstart == null) {
-                        false
-                    } else {
-                        current.dtstart!!.dayOfYear != next.dtstart!!.dayOfYear
-                    }
+            .dropLast(1)
+            .filterIndexed { index, current ->
+                val next = events[index + 1]
+                if (current.dtstart == null || next.dtstart == null) {
+                    false
+                } else {
+                    current.dtstart!!.dayOfYear != next.dtstart!!.dayOfYear
                 }
-                .take(maxNotificationsToSchedule) // Some manufacturers cap the amount of alarms you can schedule (https://stackoverflow.com/a/29610474)
+            }
+            .take(maxNotificationsToSchedule) // Some manufacturers cap the amount of alarms you can schedule (https://stackoverflow.com/a/29610474)
 
         val notifications = notificationCandidates.mapNotNull { it.toNotification(context) }
         NotificationScheduler(context).schedule(notifications)
@@ -170,13 +169,10 @@ class TransportController(private val context: Context) : ProvidesCard, Provides
          * @return List of departures
          */
         @JvmStatic
-        fun getDeparturesFromExternal(context: Context, stationID: String): Observable<List<Departure>> {
-            return MvvClient.getInstance(context)
-                    .getDepartures(stationID)
-                    .onErrorReturn { MvvDepartureList(emptyList()) }
-                    .map { it.departureList.orEmpty() }
-                    .map { it.map { mvvDeparture -> Departure.create(mvvDeparture) } }
-                    .map { it.sortedBy { departure -> departure.countDown } }
+        fun getDeparturesFromExternal(context: Context, station: Station): Observable<List<Departure>> {
+            return Observable.fromCallable { ConfigUtils.getTransportationClient(context).getDepartures(station) }
+                .onErrorReturn { emptyList() }
+                .map { it.sortedBy { departure -> departure.departureTime } }
         }
 
         /**
@@ -186,16 +182,15 @@ class TransportController(private val context: Context) : ProvidesCard, Provides
          * @return List of StationResult
          */
         @JvmStatic
-        fun getStationsFromExternal(context: Context, prefix: String): Observable<List<StationResult>> {
-            return MvvClient.getInstance(context)
-                    .getStations(prefix)
-                    .map { it.stations.sortedBy { station -> station.quality } }
+        fun getStationsFromExternal(context: Context, prefix: String): Observable<List<Station>> {
+            return Observable.fromCallable { ConfigUtils.getTransportationClient(context).getStations(prefix) }
+                .map { it.sortedByDescending { station -> station.quality } }
         }
 
         @JvmStatic
-        fun getRecentStations(recents: Collection<Recent>): List<StationResult> {
+        fun getRecentStations(recents: Collection<Recent>): List<Station> {
             return recents.mapNotNull {
-                StationResult.fromRecent(it)
+                Station.fromRecent(it)
             }
         }
     }

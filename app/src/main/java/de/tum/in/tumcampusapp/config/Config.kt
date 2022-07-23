@@ -1,7 +1,10 @@
 package de.tum.`in`.tumcampusapp.config
 
 import androidx.annotation.Keep
+import de.tum.`in`.tumcampusapp.R
+import de.tum.`in`.tumcampusapp.component.other.locations.model.Campus
 import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.model.Tuition
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
 import de.tum.`in`.tumcampusapp.utils.DateTimeUtils
 
 enum class Api {
@@ -18,11 +21,38 @@ enum class OAuthSignatureMethod {
     OAUTH_HMAC_SHA256
 }
 
+enum class TransportationApi {  // https://www.vbn.de/service/entwicklerinfos/opendata-und-openservice
+    MVV
+}
+
 /**
  * Constants not allowed
  */
 @Keep
 object Config {
+    // Campus locations
+    // First values are defaults. Campus Ids can be set freely and must be unique. Station list only needed for cards of the transportation
+    // component to determine the next station. Station id must match with the station id used in the transportation api.
+    val CAMPUS = listOf<Campus>(
+        Campus("G", R.string.campus_garching, 48.2648424, 11.6709511, listOf(
+            Station("1000460", "Garching-Forschungszentrum"),
+            Station("1000095", "Technische Universität"),
+        )),
+        Campus("H", R.string.campus_garching_hochbrueck, 48.249432, 11.633905),
+        Campus("W", R.string.campus_weihenstephan, 48.397990, 11.722727),
+        Campus("C", R.string.campus_main, 48.149436, 11.567635, listOf(
+            Station("1000120", "Theresienstraße"),
+            Station("1000095", "Technische Universität"),
+            Station("1000051", "Pinakotheken"),
+        )),
+        Campus("K", R.string.campus_klinikum_großhadern, 48.110847, 11.4703001),
+        Campus("I", R.string.campus_klinikum, 48.137, 11.601119, listOf(
+            Station("1000580", "Max-Weber-Platz"),
+        )),
+        Campus("L", R.string.campus_leopoldstrasse, 48.155916, 11.583095),
+        Campus("S", R.string.campus_geschwister_scholl, 48.150244, 11.580665),
+    )
+
     // API
     val API = Api.STUDIP
     val API_BASE_URL = "http://192.168.0.250/studip/jsonapi.php/v1/"
@@ -51,7 +81,7 @@ object Config {
     val ROOMFINDER_ENABLED = true
     val CHAT_ENABLED = true
     val OPENINGHOUR_ENABLED = true
-    val TRANSPORTATION_ENABLED = false
+    val TRANSPORTATION_ENABLED = true
     val CAFETERIA_ENABLED = false
 
     // Calendar options
@@ -81,4 +111,7 @@ object Config {
     val CHAT_ROOM_JOINABLE = false // Default: True
     val CHAT_ROOM_LEAVEABLE = false // Default: True
     val CHAT_ROOM_MEMBER_ADDABLE = false // Allows to add members to a chat room by other users; Default: True
+
+    // Transportation options
+    val TRANSPORTATION_API = TransportationApi.MVV // Default: MVV
 }

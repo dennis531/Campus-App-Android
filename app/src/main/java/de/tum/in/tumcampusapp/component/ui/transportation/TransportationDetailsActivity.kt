@@ -10,8 +10,8 @@ import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.general.RecentsDao
 import de.tum.`in`.tumcampusapp.component.other.general.model.Recent
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.ProgressActivity
-import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.Departure
-import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.StationResult
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Departure
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.utils.Utils
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -77,13 +77,13 @@ class TransportationDetailsActivity : ProgressActivity<Unit>(R.layout.activity_t
 
     private fun loadDetails(location: String, locationID: String) {
         // Quality is always 100% hit
-        val stationResult = StationResult(location, locationID, Integer.MAX_VALUE)
-        val jsonStationResult = gson.toJson(stationResult)
+        val station = Station(locationID, location, Integer.MAX_VALUE)
+        val jsonStationResult = gson.toJson(station)
 
         // save clicked station into db
         recentsDao.insert(Recent(jsonStationResult, RecentsDao.STATIONS))
 
-        disposable.add(TransportController.getDeparturesFromExternal(this, locationID)
+        disposable.add(TransportController.getDeparturesFromExternal(this, station)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::displayResults) {
@@ -105,7 +105,7 @@ class TransportationDetailsActivity : ProgressActivity<Unit>(R.layout.activity_t
             return
         }
         mViewResults.removeAllViews()
-        for ((_, direction, lineSymbol, _, departureTime) in results) {
+        for (departure in results) {
             val view = DepartureView(this, false)
             lifecycle.addObserver(view)
 
@@ -124,19 +124,19 @@ class TransportationDetailsActivity : ProgressActivity<Unit>(R.layout.activity_t
                 for (i in 0 until mViewResults.childCount) {
                     val child = mViewResults.getChildAt(i) as DepartureView
                     if (child.symbol == symbol) {
-                        child.setSymbol(symbol, highlight)
+                        child.setSymbol(departure.symbol, highlight)
                     }
                 }
             }
 
-            if (transportManager.isFavorite(lineSymbol)) {
-                view.setSymbol(lineSymbol, true)
+            if (transportManager.isFavorite(departure.symbol.name)) {
+                view.setSymbol(departure.symbol, true)
             } else {
-                view.setSymbol(lineSymbol, false)
+                view.setSymbol(departure.symbol, false)
             }
 
-            view.setLine(direction)
-            view.setTime(departureTime)
+            view.setLine(departure.direction)
+            view.setTime(departure.departureTime)
             mViewResults.addView(view)
         }
     }

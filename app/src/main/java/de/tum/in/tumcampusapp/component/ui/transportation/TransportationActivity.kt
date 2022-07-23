@@ -11,7 +11,7 @@ import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.other.general.RecentsDao
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForSearching
 import de.tum.`in`.tumcampusapp.component.other.generic.adapter.NoResultsAdapter
-import de.tum.`in`.tumcampusapp.component.ui.transportation.model.efa.StationResult
+import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Utils
@@ -26,11 +26,11 @@ import java.net.UnknownHostException
 class TransportationActivity : ActivityForSearching<Unit>(
         R.layout.activity_transportation,
         Component.TRANSPORTATION,
-        MVVStationSuggestionProvider.AUTHORITY, 3
+        TransportationSuggestionProvider.AUTHORITY, 3
 ), OnItemClickListener {
 
     private lateinit var listViewResults: ListView
-    private lateinit var adapterStations: ArrayAdapter<StationResult>
+    private lateinit var adapterStations: ArrayAdapter<Station>
     private lateinit var recentsDao: RecentsDao
 
     private val disposable = CompositeDisposable()
@@ -61,7 +61,7 @@ class TransportationActivity : ActivityForSearching<Unit>(
      * Click on station in list
      */
     override fun onItemClick(av: AdapterView<*>, v: View, position: Int, id: Long) {
-        val stationResult = av.adapter.getItem(position) as StationResult
+        val stationResult = av.adapter.getItem(position) as Station
         transitionToDetailsActivity(stationResult)
     }
 
@@ -70,9 +70,9 @@ class TransportationActivity : ActivityForSearching<Unit>(
      *
      * @param stationResult the station to show
      */
-    private fun transitionToDetailsActivity(stationResult: StationResult) {
+    private fun transitionToDetailsActivity(stationResult: Station) {
         val intent = Intent(this, TransportationDetailsActivity::class.java)
-        intent.putExtra(TransportationDetailsActivity.EXTRA_STATION, stationResult.station)
+        intent.putExtra(TransportationDetailsActivity.EXTRA_STATION, stationResult.name)
         intent.putExtra(TransportationDetailsActivity.EXTRA_STATION_ID, stationResult.id)
         startActivity(intent)
     }
@@ -102,7 +102,7 @@ class TransportationActivity : ActivityForSearching<Unit>(
                 })
     }
 
-    private fun displayStations(stations: List<StationResult>) {
+    private fun displayStations(stations: List<Station>) {
         showLoadingEnded()
 
         if (stations.isEmpty()) {

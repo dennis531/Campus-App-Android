@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/mvv_widget_station"
+            android:id="@+id/transportation_widget_station"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/material_small_padding"
@@ -28,7 +28,7 @@
             tools:text="Station" />
 
         <ImageButton
-            android:id="@+id/mvv_widget_reload_button"
+            android:id="@+id/transportation_widget_reload_button"
             android:layout_width="@dimen/icon_small"
             android:layout_height="@dimen/icon_small"
             android:layout_marginStart="@dimen/material_tiny_padding"
@@ -37,7 +37,7 @@
             android:src="@drawable/ic_autorenew" />
 
         <ImageButton
-            android:id="@+id/mvv_widget_setting_button"
+            android:id="@+id/transportation_widget_setting_button"
             android:layout_width="@dimen/icon_small"
             android:layout_height="@dimen/icon_small"
             android:layout_marginEnd="@dimen/material_tiny_padding"
@@ -55,7 +55,7 @@
         android:background="@drawable/widget_content_rounded_corners_background">
 
         <ListView
-            android:id="@+id/mvv_widget_listview"
+            android:id="@+id/transportation_widget_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/list_divider"
