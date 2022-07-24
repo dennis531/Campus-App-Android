@@ -95,10 +95,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".component.ui.overview.MainActivity"
@@ -410,7 +406,8 @@
         </activity> <!-- receiver for the mensaWidget -->
         <receiver
             android:name=".component.ui.cafeteria.widget.MensaWidget"
-            android:label="@string/mensa_widget" >
+            android:label="@string/mensa_widget"
+            android:enabled="false" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -425,7 +422,8 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" /> <!-- receiver for the MVVWidget -->
         <receiver
             android:name=".component.ui.transportation.widget.TransportationWidget"
-            android:label="@string/mvv_widget" >
+            android:label="@string/mvv_widget"
+            android:enabled="false" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="de.tum.in.newtumcampus.intent.action.TRANSPORTATION_WIDGET_FORCE_RELOAD" />
@@ -462,7 +460,8 @@
         </activity> <!-- receiver for the TimetableWidget -->
         <receiver
             android:name=".component.tumui.calendar.widget.TimetableWidget"
-            android:label="@string/timetable_widget" >
+            android:label="@string/timetable_widget"
+            android:enabled="false" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

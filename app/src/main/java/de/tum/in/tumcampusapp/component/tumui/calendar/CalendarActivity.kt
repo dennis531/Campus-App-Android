@@ -7,7 +7,7 @@ import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 
 /**
- * Activity showing the user's calendar. Calendar items (events) are fetched from TUMOnline and displayed as blocks on a timeline.
+ * Activity showing the user's calendar. Calendar items (events) are fetched from LMS and displayed as blocks on a timeline.
  */
 class CalendarActivity : BaseActivity(R.layout.activity_calendar, Component.CALENDAR) {
 

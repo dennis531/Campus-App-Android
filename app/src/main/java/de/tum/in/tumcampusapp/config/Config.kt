@@ -71,6 +71,7 @@ object Config {
     val OAUTH_SIGNATURE_METHOD = OAuthSignatureMethod.OAUTH_PLAINTEXT
 
     // Components
+    // By default components are disabled
     val PERSON_ENABLED = true
     val CALENDAR_ENABLED = true
     val LECTURES_ENABLED = true
