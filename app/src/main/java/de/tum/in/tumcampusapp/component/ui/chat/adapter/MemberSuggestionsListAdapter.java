@@ -55,9 +55,7 @@ public class MemberSuggestionsListAdapter extends BaseAdapter implements Filtera
         if (members == null || members.size() < i) {
             return -1;
         }
-        return members.get(i)
-                      .getId()
-                      .hashCode();
+        return i;
     }
 
     @Override

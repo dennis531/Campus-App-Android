@@ -85,9 +85,7 @@ public class ChatRoomListAdapter extends BaseAdapter implements StickyListHeader
     @Override
     public long getItemId(int position) {
         if (rooms != null) {
-            return rooms.get(position)
-                        .getChatRoomDbRow()
-                        .getId().hashCode();
+            return position;
         } else {
             return -1;
         }

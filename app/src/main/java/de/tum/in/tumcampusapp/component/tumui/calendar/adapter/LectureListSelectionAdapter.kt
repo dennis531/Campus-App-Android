@@ -37,7 +37,7 @@ class LectureListSelectionAdapter(
 
     override fun getItem(position: Int) = calendarItems[position]
 
-    override fun getItemId(position: Int) = calendarItems[position].id.hashCode().toLong()
+    override fun getItemId(position: Int) = position.toLong()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View = convertView ?: inflater.inflate(R.layout.list_timetable_configure_item, parent, false)

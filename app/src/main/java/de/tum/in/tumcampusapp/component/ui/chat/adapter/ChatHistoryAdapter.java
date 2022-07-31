@@ -67,7 +67,7 @@ public class ChatHistoryAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return chatHistoryList.get(position).getId().hashCode();
+        return position;
     }
 
     public boolean isEmpty() {
