@@ -29,7 +29,7 @@ class CafeteriaMenuViewHolder(
         menuDateTextView.text = DateTimeFormat.mediumDate().print(cafeteria.nextMenuDate)
 
         val openHoursHelper = OpenHoursHelper(context)
-        val openingHours = openHoursHelper.getHoursByIdAsString(cafeteria.id.toString(), cafeteria.nextMenuDate)
+        val openingHours = openHoursHelper.getHoursByIdAsString(cafeteria.id, cafeteria.nextMenuDate)
         if (openingHours.isEmpty()) {
             openingHoursTextView.visibility = View.GONE
         } else {

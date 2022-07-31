@@ -1,12 +1,12 @@
 package de.tum.`in`.tumcampusapp.component.ui.cafeteria.widget
 
 import android.content.Context
+import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.controller.CafeteriaManager
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.CafeteriaMenu
-import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.CafeteriaPrices
 import java.util.*
 import java.util.regex.Pattern
 
@@ -29,18 +29,21 @@ class MensaRemoteViewFactory(private val applicationContext: Context) : RemoteVi
             return loadingView
         }
 
-        val (_, _, _, _, typeLong, _, name) = menus[position]
+        val menu = menus[position]
         val remoteViews = RemoteViews(applicationContext.packageName, R.layout.mensa_widget_item)
 
-        val menuContent = PATTERN.matcher(name)
+        val menuContent = PATTERN.matcher(menu.name)
                 .replaceAll("")
-                .trim { it <= ' ' }
+                .trim()
         val menuText = applicationContext.getString(
-                R.string.menu_with_long_type_format_string, menuContent, typeLong)
+                R.string.menu_with_long_type_format_string, menuContent, menu.type)
         remoteViews.setTextViewText(R.id.menu_content, menuText)
 
-        CafeteriaPrices.getPrice(applicationContext, typeLong)?.let {
-            remoteViews.setTextViewText(R.id.menu_price, "$it €")
+        val price = menu.getPriceText(applicationContext)
+        if (price.isNotEmpty()) {
+            remoteViews.setTextViewText(R.id.menu_price, price)
+        } else {
+            remoteViews.setViewVisibility(R.id.menu_price, View.GONE)
         }
 
         return remoteViews

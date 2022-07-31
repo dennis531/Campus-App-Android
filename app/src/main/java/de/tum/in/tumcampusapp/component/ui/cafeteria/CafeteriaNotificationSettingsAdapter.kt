@@ -74,7 +74,7 @@ class CafeteriaNotificationSettingsAdapter(
             listener: OnNotificationTimeChangedListener
         ) = with(binding) {
             val dayOfWeekString = dayFormatter.print(time.weekday)
-                        weekdayTextView.text = dayOfWeekString
+            weekdayTextView.text = dayOfWeekString
 
             notificationActiveCheckBox.setOnCheckedChangeListener(null)
             notificationActiveCheckBox.isChecked = time.time != null

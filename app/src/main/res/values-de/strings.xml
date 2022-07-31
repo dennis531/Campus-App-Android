@@ -263,6 +263,7 @@
 		\n10 enthält eine Phenylalaninquelle
 		\n11 mit einer Zuckerart und Süßungsmitteln</string>
     <string name="action_ingredients">Inhaltsstoffe</string>
+    <string name="cafeteria_no_ingredients">Keine Inhaltsstoffe angegeben</string>
     <string name="cafeteria_notification_settings">Mensa Benachrichtigungen</string>
 
     <!-- Cafeteria Notification Settings -->

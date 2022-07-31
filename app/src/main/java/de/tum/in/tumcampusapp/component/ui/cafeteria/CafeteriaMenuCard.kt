@@ -40,7 +40,7 @@ class CafeteriaMenuCard(context: Context, private val cafeteria: CafeteriaWithMe
 
     override fun getNavigationDestination(): NavDestination? {
         val bundle = Bundle()
-        bundle.putInt(Const.CAFETERIA_ID, cafeteria.id)
+        bundle.putString(Const.CAFETERIA_ID, cafeteria.id)
         return NavDestination.Fragment(CafeteriaFragment::class.java, bundle)
     }
 
@@ -58,7 +58,7 @@ class CafeteriaMenuCard(context: Context, private val cafeteria: CafeteriaWithMe
 
     override fun hideAlways() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val id = cafeteria.id.toString()
+        val id = cafeteria.id
         val ids = prefs.getStringSet(Const.CAFETERIA_CARDS_SETTING, HashSet())!!
         if (ids.contains(id)) {
             ids.remove(id)

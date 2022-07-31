@@ -5,7 +5,7 @@ import okhttp3.Response
 import org.joda.time.Duration
 import java.util.concurrent.TimeUnit
 
-class CachingHelper {
+class CachingHelper { // TODO: Rework Caching
 
     fun isCacheable(url: String) = getCachingDuration(url) != Duration.ZERO
 

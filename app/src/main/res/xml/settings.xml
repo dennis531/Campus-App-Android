@@ -69,71 +69,14 @@
                 android:key="cafeteria_defaults"
                 android:title="@string/default_cafeteria">
 
-                <androidx.preference.ListPreference
-                    android:defaultValue="422"
-                    android:entries="@array/cafeterias_G"
-                    android:entryValues="@array/cafeterias_G_val"
-                    android:key="card_cafeteria_default_G"
-                    android:title="@string/campus_garching" />
-
-                <androidx.preference.ListPreference
-                    android:defaultValue="414"
-                    android:entries="@array/cafeterias_K"
-                    android:entryValues="@array/cafeterias_K_val"
-                    android:key="card_cafeteria_default_K"
-                    android:title="@string/campus_klinikum" />
-
-                <androidx.preference.ListPreference
-                    android:defaultValue="423"
-                    android:entries="@array/cafeterias_W"
-                    android:entryValues="@array/cafeterias_W_val"
-                    android:key="card_cafeteria_default_W"
-                    android:title="@string/campus_weihenstephan" />
-
             </androidx.preference.PreferenceCategory>
 
-            <androidx.preference.PreferenceCategory android:title="@string/categories_to_show">
-
-                <androidx.preference.CheckBoxPreference
-                    android:defaultValue="true"
-                    android:key="card_cafeteria_tg"
-                    android:title="Tagesgerichte" />
-
-                <androidx.preference.CheckBoxPreference
-                    android:defaultValue="true"
-                    android:key="card_cafeteria_ae"
-                    android:title="Aktionsessen" />
-
-                <androidx.preference.CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="card_cafeteria_akt"
-                    android:title="Aktion" />
-
-                <androidx.preference.CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="card_cafeteria_bei"
-                    android:title="Beilagen" />
-
-                <androidx.preference.CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="card_cafeteria_bg"
-                    android:title="Biogericht" />
-
-                <androidx.preference.CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="card_cafeteria_bio"
-                    android:title="Bio" />
-
-            </androidx.preference.PreferenceCategory>
-
-            <androidx.preference.PreferenceCategory android:title="@string/extra">
+            <androidx.preference.PreferenceCategory
+                android:key="cafeteria_extra"
+                android:title="@string/extra">
 
                 <androidx.preference.ListPreference
-                    android:defaultValue="0"
-                    android:entries="@array/roles"
-                    android:entryValues="@array/roles_values"
                     android:key="card_role"
-                    android:summary="@string/role_summary"
                     android:title="@string/role" />
 
             </androidx.preference.PreferenceCategory>

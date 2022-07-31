@@ -54,7 +54,7 @@ class CafeteriaDetailsSectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val menuDate = arguments?.getSerializable(Const.DATE) as DateTime
         val menuDateString = DateTimeFormat.fullDate().print(menuDate)
-        val cafeteriaId = arguments?.getInt(Const.CAFETERIA_ID)
+        val cafeteriaId = arguments?.getString(Const.CAFETERIA_ID)
         if (cafeteriaId == null) {
             Utils.log("Argument missing: cafeteriaId")
             return
@@ -80,11 +80,11 @@ class CafeteriaDetailsSectionFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(cafeteriaId: Int, dateTime: DateTime): CafeteriaDetailsSectionFragment {
+        fun newInstance(cafeteriaId: String, dateTime: DateTime): CafeteriaDetailsSectionFragment {
             val fragment = CafeteriaDetailsSectionFragment()
             fragment.arguments = Bundle().apply {
                 putSerializable(Const.DATE, dateTime)
-                putInt(Const.CAFETERIA_ID, cafeteriaId)
+                putString(Const.CAFETERIA_ID, cafeteriaId)
             }
             return fragment
         }

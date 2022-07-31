@@ -72,7 +72,7 @@ class CafeteriaViewModel @Inject constructor(
                 .subscribe(_menuDates::postValue, Utils::log)
     }
 
-    fun fetchCafeteriaMenus(id: Int, date: DateTime) {
+    fun fetchCafeteriaMenus(id: String, date: DateTime) {
         compositeDisposable += Flowable.fromCallable { localRepository.getCafeteriaMenus(id, date) }
                 .subscribeOn(Schedulers.io())
                 .defaultIfEmpty(emptyList())

@@ -3,7 +3,7 @@ package de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv
 import android.content.Context
 import com.google.gson.GsonBuilder
 import de.tum.`in`.tumcampusapp.api.general.ApiHelper
-import de.tum.`in`.tumcampusapp.component.ui.transportation.api.generic.TransportationApi
+import de.tum.`in`.tumcampusapp.component.ui.transportation.api.generic.TransportationAPI
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Departure
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
 import org.joda.time.DateTime
@@ -11,7 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MvvClient(val service: MvvApiService): TransportationApi {
+class MvvClient(val service: MvvApiService): TransportationAPI {
 
     override fun getStations(query: String, maxResults: Int): List<Station> {
         val mvvStationList = service.getStations(query).execute().body()!!

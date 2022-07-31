@@ -12,9 +12,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat.checkSelfPermission
-import androidx.core.content.edit
 import androidx.core.os.bundleOf
-import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.MultiSelectListPreference
 import androidx.preference.Preference
@@ -26,6 +24,7 @@ import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.component.other.locations.model.Campus
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
+import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.CafeteriaRole
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.SetupEduroamActivity
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsController
@@ -45,7 +44,7 @@ import java.util.concurrent.ExecutionException
 import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClickListener,
-        SharedPreferences.OnSharedPreferenceChangeListener {
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val themeProvider by lazy { ThemeProvider(requireContext()) }
 
@@ -90,12 +89,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
             setSummary("silent_mode_set_to")
             setSummary("background_mode_set_to")
             initDefaultCampusSelections()
-        } else if (rootKey == "card_cafeteria") { // TODO: Rework with Cafeteria component
-            setSummary("card_cafeteria_default_G")
-            setSummary("card_cafeteria_default_K")
-            setSummary("card_cafeteria_default_W")
-            setSummary("card_role")
+        } else if (rootKey == "card_cafeteria") {
             initCafeteriaCardSelections()
+            initDefaultCafeteriaSelections()
+            initCafeteriaCardRoles()
         } else if (rootKey == "card_transportation") {
             initTransportationCard()
         } else if (rootKey == "card_eduroam") {
@@ -110,11 +107,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         url: String
     ) {
         compositeDisposable += Single
-                .fromCallable { Picasso.get().load(url).get() }
-                .subscribeOn(Schedulers.io())
-                .map { BitmapDrawable(resources, it) }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(preference::setIcon, Utils::log)
+            .fromCallable { Picasso.get().load(url).get() }
+            .subscribeOn(Schedulers.io())
+            .map { BitmapDrawable(resources, it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(preference::setIcon, Utils::log)
     }
 
     /**
@@ -189,25 +186,26 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         val noDefaultCampusId = Const.NO_DEFAULT_CAMPUS_ID
         val campusIds = listOf(noDefaultCampusId) + campuses.map { it.id }
 
+        val defaultValue = campusIds.getOrNull(1) ?: noDefaultCampusId
+
         val preference = findPreference(Const.DEFAULT_CAMPUS) as ListPreference
         preference.entries = campusNames.toTypedArray()
         preference.entryValues = campusIds.toTypedArray()
-        preference.setDefaultValue(campusIds.firstOrNull() ?: noDefaultCampusId)
-
-        setSummary(preference.key)
+        preference.setDefaultValue(defaultValue)
+        preference.run { summary = entries[findIndexOfValue(Utils.getSetting(context, key, defaultValue))] }
     }
 
     private fun initCafeteriaCardSelections() {
         val cafeterias = cafeteriaLocalRepository
-                .getAllCafeterias()
-                .blockingFirst()
-                .sortedBy { it.name }
+            .getAllCafeterias()
+            .blockingFirst()
+            .sortedBy { it.name }
 
         val cafeteriaByLocationName = getString(R.string.settings_cafeteria_depending_on_location)
         val cafeteriaNames = listOf(cafeteriaByLocationName) + cafeterias.map { it.name }
 
         val cafeteriaByLocationId = Const.CAFETERIA_BY_LOCATION_SETTINGS_ID
-        val cafeteriaIds = listOf(cafeteriaByLocationId) + cafeterias.map { it.id.toString() }
+        val cafeteriaIds = listOf(cafeteriaByLocationId) + cafeterias.map { it.id }
 
         val preference = findPreference(Const.CAFETERIA_CARDS_SETTING) as MultiSelectListPreference
         preference.entries = cafeteriaNames.toTypedArray()
@@ -222,6 +220,55 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         setCafeteriaCardsSummary(preference)
     }
 
+    private fun initDefaultCafeteriaSelections() {
+        val preferenceCategory = findPreference("cafeteria_defaults") as PreferenceCategory
+
+        val campuses = ConfigUtils.getConfig(ConfigConst.CAMPUS, emptyList<Campus>())
+
+        for (c in campuses) {
+            // Show default cafeteria selection if more than one cafeteria is available
+            if (!c.cafeterias.isNullOrEmpty() && c.cafeterias.size >= 2) {
+                val defaultValue = c.cafeterias.first().id
+                val preference = ListPreference(preferenceCategory.context).apply {
+                    setDefaultValue(defaultValue)
+                    entries = c.cafeterias.map { it.name }.toTypedArray()
+                    entryValues = c.cafeterias.map { it.id }.toTypedArray()
+                    key = "card_cafeteria_default_${c.id}"
+                    title = c.getName(requireContext())
+                    summary = entries[findIndexOfValue(Utils.getSetting(context, key, defaultValue))]
+                }
+
+                preferenceCategory.addPreference(preference)
+            }
+        }
+
+        preferenceCategory.isVisible = preferenceCategory.preferenceCount > 0
+    }
+
+    private fun initCafeteriaCardRoles() {
+        // Show only used roles
+        val roles = cafeteriaLocalRepository.getRoles()
+            .map { CafeteriaRole.fromId(it) }
+
+        if (roles.isEmpty()) {
+            val preferenceCategory = findPreference("cafeteria_extra") as PreferenceCategory
+            preferenceCategory.isVisible = false
+            return
+        }
+
+        val defaultRole = if (roles.contains(CafeteriaRole.STUDENT)) {
+            CafeteriaRole.STUDENT.id.toString()
+        } else {
+            roles.first().id.toString()
+        }
+
+        val preference = findPreference(Const.ROLE) as ListPreference
+        preference.entries = roles.map { getString(it.nameResId) }.toTypedArray()
+        preference.entryValues = roles.map { it.id.toString() }.toTypedArray()
+        preference.setDefaultValue(defaultRole)
+        preference.run { summary = entries[findIndexOfValue(Utils.getSetting(context, key, defaultRole))] }
+    }
+
     private fun initTransportationCard() {
         val preferenceCategory = findPreference("station_defaults") as PreferenceCategory
 
@@ -230,16 +277,17 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         for (c in campuses) {
             // Show default station selection if more than one station is available
             if (!c.stations.isNullOrEmpty() && c.stations.size >= 2) {
+                val defaultStation = c.stations.first().name
                 val preference = ListPreference(preferenceCategory.context).apply {
-                    setDefaultValue(c.stations.first().name)
+                    setDefaultValue(defaultStation)
                     entries = c.stations.map { it.name }.toTypedArray()
                     entryValues = c.stations.map { it.name }.toTypedArray()
                     key = "card_stations_default_${c.id}"
                     title = c.getName(requireContext())
+                    summary = entries[findIndexOfValue(Utils.getSetting(context, key, defaultStation))]
                 }
 
                 preferenceCategory.addPreference(preference)
-                setSummary(preference.key)
             }
         }
 
@@ -260,11 +308,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
             preference.setSummary(R.string.settings_no_location_selected)
         } else {
             preference.summary = values
-                    .map { preference.findIndexOfValue(it) }
-                    .map { preference.entries[it] }
-                    .map { it.toString() }
-                    .sorted()
-                    .joinToString(", ")
+                .map { preference.findIndexOfValue(it) }
+                .map { preference.entries[it] }
+                .map { it.toString() }
+                .sorted()
+                .joinToString(", ")
         }
     }
 
@@ -281,15 +329,15 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
 
     private fun showLogoutDialog(title: Int, message: Int) {
         AlertDialog.Builder(requireContext())
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(R.string.logout) { _, _ -> logout() }
-                .setNegativeButton(R.string.cancel, null)
-                .create()
-                .apply {
-                    window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
-                }
-                .show()
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(R.string.logout) { _, _ -> logout() }
+            .setNegativeButton(R.string.cancel, null)
+            .create()
+            .apply {
+                window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
+            }
+            .show()
     }
 
     private fun logout() {

@@ -173,7 +173,7 @@ object Const {
     const val SAVED_APP_VERSION = "savedAppVersion"
 
     const val CAFETERIA_CARDS_SETTING = "cafeteria_cards_selection"
-    const val NO_CAFETERIA_FOUND = -1
+    const val NO_CAFETERIA_FOUND = "-1"
 
     const val SETTINGS_RESTART = "settingsRestart"
 

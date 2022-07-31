@@ -17,7 +17,7 @@ interface FavoriteDishDao {
     fun insertFavouriteDish(favoriteDish: FavoriteDish)
 
     @Query("DELETE FROM favoriteDish WHERE cafeteriaId = :cafeteriaId AND dishName = :dishName")
-    fun deleteFavoriteDish(cafeteriaId: Int, dishName: String)
+    fun deleteFavoriteDish(cafeteriaId: String, dishName: String)
 
     @Query("SELECT cafeteriaMenu.* FROM favoriteDish " +
             "INNER JOIN cafeteriaMenu ON cafeteriaMenu.cafeteriaId = favoriteDish.cafeteriaId " +

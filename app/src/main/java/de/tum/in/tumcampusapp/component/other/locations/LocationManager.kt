@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
-import android.preference.PreferenceManager
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import de.tum.`in`.tumcampusapp.api.generic.LMSClient
@@ -18,6 +18,7 @@ import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.api.RoomFinderAPI
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinateInterface
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.Cafeteria
+import de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.utils.ConfigConst
@@ -39,6 +40,10 @@ class LocationManager @Inject constructor(c: Context) {
     private val buildingToGpsDao: BuildingToGpsDao
     private var manager: android.location.LocationManager? = null
     private val apiClient: LMSClient = ConfigUtils.getLMSClient(mContext)
+    private val cafeteriaLocalRepository: CafeteriaLocalRepository by lazy {
+        CafeteriaLocalRepository(TcaDb.getInstance(c))
+    }
+
 
     init {
         val db = TcaDb.getInstance(c)
@@ -89,16 +94,23 @@ class LocationManager @Inject constructor(c: Context) {
     private fun getCafeterias(): List<Cafeteria> {
         val location = getCurrentOrNextLocation()
 
+        val cafeterias = cafeteriaLocalRepository.getAllCafeterias()
+            .blockingFirst()
+            .toMutableList()
+
         val lat = location.latitude
         val lng = location.longitude
         val results = FloatArray(1)
-        val list = LinkedList<Cafeteria>()
-        for (cafeteria in list) {
-            Location.distanceBetween(cafeteria.latitude, cafeteria.longitude, lat, lng, results)
+        for (cafeteria in cafeterias) {
+            if (cafeteria.latitude == null || cafeteria.longitude == null) {
+                continue
+            }
+
+            Location.distanceBetween(cafeteria.latitude!!, cafeteria.longitude!!, lat, lng, results)
             cafeteria.distance = results[0]
         }
-        list.sort()
-        return list
+        cafeterias.sort()
+        return cafeterias
     }
 
     /**
@@ -184,17 +196,17 @@ class LocationManager @Inject constructor(c: Context) {
     /**
      * If the user is in university or a lecture has been recognized => Get nearest cafeteria
      */
-    fun getCafeteria(): Int {
+    fun getCafeteria(): String {
         val campus = getCurrentOrNextCampus()
         if (campus != null) {
             val prefs = PreferenceManager.getDefaultSharedPreferences(mContext)
-//            val cafeteria = prefs.getString("card_cafeteria_default_" + campus.id, campus.defaultMensa) // TODO: Rework Cafeteria
-            val cafeteria = null
+            val cafeteria =  prefs.getString("card_cafeteria_default_" + campus.id, campus.cafeterias?.firstOrNull()?.id)
             if (cafeteria != null) {
-                return Integer.parseInt(cafeteria)
+                return cafeteria
             }
         }
 
+        // Get nearest cafeteria
         val allCafeterias = getCafeterias()
         return if (allCafeterias.isEmpty()) Const.NO_CAFETERIA_FOUND else allCafeterias[0].id
     }
@@ -371,33 +383,6 @@ class LocationManager @Inject constructor(c: Context) {
     }
 
     companion object {
-//        private enum class Campus(val short: String, val lat: Double, val lon: Double, val defaultMensa: String?, val defaultStation: Stations) {
-//            GarchingForschungszentrum("G", 48.2648424, 11.6709511, "422", Stations.GarchingForschungszentrum),
-//            GarchingHochbrueck("H", 48.249432, 11.633905, null, Stations.GarchingHochbrueck),
-//            Weihenstephan("W", 48.397990, 11.722727, "423", Stations.Weihenstephan),
-//            Stammgelaende("C", 48.149436, 11.567635, "421", Stations.Stammgelaende),
-//            KlinikumGrosshadern("K", 48.110847, 11.4703001, "414", Stations.KlinikumGrosshadern),
-//            KlinikumRechtsDerIsar("I", 48.137, 11.601119, null, Stations.KlinikumRechtsDerIsar),
-//            Leopoldstrasse("L", 48.155916, 11.583095, "411", Stations.Leopoldstrasse),
-//            GeschwisterSchollplatzAdalbertstrasse("S", 48.150244, 11.580665, null, Stations.GeschwisterSchollplatzAdalbertstrasse);
-//        }
-//
-//        private enum class Stations(val station: Station) {
-//            GarchingForschungszentrum(Station("1000460", "Garching-Forschungszentrum", Integer.MAX_VALUE)),
-//            GarchingHochbrueck(Station("1000480", "Garching-Hochbrück", Integer.MAX_VALUE)),
-//            Weihenstephan(Station("1002911", "Weihenstephan", Integer.MAX_VALUE)),
-//            Stammgelaende(Station("1000120", "Theresienstraße", Integer.MAX_VALUE)),
-//            KlinikumGrosshadern(Station("1001540", "Klinikum Großhadern", Integer.MAX_VALUE)),
-//            KlinikumRechtsDerIsar(Station("1000580", "Max-Weber-Platz", Integer.MAX_VALUE)),
-//            Leopoldstrasse(Station("1000080", "Giselastraße", Integer.MAX_VALUE)),
-//            GeschwisterSchollplatzAdalbertstrasse(Station("1000070", "Universität", Integer.MAX_VALUE)),
-//            Pinakotheken(Station("1000051", "Pinakotheken", Integer.MAX_VALUE)),
-//            TUM(Station("1000095", "Technische Universität", Integer.MAX_VALUE)),
-//            Waldhueterstrasse(Station("1001574", "Waldhüterstraße", Integer.MAX_VALUE)),
-//            Martinsried(Station("1002557", "LMU Martinsried", Integer.MAX_VALUE)),
-//            GarchingTUM(Station("1002070", "Garching-Technische Universität", Integer.MAX_VALUE))
-//        }
-
         /**
          * Returns the "id" of the campus near the given location
          * The used radius around the middle of the campus is 1km.

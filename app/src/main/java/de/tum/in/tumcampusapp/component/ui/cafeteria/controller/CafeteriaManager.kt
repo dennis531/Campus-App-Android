@@ -41,7 +41,7 @@ class CafeteriaManager @Inject constructor(private val context: Context) : Provi
         }
 
     // Choose which mensa should be shown
-    val bestMatchMensaId: Int
+    val bestMatchMensaId: String
         get() {
             val cafeteriaId = LocationManager(context).getCafeteria()
             if (cafeteriaId == Const.NO_CAFETERIA_FOUND) {
@@ -61,16 +61,15 @@ class CafeteriaManager @Inject constructor(private val context: Context) : Provi
         // adding the location based id to the set now makes sure that the cafeteria is not shown twice
         if (cafeteriaIds.contains(Const.CAFETERIA_BY_LOCATION_SETTINGS_ID)) {
             cafeteriaIds.remove(Const.CAFETERIA_BY_LOCATION_SETTINGS_ID)
-            cafeteriaIds.add(LocationManager(context).getCafeteria().toString())
+            cafeteriaIds.add(LocationManager(context).getCafeteria())
         }
 
         for (id in cafeteriaIds) {
-            val cafeteria = Integer.parseInt(id)
-            if (cafeteria == Const.NO_CAFETERIA_FOUND) {
+            if (id == Const.NO_CAFETERIA_FOUND) {
                 // no cafeteria based on the location could be found
                 continue
             }
-            val card = CafeteriaMenuCard(context, localRepository.getCafeteriaWithMenus(cafeteria))
+            val card = CafeteriaMenuCard(context, localRepository.getCafeteriaWithMenus(id))
             card.getIfShowOnStart()?.let {
                 results.add(it)
             }
@@ -83,7 +82,7 @@ class CafeteriaManager @Inject constructor(private val context: Context) : Provi
         return Utils.getSettingBool(context, "card_cafeteria_phone", true)
     }
 
-    private fun getCafeteriaMenusByCafeteriaId(cafeteriaId: Int): List<CafeteriaMenu> {
+    private fun getCafeteriaMenusByCafeteriaId(cafeteriaId: String): List<CafeteriaMenu> {
         val cafeteria = CafeteriaWithMenus(cafeteriaId)
 
         cafeteria.menuDates = localRepository.getAllMenuDates()

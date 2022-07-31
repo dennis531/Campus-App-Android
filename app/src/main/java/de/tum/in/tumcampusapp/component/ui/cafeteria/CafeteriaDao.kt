@@ -13,7 +13,7 @@ interface CafeteriaDao {
     val all: Flowable<List<Cafeteria>>
 
     @Query("SELECT * FROM cafeteria WHERE id = :id")
-    fun getById(id: Int): Cafeteria?
+    fun getById(id: String): Cafeteria?
 
     @Query("DELETE FROM cafeteria")
     fun removeCache()
@@ -22,5 +22,5 @@ interface CafeteriaDao {
     fun insert(cafeterias: List<Cafeteria>)
 
     @Query("SELECT name FROM cafeteria WHERE id = :id")
-    fun getMensaNameFromId(id: Int): String
+    fun getMensaNameFromId(id: String): String
 }

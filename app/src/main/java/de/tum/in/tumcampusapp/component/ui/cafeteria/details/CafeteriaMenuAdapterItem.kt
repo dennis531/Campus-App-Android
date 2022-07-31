@@ -31,7 +31,7 @@ sealed class CafeteriaMenuAdapterItem {
         ) = with(holder.itemView) {
             val headerTextView = findViewById<TextView>(R.id.headerTextView)
 
-            headerTextView.text = menu.typeLong.replace("[0-9]", "").trim()
+            headerTextView.text = menu.type
             setOnClickListener { listener?.invoke() }
         }
     }
@@ -39,7 +39,6 @@ sealed class CafeteriaMenuAdapterItem {
     data class Item(
         val menu: CafeteriaMenu,
         val isFavorite: Boolean = false,
-        val rolePrice: String? = null,
         val isBigLayout: Boolean,
         val favoriteDishDao: FavoriteDishDao
     ) : CafeteriaMenuAdapterItem() {
@@ -51,14 +50,23 @@ sealed class CafeteriaMenuAdapterItem {
             holder: CafeteriaMenusAdapter.ViewHolder,
             listener: (() -> Unit)?
         ) = with(holder.itemView) {
-            val formatter = CafeteriaMenuFormatter(context)
-            val menuSpan = formatter.format(menu.name, isBigLayout)
-
             val nameTextView = findViewById<TextView>(R.id.nameTextView)
-            nameTextView.text = menuSpan
+
+            nameTextView.text = if (isBigLayout) {
+                menu.name
+            } else {
+                // Remove all parentheses from the menu
+                menu.name.replace("\\(.*?\\)".toRegex(), "").trim()
+            }
 
             setOnClickListener { listener?.invoke() }
-            rolePrice?.let { showPrice(this, it) } ?: hidePrice(this)
+
+            val price = menu.getPriceText(context)
+            if (price.isNotEmpty()) {
+                showPrice(this, price)
+            } else {
+                hidePrice(this)
+            }
         }
 
         private fun showPrice(
@@ -68,7 +76,7 @@ sealed class CafeteriaMenuAdapterItem {
             val priceTextView = findViewById<TextView>(R.id.priceTextView)
             val favoriteDish = findViewById<ImageView>(R.id.favoriteDish)
 
-            priceTextView.text = kotlin.String.format("%s €", price)
+            priceTextView.text = price
 
             favoriteDish.isSelected = isFavorite
             favoriteDish.setOnClickListener { view ->

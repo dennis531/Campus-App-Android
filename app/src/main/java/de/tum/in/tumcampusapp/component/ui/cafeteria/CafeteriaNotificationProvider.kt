@@ -10,7 +10,6 @@ import de.tum.`in`.tumcampusapp.component.notifications.model.InstantNotificatio
 import de.tum.`in`.tumcampusapp.component.notifications.persistence.NotificationType
 import de.tum.`in`.tumcampusapp.component.other.locations.LocationManager
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.controller.CafeteriaMenuManager
-import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.MenuType
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.utils.Const
@@ -39,7 +38,7 @@ class CafeteriaNotificationProvider(context: Context) : NotificationProvider(con
         }
 
         val cafeteria = cafeteriaLocalRepository.getCafeteriaWithMenus(cafeteriaId)
-        val menus = cafeteria.menus.filter { it.menuType != MenuType.SIDE_DISH }
+        val menus = cafeteria.menus
         val intent = cafeteria.getIntent(context)
 
         val inboxStyle = NotificationCompat.InboxStyle()
@@ -70,10 +69,10 @@ class CafeteriaNotificationProvider(context: Context) : NotificationProvider(con
 
         // We can pass 0 as the notification ID because only one notification at a time
         // will be active
-        return InstantNotification(NotificationType.CAFETERIA, cafeteria.id, summaryNotification)
+        return InstantNotification(NotificationType.CAFETERIA, cafeteria.id.hashCode(), summaryNotification)
     }
 
     companion object {
-        private const val GROUP_KEY_CAFETERIA = "de.tum.in.tumcampus.CAFETERIA"
+        private const val GROUP_KEY_CAFETERIA = "de.tum.in.tumcampus.CAFETERIA" // TODO: Rename
     }
 }

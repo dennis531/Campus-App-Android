@@ -15,11 +15,11 @@ import kotlin.collections.ArrayList
  */
 class CafeteriaDetailsSectionsPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
 
-    private var cafeteriaId: Int = 0
+    private var cafeteriaId: String = ""
     private var dates: List<DateTime> = ArrayList()
     private val formatter: DateTimeFormatter = DateTimeFormat.fullDate()
 
-    fun setCafeteriaId(cafeteriaId: Int) {
+    fun setCafeteriaId(cafeteriaId: String) {
         this.cafeteriaId = cafeteriaId
     }
 

@@ -23,9 +23,11 @@ import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.WidgetsTimetableB
 import de.tum.`in`.tumcampusapp.component.other.locations.model.RoomLocations
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaDao
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaMenuDao
+import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaMenuPriceDao
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.FavoriteDishDao
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.Cafeteria
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.CafeteriaMenu
+import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.CafeteriaMenuPriceItem
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.FavoriteDish
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatMessageDao
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomDao
@@ -47,6 +49,7 @@ import java.util.concurrent.ExecutionException
 @Database(version = 1, entities = [
     Cafeteria::class,
     CafeteriaMenu::class,
+    CafeteriaMenuPriceItem::class,
     FavoriteDish::class,
     Sync::class,
     BuildingToGps::class,
@@ -69,6 +72,8 @@ abstract class TcaDb : RoomDatabase() {
     abstract fun cafeteriaDao(): CafeteriaDao
 
     abstract fun cafeteriaMenuDao(): CafeteriaMenuDao
+
+    abstract fun cafeteriaMenuPriceDao(): CafeteriaMenuPriceDao
 
     abstract fun favoriteDishDao(): FavoriteDishDao
 

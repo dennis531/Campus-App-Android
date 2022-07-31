@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.FavoriteDishDao
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.CafeteriaMenu
-import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.CafeteriaPrices
 import de.tum.`in`.tumcampusapp.database.TcaDb
-import de.tum.`in`.tumcampusapp.utils.Utils
 import de.tum.`in`.tumcampusapp.utils.splitOnChanged
 
 class CafeteriaMenusAdapter(
@@ -22,10 +20,6 @@ class CafeteriaMenusAdapter(
 
     private val dao: FavoriteDishDao by lazy {
         TcaDb.getInstance(context).favoriteDishDao()
-    }
-
-    private val rolePrices: Map<String, String> by lazy {
-        CafeteriaPrices.getRolePrices(context)
     }
 
     private val itemLayout: Int by lazy {
@@ -48,8 +42,8 @@ class CafeteriaMenusAdapter(
 
     fun update(menus: List<CafeteriaMenu>) {
         val newItems = menus
-                .filter(this::shouldShowMenu)
-                .splitOnChanged { it.typeLong }
+//                .filter(this::shouldShowMenu)
+                .splitOnChanged { it.type }
                 .map(this::createAdapterItemsForSection)
                 .flatten()
 
@@ -61,26 +55,25 @@ class CafeteriaMenusAdapter(
         diffResult.dispatchUpdatesTo(this)
     }
 
-    private fun shouldShowMenu(menu: CafeteriaMenu): Boolean {
-        val shouldShowMenuType = Utils.getSettingBool(
-                context,
-                "card_cafeteria_${menu.typeShort}",
-                "tg" == menu.typeShort || "ae" == menu.typeShort
-        )
-        return shouldShowMenuType || isBigLayout
-    }
+//    private fun shouldShowMenu(menu: CafeteriaMenu): Boolean {
+//        val shouldShowMenuType = Utils.getSettingBool(
+//                context,
+//                "card_cafeteria_${menu.type}",
+//                "tg" == menu.typeShort || "ae" == menu.typeShort
+//        )
+//        return shouldShowMenuType || isBigLayout
+//    }
 
     private fun createAdapterItemsForSection(
         menus: List<CafeteriaMenu>
     ): List<CafeteriaMenuAdapterItem> {
         val header = CafeteriaMenuAdapterItem.Header(menus.first())
         val items = menus.map {
-            val rolePrice = rolePrices[it.typeLong]
             val isFavorite = dao.checkIfFavoriteDish(it.tag).isNotEmpty()
-            CafeteriaMenuAdapterItem.Item(it, isFavorite, rolePrice, isBigLayout, dao)
+            CafeteriaMenuAdapterItem.Item(it, isFavorite, isBigLayout, dao)
         }
 
-        return if (header.menu.typeLong.isNotBlank()) listOf(header) + items else items
+        return if (header.menu.type.isNotBlank()) listOf(header) + items else items
     }
 
     override fun getItemViewType(position: Int): Int {

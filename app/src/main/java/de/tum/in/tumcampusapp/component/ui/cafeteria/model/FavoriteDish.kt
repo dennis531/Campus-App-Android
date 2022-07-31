@@ -9,10 +9,10 @@ import androidx.room.RoomWarnings
 data class FavoriteDish(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
-    var cafeteriaId: Int = -1,
-    var dishName: String = "",
-    var date: String = "",
-    var tag: String = ""
+    var cafeteriaId: String,
+    var dishName: String,
+    var date: String,
+    var tag: String
 ) {
 
     companion object {

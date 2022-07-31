@@ -321,6 +321,7 @@
         \n10 contains a source of phenylalanine
         \n11 with sugar and sweeteners</string>
     <string name="action_ingredients">Ingredients</string>
+    <string name="cafeteria_no_ingredients">No ingredients provided</string>
     <string name="cafeteria_notification_settings">Cafeteria Notification Settings</string>
 
     <!-- Cafeteria Notification Settings -->

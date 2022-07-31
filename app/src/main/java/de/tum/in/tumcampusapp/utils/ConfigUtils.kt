@@ -5,12 +5,15 @@ import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.api.auth.OAuthManager
 import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.api.studip.StudipClient
+import de.tum.`in`.tumcampusapp.component.ui.cafeteria.api.generic.CafeteriaAPI
+import de.tum.`in`.tumcampusapp.component.ui.cafeteria.api.munich.MunichCafeteriaAPIClient
 import de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv.MvvClient
 import de.tum.`in`.tumcampusapp.config.Api
 import de.tum.`in`.tumcampusapp.config.AuthMethod
 import de.tum.`in`.tumcampusapp.config.Config
 import de.tum.`in`.tumcampusapp.config.TransportationApi as TransportApiEnum
-import de.tum.`in`.tumcampusapp.component.ui.transportation.api.generic.TransportationApi
+import de.tum.`in`.tumcampusapp.config.CafeteriaApi as CafeteriaApiEnum
+import de.tum.`in`.tumcampusapp.component.ui.transportation.api.generic.TransportationAPI
 
 object ConfigUtils {
     @JvmStatic
@@ -32,10 +35,18 @@ object ConfigUtils {
         }
     }
 
-    fun getTransportationClient(context: Context): TransportationApi {
+    fun getTransportationClient(context: Context): TransportationAPI {
         return when (getConfig(ConfigConst.TRANSPORTATION_API, TransportApiEnum.MVV)) {
             // Add more transportation api clients here
             TransportApiEnum.MVV -> MvvClient.getInstance(context)
+            else -> throw IllegalStateException("Transportation API not known.")
+        }
+    }
+
+    fun getCafeteriaClient(context: Context): CafeteriaAPI {
+        return when (getConfig(ConfigConst.CAFETERIA_API, CafeteriaApiEnum.MUNICH)) {
+            // Add more transportation api clients here
+            CafeteriaApiEnum.MUNICH -> MunichCafeteriaAPIClient.getInstance(context)
             else -> throw IllegalStateException("Transportation API not known.")
         }
     }

@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
@@ -23,9 +24,7 @@ import de.tum.`in`.tumcampusapp.databinding.FragmentCafeteriaBinding
 import de.tum.`in`.tumcampusapp.di.ViewModelFactory
 import de.tum.`in`.tumcampusapp.di.injector
 import de.tum.`in`.tumcampusapp.service.DownloadWorker
-import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.Utils
-import de.tum.`in`.tumcampusapp.utils.observeNonNull
+import de.tum.`in`.tumcampusapp.utils.*
 import org.joda.time.DateTime
 import javax.inject.Inject
 import javax.inject.Provider
@@ -46,6 +45,10 @@ class CafeteriaFragment : FragmentForDownloadingExternal(
 
     @Inject
     lateinit var cafeteriaDownloadAction: DownloadWorker.Action
+
+    private val ingredientsMessage: Int? by lazy {
+        ConfigUtils.getConfig<Int?>(ConfigConst.CAFETERIA_INGREDIENTS_TEXT, null)
+    }
 
     private var cafeterias = mutableListOf<Cafeteria>()
 
@@ -85,6 +88,7 @@ class CafeteriaFragment : FragmentForDownloadingExternal(
         cafeteriaViewModel.cafeterias.observeNonNull(this) { updateCafeterias(it) }
         cafeteriaViewModel.selectedCafeteria.observeNonNull(this) { onNewCafeteriaSelected(it) }
         cafeteriaViewModel.menuDates.observeNonNull(this) { updateSectionsPagerAdapter(it) }
+        // TODO: ADD Price Category
 
         cafeteriaViewModel.error.observeNonNull(this) { isError ->
             if (isError) {
@@ -118,13 +122,13 @@ class CafeteriaFragment : FragmentForDownloadingExternal(
 
     private fun initCafeteriaSpinner() {
         val intent = requireActivity().intent
-        val cafeteriaId: Int
+        val cafeteriaId: String
 
         if (intent != null && intent.hasExtra(Const.MENSA_FOR_FAVORITEDISH)) {
-            cafeteriaId = intent.getIntExtra(Const.MENSA_FOR_FAVORITEDISH, NONE_SELECTED)
+            cafeteriaId = intent.getStringExtra(Const.MENSA_FOR_FAVORITEDISH) ?: NONE_SELECTED.toString()
             intent.removeExtra(Const.MENSA_FOR_FAVORITEDISH)
         } else if (intent != null && intent.hasExtra(Const.CAFETERIA_ID)) {
-            cafeteriaId = intent.getIntExtra(Const.CAFETERIA_ID, 0)
+            cafeteriaId = intent.getStringExtra(Const.CAFETERIA_ID) ?: "0"
         } else {
             // If we're not provided with a cafeteria ID, we choose the best matching cafeteria.
             cafeteriaId = cafeteriaManager.bestMatchMensaId
@@ -133,12 +137,12 @@ class CafeteriaFragment : FragmentForDownloadingExternal(
         updateCafeteriaSpinner(cafeteriaId)
     }
 
-    private fun updateCafeteriaSpinner(cafeteriaId: Int) {
+    private fun updateCafeteriaSpinner(cafeteriaId: String) {
         var selectedIndex = NONE_SELECTED
 
         for (cafeteria in cafeterias) {
             val index = cafeterias.indexOf(cafeteria)
-            if (cafeteriaId == NONE_SELECTED || cafeteriaId == cafeteria.id) {
+            if (cafeteriaId == NONE_SELECTED.toString() || cafeteriaId == cafeteria.id) {
                 selectedIndex = index
                 break
             }
@@ -174,7 +178,12 @@ class CafeteriaFragment : FragmentForDownloadingExternal(
                 if (cafeteria != null) {
                     name.text = cafeteria.name
                     address.text = cafeteria.address
-                    distance.text = Utils.formatDistance(cafeteria.distance)
+                    address.isVisible = !cafeteria.address.isNullOrEmpty()
+                    if (cafeteria.distance != null) {
+                        distance.text = Utils.formatDistance(cafeteria.distance!!)
+                    } else {
+                        distance.visibility = View.GONE
+                    }
                 }
 
                 return v
@@ -190,8 +199,17 @@ class CafeteriaFragment : FragmentForDownloadingExternal(
     override fun onNothingSelected(adapterView: AdapterView<*>?) = Unit
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.menu_section_fragment_cafeteria_details, menu)
+        inflater.inflate(R.menu.menu_section_fragment_cafeteria_details, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        val menuItemIngredients = menu.findItem(R.id.action_ingredients)
+
+        // Only show ingredients message if text is configured
+        menuItemIngredients.isVisible = ingredientsMessage != null
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -215,12 +233,9 @@ class CafeteriaFragment : FragmentForDownloadingExternal(
 
     private fun showIngredientsInfo() {
         // Build a alert dialog containing the mapping of ingredients to the numbers
-        val formatter = CafeteriaMenuFormatter(requireContext())
-        val message = formatter.format(R.string.cafeteria_ingredients, true)
-
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.action_ingredients)
-            .setMessage(message)
+            .setMessage(ingredientsMessage ?: R.string.cafeteria_no_ingredients)
             .setPositiveButton(R.string.ok, null)
             .create()
             .apply {

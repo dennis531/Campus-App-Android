@@ -1,16 +1,19 @@
 package de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository
 
 import android.annotation.SuppressLint
-import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
+import android.content.Context
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class CafeteriaRemoteRepository @Inject constructor(
-    private val tumCabeClient: TUMCabeClient,
+    private val context: Context,
     private val localRepository: CafeteriaLocalRepository
 ) {
+
+    val cafeteriaClient = ConfigUtils.getCafeteriaClient(context)
 
     /**
      * Downloads cafeterias and stores them in the local repository.
@@ -23,11 +26,10 @@ class CafeteriaRemoteRepository @Inject constructor(
      */
     @SuppressLint("CheckResult")
     fun fetchCafeterias(force: Boolean) {
-        Observable.just(1)
+        Observable.fromCallable { cafeteriaClient.getCafeterias() }
                 .filter { localRepository.getLastSync() == null || force }
                 .subscribeOn(Schedulers.io())
                 .doOnNext { localRepository.clear() }
-                .flatMap { tumCabeClient.cafeterias }
                 .doAfterNext { localRepository.updateLastSync() }
                 .subscribe(localRepository::addCafeterias, Utils::log)
     }
