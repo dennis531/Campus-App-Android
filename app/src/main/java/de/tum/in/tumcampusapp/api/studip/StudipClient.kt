@@ -47,6 +47,9 @@ import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
 import de.tum.`in`.tumcampusapp.component.ui.news.model.AbstractNews
 import de.tum.`in`.tumcampusapp.component.ui.openinghours.api.OpeningHoursApi
 import de.tum.`in`.tumcampusapp.component.ui.openinghours.model.Location
+import de.tum.`in`.tumcampusapp.component.ui.studyroom.api.StudyRoomAPI
+import de.tum.`in`.tumcampusapp.component.ui.studyroom.model.StudyRoom
+import de.tum.`in`.tumcampusapp.component.ui.studyroom.model.StudyRoomGroup
 import de.tum.`in`.tumcampusapp.utils.*
 import okhttp3.Request
 import org.joda.time.DateTime
@@ -64,7 +67,8 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     GradesAPI,
     RoomFinderAPI,
     ChatAPI,
-    OpeningHoursApi {
+    OpeningHoursApi,
+    StudyRoomAPI {
 
     private var userId = Utils.getSetting(context, Const.PROFILE_ID, "")
 
@@ -286,6 +290,68 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             "https://www.informatik.uni-osnabrueck.de/institut_fuer_informatik.html")
 
         return listOf(location1, location2, location3)
+    }
+
+    override fun getStudyRoomGroups(): List<StudyRoomGroup> {
+        val studyRoom1 = StudyRoom(
+            "1",
+            "96/E01",
+            "Einzelarbeitsraum",
+            "1",
+            occupiedUntil = DateTime.now().plusHours(2)
+        )
+
+        val studyRoom2 = StudyRoom(
+            "2",
+            "96/E02",
+            "Gruppenarbeitsraum",
+            "1",
+            freeUntil = DateTime.now().plusHours(3)
+        )
+
+        val studyRoomGroup1 = StudyRoomGroup(
+            "1",
+            "Bibliothek Westerberg",
+            listOf(studyRoom1, studyRoom2)
+        )
+
+        val studyRoom3 = StudyRoom(
+            "3",
+            "21/E01",
+            "Einzelarbeitsraum",
+            "2",
+        )
+
+        val studyRoom4 = StudyRoom(
+            "4",
+            "21/E02",
+            "Gruppenarbeitsraum",
+            "2",
+        )
+
+        val studyRoom5 = StudyRoom(
+            "5",
+            "21/E03",
+            "Gruppenarbeitsraum 2",
+            "2",
+            occupiedUntil = DateTime.now().plusHours(2)
+        )
+
+        val studyRoom6 = StudyRoom(
+            "6",
+            "21/E04",
+            "Gruppenarbeitsraum",
+            "2",
+            freeUntil = DateTime.now().plusHours(1)
+        )
+
+        val studyRoomGroup2 = StudyRoomGroup(
+            "2",
+            "Bibliothek Innenstadt",
+            listOf(studyRoom3, studyRoom4, studyRoom5, studyRoom6)
+        )
+
+        return listOf(studyRoomGroup1, studyRoomGroup2)
     }
 
     companion object {

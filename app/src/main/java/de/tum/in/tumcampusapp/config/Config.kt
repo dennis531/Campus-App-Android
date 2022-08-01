@@ -117,6 +117,7 @@ object Config {
     val OPENINGHOUR_ENABLED = true
     val TRANSPORTATION_ENABLED = true
     val CAFETERIA_ENABLED = true
+    val STUDYROOM_ENABLED = true
 
     // Calendar options
     val CALENDAR_EDITABLE = false

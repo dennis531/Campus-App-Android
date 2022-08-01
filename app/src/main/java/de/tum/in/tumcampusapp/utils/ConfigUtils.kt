@@ -97,6 +97,7 @@ object ConfigUtils {
             Component.NEWS -> getConfig(ConfigConst.NEWS_ENABLED, defaultVal)
             Component.OPENINGHOUR -> getConfig(ConfigConst.OPENINGHOUR_ENABLED, defaultVal)
             Component.TRANSPORTATION -> getConfig(ConfigConst.TRANSPORTATION_ENABLED, defaultVal)
+            Component.STUDYROOM -> getConfig(ConfigConst.STUDYROOM_ENABLED, defaultVal)
             else -> true // Remaining components can not be disabled manually
         }
     }

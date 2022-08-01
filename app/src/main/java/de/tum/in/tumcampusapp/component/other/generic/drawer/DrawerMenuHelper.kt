@@ -19,6 +19,7 @@ import de.tum.`in`.tumcampusapp.component.ui.news.NewsFragment
 import de.tum.`in`.tumcampusapp.component.ui.openinghours.OpeningHoursListFragment
 import de.tum.`in`.tumcampusapp.component.ui.overview.InformationActivity
 import de.tum.`in`.tumcampusapp.component.ui.overview.MainFragment
+import de.tum.`in`.tumcampusapp.component.ui.studyroom.StudyRoomsFragment
 import de.tum.`in`.tumcampusapp.component.ui.transportation.TransportationActivity
 import de.tum.`in`.tumcampusapp.utils.*
 
@@ -132,6 +133,7 @@ class DrawerMenuHelper(
 
         private val GENERAL: Array<NavItem> = arrayOf(
                 NavItem.FragmentDestination(R.string.menues, R.drawable.ic_cutlery, CafeteriaFragment::class.java, Component.CAFETERIA),
+                NavItem.FragmentDestination(R.string.study_rooms, R.drawable.ic_outline_group_work_24px, StudyRoomsFragment::class.java, Component.STUDYROOM),
                 NavItem.FragmentDestination(R.string.roomfinder, R.drawable.ic_outline_location_on_24px, RoomFinderFragment::class.java, Component.ROOMFINDER, true),
                 NavItem.FragmentDestination(R.string.person_search, R.drawable.ic_outline_people_outline_24px, PersonSearchFragment::class.java, Component.PERSON, true),
                 NavItem.FragmentDestination(R.string.news, R.drawable.ic_rss, NewsFragment::class.java, Component.NEWS, true),

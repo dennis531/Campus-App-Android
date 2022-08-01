@@ -41,7 +41,7 @@ class TuitionFeeManager(private val context: Context) : ProvidesCard, ProvidesNo
                 ConfigUtils.getConfig(ConfigConst.TUITIONFEES_TUITION, null)
             }
 
-            if (tuition == null) {
+            if (tuition == null || tuition.deadline.isBeforeNow) {
                 return null
             }
 
