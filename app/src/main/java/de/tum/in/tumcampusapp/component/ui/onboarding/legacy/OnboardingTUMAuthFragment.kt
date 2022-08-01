@@ -37,7 +37,7 @@ sealed class TokenResponse {
 
 class OnboardingStartFragment : BaseFragment<Unit>(
     R.layout.fragment_onboarding_start,
-    R.string.connect_to_tum_online
+    R.string.connect_to_your_campus
 ) {
 
     private val compositeDisposable = CompositeDisposable()

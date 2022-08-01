@@ -5,7 +5,6 @@
 
     <!-- Generic -->
     <string name="search">Suchen</string>
-    <string name="tum_logo">TUM Logo</string>
     <string name="update">Update</string>
     <string name="loading">Lade …</string>
     <string name="settings">Einstellungen</string>
@@ -26,7 +25,7 @@
     <string name="dialog_show_calendar">Exportieren erfolgreich.\nLokalen Kalender <i>AMPUS_APP</i> in der <i>Google Calendar App</i> anzeigen?</string>
     <string name="export_to_google">Exportiere nach Google</string>
     <string name="delete_from_google">Löschen aus Google</string>
-    <string name="dialog_delete_calendar">Den lokalen <i>TUM_CAMPUS_APP</i> Kalender von deinem Gerät löschen?</string>
+    <string name="dialog_delete_calendar">Den lokalen <i>CAMPUS_APP</i> Kalender von deinem Gerät löschen?</string>
     <string name="calendar_deleted_toast">Kalender erfolgreich gelöscht</string>
     <string name="calendar_not_existing_toast">Es existiert kein lokaler Kalender</string>
     <string name="calendar_filter_title">Filter ändern</string>
@@ -64,7 +63,7 @@
     <!-- Preferences -->
     <string name="lrz_id">Identität</string>
     <string name="role">Rolle</string>
-    <string name="role_summary">Deine Rolle an der TUM. Entweder Student*in, Mitarbeiter*in oder Gast.</string>
+    <string name="role_summary">Deine Rolle an deinem Campus. Entweder Student*in, Mitarbeiter*in oder Gast.</string>
     <string name="student">Student*in</string>
     <string name="employee">Mitarbeiter*in</string>
     <string name="guest">Gast</string>
@@ -73,9 +72,9 @@
     <string name="notification">Benachrichtigungen</string>
     <string name="extras">Extras</string>
     <string name="open_wizard">Öffne Startup-Wizard</string>
-    <string name="open_wizard_detail">Der Startup-Wizard hilft dir, grundlegende Einstellungen für den Zugriff auf TUMonline Dienste einzurichten und das Farbschema der App festzulegen.</string>
+    <string name="open_wizard_detail">Der Startup-Wizard hilft dir, grundlegende Einstellungen für den Zugriff auf die Campus-Dienste einzurichten und das Farbschema der App festzulegen.</string>
     <string name="clear_cache">Lösche Daten</string>
-    <string name="clear_cache_detail">Löscht alle Daten der TUM Campus App von deinem Gerät.</string>
+    <string name="clear_cache_detail">Löscht alle Daten der Campus App von deinem Gerät.</string>
     <string name="delete_cache_sure">Alle Daten wirklich löschen?</string>
     <string name="success_clear_cache">Daten erfolgreich gelöscht</string>
     <string name="services">Dienste</string>
@@ -103,17 +102,17 @@
     <!-- Startup Wizard -->
     <string name="onboarding">Einrichtung</string>
     <string name="not_connected_to_lms">Nicht verbunden</string>
-    <string name="connect_to_tum_online">Mit Lernplattform verbinden</string>
-    <string name="welcome_msg">Um den Zugriff auf TUMonline-Dienste zu ermöglichen, wird deine <b>TUM-Kennung</b> benötigt.\n\nDie Kennung hat das Format <i>ga12abc</i>.</string>
+    <string name="connect_to_your_campus">Mit deinem Campus verbinden</string>
+    <string name="welcome_tum_msg">Um den Zugriff auf TUMonline-Dienste zu ermöglichen, wird deine <b>TUM-Kennung</b> benötigt.\n\nDie Kennung hat das Format <i>ga12abc</i>.</string>
     <string name="button_skip">Überspringen</string>
     <string name="button_next">Weiter</string>
-    <string name="need_to_enable"><b>Das TUMonline-Access-Token wurde erfolgreich erzeugt</b>\n\nBitte aktiviere das Token in TUMonline unter <i>Dienste/Token-Verwaltung</i> oder folge dem Link in der Email, die du in Kürze von TUMonline erhalten wirst. Beachte, dass du ebenfalls die Rechte zum Zugriff auf einzelne Dienste unter <i>Aktive Rechte</i> aktivieren musst.</string>
+    <string name="need_to_enable_tum"><b>Das TUMonline-Access-Token wurde erfolgreich erzeugt</b>\n\nBitte aktiviere das Token in TUMonline unter <i>Dienste/Token-Verwaltung</i> oder folge dem Link in der Email, die du in Kürze von TUMonline erhalten wirst. Beachte, dass du ebenfalls die Rechte zum Zugriff auf einzelne Dienste unter <i>Aktive Rechte</i> aktivieren musst.</string>
     <string name="step_1">Schritt 1</string>
     <string name="step_2">Schritt 2</string>
     <string name="step_3">Schritt 3</string>
     <string name="set_silent_mode">Bei Aktivierung wird sich das Gerät bei einer aktuell stattfindenden Vorlesung lautlos schalten.</string>
-    <string name="set_background_mode">Aktiviere oder deaktiviere den <i>Hintergrundmodus</i>. Bei Aktivierung werden einmal am Tag im Hintergrund alle Inhalte heruntergeladen, um deine TUM Campus App auf den neusten Stand zu halten.</string>
-    <string name="goto_tumcampus">Starte TUM Campus App</string>
+    <string name="set_background_mode">Aktiviere oder deaktiviere den <i>Hintergrundmodus</i>. Bei Aktivierung werden einmal am Tag im Hintergrund alle Inhalte heruntergeladen, um deine Campus App auf den neusten Stand zu halten.</string>
+    <string name="goto_campus">Starte Campus App</string>
     <string name="oauth_msg">Um den Zugriff auf alle Funktionen der App zu erhalten, musst du auf der nächsten Seite den Zugriff auf deine Lernplattform erlauben.\n\nDiese App speichert nicht dein Passwort.\n\nNach dem Einrichten kannst du:\n &#8226; auf deinen Kalender zugreifen\n &#8226; Details zu deinen Vorlesungen erfahren\n &#8226; deine Noten ansehen\n &#8226; deinen Studienbeitragsstatus prüfen\n &#8226; mit Komilitonen aus deinen Vorlesungen chatten</string>
 
     <!-- News -->
@@ -273,7 +272,7 @@
     <string name="version">Version: %1$s</string>
     <string name="send_email">E-Mail Feedback senden</string>
     <string name="show_feedback">Feedback senden</string>
-    <string name="feedbackSubj">Feedback für TUM Campus App</string>
+    <string name="feedbackSubj">Feedback für Campus App</string>
     <!-- END Translated, please do not change identifiers -->
 
     <string name="min_search_len">Text muss mindestens %d Zeichen lang sein</string>
@@ -345,7 +344,6 @@
     <string name="error_pk_verification">Es ist ein Problem bei der Authentifizierung aufgetreten</string>
     <string name="room_timetable">Belegungsplan</string>
     <string name="newspread_summary">Wähle aus welches newspread angezeigt werden soll. Das sind die Folien die auf den Info Monitoren in deiner Fakultät angezeigt werden.</string>
-    <string name="no_rights_to_access_id">Identität konnte nicht abgefragt werden. Bitte überprüfe die Rechte deines TUMonline Tokens!</string>
     <string name="vibration">Vibration</string>
     <string name="silent">Leise</string>
     <string name="mode_silent_mode">Modus während Vorlesung</string>
@@ -385,11 +383,11 @@ Signatur: %5$s</string>
     <string name="yesterday">Gestern</string>
     <string name="semester_summer">Sommersemester</string>
     <string name="semester_winter">Wintersemester</string>
-    <string name="update_notification_description">Eine neue Version der Tum Campus App wurde am %s released. Hier tippen zum herunterladen.</string>
+    <string name="update_notification_description">Eine neue Version der Campus App wurde am %s released. Hier tippen zum herunterladen.</string>
     <string name="support_us">Hilf uns, die Campus App besser zu machen. Like uns auf Facebook, schlage neue Ideen auf GitHub vor oder sage uns deine Meinung per E-Mail.</string>
     <string name="support_us_title">Unterstütze uns</string>
     <string name="permission_location_explanation">Die Campus App braucht die Erlaubnis, auf deinen Standort zugreifen zu dürfen, um Mensa-Speisepläne in deiner Nähe oder Fahrpläne der nächstgelegenen MVV-Station anzeigen zu können. Wenn du das nicht willst, kannst du deinen Standort in den Einstellungen konfigurieren.</string>
-    <string name="permission_calendar_explanation">Die Campus App braucht die Erlaubnis, auf deinen Kalender zugreifen zu dürfen, um diesen mit deinem TUM-Kalender abgleichen zu können.</string>
+    <string name="permission_calendar_explanation">Die Campus App braucht die Erlaubnis, auf deinen Kalender zugreifen zu dürfen, um diesen mit deinem Campus-Kalender abgleichen zu können.</string>
     <string name="permission_contacts_explanation">Die Campus App braucht die Erlaubnis, auf deine Kontakte zugreifen zu dürfen, um diese Person hinzufügen zu können.</string>
     <string name="cancel">Abbruch</string>
     <string name="grant_permission">Erlauben</string>
@@ -424,7 +422,7 @@ Signatur: %5$s</string>
     <string name="mvv_widget_no_data">Offline oder keine Daten verfügbar</string>
     <string name="mvv_widget_auto_reload">Automatisch aktualisieren</string>
     <string name="mvv_widget_auto_reload_hint">Erhöht Strom und Datenverbrauch</string>
-    <string name="timetable_widget">Stundenplan Widget TUM</string>
+    <string name="timetable_widget">Stundenplan Widget Campus</string>
     <string name="timetable_widget_select_lectures">Vorlesungen auswählen</string>
     <string name="timetable_widget_no_lectures">Keine Vorlesungen geplant :)</string>
     <string name="eduroam_not_valid_id">Keine gültige Kennung</string>
@@ -442,8 +440,8 @@ Signatur: %5$s</string>
 
     <!-- Feedback Activity -->
     <string name="feedback">Feedback</string>
-    <string name="general">TUM Allgemein</string>
-    <string name="tca">TUM Campus App</string>
+    <string name="general">Campus Allgemein</string>
+    <string name="tca">Campus App</string>
     <string-array name="feedback_options">
         <item>@string/general</item>
         <item>@string/tca</item>
@@ -475,17 +473,14 @@ Signatur: %5$s</string>
     <string name="channel_cafeteria">Mensa</string>
     <string name="channel_chat">Chat</string>
     <string name="channel_mvv">MVV</string>
-    <string name="channel_tum_alarmierung">TUM Alarmierung (für Katastrophen)</string>
+    <string name="channel_tum_alarmierung">Campus Alarmierung (für Katastrophen)</string>
 
     <string name="favorite_dish_info">Du bekommst an Tagen, an denen es eines deiner Lieblingsgerichte in der Mensa gibt eine Benachrichtigung. Guten Appetit!</string>
     <string name="location_services_off_title">Standortfreigabe ist ausgeschaltet</string>
     <string name="location_services_off_message">Schalte deinen Standort in den Einstellungen an um deinen Standort mitzusenden</string>
     <string name="study_cards_title">Cards</string>
-    <string name="card_title">Titel</string>
     <string name="create_card">Karte hinzufügen</string>
     <string name="title_activity_cards">Karteikarten</string>
-    <string name="card_front_text">Vorderseite</string>
-    <string name="card_back_text">Hinterseite</string>
     <string name="title_activity_cards_detail">Karte hinzufügen</string>
     <string name="card_question">Frage</string>
     <string name="card_answer">Antwort</string>
@@ -493,20 +488,6 @@ Signatur: %5$s</string>
     <string name="filter_lecture_OWN_LECTURES">Eigene Vorlesungen</string>
     <string name="filter_lecture_SELECTED_LECTURES">Ausgewählte Vorlesungen</string>
     <string name="show_answer">Antwort anzeigen</string>
-
-    <!-- Events Activity -->
-    <string name="show_booked_events">Gebuchte Events anzeigen</string>
-    <string name="events_tickets">Events &amp; Tickets</string>
-    <string name="payment_selection">Zahlungsoption wählen</string>
-    <string name="add_eventcalendar">Zum Kalender hinzufügen</string>
-    <string name="all_events">Alle Events</string>
-    <string name="booked_events">Buchungen</string>
-    <string name="redeemed_format_string">Eingelöst: %1$s</string>
-    <string name="visit_website">Webseite besuchen</string>
-    <string name="tum_calendar">TUM Kalender</string>
-    <string name="external_calendar">Externer Kalender</string>
-    <string name="add_to_calendar_info">Event zu Kalender hinzufügen</string>
-    <string name="ticket_not_fetched">Du hast möglicherweise schon ein Ticket für dieses Event gekauft. Versuche, deine Tickets erneut zu laden, indem du die Eventübersicht aktualisierst.</string>
 
     <!-- Ticket Activity -->
     <string name="your_ticket">Dein Ticket</string>
@@ -523,48 +504,7 @@ Signatur: %5$s</string>
     <string name="purchase_details">Details zu Ihrem Kauf:</string>
     <string name="continue_to_payment">Weiter zur Zahlung</string>
     <string name="order_summary">Bestellungsübersicht</string>
-    <string name="ticket_type">Tickettyp</string>
-    <string name="select_tickets">Tickets Auswählen</string>
-    <string name="total">Gesamt</string>
-    <string name="location">Ort</string>
-    <string name="choose_ticket_type">Wähle deinen Ticket-Typ</string>
-    <string name="price_per_ticket">%s pro Ticket</string>
-    <string name="ticket_amount_error_title">Kaufeinschränkungen</string>
     <string name="unknown">Unbekannt</string>
-    <string name="not_redeemed_yet">Noch nicht eingelöst</string>
-    <string name="partially_redeemed">%d von %d eingelöst (%s)</string>
-    <string name="redeemed_at">Eingelöst um %s</string>
-    <string name="no_tickets_remaining">Keine Tickets mehr vorhanden</string>
-    <string name="no_tickets_remaining_message">Leider stehen für diese Veranstaltung keine weiteren Online Tickets zur Verfügung.\nBei vielen Veranstaltungen kannst du aber vor Ort noch Tickets erwerben.</string>
-    <string name="error_message_select_at_least_one_ticket">Bitte wähle mindestens ein Ticket aus einer der Kategorien aus.</string>
-    <string name="error_no_ticket_selected">Keine Tickets ausgewählt</string>
-    <string name="ticket_amount_information">Es können maximal %d Tickets pro Person vom Typ \“%s\” gekauft werden.</string>
-    <string name="ticket_amount_label">Betrag</string>
-    <string name="tickets_saved_in_app">Das Ticket wurde in der App gespeichert.</string>
-
-    <!-- Payment -->
-    <string name="creditcard">Kreditkarte</string>
-    <string name="complete_purchase">Jetzt kaufen</string>
-    <string name="select_payment_method">Zahlungsmethode auswählen</string>
-    <string name="enter_card_info_title">Zahlungsinformationen</string>
-    <string name="enter_card_info_description">Gib deine Zahlungsinformationen an, um den Kauf abzuschließen:</string>
-    <string name="purchase_progress_message">Ticket wird angefragt, bitte warten…</string>
-    <string name="purchase_success_title">Kauf abgeschlossen</string>
-    <string name="purchase_success_message">Du kannst dein Ticket nun im Ticketbereich einsehen.</string>
-    <string name="purchase_success_continue">Weiter</string>
-    <string name="purchase_error_message">Fehler bei Server Anfrage.</string>
-    <string name="card_data_invalid">Ungültige Zahlungsdaten.</string>
-    <string name="customersession_init_failed">Fehler beim Laden der gespeicherten Kreditkarten.</string>
-    <string name="cardholder">Karteninhaber</string>
-    <string name="buy_format_string">Bezahlen\n%s</string>
-    <string name="internal_error">Interner Fehler!</string>
-    <string name="creditcard_ending_in">endet mit</string>
-    <string name="empty_cardholder_message">Kein Karteninhaber angegeben.</string>
-    <string name="not_logged_in_error">Du musst eingeloggt sein und in TUMonline den Zugriff auf Name und TUM-ID erlauben, um Tickets zu kaufen.</string>
-    <string name="ticket_retrieval_error">Fehler bei der Übertragung des Tickets.</string>
-    <string name="reserving_ticket">Dein Ticket wird reserviert, bitte warten…</string>
-    <string name="remaining_tickets_format_string" formatted="true">Noch %d Tickets verfügbar</string>
-    <string name="ticket_contingent_exhausted">Für den gewünschten Typ sind alle Tickets bereits ausverkauft.</string>
 
     <!-- Create personal Appointment (Calendar) -->
     <string name="create_event">Termin erstellen</string>
@@ -594,9 +534,9 @@ Signatur: %5$s</string>
                                         &#8226; deine Noten ansehen\n
                                         &#8226; deinen Studienbeitragsstatus prüfen\n
                                         &#8226; mit Komilitonen aus deinen Vorlesungen chatten</string>
-    <string name="tumonline_login">Mit Lernplattform verbinden</string>
+    <string name="campus_login">Mit Campus verbinden</string>
     <string name="card_login_title">Willkommen zur Campus App</string>
-    <string name="card_login_body">Verbinde die App mit deiner Lernplattform, um auf deinen Kalendar, deine Vorlesungen und deine Noten zugreifen zu können.</string>
+    <string name="card_login_body">Verbinde die App mit deinem Campus, um auf deinen Kalendar, deine Vorlesungen und deine Noten zugreifen zu können.</string>
 
     <string name="watch_trailer">Trailer anschauen</string>
     <string name="show_trailer_error">Trailer kann nicht gezeigt werden</string>
@@ -645,11 +585,11 @@ Signatur: %5$s</string>
     <string name="channel_description_cafeteria">Aktuelles Tagesmenü</string>
     <string name="channel_description_chat">Neue Chat-Nachrichten</string>
     <string name="channel_description_mvv">Abfahrten an nahegelegenen Haltestellen</string>
-    <string name="channel_description_tum_alarmierung">Alarmierung bei Notfällen an der TUM</string>
+    <string name="channel_description_tum_alarmierung">Alarmierung bei Notfällen an dem Campus</string>
     <string name="channel_description_eduroam">Untersützung beim Einrichten von eduroam</string>
 
     <string name="updating_event">Aktualisiere Event …</string>
-    <string name="error_tum_online_unavailable">TUMonline ist aktuell nicht verfügbar.</string>
+    <string name="error_api_unavailable">System ist aktuell nicht verfügbar.</string>
     <string name="retry">Wiederholen</string>
     <string name="open_settings">Einstellungen öffnen</string>
     <string name="not_available">Nicht verfügbar</string>
@@ -658,7 +598,7 @@ Signatur: %5$s</string>
     <string name="error_accessing_lms_body">Bitte stelle sicher, dass das du authentifiziert bist und die entsprechenden Rechte besitzt.</string>
     <string name="error_no_access_token_setup_header">Kein TUMonline-Access-Token gefunden</string>
     <string name="error_no_access_token_setup_body">Bitte erzeuge ein TUMonline-Access-Token in den Einstellungen, um TUMonline-Funktionen nutzen zu können.</string>
-    <string name="error_access_token_already_set_generate_new">Dein TUMonline-Access-Token ist bereits gesetzt. Wenn du ein neues Token generierst, wird das alte unbrauchbar.</string>
+    <string name="error_access_token_already_set_generate_new">Dein Access-Token ist bereits gesetzt. Wenn du ein neues Token generierst, wird das alte unbrauchbar.</string>
     <string name="error_invalid_tum_id">Deine TUM-Kennung ist ungültig</string>
     <string name="error_access_token_could_not_be_generated">Dein TUMonline-Access-Token konnte nicht erstellt werden.</string>
     <string name="error_access_token_inactive">Dein TUMonline-Access-Token ist noch inaktiv. Gehe zu TUMonline, um es zu aktivieren.</string>
@@ -672,16 +612,6 @@ Signatur: %5$s</string>
     <string name="export_to_google_error">Ein Fehler ist während des Kalender-Exports zu Google Kalender aufgetreten.</string>
     <string name="checking_if_token_enabled">Überprüfung, ob Token aktiviert ist …</string>
 
-    <string name="no_events_found">Keine Events gefunden</string>
-    <string name="no_bookings_found">Keine Buchungen gefunden</string>
-    <string name="ticket">Ticket</string>
-    <string name="thanks_for_your_purchase">Danke für deinen Einkauf</string>
-    <plurals name="tickets_saved_in_app">
-        <item quantity="one">@string/tickets_saved_in_app</item>
-        <item quantity="other">Die Tickets wurden in der App gespeichert.</item>
-    </plurals>
-    <string name="remaining_tickets">Verbleibende Tickets</string>
-    <string name="payment_confirmation">Zahlungsbestätigung</string>
     <string name="about">Über</string>
     <string name="due_on_format_string">Fällig am %s</string>
     <string name="home">Übersicht</string>
@@ -698,16 +628,11 @@ Signatur: %5$s</string>
     <string name="chat_message_try_again">Die Nachricht konnte nicht gesendet werden. Erneut versuchen?</string>
     <string name="leave">Verlassen</string>
     <string name="today">Heute</string>
-    <string name="ticket_sale_beta">Der Ticketverkauf befindet sich momentan im Testbetrieb und es können Fehler auftreten. Solltet ihr Probleme haben, könnt ihr uns unter app@tum.de erreichen. Es gibt weiterhin Karten an der Abendkasse, selbst wenn digital das Kontigent erschöpft ist.</string>
     <string name="next_lecture_show_more">Zeige %d weitere …</string>
     <string name="next_lecture_hide">Verbergen</string>
     <string name="employee_mode">Personalmodus</string>
     <string name="employee_mode_info">Menüpunkte wie die Notenansicht oder Studienbeitrag werden in dieser Ansicht nicht angezeigt.</string>
-    <string name="event_imminent_error">Tickets können nur bis zu vier Stunden vor Beginn über die App erworben werden.</string>
     <string name="show_in_calendar">Im Kalender öffnen</string>
-    <string name="stripe_terms_of_service_checkbox">Ich stimme den allgemeinen Geschäftsbedingungen (AGB) zu.</string>
-    <string name="stripe_terms_of_service_button">AGB</string>
-    <string name="tickets_available_here">Tickets hier erhältlich!</string>
 
     <string name="update_note_title">Neue Features</string>
     <string name="update_note_version">Version %s</string>
@@ -719,7 +644,7 @@ Signatur: %5$s</string>
     </plurals>
     <string name="not_specified">Keine Angabe</string>
 
-    <string name="stuy_room_placeholder_text">Hier werden gerade neue Lernräume eingerichtet!</string>
+    <string name="study_room_placeholder_text">Hier werden gerade neue Lernräume eingerichtet!</string>
     <string name="invalid_email">Ungültige E-Mail-Adresse</string>
 
     <string name="settings_cafeteria_depending_on_location">Standortabhängig</string>

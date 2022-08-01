@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 class CheckTokenFragment : BaseFragment<Unit>(
     R.layout.fragment_check_token,
-    R.string.connect_to_tum_online
+    R.string.connect_to_your_campus
 ) {
 
     private val compositeDisposable = CompositeDisposable()

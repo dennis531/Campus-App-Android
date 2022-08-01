@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
     R.layout.fragment_onboarding_extras,
-    R.string.connect_to_tum_online
+    R.string.connect_to_your_campus
 ) {
 
     private val onboardingComponent: OnboardingComponent by lazy {

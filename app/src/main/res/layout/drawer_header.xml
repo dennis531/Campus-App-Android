@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/material_default_padding"
-        android:text="@string/tumonline_login"
+        android:text="@string/campus_login"
         android:textAllCaps="false"
         android:textColor="@color/text_primary"
         android:visibility="gone"

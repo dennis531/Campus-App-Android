@@ -219,7 +219,7 @@ abstract class BaseFragment<T>(
     protected fun onDownloadUnsuccessful(statusCode: Int) {
         if (statusCode == 503) {
             // The service is unavailable
-            showErrorSnackbar(R.string.error_tum_online_unavailable)
+            showErrorSnackbar(R.string.error_api_unavailable)
         } else {
             showErrorSnackbar(R.string.error_unknown)
         }

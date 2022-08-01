@@ -33,7 +33,7 @@ import javax.inject.Inject
 
 class OnboardingOAuth10aFragment : BaseFragment<String>(
     R.layout.fragment_onboarding_oauth,
-    R.string.connect_to_tum_online
+    R.string.connect_to_your_campus
 ) {
     private val compositeDisposable = CompositeDisposable()
 
