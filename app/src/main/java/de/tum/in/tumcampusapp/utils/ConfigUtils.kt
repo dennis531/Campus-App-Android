@@ -14,6 +14,7 @@ import de.tum.`in`.tumcampusapp.config.Config
 import de.tum.`in`.tumcampusapp.config.TransportationApi as TransportApiEnum
 import de.tum.`in`.tumcampusapp.config.CafeteriaApi as CafeteriaApiEnum
 import de.tum.`in`.tumcampusapp.component.ui.transportation.api.generic.TransportationAPI
+import de.tum.`in`.tumcampusapp.component.ui.transportation.api.vbn.VbnClient
 
 object ConfigUtils {
     @JvmStatic
@@ -39,6 +40,7 @@ object ConfigUtils {
         return when (getConfig(ConfigConst.TRANSPORTATION_API, TransportApiEnum.MVV)) {
             // Add more transportation api clients here
             TransportApiEnum.MVV -> MvvClient.getInstance(context)
+            TransportApiEnum.VBN -> VbnClient.getInstance(context)
             else -> throw IllegalStateException("Transportation API not known.")
         }
     }

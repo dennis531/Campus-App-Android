@@ -1,4 +1,4 @@
-package de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv
+package de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv.model
 
 import android.content.Context
 import androidx.annotation.ColorRes

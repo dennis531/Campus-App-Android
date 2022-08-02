@@ -218,7 +218,7 @@ class LocationManager @Inject constructor(c: Context) {
 
     /**
      * Gets the location of the next room where the user has a lecture.
-     * If no lectures are available Garching will be returned
+     * If no lectures are available first campus in configs will be returned
      *
      * @return Location of the next lecture room
      */
@@ -405,7 +405,7 @@ class LocationManager @Inject constructor(c: Context) {
                 }
             }
 
-            return if (bestDistance < 10000000) {
+            return if (bestDistance < 1000) {
                 bestCampus
             } else {
                 null

@@ -1,5 +1,7 @@
 package de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv
 
+import de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv.model.MvvDepartureList
+import de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv.model.MvvStationList
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

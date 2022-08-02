@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.gson.GsonBuilder
 import de.tum.`in`.tumcampusapp.api.general.ApiHelper
 import de.tum.`in`.tumcampusapp.component.ui.transportation.api.generic.TransportationAPI
+import de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv.model.MvvStationList
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Departure
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
 import org.joda.time.DateTime

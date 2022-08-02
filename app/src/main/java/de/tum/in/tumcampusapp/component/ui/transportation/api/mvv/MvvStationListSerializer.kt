@@ -1,6 +1,7 @@
 package de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv
 
 import com.google.gson.*
+import de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv.model.MvvStationList
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
 import java.lang.reflect.Type
 

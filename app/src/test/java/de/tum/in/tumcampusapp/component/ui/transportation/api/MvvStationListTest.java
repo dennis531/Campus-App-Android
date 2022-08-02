@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import de.tum.in.tumcampusapp.component.ui.transportation.api.mvv.MvvStationList;
+import de.tum.in.tumcampusapp.component.ui.transportation.api.mvv.model.MvvStationList;
 import de.tum.in.tumcampusapp.component.ui.transportation.api.mvv.MvvStationListSerializer;
 import de.tum.in.tumcampusapp.component.ui.transportation.model.Station;
 

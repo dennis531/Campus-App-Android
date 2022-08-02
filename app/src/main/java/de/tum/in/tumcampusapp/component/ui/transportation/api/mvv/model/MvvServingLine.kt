@@ -1,4 +1,4 @@
-package de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv
+package de.tum.`in`.tumcampusapp.component.ui.transportation.api.mvv.model
 
 data class MvvServingLine(
     val name: String = "",
