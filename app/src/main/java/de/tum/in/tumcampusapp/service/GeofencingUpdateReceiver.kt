@@ -9,10 +9,10 @@ import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 
 /**
- * Receiver for Geofencing updates regarding munich.
+ * Receiver for Geofencing updates regarding campus region.
  *
  * This class will disable or enable the background mode depending on whether the user
- * entered or left munich.
+ * entered or left campus region.
  */
 class GeofencingUpdateReceiver : BroadcastReceiver() {
 
@@ -30,12 +30,12 @@ class GeofencingUpdateReceiver : BroadcastReceiver() {
         if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
             Utils.setSetting(context, Const.BACKGROUND_MODE, true)
             StartSyncReceiver.startBackground(context)
-            Utils.logWithTag(TAG, "Geofencing detected user entering munich, " +
+            Utils.logWithTag(TAG, "Geofencing detected user entering campus region, " +
                     "enabling Auto updates")
         } else if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
             Utils.setSetting(context, Const.BACKGROUND_MODE, false)
             StartSyncReceiver.cancelBackground()
-            Utils.logWithTag(TAG, "Geofencing detected user leaving munich, " +
+            Utils.logWithTag(TAG, "Geofencing detected user leaving campus region, " +
                     "disabling Auto updates")
         }
     }

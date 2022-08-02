@@ -92,6 +92,7 @@ object ConfigUtils {
             Component.LECTURES -> getConfig(ConfigConst.LECTURES_ENABLED, defaultVal)
             Component.PERSON -> getConfig(ConfigConst.PERSON_ENABLED, defaultVal)
             Component.ROOMFINDER -> getConfig(ConfigConst.ROOMFINDER_ENABLED, defaultVal)
+            Component.GEOFENCING -> getConfig(ConfigConst.GEOFENCING_ENABLED, defaultVal)
             Component.TUITIONFEES -> getConfig(ConfigConst.TUITIONFEES_ENABLED, defaultVal)
             Component.CAFETERIA -> getConfig(ConfigConst.CAFETERIA_ENABLED, defaultVal)
             Component.CHAT -> getConfig(ConfigConst.CHAT_ENABLED, defaultVal)

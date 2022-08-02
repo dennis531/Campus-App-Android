@@ -70,17 +70,8 @@ object NotificationUtils {
                 NotificationManager.IMPORTANCE_LOW
         )
 
-        val emergency = createChannel(
-                context, Const.NOTIFICATION_CHANNEL_EMERGENCY,
-                R.string.channel_tum_alarmierung, R.string.channel_description_tum_alarmierung,
-                NotificationManager.IMPORTANCE_HIGH).apply {
-            enableLights(true)
-            enableVibration(true)
-            lightColor = Color.RED
-        }
-
         val notificationManager = context.notificationManager
-        val channels = listOf(default, chat, eduroam, cafeteria, mvv, emergency)
+        val channels = listOf(default, chat, eduroam, cafeteria, mvv)
 
         channels.forEach { notificationManager.createNotificationChannel(it) }
     }

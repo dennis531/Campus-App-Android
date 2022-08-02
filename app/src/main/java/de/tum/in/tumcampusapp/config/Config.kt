@@ -136,6 +136,7 @@ object Config {
     val LECTURES_ENABLED = true
     val NEWS_ENABLED = true
     val EDUROAM_ENABLED = true
+    val GEOFENCING_ENABLED = true
     val GRADES_ENABLED = true
     val TUITIONFEES_ENABLED = true
     val ROOMFINDER_ENABLED = true
@@ -157,6 +158,14 @@ object Config {
 
     // Allows to check if the anonymous identity is correct
     val EDUROAM_ANONYMOUS_IDENTITIES = listOf<String>("eduroam@uos.de", "eduroam@uni-osnabrueck.de", "anonymous@uni-osnabrueck.de")
+
+    // Geofencing options
+    // Geofencing disables background task when the user leaves the geographical region
+    // Coordinates define the center of the circular region
+    val GEOFENCING_LATITUDE = 52.27158 // latitude of "Camous Innenstadt"; default: 0.0
+    val GEOFENCING_LONGITUDE = 8.04426 // longitude of "Camous Innenstadt"; default: 0.0
+    // Radius of the circular region
+    val GEOFENCING_RADIUS_IN_METER = 50 * 1000f // 50 Km; default: 0f
 
     // Tuition fees options
     // if true and tuition api is provided, the tuition will be loaded from the selected api

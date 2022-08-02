@@ -489,23 +489,6 @@ Signatur: %5$s</string>
     <string name="filter_lecture_SELECTED_LECTURES">Ausgewählte Vorlesungen</string>
     <string name="show_answer">Antwort anzeigen</string>
 
-    <!-- Ticket Activity -->
-    <string name="your_ticket">Dein Ticket</string>
-    <string name="show_ticket">Ticket anzeigen</string>
-    <plurals name="show_tickets">
-        <item quantity="one">Ticket anzeigen</item>
-        <item quantity="other">Tickets anzeigen</item>
-    </plurals>
-    <plurals name="tickets">
-        <item quantity="one">Ticket</item>
-        <item quantity="other">%d Tickets</item>
-    </plurals>
-    <string name="buy_ticket">Ticket kaufen</string>
-    <string name="purchase_details">Details zu Ihrem Kauf:</string>
-    <string name="continue_to_payment">Weiter zur Zahlung</string>
-    <string name="order_summary">Bestellungsübersicht</string>
-    <string name="unknown">Unbekannt</string>
-
     <!-- Create personal Appointment (Calendar) -->
     <string name="create_event">Termin erstellen</string>
     <string name="comment">Anmerkung</string>
@@ -612,6 +595,7 @@ Signatur: %5$s</string>
     <string name="export_to_google_error">Ein Fehler ist während des Kalender-Exports zu Google Kalender aufgetreten.</string>
     <string name="checking_if_token_enabled">Überprüfung, ob Token aktiviert ist …</string>
 
+    <string name="unknown">Unbekannt</string>
     <string name="about">Über</string>
     <string name="due_on_format_string">Fällig am %s</string>
     <string name="home">Übersicht</string>

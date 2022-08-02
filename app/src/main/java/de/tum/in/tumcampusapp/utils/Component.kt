@@ -13,6 +13,7 @@ enum class Component(val titleResId: Int, val requiresLMS: Boolean) {
     CAFETERIA(R.string.cafeteria, false),
     CHAT(R.string.chat, true),
     EDUROAM(R.string.eduroam, false),
+    GEOFENCING(R.string.geofencing, false),
     NEWS(R.string.news, true),
     ONBOARDING(R.string.onboarding, true),
     OPENINGHOUR(R.string.opening_hours, false),

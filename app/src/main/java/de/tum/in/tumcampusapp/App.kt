@@ -21,6 +21,7 @@ import de.tum.`in`.tumcampusapp.component.ui.cafeteria.widget.MensaWidget
 import de.tum.`in`.tumcampusapp.component.ui.transportation.widget.TransportationWidget
 import de.tum.`in`.tumcampusapp.di.AppComponent
 import de.tum.`in`.tumcampusapp.di.DaggerAppComponent
+import de.tum.`in`.tumcampusapp.service.GeofencingStartupReceiver
 import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import io.reactivex.plugins.RxJavaPlugins
@@ -48,6 +49,7 @@ open class App : Application() {
         //BackendHelper.getBackendConnection()
         setupWidgets()
         setupShortcuts()
+        setupGeofencing()
     }
 
     private fun buildAppComponent() {
@@ -157,5 +159,15 @@ open class App : Application() {
         }
 
         ShortcutManagerCompat.setDynamicShortcuts(this, shortcuts)
+    }
+
+    private fun setupGeofencing() {
+        if (ConfigUtils.isComponentEnabled(this, Component.GEOFENCING)) {
+            packageManager.setComponentEnabledSetting(
+                ComponentName(this, GeofencingStartupReceiver::class.java),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+            )
+        }
     }
 }

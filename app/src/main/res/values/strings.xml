@@ -354,6 +354,7 @@
     <string name="always_hide_card">Always hide card</string>
     <string name="phone_summary">To receive notifications on your phone you have to enable Wearable</string>
     <string name="display">Display</string>
+    <string name="geofencing" translatable="false">Geofencing</string>
 
     <string name="opens">Opens</string>
     <string name="closes">Closes</string>
@@ -655,23 +656,6 @@ Signature: %5$s</string>
     <string name="discard_changes_question">Discard your changes?</string>
     <string name="discard">Discard</string>
     <string name="keep_editing">Keep editing</string>
-
-    <!-- Ticket Activity -->
-    <string name="your_ticket">Your Ticket</string>
-    <string name="show_ticket">Show Ticket</string>
-    <plurals name="show_tickets">
-        <item quantity="one">Show Ticket</item>
-        <item quantity="other">Show Tickets</item>
-    </plurals>
-    <plurals name="tickets">
-        <item quantity="one">Ticket</item>
-        <item quantity="other">%d Tickets</item>
-    </plurals>
-    <string name="buy_ticket">Buy Ticket</string>
-    <string name="purchase_details">Details</string>
-    <string name="continue_to_payment">Continue to payment</string>
-    <string name="order_summary">Order summary</string>
-
 
     <string name="retry">Retry</string>
     <string name="updating_event">Updating event …</string>
