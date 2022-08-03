@@ -2,6 +2,7 @@ package de.tum.`in`.tumcampusapp.component.ui.eduroam
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiEnterpriseConfig.Eap.PEAP
 import android.net.wifi.WifiEnterpriseConfig.Eap.TTLS
@@ -32,8 +33,8 @@ class EduroamFixCard(
     private val errors: MutableList<String> = ArrayList()
     private lateinit var eduroam: WifiConfiguration
 
-    private val radiusDNS: String = ConfigUtils.getConfig(ConfigConst.EDUROAM_RADIUS_SERVER, "")
-    private val domains: List<String> = ConfigUtils.getConfig(ConfigConst.EDUROAM_DOMAINS, listOf())
+    private val radiusDNS: String = ConfigUtils.getConfig(ConfigConst.EDUROAM_RADIUS_DOMAIN, "")
+    private val idDomains: List<String> = ConfigUtils.getConfig(ConfigConst.EDUROAM_ID_DOMAINS, listOf())
     private val anonymousIdentities: List<String> = ConfigUtils.getConfig(ConfigConst.EDUROAM_ANONYMOUS_IDENTITIES, listOf())
 
     private fun isConfigValid(): Boolean {
@@ -42,7 +43,7 @@ class EduroamFixCard(
         eduroam = EduroamController.getEduroamConfig(context) ?: return true
 
         // No eduroam domains are available to check
-        if (domains.isEmpty()) {
+        if (idDomains.isEmpty()) {
             Utils.log("No eduroam domains are set")
             return true
         }
@@ -121,7 +122,7 @@ class EduroamFixCard(
     }
 
     private fun isCampusEduroam(identity: String): Boolean {
-        return domains.any {identity.endsWith(it)}
+        return idDomains.any {identity.endsWith(it)}
     }
 
     private fun isValidSubjectMatchAPI18(eduroam: WifiConfiguration): Boolean {

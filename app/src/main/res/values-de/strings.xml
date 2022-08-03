@@ -417,11 +417,12 @@ Signatur: %5$s</string>
     <string name="transport">Verkehrsmittel</string>
     <string name="transport_action_usage">Hilfestellung</string>
     <string name="transport_help_text">Tippe deine favorisierten Verkehrslinien an um sie hervorzuheben. Tippe erneut und sie sind wieder normal.</string>
-    <string name="mvv_widget_no_station">Keine Station ausgewählt</string>
-    <string name="mvv_widget_select_station">Station auswählen</string>
-    <string name="mvv_widget_no_data">Offline oder keine Daten verfügbar</string>
-    <string name="mvv_widget_auto_reload">Automatisch aktualisieren</string>
-    <string name="mvv_widget_auto_reload_hint">Erhöht Strom und Datenverbrauch</string>
+    <string name="transportation_widget">Verkehrsmittel Widget Campus</string>
+    <string name="transportation_widget_no_station">Keine Station ausgewählt</string>
+    <string name="transportation_widget_select_station">Station auswählen</string>
+    <string name="transportation_widget_no_data">Offline oder keine Daten verfügbar</string>
+    <string name="transportation_widget_auto_reload">Automatisch aktualisieren</string>
+    <string name="transportation_widget_auto_reload_hint">Erhöht Strom und Datenverbrauch</string>
     <string name="timetable_widget">Stundenplan Widget Campus</string>
     <string name="timetable_widget_select_lectures">Vorlesungen auswählen</string>
     <string name="timetable_widget_no_lectures">Keine Vorlesungen geplant :)</string>

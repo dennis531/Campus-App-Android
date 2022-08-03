@@ -151,12 +151,10 @@ object Config {
 
     // Eduroam options
     // Allows to check if the user's eduroam wifi setting is set for this campus. If settings are set for this campus, several checks are performed.
-    val EDUROAM_DOMAINS = listOf<String>("uos.de", "uni-osnabrueck.de")
-
-    // Allows to check if the correct authentication server is set in the wifi settings
-    val EDUROAM_RADIUS_SERVER = "radius.uni-osnabrueck.de"
-
-    // Allows to check if the anonymous identity is correct
+    val EDUROAM_ID_DOMAINS = listOf<String>("uos.de", "uni-osnabrueck.de")
+    // Allows to check if the correct authentication server is set in the wifi settings. It is used for the set up (required; default: "").
+    val EDUROAM_RADIUS_DOMAIN = "uni-osnabrueck.de"
+    // Allows to check if the anonymous identity is correct; The first will be used for set up (required; default if not set or list empty: "").
     val EDUROAM_ANONYMOUS_IDENTITIES = listOf<String>("eduroam@uos.de", "eduroam@uni-osnabrueck.de", "anonymous@uni-osnabrueck.de")
 
     // Geofencing options

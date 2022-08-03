@@ -13,11 +13,20 @@ import android.net.wifi.WifiNetworkSuggestion;
 import android.os.Build;
 import android.os.Bundle;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import de.tum.in.tumcampusapp.R;
+import de.tum.in.tumcampusapp.utils.ConfigConst;
+import de.tum.in.tumcampusapp.utils.ConfigUtils;
 import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.Utils;
 
@@ -40,6 +49,7 @@ public class EduroamController {
      *
      * @return true if eduroam is already setup, false otherwise
      */
+    @Nullable
     public static WifiConfiguration getEduroamConfig(Context c) {
         WifiManager wifiManager = (WifiManager) c.getApplicationContext()
                                                  .getSystemService(Context.WIFI_SERVICE);
@@ -167,16 +177,35 @@ public class EduroamController {
      */
     @RequiresApi(api = Build.VERSION_CODES.Q)
     private WifiNetworkSuggestion getEduroamSuggestion(String identity, String networkPass) {
+        String radiusDomain = ConfigUtils.getConfig(ConfigConst.EDUROAM_RADIUS_DOMAIN, "");
+
+        List<String> anonymousIds = ConfigUtils.getConfig(ConfigConst.EDUROAM_ANONYMOUS_IDENTITIES, Collections.emptyList());
+        String anonymousId = !anonymousIds.isEmpty() ? anonymousIds.get(0) : "";
+
         WifiEnterpriseConfig enterpriseConfig = new WifiEnterpriseConfig();
-        enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.PWD);
+        enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.TTLS);
         enterpriseConfig.setIdentity(identity);
         enterpriseConfig.setPassword(networkPass);
+        enterpriseConfig.setDomainSuffixMatch(radiusDomain);
+        enterpriseConfig.setPhase2Method(WifiEnterpriseConfig.Phase2.MSCHAPV2);
+        enterpriseConfig.setAnonymousIdentity(anonymousId);
+        enterpriseConfig.setCaCertificate(getEduroamCertificate());
 
         WifiNetworkSuggestion.Builder builder = new WifiNetworkSuggestion.Builder();
         return builder
                 .setSsid(Const.EDUROAM_SSID)
                 .setWpa2EnterpriseConfig(enterpriseConfig)
                 .build();
+    }
+
+    @Nullable
+    private X509Certificate getEduroamCertificate() {
+        try (InputStream inStream = mContext.getResources().openRawResource(R.raw.rootcert)) {
+            CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+            return (X509Certificate) certificateFactory.generateCertificate(inStream);
+        } catch (IOException | CertificateException e) {
+            return null;
+        }
     }
 
     /**
