@@ -130,6 +130,7 @@ object Config {
     val OAUTH_SIGNATURE_METHOD = OAuthSignatureMethod.OAUTH_PLAINTEXT
 
     // Components
+    // API and Authentication requirements can be configured in Component enum class
     // By default components are disabled
     val PERSON_ENABLED = true
     val CALENDAR_ENABLED = true
@@ -167,7 +168,7 @@ object Config {
 
     // Tuition fees options
     // if true and tuition api is provided, the tuition will be loaded from the selected api
-    val TUITIONFEES_FROM_API = false
+    val TUITIONFEES_FROM_API = false // Default: false
     val TUITIONFEES_TUITION = Tuition(
         start = DateTimeUtils.getDate("2022-07-01"),
         deadline = DateTimeUtils.getDate("2022-07-31"),

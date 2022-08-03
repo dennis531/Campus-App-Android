@@ -37,7 +37,6 @@ class DrawerMenuHelper(
     private val allItems = mutableListOf<NavItem>()
 
     fun populateMenu() {
-        val hasLMSAccess = ConfigUtils.getAuthManager(activity).hasAccess()
         val isChatEnabled = Utils.getSettingBool(activity, Const.GROUP_CHAT_ENABLED, false)
         val isEmployeeMode = Utils.getSettingBool(activity, Const.EMPLOYEE_MODE, false)
 
@@ -50,7 +49,6 @@ class DrawerMenuHelper(
         val myCampusMenu = navigationMenu.addSubMenu(R.string.my_campus)
         val myCampusCandidates = MY_CAMPUS
             .filterNot { !isComponentEnabled(it.component) }
-            .filterNot { it.needsLMSAccess && !hasLMSAccess }
             .filterNot { !isChatEnabled && it.needsChatAccess }
             .filterNot { isEmployeeMode && it.hideForEmployees }
 
@@ -62,7 +60,6 @@ class DrawerMenuHelper(
         val generalMenu = navigationMenu.addSubMenu(R.string.common_info)
         val generalCandidates = GENERAL
             .filterNot { !isComponentEnabled(it.component) }
-            .filterNot { it.needsLMSAccess && !hasLMSAccess }
         for (candidate in generalCandidates) {
             generalMenu += candidate
             allItems += candidate
@@ -124,19 +121,19 @@ class DrawerMenuHelper(
         private val HOME = NavItem.FragmentDestination(R.string.home, R.drawable.ic_outline_home_24px, MainFragment::class.java, Component.OVERVIEW)
 
         private val MY_CAMPUS: Array<NavItem> = arrayOf(
-                NavItem.FragmentDestination(R.string.calendar, R.drawable.ic_outline_event_24px, CalendarFragment::class.java, Component.CALENDAR, true),
-                NavItem.FragmentDestination(R.string.my_lectures, R.drawable.ic_outline_school_24px, LecturesFragment::class.java, Component.LECTURES,true, hideForEmployees = true),
-                NavItem.FragmentDestination(R.string.chat_rooms, R.drawable.ic_outline_chat_bubble_outline_24px, ChatRoomsFragment::class.java, Component.CHAT, true, true),
-                NavItem.FragmentDestination(R.string.my_grades, R.drawable.ic_outline_insert_chart_outlined_24px, GradesFragment::class.java, Component.GRADES, true, hideForEmployees = true),
+                NavItem.FragmentDestination(R.string.calendar, R.drawable.ic_outline_event_24px, CalendarFragment::class.java, Component.CALENDAR),
+                NavItem.FragmentDestination(R.string.my_lectures, R.drawable.ic_outline_school_24px, LecturesFragment::class.java, Component.LECTURES, hideForEmployees = true),
+                NavItem.FragmentDestination(R.string.chat_rooms, R.drawable.ic_outline_chat_bubble_outline_24px, ChatRoomsFragment::class.java, Component.CHAT, true),
+                NavItem.FragmentDestination(R.string.my_grades, R.drawable.ic_outline_insert_chart_outlined_24px, GradesFragment::class.java, Component.GRADES, hideForEmployees = true),
                 NavItem.FragmentDestination(R.string.tuition_fees, R.drawable.ic_money, TuitionFeesFragment::class.java, Component.TUITIONFEES, hideForEmployees = true)
         )
 
         private val GENERAL: Array<NavItem> = arrayOf(
                 NavItem.FragmentDestination(R.string.menues, R.drawable.ic_cutlery, CafeteriaFragment::class.java, Component.CAFETERIA),
                 NavItem.FragmentDestination(R.string.study_rooms, R.drawable.ic_outline_group_work_24px, StudyRoomsFragment::class.java, Component.STUDYROOM),
-                NavItem.FragmentDestination(R.string.roomfinder, R.drawable.ic_outline_location_on_24px, RoomFinderFragment::class.java, Component.ROOMFINDER, true),
-                NavItem.FragmentDestination(R.string.person_search, R.drawable.ic_outline_people_outline_24px, PersonSearchFragment::class.java, Component.PERSON, true),
-                NavItem.FragmentDestination(R.string.news, R.drawable.ic_rss, NewsFragment::class.java, Component.NEWS, true),
+                NavItem.FragmentDestination(R.string.roomfinder, R.drawable.ic_outline_location_on_24px, RoomFinderFragment::class.java, Component.ROOMFINDER),
+                NavItem.FragmentDestination(R.string.person_search, R.drawable.ic_outline_people_outline_24px, PersonSearchFragment::class.java, Component.PERSON),
+                NavItem.FragmentDestination(R.string.news, R.drawable.ic_rss, NewsFragment::class.java, Component.NEWS),
                 // NavItem.FragmentDestination(R.string.barrier_free, R.drawable.ic_outline_accessible_24px, BarrierFreeInfoFragment::class.java),
                 NavItem.FragmentDestination(R.string.opening_hours, R.drawable.ic_outline_access_time_24px, OpeningHoursListFragment::class.java, Component.OPENINGHOUR),
                 NavItem.ActivityDestination(R.string.transport, R.drawable.ic_outline_train_24px, TransportationActivity::class.java, Component.TRANSPORTATION)

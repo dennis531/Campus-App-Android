@@ -31,7 +31,7 @@ abstract class AbstractTuition {
     /**
      * If true the user can manually mark the tuition fee as paid
      */
-    open fun canMarkedAsPaid(context: Context): Boolean = !ConfigUtils.shouldTuitionLoadedFromApi(context)
+    open fun canMarkedAsPaid(context: Context): Boolean = !ConfigUtils.shouldTuitionLoadedFromApi()
 
     open fun getAmountText(context: Context): String {
         // Set zero amount if tuition fee is marked as paid by the user

@@ -70,13 +70,27 @@ object ConfigUtils {
             return false
         }
 
-        // Components needing LMS API
-        if (component.requiresLMS) {
-            return getLMSClient(context).hasAPI(component)
+        // Components without LMS API dependency
+        if (!component.requiresLMS) {
+            return true
         }
 
-        // Components without LMS dependency
-        return true
+        // Check if component needs LMS access and access is granted
+        if (needsComponentLMSAccess(component) && !getAuthManager(context).hasAccess()) {
+            return false
+        }
+
+        // Components needing LMS API
+        return getLMSClient(context).hasAPI(component)
+    }
+
+    @JvmStatic
+    private fun needsComponentLMSAccess(component: Component?): Boolean {
+        if (component == null) {
+            return false
+        }
+
+        return component.needsLMSAccess
     }
 
     @JvmStatic
@@ -109,13 +123,8 @@ object ConfigUtils {
      * Checks if the tuition fees should be loaded from the api
      */
     @JvmStatic
-    fun shouldTuitionLoadedFromApi(context: Context): Boolean {
+    fun shouldTuitionLoadedFromApi(): Boolean {
         if (!getConfig(ConfigConst.TUITIONFEES_FROM_API, false)) {
-            return false
-        }
-
-        // check if tuition api is provided
-        if (!getLMSClient(context).hasAPI(Component.TUITIONFEES)) {
             return false
         }
 

@@ -35,7 +35,7 @@ class TuitionFeeManager(private val context: Context) : ProvidesCard, ProvidesNo
     fun loadTuition(cacheControl: CacheControl): AbstractTuition? {
         try {
             // Indicates if tuition is loaded from api
-            val tuition = if (ConfigUtils.shouldTuitionLoadedFromApi(context)) {
+            val tuition = if (ConfigUtils.shouldTuitionLoadedFromApi()) {
                 (ConfigUtils.getLMSClient(context) as TuitionFeesAPI).getTuitionFeesStatus()
             } else {
                 ConfigUtils.getConfig(ConfigConst.TUITIONFEES_TUITION, null)
