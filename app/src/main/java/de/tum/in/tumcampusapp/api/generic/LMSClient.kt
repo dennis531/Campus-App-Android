@@ -6,8 +6,9 @@ import de.tum.`in`.tumcampusapp.component.tumui.lectures.api.LecturesAPI
 import de.tum.`in`.tumcampusapp.component.tumui.person.api.PersonAPI
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.api.RoomFinderAPI
 import de.tum.`in`.tumcampusapp.component.ui.chat.api.ChatAPI
+import de.tum.`in`.tumcampusapp.component.ui.messages.api.MessagesAPI
 import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
-import de.tum.`in`.tumcampusapp.component.ui.openinghours.api.OpeningHoursApi
+import de.tum.`in`.tumcampusapp.component.ui.openinghours.api.OpeningHoursAPI
 import de.tum.`in`.tumcampusapp.component.ui.studyroom.api.StudyRoomAPI
 import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Utils
@@ -35,8 +36,9 @@ abstract class LMSClient : BaseAPI {
             Component.CHAT to ChatAPI::class.java,
             Component.GRADES to GradesAPI::class.java,
             Component.LECTURES to LecturesAPI::class.java,
+            Component.MESSAGES to MessagesAPI::class.java,
             Component.NEWS to NewsAPI::class.java,
-            Component.OPENINGHOUR to OpeningHoursApi::class.java,
+            Component.OPENINGHOUR to OpeningHoursAPI::class.java,
             Component.PERSON to PersonAPI::class.java,
             Component.ROOMFINDER to RoomFinderAPI::class.java,
             Component.STUDYROOM to StudyRoomAPI::class.java,

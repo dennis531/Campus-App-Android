@@ -26,7 +26,6 @@ import de.tum.`in`.tumcampusapp.databinding.FragmentPersonDetailsBinding
 import de.tum.`in`.tumcampusapp.di.injector
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.ContactsHelper
-import io.reactivex.Single
 import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 

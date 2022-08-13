@@ -24,6 +24,7 @@ object CardManager {
     const val CARD_RESTORE = R.layout.card_restore
     const val CARD_NO_INTERNET = R.layout.card_no_internet
     const val CARD_TRANSPORTATION = R.layout.card_transportation
+    const val CARD_MESSAGES = R.layout.card_messages
     const val CARD_NEWS = R.layout.card_news_item
     const val CARD_EDUROAM = R.layout.card_eduroam
     const val CARD_CHAT = R.layout.card_chat_messages

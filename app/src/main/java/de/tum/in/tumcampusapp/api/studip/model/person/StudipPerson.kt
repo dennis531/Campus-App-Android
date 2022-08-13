@@ -12,7 +12,7 @@ import java.io.Serializable
 @Type("users")
 class StudipPerson : PersonInterface {
     @Id
-    override val id: String = ""
+    override var id: String = ""
     @JsonProperty("given-name")
     override var firstName: String = ""
     @JsonProperty("family-name")

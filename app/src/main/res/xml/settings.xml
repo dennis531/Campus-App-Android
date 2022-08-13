@@ -153,6 +153,29 @@
 
         </androidx.preference.PreferenceScreen>
 
+        <!-- Messages card -->
+        <androidx.preference.PreferenceScreen
+            android:icon="@drawable/ic_outline_mail_outline_24px"
+            android:key="card_messages"
+            android:summary="@string/card_messages_summary"
+            android:title="@string/messages">
+
+            <androidx.preference.PreferenceCategory android:title="@string/display">
+
+                <androidx.preference.CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="card_messages_start"
+                    android:title="@string/startpage" />
+
+                <androidx.preference.CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="card_messages_phone"
+                    android:title="@string/notification" />
+
+            </androidx.preference.PreferenceCategory>
+
+        </androidx.preference.PreferenceScreen>
+
         <!-- News card -->
         <androidx.preference.PreferenceScreen
             android:icon="@drawable/ic_rss"

@@ -80,7 +80,7 @@ class ChatNotificationProvider(
 
         val notificationId = (chatRoom.id.hashCode() shl 4) + NOTIFICATION_ID
 
-        return InstantNotification(NotificationType.GRADES, notificationId, notification)
+        return InstantNotification(NotificationType.CHAT, notificationId, notification)
     }
 
     companion object {

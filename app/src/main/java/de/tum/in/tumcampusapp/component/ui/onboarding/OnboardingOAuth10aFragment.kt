@@ -196,8 +196,7 @@ class OnboardingOAuth10aFragment : BaseFragment<String>(
         Utils.setSetting(requireContext(), Const.PROFILE_ID, person.id)
         Utils.setSetting(requireContext(), Const.PROFILE_PICTURE_URL, person.imageUrl)
         Utils.setSetting(requireContext(), Const.PROFILE_EMAIL, person.email)
-
-        Utils.setSetting(requireContext(), Const.CHAT_ROOM_DISPLAY_NAME, person.fullName)
+        Utils.setSetting(requireContext(), Const.PROFILE_DISPLAY_NAME, person.fullName)
 
         showLoadingEnded()
         openNextOnboardingStep()

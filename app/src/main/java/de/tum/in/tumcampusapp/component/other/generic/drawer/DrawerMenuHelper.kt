@@ -15,6 +15,7 @@ import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.RoomFinderFragment
 import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.TuitionFeesFragment
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.fragment.CafeteriaFragment
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomsFragment
+import de.tum.`in`.tumcampusapp.component.ui.messages.fragment.MessagesFragment
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsFragment
 import de.tum.`in`.tumcampusapp.component.ui.openinghours.OpeningHoursListFragment
 import de.tum.`in`.tumcampusapp.component.ui.overview.InformationActivity
@@ -124,6 +125,7 @@ class DrawerMenuHelper(
                 NavItem.FragmentDestination(R.string.calendar, R.drawable.ic_outline_event_24px, CalendarFragment::class.java, Component.CALENDAR),
                 NavItem.FragmentDestination(R.string.my_lectures, R.drawable.ic_outline_school_24px, LecturesFragment::class.java, Component.LECTURES, hideForEmployees = true),
                 NavItem.FragmentDestination(R.string.chat_rooms, R.drawable.ic_outline_chat_bubble_outline_24px, ChatRoomsFragment::class.java, Component.CHAT, true),
+                NavItem.FragmentDestination(R.string.messages, R.drawable.ic_outline_mail_outline_24px, MessagesFragment::class.java, Component.MESSAGES),
                 NavItem.FragmentDestination(R.string.my_grades, R.drawable.ic_outline_insert_chart_outlined_24px, GradesFragment::class.java, Component.GRADES, hideForEmployees = true),
                 NavItem.FragmentDestination(R.string.tuition_fees, R.drawable.ic_money, TuitionFeesFragment::class.java, Component.TUITIONFEES, hideForEmployees = true)
         )

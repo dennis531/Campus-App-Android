@@ -8,13 +8,10 @@ import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.OnboardingActivity
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
-import java.util.Locale
-import javax.inject.Inject
 
 class DrawerHeaderInflater(
     private val context: Context
@@ -30,7 +27,7 @@ class DrawerHeaderInflater(
         val isLoggedIn = ConfigUtils.getAuthManager(context).hasAccess()
 
         if (isLoggedIn) {
-            val name = Utils.getSetting(context, Const.CHAT_ROOM_DISPLAY_NAME, "")
+            val name = Utils.getSetting(context, Const.PROFILE_DISPLAY_NAME, "")
             if (name.isNotEmpty()) {
                 nameTextView.text = name
             } else {

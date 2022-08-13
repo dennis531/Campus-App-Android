@@ -12,6 +12,7 @@ import de.tum.`in`.tumcampusapp.component.ui.cafeteria.controller.CafeteriaManag
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomController
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.EduroamCard
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.EduroamFixCard
+import de.tum.`in`.tumcampusapp.component.ui.messages.MessagesController
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsController
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.LoginPromptCard
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
@@ -70,10 +71,9 @@ class CardsRepository @Inject constructor(
         }
 
         val providers = ArrayList<ProvidesCard>().apply {
-            if (authManager.hasAccess()) {
-                addIfEnabled(Component.CALENDAR, CalendarController(context))
-                addIfEnabled(Component.CHAT, ChatRoomController(context))
-            }
+            addIfEnabled(Component.CALENDAR, CalendarController(context))
+            addIfEnabled(Component.MESSAGES, MessagesController(context))
+            addIfEnabled(Component.CHAT, ChatRoomController(context))
             addIfEnabled(Component.TUITIONFEES, TuitionFeeManager(context))
             addIfEnabled(Component.CAFETERIA, CafeteriaManager(context))
             addIfEnabled(Component.TRANSPORTATION, TransportController(context))
@@ -98,8 +98,9 @@ class CardsRepository @Inject constructor(
     }
 
     private fun ArrayList<ProvidesCard>.addIfEnabled(component: Component, provider: ProvidesCard) {
-        if (ConfigUtils.isComponentEnabled(context, component)) {
-            add(provider)
+        if (!ConfigUtils.isComponentEnabled(context, component)) {
+            return
         }
+        add(provider)
     }
 }

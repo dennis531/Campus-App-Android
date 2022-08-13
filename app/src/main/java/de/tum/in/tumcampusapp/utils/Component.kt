@@ -26,7 +26,8 @@ enum class Component(val titleResId: Int, val requiresLMS: Boolean = false, val 
     OPENINGHOUR(R.string.opening_hours, true, false),
     OVERVIEW(R.string.home),
     TRANSPORTATION(R.string.transport),
-    STUDYROOM(R.string.study_rooms, true);
+    STUDYROOM(R.string.study_rooms, true),
+    MESSAGES(R.string.messages, true, true);
 
     fun getTitle(context: Context): String {
         return context.getString(titleResId)

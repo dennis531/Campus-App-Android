@@ -19,6 +19,7 @@ import de.tum.`in`.tumcampusapp.api.studip.model.chat.StudipBlubberThread
 import de.tum.`in`.tumcampusapp.api.studip.model.grades.StudipExam
 import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLecture
 import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLectureAppointment
+import de.tum.`in`.tumcampusapp.api.studip.model.messages.StudipMessage
 import de.tum.`in`.tumcampusapp.api.studip.model.news.StudipNews
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipInstitute
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipPerson
@@ -43,9 +44,13 @@ import de.tum.`in`.tumcampusapp.component.ui.chat.api.ChatAPI
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMember
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMessage
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoom
+import de.tum.`in`.tumcampusapp.component.ui.messages.api.MessagesAPI
+import de.tum.`in`.tumcampusapp.component.ui.messages.model.AbstractMessage
+import de.tum.`in`.tumcampusapp.component.ui.messages.model.MessageMember
+import de.tum.`in`.tumcampusapp.component.ui.messages.model.MessageType
 import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
 import de.tum.`in`.tumcampusapp.component.ui.news.model.AbstractNews
-import de.tum.`in`.tumcampusapp.component.ui.openinghours.api.OpeningHoursApi
+import de.tum.`in`.tumcampusapp.component.ui.openinghours.api.OpeningHoursAPI
 import de.tum.`in`.tumcampusapp.component.ui.openinghours.model.Location
 import de.tum.`in`.tumcampusapp.component.ui.studyroom.api.StudyRoomAPI
 import de.tum.`in`.tumcampusapp.component.ui.studyroom.model.StudyRoom
@@ -57,7 +62,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.net.URL
 
-@Suppress("UNCHECKED_CAST")
 class StudipClient(private val apiService: StudipAPIService, context: Context, val converter: ResourceConverter) :
     LMSClient(),
     PersonAPI,
@@ -67,8 +71,9 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     GradesAPI,
     RoomFinderAPI,
     ChatAPI,
-    OpeningHoursApi,
-    StudyRoomAPI {
+    OpeningHoursAPI,
+    StudyRoomAPI,
+    MessagesAPI {
 
     private var userId = Utils.getSetting(context, Const.PROFILE_ID, "")
 
@@ -178,9 +183,9 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     override fun getCalendar(): List<AbstractEvent>? {
         if (userId.isEmpty()) throw UnauthorizedException()
 
-        val jsonResponse = apiService.getCalendar(userId).execute().body()!!.bytes()
+        val jsonResponseStream = apiService.getCalendar(userId).execute().body()!!.byteStream()
 
-        return converter.readDocumentCollection(jsonResponse, StudipBaseEvent::class.java).get()
+        return converter.readDocumentCollection(jsonResponseStream, StudipBaseEvent::class.java).get()
     }
 
     override fun createCalendarEvent(calendarItem: CalendarItem): String {
@@ -226,9 +231,9 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         // Not supported by the STUD.IP json api
     }
 
-    override fun getMessages(chatRoom: ChatRoom, latestMessage: ChatMessage?): List<ChatMessage> {
+    override fun getChatMessages(chatRoom: ChatRoom, latestMessage: ChatMessage?): List<ChatMessage> {
         if (latestMessage != null) {
-            val oldMessages =  apiService.getOlderMessages(chatRoom.id, latestMessage.timestamp.toString()).execute().body()!!.toMutableList()
+            val oldMessages =  apiService.getOlderChatMessages(chatRoom.id, latestMessage.timestamp.toString()).execute().body()!!.toMutableList()
 
             // Remove duplicate lastMessage from response
             if (oldMessages.isNotEmpty()) {
@@ -238,11 +243,11 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             return oldMessages
         }
 
-        return apiService.getMessages(chatRoom.id).execute().body()!!
+        return apiService.getChatMessages(chatRoom.id).execute().body()!!
     }
 
-    override fun sendMessage(chatRoom: ChatRoom, message: ChatMessage): ChatMessage {
-        return apiService.sendMessage(chatRoom.id, StudipBlubberComment(message)).execute().body()!!
+    override fun sendChatMessage(chatRoom: ChatRoom, message: ChatMessage): ChatMessage {
+        return apiService.sendChatMessage(chatRoom.id, StudipBlubberComment(message)).execute().body()!!
     }
 
     override fun searchChatMember(query: String): List<ChatMember>? {
@@ -354,6 +359,33 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return listOf(studyRoomGroup1, studyRoomGroup2)
     }
 
+    override fun getMessages(): List<AbstractMessage> {
+        val inboxMessages = apiService.getInboxMessages(userId).execute().body()!!
+            .onEach {
+                it.type = MessageType.INBOX
+            }
+
+        val outboxMessages = apiService.getOutboxMessages(userId).execute().body()!!
+            .onEach {
+                it.type = MessageType.SENT
+            }
+
+        return inboxMessages + outboxMessages
+    }
+
+    override fun sendMessage(message: AbstractMessage): AbstractMessage {
+        return apiService.sendMessage(StudipMessage(message)).execute().body()!!
+    }
+
+    override fun deleteMessage(message: AbstractMessage) {
+        apiService.deleteMessage(message.id).execute()
+    }
+
+    override fun searchRecipient(query: String): List<MessageMember> {
+        return apiService.searchPerson(query).execute().body()!!
+            .map { MessageMember(it.id, it.fullName) }
+    }
+
     companion object {
         private var client: StudipClient? = null
 
@@ -394,6 +426,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
                 StudipNews::class.java,
                 StudipBlubberThread::class.java,
                 StudipBlubberComment::class.java,
+                StudipMessage::class.java,
             )
 
             // Set up relationship resolver

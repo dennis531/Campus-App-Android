@@ -33,7 +33,6 @@ object Const {
     const val STUDY_ROOMS_HOSTNAME = "www.devapp.it.tum.de"
 
     const val CURRENT_CHAT_ROOM = "current_chat_room"
-    const val CHAT_ROOM_DISPLAY_NAME = "chat_room_display_name"
     const val CHAT_ROOM_NAME = "chat_room_name"
 
     const val PRIVATE_KEY = "chat_member_private_key"
@@ -78,6 +77,7 @@ object Const {
 
     const val NOTIFICATION_CHANNEL_DEFAULT = "general"
     const val NOTIFICATION_CHANNEL_CHAT = "chat"
+    const val NOTIFICATION_CHANNEL_MESSAGES = "messages"
     const val NOTIFICATION_CHANNEL_EDUROAM = "eduroam"
     const val NOTIFICATION_CHANNEL_CAFETERIA = "cafeteria"
     const val NOTIFICATION_CHANNEL_TRANSPORTATION = "transportation"
@@ -134,6 +134,8 @@ object Const {
     const val PDF_TITLE = "pdfTitle"
     const val PDF_PATH = "pdfPath"
 
+    const val MESSAGE_REPLY = "messageReply"
+
     const val NEWS_ALERT_IMAGE = "newsAlertImageURL"
     const val NEWS_ALERT_LINK = "newsAlertLink"
     const val NEWS_ALERT_SHOW_UNTIL = "newsAlertShowUntil"
@@ -147,6 +149,7 @@ object Const {
     const val PROFILE_PICTURE_URL = "profile_picture_url"
     const val PROFILE_EMAIL = "profile_email"
     const val PROFILE_ID = "profile_id"
+    const val PROFILE_DISPLAY_NAME = "profile_display_name"
 
     const val CALENDAR_FILTER_CANCELED = "calendar_filter_canceled"
     const val CALENDAR_FILTER_HOUR_LIMIT_MIN = "calendar_filter_hour_limit_min"

@@ -110,6 +110,36 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".component.ui.messages.activity.MessagesActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/messages"
+            android:launchMode="singleTop"
+            android:parentActivityName=".component.ui.overview.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".component.ui.overview.MainActivity" />
+        </activity>
+        <activity
+            android:name=".component.ui.messages.activity.MessagesDetailsActivity"
+            android:configChanges="orientation|screenSize"
+            android:label=""
+            android:parentActivityName=".component.ui.messages.activity.MessagesActivity"
+            android:theme="@style/AppTheme.NoDrawerLayout">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".component.ui.messages.activity.MessagesActivity" />
+        </activity>
+        <activity
+            android:name=".component.ui.messages.activity.CreateMessageActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/new_message"
+            android:parentActivityName=".component.ui.messages.activity.MessagesActivity"
+            android:theme="@style/AppTheme.NoDrawerLayout">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".component.ui.messages.activity.MessagesActivity" />
+        </activity>
+        <activity
             android:name=".component.ui.news.NewsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/news"

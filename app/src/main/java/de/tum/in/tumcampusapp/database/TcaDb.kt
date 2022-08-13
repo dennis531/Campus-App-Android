@@ -33,6 +33,8 @@ import de.tum.`in`.tumcampusapp.component.ui.chat.ChatMessageDao
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomDao
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMessage
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoomDbRow
+import de.tum.`in`.tumcampusapp.component.ui.messages.MessageDao
+import de.tum.`in`.tumcampusapp.component.ui.messages.model.MessageItem
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsDao
 import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsItem
 import de.tum.`in`.tumcampusapp.component.ui.openinghours.LocationDao
@@ -60,6 +62,7 @@ import java.util.concurrent.ExecutionException
     ChatMessage::class,
     Location::class,
     NewsItem::class,
+    MessageItem::class,
     CalendarItem::class,
     EventSeriesMapping::class,
     RoomLocations::class,
@@ -92,6 +95,8 @@ abstract class TcaDb : RoomDatabase() {
     abstract fun chatMessageDao(): ChatMessageDao
 
     abstract fun newsDao(): NewsDao
+
+    abstract fun messageDao(): MessageDao
 
     abstract fun calendarDao(): CalendarDao
 

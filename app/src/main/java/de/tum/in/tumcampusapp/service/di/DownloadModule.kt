@@ -11,6 +11,8 @@ import de.tum.`in`.tumcampusapp.component.tumui.grades.GradesDownloadAction
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.CafeteriaDownloadAction
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.controller.CafeteriaMenuManager
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository.CafeteriaRemoteRepository
+import de.tum.`in`.tumcampusapp.component.ui.messages.MessagesController
+import de.tum.`in`.tumcampusapp.component.ui.messages.MessagesDownloadAction
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsController
 import de.tum.`in`.tumcampusapp.component.ui.news.NewsDownloadAction
 import de.tum.`in`.tumcampusapp.component.ui.openinghours.LocationImportAction
@@ -69,17 +71,26 @@ object DownloadModule {
 
     @JvmStatic
     @Provides
+    fun provideMessagesDownloadAction(
+        context: Context,
+        messagesController: MessagesController
+    ): MessagesDownloadAction = MessagesDownloadAction(context, messagesController)
+
+    @JvmStatic
+    @Provides
     fun provideWorkerActions(
         cafeteriaDownloadAction: CafeteriaDownloadAction,
         locationImportAction: LocationImportAction,
         gradesDownloadAction: GradesDownloadAction,
         newsDownloadAction: NewsDownloadAction,
+        messagesDownloadAction: MessagesDownloadAction,
         // updateNoteDownloadAction: UpdateNoteDownloadAction
     ): DownloadWorker.WorkerActions = DownloadWorker.WorkerActions(
             cafeteriaDownloadAction,
             locationImportAction,
             gradesDownloadAction,
             newsDownloadAction,
+            messagesDownloadAction,
             // updateNoteDownloadAction
     )
 }

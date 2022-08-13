@@ -119,6 +119,27 @@
     <string name="no_link_existing">Kein Link gefunden.</string>
     <string name="info_title">Neuigkeiten:</string>
 
+    <!-- Messages -->
+    <string name="messages">Nachrichten</string>
+    <string name="inbox">Eingang</string>
+    <string name="outbox">Ausgang</string>
+    <string name="sent">Gesendet</string>
+    <string name="deleted">Gelöscht</string>
+    <string name="delete_message">Nachricht löschen</string>
+    <string name="delete_message_body">Bist du sicher, dass du die Nachricht löschen willst?</string>
+    <string name="sender_format_string">Von: %s</string>
+    <string name="recipients_format_string">An: %s</string>
+    <string name="new_messages_format_string">%d neue Nachrichten</string>
+    <string name="new_message">Neue Nachricht</string>
+    <string name="message_sending">Nachricht wird gesendet…</string>
+    <string name="recipients">Adressaten</string>
+    <string name="subject">Betreff</string>
+    <string name="message">Nachricht</string>
+    <string name="error_recipient_selected">Adressat bereits ausgewählt</string>
+    <string name="error_recipient_missing">Adressat ist nicht vorhanden</string>
+    <string name="error_subject_missing">Betreff ist nicht vorhanden</string>
+    <string name="error_message_missing">Nachricht ist nicht vorhanden</string>
+
     <!-- Kino -->
     <string name="imdb_rating">IMDb-Wertung</string>
     <string name="year">Erscheinungsjahr</string>
@@ -284,6 +305,7 @@
     <string name="card_transportation_summary">Zeigt die Abfahrtszeiten der öffentlich Verkehrmittel an</string>
     <string name="card_next_lecture_summary">Zeigt Informationen zur nächsten Vorlesung an</string>
     <string name="card_tuition_fee_summary">Erinnert dich, wenn du die Studiengebühren zahlen musst</string>
+    <string name="card_messages_summary">Zeigt deine letzten Nachrichten an</string>
     <string name="card_news_summary">Schlägt ausgewählte News vor</string>
     <string name="card_chat_summary">Benachrichtigt dich über neue Nachrichten</string>
     <string name="open_card_settings">Karte anpassen</string>
@@ -571,6 +593,8 @@ Signatur: %5$s</string>
     <string name="channel_description_mvv">Abfahrten an nahegelegenen Haltestellen</string>
     <string name="channel_description_tum_alarmierung">Alarmierung bei Notfällen an dem Campus</string>
     <string name="channel_description_eduroam">Untersützung beim Einrichten von eduroam</string>
+    <string name="channel_messages">Nachrichten</string>
+    <string name="channel_description_messages">Neue Nachrichten</string>
 
     <string name="updating_event">Aktualisiere Event …</string>
     <string name="error_api_unavailable">System ist aktuell nicht verfügbar.</string>
@@ -609,7 +633,7 @@ Signatur: %5$s</string>
     <string name="logout_title">Verbindung zur Lernplattform löschen</string>
     <string name="logout_error_title">Logout ist fehlgeschlagen</string>
     <string name="logout_try_again">Erneut versuchen?</string>
-    <string name="chat_message_send_error">Nachricht konnte nicht gesendet werden</string>
+    <string name="message_send_error">Nachricht konnte nicht gesendet werden</string>
     <string name="chat_message_try_again">Die Nachricht konnte nicht gesendet werden. Erneut versuchen?</string>
     <string name="leave">Verlassen</string>
     <string name="today">Heute</string>

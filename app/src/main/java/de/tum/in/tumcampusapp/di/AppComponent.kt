@@ -9,6 +9,7 @@ import de.tum.`in`.tumcampusapp.component.tumui.lectures.di.LecturesComponent
 import de.tum.`in`.tumcampusapp.component.tumui.person.di.PersonComponent
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.di.RoomFinderComponent
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.di.CafeteriaComponent
+import de.tum.`in`.tumcampusapp.component.ui.messages.di.MessagesComponent
 import de.tum.`in`.tumcampusapp.component.ui.news.di.NewsComponent
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.di.OnboardingComponent
 import de.tum.`in`.tumcampusapp.component.ui.overview.MainActivity
@@ -24,6 +25,7 @@ interface AppComponent {
     fun downloadComponent(): DownloadComponent
     fun feedbackComponent(): FeedbackComponent.Builder
     fun lecturesComponent(): LecturesComponent
+    fun messagesComponent(): MessagesComponent
     fun newsComponent(): NewsComponent
     fun onboardingComponent(): OnboardingComponent.Factory
     fun personComponent(): PersonComponent

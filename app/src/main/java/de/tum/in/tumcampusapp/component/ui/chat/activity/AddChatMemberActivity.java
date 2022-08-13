@@ -112,27 +112,6 @@ public class AddChatMemberActivity extends BaseActivity {
                     return;
                 }
 
-                // backend call, add to adapter
-                //                if (tumIdPattern.matcher(charSequence)
-                //                                .matches()) {
-                //                    // query matches TUM-ID
-                //                    apiClient.getChatMemberByLrzId(charSequence.toString(), new Callback<ChatMember>() {
-                //                        @Override
-                //                        public void onResponse(Call<ChatMember> call, Response<ChatMember> response) {
-                //                            searchView.setError(null);
-                //                            suggestions = new ArrayList<>();
-                //                            suggestions.add(response.body());
-                //                            ((MemberSuggestionsListAdapter) searchView.getAdapter()).updateSuggestions(suggestions);
-                //                        }
-                //
-                //                        @Override
-                //                        public void onFailure(Call<ChatMember> call, Throwable t) {
-                //                            onError();
-                //                        }
-                //                    });
-                //                    return;
-                //                }
-
                 boolean containsDigit = false;
                 for (int i = 0; i < charSequence.length(); i++) {
                     if (Character.isDigit(charSequence.charAt(i))) {

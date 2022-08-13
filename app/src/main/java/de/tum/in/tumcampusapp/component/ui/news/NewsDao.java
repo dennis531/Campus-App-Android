@@ -28,7 +28,7 @@ public interface NewsDao {
     List<NewsItem> getNewer();
 
     @Nullable
-    @Query("SELECT * FROM news ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM news ORDER BY date DESC LIMIT 1")
     NewsItem getLast();
 
     @Query("UPDATE news SET dismissed=:d WHERE id=:id")

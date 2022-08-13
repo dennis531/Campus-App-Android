@@ -7,8 +7,8 @@ import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoom
 interface ChatAPI {
     // Basic functions
     fun getChatRooms(): List<ChatRoom>
-    fun getMessages(chatRoom: ChatRoom, latestMessage: ChatMessage?): List<ChatMessage> // get newest messages if latestMessage is null, otherwise messages older than the latest message
-    fun sendMessage(chatRoom: ChatRoom, message: ChatMessage): ChatMessage
+    fun getChatMessages(chatRoom: ChatRoom, latestMessage: ChatMessage?): List<ChatMessage> // get newest messages if latestMessage is null, otherwise messages older than the latest message
+    fun sendChatMessage(chatRoom: ChatRoom, message: ChatMessage): ChatMessage
 
     // CHAT_ROOM_CREATEABLE
     fun createChatRoom(chatRoom: ChatRoom): ChatRoom? // The current user should be joined to the created chatroom

@@ -24,11 +24,15 @@ class CheckErrorInterceptor(private val context: Context) : Interceptor {
         val response = chain.proceed(request)
 
         when (response.code) {
-            401 -> throw UnauthorizedException().also { Utils.setSetting(context, Const.TUMO_DISABLED, true) }
+            401 -> throw UnauthorizedException()
             403 -> throw ForbiddenException()
             404 -> throw NotFoundException()
             409 -> throw UnknownErrorException()
             500 -> throw UnknownErrorException()
+        }
+
+        if (!response.isSuccessful) {
+            throw UnknownErrorException()
         }
 
         // Because the request did not return an Error, we can re-enable LMS request

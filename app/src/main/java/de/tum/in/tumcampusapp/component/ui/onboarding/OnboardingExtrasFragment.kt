@@ -132,7 +132,7 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
         val userId = Utils.getSetting(requireContext(), Const.PROFILE_ID, "")
         val username = Utils.getSetting(requireContext(), Const.USERNAME, "")
         val name = Utils.getSetting(requireContext(),
-            Const.CHAT_ROOM_DISPLAY_NAME, getString(R.string.not_connected_to_lms))
+            Const.PROFILE_DISPLAY_NAME, getString(R.string.not_connected_to_lms))
 
         val currentChatMember = ChatMember(userId, username, name)
 

@@ -19,6 +19,6 @@ abstract class AppNotification(
 ) {
 
     fun toScheduledNotification(): ScheduledNotification {
-        return ScheduledNotification(type.id.toLong(), id)
+        return ScheduledNotification(0, type.id, id)
     }
 }

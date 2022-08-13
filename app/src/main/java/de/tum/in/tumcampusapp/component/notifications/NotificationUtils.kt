@@ -4,9 +4,10 @@ import android.annotation.TargetApi
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.graphics.Color
 import android.os.Build
 import de.tum.`in`.tumcampusapp.R
+import de.tum.`in`.tumcampusapp.utils.Component
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Const
 import org.jetbrains.anko.notificationManager
 
@@ -40,6 +41,8 @@ object NotificationUtils {
             return
         }
 
+        ConfigUtils.isComponentEnabled(context, Component.CHAT)
+
         val default = createChannel(
                 context, Const.NOTIFICATION_CHANNEL_DEFAULT,
                 R.string.channel_general, R.string.channel_description_general,
@@ -50,6 +53,12 @@ object NotificationUtils {
                 context, Const.NOTIFICATION_CHANNEL_CHAT,
                 R.string.channel_chat, R.string.channel_description_chat,
                 NotificationManager.IMPORTANCE_DEFAULT
+        )
+
+        val messages = createChannel(
+            context, Const.NOTIFICATION_CHANNEL_MESSAGES,
+            R.string.channel_messages, R.string.channel_description_messages,
+            NotificationManager.IMPORTANCE_DEFAULT
         )
 
         val eduroam = createChannel(
@@ -71,7 +80,7 @@ object NotificationUtils {
         )
 
         val notificationManager = context.notificationManager
-        val channels = listOf(default, chat, eduroam, cafeteria, mvv)
+        val channels = listOfNotNull(default, chat, messages, eduroam, cafeteria, mvv)
 
         channels.forEach { notificationManager.createNotificationChannel(it) }
     }
@@ -82,8 +91,14 @@ object NotificationUtils {
         id: String,
         nameResId: Int,
         descriptionResId: Int,
-        importance: Int
-    ): NotificationChannel {
+        importance: Int,
+        component: Component? = null
+    ): NotificationChannel? {
+        // Check if component is enabled
+        if (component != null && !ConfigUtils.isComponentEnabled(context, Component.CHAT)) {
+            return null
+        }
+
         return NotificationChannel(id, context.getString(nameResId), importance).apply {
             description = context.getString(descriptionResId)
         }

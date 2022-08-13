@@ -2,32 +2,22 @@ package de.tum.`in`.tumcampusapp.service
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import androidx.core.app.TaskStackBuilder
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.work.*
-import com.google.gson.Gson
-import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.auth.exception.AuthException
 import de.tum.`in`.tumcampusapp.component.notifications.NotificationScheduler
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatMessageViewModel
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatNotificationProvider
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomController
-import de.tum.`in`.tumcampusapp.component.ui.chat.activity.ChatActivity
-import de.tum.`in`.tumcampusapp.component.ui.chat.activity.ChatRoomsActivity
 import de.tum.`in`.tumcampusapp.component.ui.chat.api.ChatAPI
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatMessage
 import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoom
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageLocalRepository
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageRemoteRepository
-import de.tum.`in`.tumcampusapp.component.ui.overview.MainActivity
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
-import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import java.util.concurrent.TimeUnit
 
-class MessagePollingWorker(context: Context, workerParams: WorkerParameters) :
+class ChatMessagePollingWorker(context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
 
     private val tcaDb by lazy { TcaDb.getInstance(applicationContext) }
@@ -77,7 +67,7 @@ class MessagePollingWorker(context: Context, workerParams: WorkerParameters) :
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
-            return OneTimeWorkRequestBuilder<MessagePollingWorker>()
+            return OneTimeWorkRequestBuilder<ChatMessagePollingWorker>()
                 .setConstraints(constraints)
                 .build()
         }
@@ -86,7 +76,7 @@ class MessagePollingWorker(context: Context, workerParams: WorkerParameters) :
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
-            return PeriodicWorkRequestBuilder<MessagePollingWorker>(30, TimeUnit.MINUTES)
+            return PeriodicWorkRequestBuilder<ChatMessagePollingWorker>(30, TimeUnit.MINUTES)
                 .setConstraints(constraints)
                 .build()
         }

@@ -2,7 +2,6 @@ package de.tum.in.tumcampusapp.api.general;
 
 import android.content.Context;
 
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

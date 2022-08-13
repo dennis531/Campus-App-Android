@@ -115,6 +115,7 @@ object ConfigUtils {
             Component.OPENINGHOUR -> getConfig(ConfigConst.OPENINGHOUR_ENABLED, defaultVal)
             Component.TRANSPORTATION -> getConfig(ConfigConst.TRANSPORTATION_ENABLED, defaultVal)
             Component.STUDYROOM -> getConfig(ConfigConst.STUDYROOM_ENABLED, defaultVal)
+            Component.MESSAGES -> getConfig(ConfigConst.MESSAGES_ENABLED, defaultVal)
             else -> true // Remaining components can not be disabled manually
         }
     }

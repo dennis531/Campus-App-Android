@@ -16,13 +16,11 @@ import de.tum.in.tumcampusapp.component.ui.chat.model.ChatMember;
 
 public class MemberSuggestionsListAdapter extends BaseAdapter implements Filterable {
 
-    private List<ChatMember> originalData;
     private List<ChatMember> members;
     private Context mContext;
 
     // constructor
     public MemberSuggestionsListAdapter(Context context, List<ChatMember> members) {
-        originalData = members;
         this.members = members;
         mContext = context;
     }
@@ -67,7 +65,6 @@ public class MemberSuggestionsListAdapter extends BaseAdapter implements Filtera
     }
 
     public void updateSuggestions(List<ChatMember> members) {
-        this.originalData = members;
         this.members = members;
         notifyDataSetChanged();
     }
@@ -77,26 +74,16 @@ public class MemberSuggestionsListAdapter extends BaseAdapter implements Filtera
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
+                // We don't filter the members as the members should have been filtered by the api
                 FilterResults results = new FilterResults();
-                ArrayList<ChatMember> after = new ArrayList<>();
-                if (charSequence != null) {
-                    for (ChatMember member : originalData) {
-                        if (member.getDisplayName() != null && member.getDisplayName()
-                                                                     .contains(charSequence)) {
-                            after.add(member);
-                        }
-                    }
-                }
-                results.values = after;
-                results.count = after.size();
+                results.values = members;
+                results.count = members.size();
                 return results;
             }
 
-            @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                members = (List<ChatMember>) filterResults.values;
-                notifyDataSetChanged();
+                // We don't change the data
             }
         };
     }

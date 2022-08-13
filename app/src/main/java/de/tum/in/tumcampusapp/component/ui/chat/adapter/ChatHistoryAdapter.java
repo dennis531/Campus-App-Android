@@ -202,7 +202,7 @@ public class ChatHistoryAdapter extends BaseAdapter {
             }
 
             if (isError) {
-                timestampTextView.setText(R.string.chat_message_send_error);
+                timestampTextView.setText(R.string.message_send_error);
                 timestampTextView.setTextColor(iconTint);
             } else {
                 int textColor = ContextCompat.getColor(context, R.color.text_secondary);

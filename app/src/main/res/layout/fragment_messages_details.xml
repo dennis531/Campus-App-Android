@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/material_default_padding"
+            android:paddingTop="@dimen/material_default_padding">
+
+            <TextView
+                android:id="@+id/subjectTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/material_default_padding"
+                android:layout_marginStart="@dimen/material_default_padding"
+                android:textColor="@color/color_primary"
+                android:textSize="@dimen/large_text_size"
+                tools:text="Subject" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/material_small_padding"
+                android:layout_marginTop="@dimen/material_small_padding"
+                android:background="@color/list_divider" />
+
+            <TextView
+                android:id="@+id/senderTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/material_default_padding"
+                android:layout_marginStart="@dimen/material_default_padding"
+                android:textSize="@dimen/semilarge_text_size"
+                tools:text="Sender" />
+
+            <TextView
+                android:id="@+id/recipientsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/material_default_padding"
+                android:layout_marginStart="@dimen/material_default_padding"
+                android:textSize="@dimen/semilarge_text_size"
+                tools:text="Recipients" />
+
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/material_default_padding"
+                android:layout_marginStart="@dimen/material_default_padding"
+                android:textSize="@dimen/mid_text_size"
+                tools:text="Date" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/material_small_padding"
+                android:layout_marginTop="@dimen/material_small_padding"
+                android:background="@color/list_divider" />
+
+            <TextView
+                android:id="@+id/messageTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/material_default_padding"
+                android:layout_marginStart="@dimen/material_default_padding"
+                android:autoLink="all"
+                android:textSize="@dimen/large_text_size"
+                tools:text="Message" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/material_small_padding"
+        android:paddingEnd="@dimen/material_default_padding"
+        android:paddingStart="@dimen/material_default_padding"
+        android:paddingTop="@dimen/material_small_padding">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/replyButton"
+            style="@style/BlueButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/reply_label"
+            android:textAllCaps="false" />
+    </FrameLayout>
+
+</LinearLayout>

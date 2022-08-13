@@ -4,6 +4,7 @@ import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipCourseEvent
 import de.tum.`in`.tumcampusapp.api.studip.model.chat.StudipBlubberComment
 import de.tum.`in`.tumcampusapp.api.studip.model.chat.StudipBlubberThread
 import de.tum.`in`.tumcampusapp.api.studip.model.lectures.StudipLecture
+import de.tum.`in`.tumcampusapp.api.studip.model.messages.StudipMessage
 import de.tum.`in`.tumcampusapp.api.studip.model.news.StudipNews
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipInstitute
 import de.tum.`in`.tumcampusapp.api.studip.model.person.StudipPerson
@@ -41,18 +42,33 @@ interface StudipAPIService {
     @GET("courses?include=institute,start-semester,end-semester")
     fun searchLectures(@Query("filter[q]") query: String): Call<List<StudipLecture>>
 
+
     @GET("studip/news")
     fun getNews(): Call<List<StudipNews>>
+
 
     @GET("blubber-threads?include=context,mentions")
     fun getChatRooms(): Call<List<StudipBlubberThread>>
 
     @GET("blubber-threads/{id}/comments?include=author")
-    fun getMessages(@Path("id") id: String): Call<List<StudipBlubberComment>>
+    fun getChatMessages(@Path("id") id: String): Call<List<StudipBlubberComment>>
 
     @GET("blubber-threads/{id}/comments?include=author")
-    fun getOlderMessages(@Path("id") id: String, @Query("filter[before]") before: String): Call<List<StudipBlubberComment>>
+    fun getOlderChatMessages(@Path("id") id: String, @Query("filter[before]") before: String): Call<List<StudipBlubberComment>>
 
     @POST("blubber-threads/{id}/comments")
-    fun sendMessage(@Path("id") roomId: String, @Body message: StudipBlubberComment): Call<StudipBlubberComment>
+    fun sendChatMessage(@Path("id") roomId: String, @Body message: StudipBlubberComment): Call<StudipBlubberComment>
+
+
+    @GET("users/{id}/inbox?include=sender,recipients")
+    fun getInboxMessages(@Path("id") userId: String): Call<List<StudipMessage>>
+
+    @GET("users/{id}/outbox?include=sender,recipients")
+    fun getOutboxMessages(@Path("id") userId: String): Call<List<StudipMessage>>
+
+    @POST("messages")
+    fun sendMessage(@Body message: StudipMessage): Call<StudipMessage>
+
+    @DELETE("messages/{id}")
+    fun deleteMessage(@Path("id") id: String): Call<ResponseBody>
 }

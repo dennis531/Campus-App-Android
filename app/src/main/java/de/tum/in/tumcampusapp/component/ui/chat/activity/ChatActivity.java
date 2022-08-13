@@ -25,7 +25,6 @@ import com.google.gson.Gson;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -47,7 +46,7 @@ import de.tum.in.tumcampusapp.component.ui.chat.repository.ChatMessageRemoteRepo
 import de.tum.in.tumcampusapp.component.ui.overview.CardManager;
 import de.tum.in.tumcampusapp.database.TcaDb;
 import de.tum.in.tumcampusapp.service.DownloadWorker;
-import de.tum.in.tumcampusapp.service.SendMessageWorker;
+import de.tum.in.tumcampusapp.service.SendChatMessageWorker;
 import de.tum.in.tumcampusapp.utils.Component;
 import de.tum.in.tumcampusapp.utils.ConfigConst;
 import de.tum.in.tumcampusapp.utils.ConfigUtils;
@@ -196,7 +195,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
     }
 
     private void handleFailureBroadcast() {
-        Utils.showToast(this, R.string.chat_message_send_error);
+        Utils.showToast(this, R.string.message_send_error);
         getNextHistoryFromServer(true);
     }
 
@@ -353,7 +352,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
 
     private void sendMessage(String text) {
         if (currentChatMember == null) {
-            Utils.showToast(this, R.string.chat_message_send_error);
+            Utils.showToast(this, R.string.message_send_error);
             return;
         }
 
@@ -364,7 +363,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
         chatMessageViewModel.addToUnsent(message);
 
         WorkManager.getInstance()
-                   .enqueue(SendMessageWorker.getWorkRequest());
+                   .enqueue(SendChatMessageWorker.getWorkRequest());
     }
 
     @Override

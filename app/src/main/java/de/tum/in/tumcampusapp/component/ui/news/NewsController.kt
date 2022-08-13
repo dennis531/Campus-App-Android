@@ -16,7 +16,7 @@ import org.joda.time.DateTime
 import java.io.IOException
 import javax.inject.Inject
 
-private const val TIME_TO_SYNC = 86400
+private const val TIME_TO_SYNC = 86400 // 24 h
 
 class NewsController @Inject constructor(
     private val context: Context
