@@ -19,7 +19,10 @@ import de.tum.`in`.tumcampusapp.component.ui.messages.model.MessageType
 import de.tum.`in`.tumcampusapp.databinding.FragmentMessagesBinding
 import de.tum.`in`.tumcampusapp.di.injector
 import de.tum.`in`.tumcampusapp.service.DownloadWorker
+import de.tum.`in`.tumcampusapp.utils.Const
+import de.tum.`in`.tumcampusapp.utils.Utils
 import kotlinx.android.synthetic.main.fragment_messages.*
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 /**
@@ -40,6 +43,8 @@ class MessagesFragment : FragmentForDownloadingExternal(
         get() = messagesDownloadAction
 
     private var selectedMessageType: MessageType = MessageType.INBOX
+
+    private var messages: List<AbstractMessage> = emptyList()
 
     private val binding by viewBinding(FragmentMessagesBinding::bind)
 
@@ -102,10 +107,15 @@ class MessagesFragment : FragmentForDownloadingExternal(
     }
 
     private fun loadMessages() {
-        val messages = manager.getAllMessagesByType(selectedMessageType)
+        messages = manager.getAllMessagesByType(selectedMessageType)
 
         with(binding) {
-            messagesRecyclerView.adapter = MessagesAdapter(messages, true, this@MessagesFragment::onItemClick)
+            val lastDateMillis = Utils.getSettingLong(requireContext(), Const.MESSAGE_LAST_DATE, 0)
+            val lastDate = DateTime(lastDateMillis)
+
+            val adapter = MessagesAdapter(messages, true, this@MessagesFragment::onItemClick)
+            adapter.setLastDate(lastDate)
+            messagesRecyclerView.adapter = adapter
         }
 
         showLoadingEnded()
@@ -121,6 +131,15 @@ class MessagesFragment : FragmentForDownloadingExternal(
     private fun openMessageDetails(message: AbstractMessage) {
         val intent = message.getIntent(requireContext())
         startActivity(intent)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        // Save date of last seen message
+        messages.firstOrNull()?.let {
+            Utils.setSetting(requireContext(), Const.MESSAGE_LAST_DATE, it.date.millis)
+        }
     }
 
     companion object {

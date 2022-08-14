@@ -1,5 +1,6 @@
 package de.tum.`in`.tumcampusapp.component.ui.messages.adapter
 
+import android.graphics.Typeface
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.core.view.isVisible
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.ui.messages.model.AbstractMessage
 import de.tum.`in`.tumcampusapp.component.ui.messages.model.MessageType
+import org.joda.time.DateTime
 
 /**
  * [RecyclerView.Adapter] that can display a [AbstractMessage].
@@ -18,6 +20,8 @@ class MessagesAdapter(
     private val isBigLayout: Boolean,
     private val onItemClick: (AbstractMessage) -> Unit
 ) : RecyclerView.Adapter<MessagesAdapter.ViewHolder>() {
+
+    private var lastDate: DateTime? = null
 
     private val itemLayout: Int by lazy {
         if (isBigLayout) R.layout.message_item_big else R.layout.message_item_small
@@ -30,7 +34,7 @@ class MessagesAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(messages[position], onItemClick)
+        holder.bind(messages[position], lastDate, onItemClick)
     }
 
     override fun getItemCount(): Int = messages.size
@@ -40,13 +44,20 @@ class MessagesAdapter(
         notifyDataSetChanged()
     }
 
+    /**
+     * Messages after the last date will be highlighted
+     */
+    fun setLastDate(date: DateTime) {
+        lastDate = date
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(message: AbstractMessage, onItemClick: (AbstractMessage) -> Unit) = with(itemView) {
-            val subjectTextView = findViewById<TextView>(R.id.subjectTextView)
-            val memberTextView = findViewById<TextView>(R.id.memberTextView)
-            val dateTextView = findViewById<TextView>(R.id.dateTextView)
+        private val subjectTextView = itemView.findViewById<TextView>(R.id.subjectTextView)
+        private val memberTextView = itemView.findViewById<TextView>(R.id.memberTextView)
+        private val dateTextView = itemView.findViewById<TextView>(R.id.dateTextView)
 
+        fun bind(message: AbstractMessage, lastDate: DateTime?, onItemClick: (AbstractMessage) -> Unit) = with(itemView) {
             subjectTextView.text = message.subject
             dateTextView.text = message.formattedDate
 
@@ -61,7 +72,18 @@ class MessagesAdapter(
                 memberTextView.isVisible = message.recipients.isNotEmpty()
             }
 
+            // highlight messages after last date
+            lastDate?.let {
+                if (message.date.isAfter(lastDate)) {
+                    highlight()
+                }
+            }
+
             setOnClickListener { onItemClick(message) }
+        }
+
+        private fun highlight() {
+            subjectTextView.setTypeface(subjectTextView.typeface, Typeface.BOLD)
         }
     }
 

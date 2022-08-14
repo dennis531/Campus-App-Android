@@ -135,6 +135,7 @@ object Const {
     const val PDF_PATH = "pdfPath"
 
     const val MESSAGE_REPLY = "messageReply"
+    const val MESSAGE_LAST_DATE = "messageLastDate"
 
     const val NEWS_ALERT_IMAGE = "newsAlertImageURL"
     const val NEWS_ALERT_LINK = "newsAlertLink"
