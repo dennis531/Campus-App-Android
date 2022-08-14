@@ -7,19 +7,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.os.bundleOf
-import androidx.preference.ListPreference
-import androidx.preference.MultiSelectListPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
-import com.squareup.picasso.Picasso
+import androidx.preference.*
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.component.other.locations.model.Campus
@@ -86,9 +79,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
             findPreference(BUTTON_LOGOUT).onPreferenceClickListener = this
             setSummary("language_preference")
             setSummary(Const.DESIGN_THEME)
-            setSummary("silent_mode_set_to")
+            setSummary(Const.SILENCE_SERVICE_MODE)
             setSummary("background_mode_set_to")
             initDefaultCampusSelections()
+            initCardPreferences()
+            initSilentServicePreferences()
         } else if (rootKey == "card_cafeteria") {
             initCafeteriaCardSelections()
             initDefaultCafeteriaSelections()
@@ -102,16 +97,18 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         requireContext().defaultSharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
-    private fun loadNewsSourceIcon(
-        preference: Preference,
-        url: String
-    ) {
-        compositeDisposable += Single
-            .fromCallable { Picasso.get().load(url).get() }
-            .subscribeOn(Schedulers.io())
-            .map { BitmapDrawable(resources, it) }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(preference::setIcon, Utils::log)
+    private fun initCardPreferences() {
+        Component.values().forEach { component ->
+            component.preferenceKey?.let {
+                findPreference(it).isVisible = ConfigUtils.isComponentEnabled(requireContext(), component, false)
+            }
+        }
+    }
+
+    private fun initSilentServicePreferences() {
+        val isVisible = ConfigUtils.isComponentEnabled(requireContext(), Component.CALENDAR, false)
+        findPreference(Const.SILENCE_SERVICE).isVisible = isVisible
+        findPreference(Const.SILENCE_SERVICE_MODE).isVisible = isVisible
     }
 
     /**
@@ -227,7 +224,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
 
         for (c in campuses) {
             // Show default cafeteria selection if more than one cafeteria is available
-            if (!c.cafeterias.isNullOrEmpty() && c.cafeterias.size >= 2) {
+            if (!c.cafeterias.isNullOrEmpty() && c.cafeterias.size > 1) {
                 val defaultValue = c.cafeterias.first().id
                 val preference = ListPreference(preferenceCategory.context).apply {
                     setDefaultValue(defaultValue)
@@ -256,17 +253,19 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
             return
         }
 
-        val defaultRole = if (roles.contains(CafeteriaRole.STUDENT)) {
-            CafeteriaRole.STUDENT.id.toString()
-        } else {
-            roles.first().id.toString()
-        }
+        // Assume that student role is always given
+        val defaultRole = CafeteriaRole.STUDENT.id.toString()
 
         val preference = findPreference(Const.ROLE) as ListPreference
         preference.entries = roles.map { getString(it.nameResId) }.toTypedArray()
         preference.entryValues = roles.map { it.id.toString() }.toTypedArray()
         preference.setDefaultValue(defaultRole)
         preference.run { summary = entries[findIndexOfValue(Utils.getSetting(context, key, defaultRole))] }
+
+        // Force to check the default value if no value is set
+        if (preference.value == null) {
+            preference.value = defaultRole
+        }
     }
 
     private fun initTransportationCard() {
@@ -297,8 +296,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
     private fun setSummary(key: CharSequence) {
         val pref = findPreference(key)
         if (pref is ListPreference) {
-            val entry = pref.entry.toString()
-            pref.summary = entry
+            pref.summary = pref.entry
         }
     }
 

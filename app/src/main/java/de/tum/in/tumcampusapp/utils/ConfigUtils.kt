@@ -62,8 +62,15 @@ object ConfigUtils {
         }
     }
 
+    /**
+     * Checks if the component is enabled in the config file, the required api interface is provided by the client
+     * and the user has been authenticated. The authentication will be checked if the component needs an authenticated user
+     * which is set with [Component.needsLMSAccess].
+     *
+     * @param checkAuthentication Should the user authentication status be checked?
+     */
     @JvmStatic
-    fun isComponentEnabled(context: Context, component: Component): Boolean {
+    fun isComponentEnabled(context: Context, component: Component, checkAuthentication: Boolean = true): Boolean {
         // Check if component is disabled in configuration
         if (!getComponentConfig(component)) {
             Utils.log("Component not enabled in config: ${component.name}")
@@ -76,7 +83,7 @@ object ConfigUtils {
         }
 
         // Check if component needs LMS access and access is granted
-        if (needsComponentLMSAccess(component) && !getAuthManager(context).hasAccess()) {
+        if (checkAuthentication && needsComponentLMSAccess(component) && !getAuthManager(context).hasAccess()) {
             return false
         }
 

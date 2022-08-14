@@ -25,6 +25,7 @@ object Const {
     const val ROLE = "card_role"
     const val SILENCE_ON = "silence_on"
     const val SILENCE_SERVICE = "silent_mode"
+    const val SILENCE_SERVICE_MODE = "silent_mode_set_to"
     const val SILENCE_OLD_STATE = "silence_old_state"
     const val TITLE_EXTRA = "title"
 

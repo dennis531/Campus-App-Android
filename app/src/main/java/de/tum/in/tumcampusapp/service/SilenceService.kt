@@ -119,7 +119,7 @@ class SilenceService : JobIntentService() {
             Utils.setSetting(this, Const.SILENCE_ON, true)
 
             // Set into silent or vibrate mode based on current setting
-            val mode = Utils.getSetting(this, "silent_mode_set_to", "0")
+            val mode = Utils.getSetting(this, Const.SILENCE_SERVICE_MODE, "0")
             audioManager.ringerMode = when (mode) {
                 RINGER_MODE_SILENT -> AudioManager.RINGER_MODE_VIBRATE
                 else -> AudioManager.RINGER_MODE_SILENT
