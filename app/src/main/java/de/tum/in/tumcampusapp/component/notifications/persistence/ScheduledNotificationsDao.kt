@@ -1,9 +1,6 @@
 package de.tum.`in`.tumcampusapp.component.notifications.persistence
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface ScheduledNotificationsDao {
@@ -14,6 +11,12 @@ interface ScheduledNotificationsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(notification: ScheduledNotification): Long
 
+    @Update
+    fun update(notification: ScheduledNotification)
+
     @Query("DELETE FROM scheduled_notifications WHERE type_id = :typeId AND content_id = :contentId")
     fun delete(typeId: Int, contentId: Int)
+
+    @Query("DELETE FROM scheduled_notifications WHERE date < datetime('now','-3 month')")
+    fun deleteOld()
 }

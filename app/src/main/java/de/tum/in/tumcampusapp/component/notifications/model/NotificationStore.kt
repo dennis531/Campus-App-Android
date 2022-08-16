@@ -12,9 +12,23 @@ class NotificationStore(context: Context) {
         return dao.find(notification.type.id, notification.id)
     }
 
+    fun update(id: Long, notification: AppNotification) {
+        val scheduledNotification = notification.toScheduledNotification()
+            .apply { this.id = id }
+        return dao.update(scheduledNotification)
+    }
+
     fun save(notification: AppNotification): Long {
         val scheduledNotification = notification.toScheduledNotification()
         return dao.insert(scheduledNotification)
+    }
+
+    fun remove(notification: AppNotification) {
+        dao.delete(notification.type.id, notification.id)
+    }
+
+    fun removeOld() {
+        dao.deleteOld()
     }
 
     companion object {

@@ -18,7 +18,5 @@ abstract class AppNotification(
     val notification: Notification
 ) {
 
-    fun toScheduledNotification(): ScheduledNotification {
-        return ScheduledNotification(0, type.id, id)
-    }
+    abstract fun toScheduledNotification(): ScheduledNotification
 }

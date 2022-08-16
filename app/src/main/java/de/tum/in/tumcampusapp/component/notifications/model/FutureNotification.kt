@@ -2,6 +2,7 @@ package de.tum.`in`.tumcampusapp.component.notifications.model
 
 import android.app.Notification
 import de.tum.`in`.tumcampusapp.component.notifications.persistence.NotificationType
+import de.tum.`in`.tumcampusapp.component.notifications.persistence.ScheduledNotification
 import org.joda.time.DateTime
 
 /**
@@ -16,4 +17,9 @@ class FutureNotification(
     id: Int,
     notification: Notification,
     val time: DateTime
-) : AppNotification(type, id, notification)
+) : AppNotification(type, id, notification) {
+
+    override fun toScheduledNotification(): ScheduledNotification {
+        return ScheduledNotification(type.id, id, time)
+    }
+}

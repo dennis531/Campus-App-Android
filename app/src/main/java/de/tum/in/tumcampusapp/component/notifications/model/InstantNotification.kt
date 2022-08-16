@@ -2,6 +2,8 @@ package de.tum.`in`.tumcampusapp.component.notifications.model
 
 import android.app.Notification
 import de.tum.`in`.tumcampusapp.component.notifications.persistence.NotificationType
+import de.tum.`in`.tumcampusapp.component.notifications.persistence.ScheduledNotification
+import org.joda.time.DateTime
 
 /**
  * Holds a [Notification] that is scheduled to be displayed instantly.
@@ -13,4 +15,9 @@ class InstantNotification(
     type: NotificationType,
     id: Int,
     notification: Notification
-) : AppNotification(type, id, notification)
+) : AppNotification(type, id, notification) {
+
+    override fun toScheduledNotification(): ScheduledNotification {
+        return ScheduledNotification(type.id, id, DateTime.now())
+    }
+}

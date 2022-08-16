@@ -21,6 +21,8 @@ class StartSyncReceiver : BroadcastReceiver() {
         // Check intent if called from StartupActivity
         startBackground(context)
 
+        startNotificationGCWorker()
+
         startChatWorker(context)
 
         startMessageWorker(context)
@@ -32,6 +34,7 @@ class StartSyncReceiver : BroadcastReceiver() {
 
     companion object {
         private const val UNIQUE_BACKGROUND = "START_SYNC_BACKGROUND"
+        private const val UNIQUE_NOTIFICATION_GC = "UNIQUE_NOTIFICATION_GC"
         private const val UNIQUE_SEND_CHAT_MESSAGE = "START_SYNC_SEND_CHAT_MESSAGE"
         private const val UNIQUE_POLLING_CHAT_MESSAGE = "START_SYNC_POLLING_CHAT_MESSAGE"
         private const val UNIQUE_SEND_MESSAGE = "START_SYNC_SEND_MESSAGE"
@@ -47,6 +50,12 @@ class StartSyncReceiver : BroadcastReceiver() {
             WorkManager.getInstance()
                     .enqueueUniquePeriodicWork(UNIQUE_BACKGROUND, KEEP,
                             BackgroundWorker.getWorkRequest())
+        }
+
+        private fun startNotificationGCWorker() {
+            WorkManager.getInstance()
+                .enqueueUniquePeriodicWork(UNIQUE_NOTIFICATION_GC, KEEP,
+                    NotificationGCWorker.getWorkRequest())
         }
 
         fun startChatWorker(context: Context) {

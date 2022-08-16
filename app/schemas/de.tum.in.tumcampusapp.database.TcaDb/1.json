@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4c7db9a6f53cbcd2ad61262e8af1caa2",
+    "identityHash": "4800dcbed04b7f12cfaa30dc463a4ce1",
     "entities": [
       {
         "tableName": "Cafeteria",
@@ -850,14 +850,8 @@
       },
       {
         "tableName": "scheduled_notifications",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type_id` INTEGER NOT NULL, `content_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type_id` INTEGER NOT NULL, `content_id` INTEGER NOT NULL, `date` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "typeId",
             "columnName": "type_id",
@@ -867,6 +861,18 @@
           {
             "fieldPath": "contentId",
             "columnName": "content_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -904,7 +910,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4c7db9a6f53cbcd2ad61262e8af1caa2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4800dcbed04b7f12cfaa30dc463a4ce1')"
     ]
   }
 }

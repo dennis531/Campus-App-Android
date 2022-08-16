@@ -13,7 +13,16 @@ object NotificationPresenter {
 
     fun show(context: Context, notification: InstantNotification) {
         val persistentStore = NotificationStore.getInstance(context)
-        val globalId = persistentStore.save(notification)
+        val scheduledNotification = persistentStore.find(notification)
+
+        // Update scheduled notification
+        scheduledNotification?.let {
+            persistentStore.update(it.id, notification)
+        }
+
+        // Use existing id to update notification or show new notification
+        val globalId = scheduledNotification?.id ?: persistentStore.save(notification)
+
         show(context, globalId.toInt(), notification)
     }
 

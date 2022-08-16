@@ -72,6 +72,7 @@ class NotificationScheduler @Inject constructor(private val context: Context) {
             // notification to prevent duplicates.
             cancel(it.id, notification)
             notificationManager.cancel(it.id.toInt())
+            persistentStore.remove(notification)
         }
 
         val globalNotificationId = persistentStore.save(notification)
