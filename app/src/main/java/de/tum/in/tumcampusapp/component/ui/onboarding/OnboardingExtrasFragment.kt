@@ -9,7 +9,6 @@ import com.google.gson.Gson
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.auth.AuthManager
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForLoadingInBackground
 import de.tum.`in`.tumcampusapp.component.ui.chat.ChatRoomController
 import de.tum.`in`.tumcampusapp.component.ui.chat.api.ChatAPI
@@ -32,11 +31,12 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
         (requireActivity() as OnboardingComponentProvider).onboardingComponent()
     }
 
-    @Inject
-    lateinit var cacheManager: CacheManager
+    private val apiClient: ChatAPI by lazy {
+        ConfigUtils.getApiClient(requireContext(), Component.CHAT) as ChatAPI
+    }
 
     @Inject
-    lateinit var apiClient: LMSClient
+    lateinit var cacheManager: CacheManager
 
     @Inject
     lateinit var chatRoomController: ChatRoomController
@@ -142,7 +142,7 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
 
         // Try to restore already joined chat rooms from server
         return try {
-            val rooms = (apiClient as ChatAPI).getChatRooms()
+            val rooms = apiClient.getChatRooms()
             chatRoomController.replaceIntoRooms(rooms)
 
             currentChatMember

@@ -20,7 +20,7 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.notifications.persistence.NotificationType
-import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingApi
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.CalendarItem
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.AbstractEvent
@@ -30,7 +30,6 @@ import de.tum.`in`.tumcampusapp.databinding.FragmentCalendarBinding
 import de.tum.`in`.tumcampusapp.service.QueryLocationsService
 import de.tum.`in`.tumcampusapp.utils.*
 import io.reactivex.Completable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -39,9 +38,10 @@ import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import java.util.*
 
-class CalendarFragment : FragmentForAccessingLMS<List<AbstractEvent>>(
+class CalendarFragment : FragmentForAccessingApi<List<AbstractEvent>>(
         R.layout.fragment_calendar,
-        R.string.calendar
+        R.string.calendar,
+        Component.CALENDAR
 ), CalendarDetailsFragment.OnEventInteractionListener {
 
     private val calendarController: CalendarController by lazy {

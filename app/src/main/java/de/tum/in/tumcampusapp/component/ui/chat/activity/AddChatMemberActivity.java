@@ -15,12 +15,9 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import de.tum.in.tumcampusapp.R;
 import de.tum.in.tumcampusapp.api.general.ApiHelper;
-import de.tum.in.tumcampusapp.api.general.TUMCabeClient;
-import de.tum.in.tumcampusapp.api.general.model.TUMCabeVerification;
 import de.tum.in.tumcampusapp.component.other.generic.activity.BaseActivity;
 import de.tum.in.tumcampusapp.component.ui.chat.adapter.MemberSuggestionsListAdapter;
 import de.tum.in.tumcampusapp.component.ui.chat.api.ChatAPI;
@@ -31,15 +28,11 @@ import de.tum.in.tumcampusapp.utils.Component;
 import de.tum.in.tumcampusapp.utils.ConfigUtils;
 import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.Utils;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Allows user to search for other users which he or she can then add to the ChatRoom
@@ -72,7 +65,7 @@ public class AddChatMemberActivity extends BaseActivity {
         room = new Gson().fromJson(encodedRoom, ChatRoom.class);
         Utils.log("ChatRoom: " + room.getTitle() + " (roomId: " + room.getId() + ")");
 
-        apiClient = (ChatAPI) ConfigUtils.getLMSClient(this);
+        apiClient = (ChatAPI) ConfigUtils.getApiClient(this, Component.CHAT);
 
         compositeDisposable = new CompositeDisposable();
 

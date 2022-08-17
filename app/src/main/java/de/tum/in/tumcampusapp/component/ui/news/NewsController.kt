@@ -1,7 +1,6 @@
 package de.tum.`in`.tumcampusapp.component.ui.news
 
 import android.content.Context
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.notifications.NotificationScheduler
 import de.tum.`in`.tumcampusapp.component.notifications.ProvidesNotifications
@@ -10,6 +9,8 @@ import de.tum.`in`.tumcampusapp.component.ui.news.model.NewsItem
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.ProvidesCard
 import de.tum.`in`.tumcampusapp.database.TcaDb
+import de.tum.`in`.tumcampusapp.utils.Component
+import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import de.tum.`in`.tumcampusapp.utils.sync.SyncManager
 import org.joda.time.DateTime
@@ -22,8 +23,9 @@ class NewsController @Inject constructor(
     private val context: Context
 ) : ProvidesCard, ProvidesNotifications {
 
-    @Inject
-    lateinit var apiClient: LMSClient
+    private val apiClient: NewsAPI by lazy {
+        ConfigUtils.getApiClient(context, Component.NEWS) as NewsAPI
+    }
 
     private val newsDao = TcaDb.getInstance(context).newsDao()
 
@@ -57,7 +59,7 @@ class NewsController @Inject constructor(
 
         // Load all news since the last sync
         try {
-            val news = (apiClient as NewsAPI).getNews()
+            val news = apiClient.getNews()
                 .map { it.toNewsItem() }
             newsDao.insert(news)
             showNewsNotification(news, latestNewsDate)

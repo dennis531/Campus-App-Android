@@ -7,7 +7,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dagger.Module
 import dagger.Provides
 import de.tum.`in`.tumcampusapp.api.auth.AuthManager
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.api.general.TUMCabeClient
 import de.tum.`in`.tumcampusapp.api.tumonline.TUMOnlineClient
 import de.tum.`in`.tumcampusapp.database.TcaDb
@@ -44,13 +43,6 @@ abstract class AppModule {
         fun provideTUMOnlineClient( // TODO: Remove
             context: Context
         ): TUMOnlineClient = TUMOnlineClient.getInstance(context)
-
-        @JvmStatic
-        @Singleton
-        @Provides
-        fun provideLMSAPIClient(
-            context: Context
-        ): LMSClient = ConfigUtils.getLMSClient(context)
 
         @JvmStatic
         @Singleton

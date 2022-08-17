@@ -9,7 +9,7 @@ import com.github.jasminb.jsonapi.ResourceConverter
 import com.github.jasminb.jsonapi.retrofit.JSONAPIConverterFactory
 import de.tum.`in`.tumcampusapp.api.general.ApiHelper
 import de.tum.`in`.tumcampusapp.api.general.exception.UnauthorizedException
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
+import de.tum.`in`.tumcampusapp.component.ui.onboarding.api.OnboardingAPI
 import de.tum.`in`.tumcampusapp.api.studip.interceptors.CheckErrorInterceptor
 import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipBaseEvent
 import de.tum.`in`.tumcampusapp.api.studip.model.calendar.StudipCalendarEvent
@@ -63,7 +63,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.net.URL
 
 class StudipClient(private val apiService: StudipAPIService, context: Context, val converter: ResourceConverter) :
-    LMSClient(),
+    OnboardingAPI,
     PersonAPI,
     CalendarAPI,
     LecturesAPI,
@@ -389,6 +389,8 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     companion object {
         private var client: StudipClient? = null
 
+        private val STUDIP_BASE_URL = ConfigUtils.getConfig(ConfigConst.STUDIP_API_BASE_URL, "")
+
         @JvmStatic
         @Synchronized
         fun getInstance(context: Context): StudipClient {
@@ -431,7 +433,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
 
             // Set up relationship resolver
             resourceConverter.setGlobalResolver { relationshipURL ->
-                val baseUrl = URL(ConfigUtils.getConfig(ConfigConst.API_BASE_URL, ""))
+                val baseUrl = URL(STUDIP_BASE_URL)
                 val requestUrl = URL(baseUrl.protocol, baseUrl.host, baseUrl.port, relationshipURL)
                 Utils.log("Request-Url: $requestUrl")
 
@@ -442,7 +444,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             val jsonapiConverterFactory = JSONAPIConverterFactory(resourceConverter)
 
             val apiService = Retrofit.Builder()
-                .baseUrl(ConfigUtils.getConfig(ConfigConst.API_BASE_URL, ""))
+                .baseUrl(STUDIP_BASE_URL)
                 .client(client)
                 .addConverterFactory(jsonapiConverterFactory)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

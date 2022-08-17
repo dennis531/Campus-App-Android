@@ -20,17 +20,13 @@ import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.CafeteriaRole
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.tum.`in`.tumcampusapp.component.ui.eduroam.SetupEduroamActivity
-import de.tum.`in`.tumcampusapp.component.ui.news.NewsController
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.StartupActivity
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.di.injector
 import de.tum.`in`.tumcampusapp.service.SilenceService
 import de.tum.`in`.tumcampusapp.service.StartSyncReceiver
 import de.tum.`in`.tumcampusapp.utils.*
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.defaultSharedPreferences
 import org.jetbrains.anko.notificationManager
 import java.util.concurrent.ExecutionException
@@ -45,9 +41,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
 
     @Inject
     lateinit var cafeteriaLocalRepository: CafeteriaLocalRepository
-
-    @Inject
-    lateinit var newsController: NewsController
 
     @Inject
     lateinit var authManager: AuthManager

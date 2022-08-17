@@ -7,10 +7,11 @@ import android.view.View
 import androidx.core.view.isVisible
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
-import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingApi
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.api.LecturesAPI
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 import de.tum.`in`.tumcampusapp.databinding.ActivityLecturedetailsBinding
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 
 /**
@@ -28,7 +29,7 @@ import de.tum.`in`.tumcampusapp.utils.Const
  *
  * NEEDS: stp_sp_nr set in incoming bundle (lecture id)
  */
-class LectureDetailsActivity : ActivityForAccessingLMS<AbstractLecture>(R.layout.activity_lecturedetails) {
+class LectureDetailsActivity : ActivityForAccessingApi<AbstractLecture>(R.layout.activity_lecturedetails, Component.LECTURES) {
 
     private lateinit var currentItem: AbstractLecture
     private lateinit var mLectureId: String

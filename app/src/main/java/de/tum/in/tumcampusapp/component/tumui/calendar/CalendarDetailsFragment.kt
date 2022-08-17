@@ -160,7 +160,7 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
 
     private fun deleteEvent(eventId: String) {
         val c = requireContext()
-        compositeDisposable += Single.fromCallable { (ConfigUtils.getLMSClient(c) as CalendarAPI).deleteCalenderEvent(eventId) }
+        compositeDisposable += Single.fromCallable { (ConfigUtils.getApiClient(c, Component.CALENDAR) as CalendarAPI).deleteCalenderEvent(eventId) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->

@@ -24,7 +24,7 @@ import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl.BYPASS_CACHE
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl.USE_CACHE
 import de.tum.`in`.tumcampusapp.component.other.generic.adapter.NoResultsAdapter
-import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingApi
 import de.tum.`in`.tumcampusapp.component.ui.chat.activity.ChatActivity
 import de.tum.`in`.tumcampusapp.component.ui.chat.activity.JoinRoomScanActivity
 import de.tum.`in`.tumcampusapp.component.ui.chat.adapter.ChatRoomListAdapter
@@ -40,9 +40,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.support.v4.runOnUiThread
 
-class ChatRoomsFragment : FragmentForAccessingLMS<List<ChatRoom>>(
+class ChatRoomsFragment : FragmentForAccessingApi<List<ChatRoom>>(
     R.layout.fragment_chat_rooms,
-    R.string.chat_rooms
+    R.string.chat_rooms,
+    Component.CHAT
 ) {
 
     private var currentMode = ChatRoom.MODE_JOINED

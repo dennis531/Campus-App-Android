@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.auth.OAuthManager
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
+import de.tum.`in`.tumcampusapp.component.ui.onboarding.api.OnboardingAPI
 import de.tum.`in`.tumcampusapp.component.other.generic.fragment.BaseFragment
 import de.tum.`in`.tumcampusapp.component.tumui.person.model.PersonInterface
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.di.OnboardingComponent
@@ -45,7 +45,7 @@ class OnboardingOAuth10aFragment : BaseFragment<String>(
     lateinit var authManager: OAuthManager
 
     @Inject
-    lateinit var apiClient: LMSClient
+    lateinit var apiClient: OnboardingAPI
 
     @Inject
     lateinit var navigator: OnboardingNavigator

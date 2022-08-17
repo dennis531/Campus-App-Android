@@ -9,20 +9,18 @@ import androidx.core.view.isVisible
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
-import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingApi
 import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.model.AbstractTuition
 import de.tum.`in`.tumcampusapp.databinding.FragmentTuitionFeesBinding
-import de.tum.`in`.tumcampusapp.utils.ConfigConst
-import de.tum.`in`.tumcampusapp.utils.ConfigUtils
-import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.Utils
+import de.tum.`in`.tumcampusapp.utils.*
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import java.util.Locale
 
-class TuitionFeesFragment : FragmentForAccessingLMS<AbstractTuition>(
+class TuitionFeesFragment : FragmentForAccessingApi<AbstractTuition>(
     R.layout.fragment_tuition_fees,
-    R.string.tuition_fees
+    R.string.tuition_fees,
+    Component.TUITIONFEES
 ) {
 
     private val tuitionFeeManager by lazy { TuitionFeeManager(requireContext()) }

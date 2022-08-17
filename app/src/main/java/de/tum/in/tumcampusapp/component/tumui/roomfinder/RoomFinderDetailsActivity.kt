@@ -9,7 +9,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.other.generic.activity.ProgressActivity
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.api.RoomFinderAPI
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderCoordinateInterface
@@ -24,7 +23,7 @@ import javax.inject.Inject
 class RoomFinderDetailsActivity : ProgressActivity<RoomFinderCoordinateInterface>(R.layout.activity_roomfinderdetails, Component.ROOMFINDER) {
 
     @Inject
-    lateinit var apiClient: LMSClient
+    lateinit var apiClient: RoomFinderAPI
 
     private lateinit var detailsFragment: RoomFinderDetailsFragment
     private var weekViewFragment: Fragment? = null
@@ -105,7 +104,7 @@ class RoomFinderDetailsActivity : ProgressActivity<RoomFinderCoordinateInterface
     }
 
     private fun loadGeo() {
-        fetch { (apiClient as RoomFinderAPI).fetchRoomCoordinates(room) }
+        fetch { apiClient.fetchRoomCoordinates(room) }
     }
 
     override fun onDownloadSuccessful(response: RoomFinderCoordinateInterface) {

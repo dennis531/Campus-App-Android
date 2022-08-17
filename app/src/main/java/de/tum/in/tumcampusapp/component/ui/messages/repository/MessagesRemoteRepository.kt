@@ -5,13 +5,14 @@ import de.tum.`in`.tumcampusapp.component.ui.messages.api.MessagesAPI
 import de.tum.`in`.tumcampusapp.component.ui.messages.model.AbstractMessage
 import de.tum.`in`.tumcampusapp.component.ui.messages.model.MessageMember
 import de.tum.`in`.tumcampusapp.component.ui.messages.model.MessageType
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import javax.inject.Inject
 
 class MessagesRemoteRepository @Inject constructor(
     context: Context
 ) {
-    private val apiClient: MessagesAPI = ConfigUtils.getLMSClient(context) as MessagesAPI
+    private val apiClient: MessagesAPI = ConfigUtils.getApiClient(context, Component.MESSAGES) as MessagesAPI
 
     fun getMessages(): List<AbstractMessage> {
         return apiClient.getMessages()

@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.other.generic.fragment.BaseFragment
 import de.tum.`in`.tumcampusapp.component.tumui.person.adapteritems.*
@@ -34,7 +33,7 @@ class PersonDetailsFragment : BaseFragment<PersonInterface>(
     R.string.contact_information
 ) {
     @Inject
-    lateinit var apiClient: LMSClient
+    lateinit var apiClient: PersonAPI
 
     private lateinit var personId: String
     private var person: PersonInterface? = null
@@ -66,12 +65,7 @@ class PersonDetailsFragment : BaseFragment<PersonInterface>(
     }
 
     private fun loadPersonDetails(personId: String, cacheControl: CacheControl) {
-        if (apiClient !is PersonAPI) {
-            showError(R.string.error_function_not_available)
-            return
-        }
-
-        (apiClient as? PersonAPI)?.let { fetch { it.getPersonDetails(personId) } }
+        fetch { apiClient.getPersonDetails(personId) }
     }
 
     override fun onDownloadSuccessful(response: PersonInterface) {

@@ -1,9 +1,9 @@
 package de.tum.`in`.tumcampusapp.component.tumui.grades
 
 import android.content.Context
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.notifications.NotificationScheduler
 import de.tum.`in`.tumcampusapp.component.tumui.grades.api.GradesAPI
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import org.jetbrains.anko.doAsync
@@ -11,10 +11,13 @@ import javax.inject.Inject
 
 class GradesBackgroundUpdater @Inject constructor(
     private val context: Context,
-    private val apiClient: LMSClient,
     private val notificationScheduler: NotificationScheduler,
     private val gradesStore: GradesStore
 ) {
+
+    private val apiClient: GradesAPI by lazy {
+        ConfigUtils.getApiClient(context, Component.GRADES) as GradesAPI
+    }
 
     fun fetchGradesAndNotifyIfNecessary() {
         if (ConfigUtils.getAuthManager(context).hasAccess()) {
@@ -26,7 +29,7 @@ class GradesBackgroundUpdater @Inject constructor(
 
     private fun fetchGrades() {
         try {
-            val exams = (apiClient as GradesAPI).getGrades()
+            val exams = apiClient.getGrades()
             val newCourses = exams.map { it.course }
             val existingCourses = gradesStore.gradedCourses
             val diff = newCourses - existingCourses

@@ -6,30 +6,20 @@ import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import de.tum.in.tumcampusapp.api.general.TUMCabeClient;
-import de.tum.in.tumcampusapp.api.general.model.TUMCabeVerification;
-import de.tum.in.tumcampusapp.api.generic.LMSClient;
 import de.tum.in.tumcampusapp.api.tumonline.CacheControl;
-import de.tum.in.tumcampusapp.api.tumonline.TUMOnlineClient;
-import de.tum.in.tumcampusapp.component.tumui.lectures.model.AbstractLecture;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoom;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoomAndLastMessage;
 import de.tum.in.tumcampusapp.component.ui.chat.model.ChatRoomDbRow;
 import de.tum.in.tumcampusapp.component.ui.overview.card.Card;
 import de.tum.in.tumcampusapp.component.ui.overview.card.ProvidesCard;
 import de.tum.in.tumcampusapp.database.TcaDb;
-import de.tum.in.tumcampusapp.utils.Const;
 import de.tum.in.tumcampusapp.utils.Utils;
-import retrofit2.Response;
 
 /**
  * Chat room controller providing functions to get the messages and the cards

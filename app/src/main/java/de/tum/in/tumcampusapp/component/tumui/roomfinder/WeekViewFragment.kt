@@ -12,6 +12,7 @@ import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.WidgetCalendarItem
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.api.RoomFinderAPI
 import de.tum.`in`.tumcampusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
@@ -55,7 +56,7 @@ class WeekViewFragment : Fragment() {
 
     private fun fetchEventList(room: RoomFinderRoomInterface): List<WeekViewDisplayable<WidgetCalendarItem>> {
         try {
-            val apiClient = ConfigUtils.getLMSClient(requireContext())
+            val apiClient = ConfigUtils.getApiClient(requireContext(), Component.ROOMFINDER)
             val schedules = (apiClient as RoomFinderAPI).fetchRoomSchedule(room)
 
             if (schedules == null) {

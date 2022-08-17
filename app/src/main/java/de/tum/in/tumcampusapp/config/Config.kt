@@ -22,7 +22,7 @@ enum class OAuthSignatureMethod {
     OAUTH_HMAC_SHA256
 }
 
-enum class TransportationApi {  // https://www.vbn.de/service/entwicklerinfos/opendata-und-openservice
+enum class TransportationApi {
     MVV,
     VBN
 }
@@ -40,54 +40,6 @@ object Config {
     // First values are defaults. Campus Ids can be set freely and must be unique. Station list only needed for cards of the transportation
     // component to determine the next station. Station id must match with the station id used in the transportation api.
     // If no cafeterias are provided and cafeteria component is enabled, the nearest cafeteria will be used for location based cafeteria recommendation.
-
-//    val CAMPUS = listOf<Campus>(
-//        Campus(
-//            "G", R.string.campus_garching, 48.2648424, 11.6709511, listOf(
-//                Cafeteria("422", "Mensa Garching"),
-//                Cafeteria("527", "StuCafé Boltzmannstraße"),
-//                Cafeteria("524", "StuCafé Mensa Garching"),
-//            ), listOf(
-//                Station("1000460", "Garching-Forschungszentrum"),
-//                Station("1000095", "Technische Universität"),
-//            )
-//        ),
-//        Campus("H", R.string.campus_garching_hochbrueck, 48.249432, 11.633905),
-//        Campus(
-//            "W", R.string.campus_weihenstephan, 48.397990, 11.722727, listOf(
-//                Cafeteria("423", "Mensa Weihenstephan"),
-//                Cafeteria("526", "StuCafé Akademie"),
-//                Cafeteria("525", "StuCafé Mensa-WST"),
-//            )
-//        ),
-//        Campus(
-//            "C", R.string.campus_main, 48.149436, 11.567635, listOf(
-//                Cafeteria("421", "Mensa Arcisstraße")
-//            ), listOf(
-//                Station("1000120", "Theresienstraße"),
-//                Station("1000095", "Technische Universität"),
-//                Station("1000051", "Pinakotheken"),
-//            )
-//        ),
-//        Campus(
-//            "K", R.string.campus_klinikum_großhadern, 48.110847, 11.4703001, listOf(
-//                Cafeteria("414", "Mensaria Großhadern"),
-//                Cafeteria("412", "Mensa Martinsried"),
-//            )
-//        ),
-//        Campus(
-//            "I", R.string.campus_klinikum, 48.137, 11.601119, stations = listOf(
-//                Station("1000580", "Max-Weber-Platz"),
-//            )
-//        ),
-//        Campus(
-//            "L", R.string.campus_leopoldstrasse, 48.155916, 11.583095, listOf(
-//                Cafeteria("411", "Mensa Leopoldstraße")
-//            )
-//        ),
-//        Campus("S", R.string.campus_geschwister_scholl, 48.150244, 11.580665),
-//    )
-
     val CAMPUS = listOf<Campus>(
         // Coordinates of "Schlossinnenhof"
         Campus("I", "Campus Innenstadt", 52.27158, 8.04426, listOf(
@@ -113,8 +65,11 @@ object Config {
     )
 
     // API
+    // To set a different api for a component, create a variable with the following format "{ComponentName}_API" (e.g. "LECTURES_API")
     val API = Api.STUDIP
-    val API_BASE_URL = "http://192.168.178.91/studip/jsonapi.php/v1/"
+
+    // Studip API
+    val STUDIP_API_BASE_URL = "http://192.168.178.91/studip/jsonapi.php/v1/" // Default: ""
 
     // Authentication
     val AUTH_METHOD = AuthMethod.OAUTH10A

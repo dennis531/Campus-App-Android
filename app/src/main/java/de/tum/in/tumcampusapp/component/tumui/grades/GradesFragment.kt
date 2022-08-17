@@ -20,19 +20,21 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
-import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingApi
 import de.tum.`in`.tumcampusapp.component.tumui.grades.api.GradesAPI
 import de.tum.`in`.tumcampusapp.component.tumui.grades.model.AbstractExam
 import de.tum.`in`.tumcampusapp.databinding.FragmentGradesBinding
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import org.jetbrains.anko.support.v4.defaultSharedPreferences
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
-class GradesFragment : FragmentForAccessingLMS<List<AbstractExam>>(
+class GradesFragment : FragmentForAccessingApi<List<AbstractExam>>(
         R.layout.fragment_grades,
-        R.string.my_grades
+        R.string.my_grades,
+        Component.GRADES
 ) {
 
     private var spinnerPosition = 0

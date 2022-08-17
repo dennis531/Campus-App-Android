@@ -1,7 +1,8 @@
 package de.tum.`in`.tumcampusapp.component.other.generic.activity
 
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
+import de.tum.`in`.tumcampusapp.api.generic.BaseAPI
 import de.tum.`in`.tumcampusapp.api.tumonline.TUMOnlineClient
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 
 /**
@@ -12,9 +13,9 @@ import de.tum.`in`.tumcampusapp.utils.ConfigUtils
  * @param T The type of object that is loaded from the TUMonline API
  */
 @Deprecated("Use BaseActivity and a suitable BaseFragment class")
-abstract class ActivityForAccessingLMS<T>(layoutId: Int) : ProgressActivity<T>(layoutId) {
+abstract class ActivityForAccessingApi<T>(layoutId: Int, component: Component) : ProgressActivity<T>(layoutId, component) {
 
-    protected val apiClient: LMSClient by lazy {
-        ConfigUtils.getLMSClient(this)
+    protected val apiClient: BaseAPI by lazy {
+        ConfigUtils.getApiClient(this, component)
     }
 }

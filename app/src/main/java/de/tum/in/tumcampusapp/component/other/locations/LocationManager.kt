@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.other.locations.model.BuildingToGps
 import de.tum.`in`.tumcampusapp.component.other.locations.model.Campus
 import de.tum.`in`.tumcampusapp.component.other.locations.model.Geo
@@ -21,10 +20,7 @@ import de.tum.`in`.tumcampusapp.component.ui.cafeteria.model.Cafeteria
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.tum.`in`.tumcampusapp.component.ui.transportation.model.Station
 import de.tum.`in`.tumcampusapp.database.TcaDb
-import de.tum.`in`.tumcampusapp.utils.ConfigConst
-import de.tum.`in`.tumcampusapp.utils.ConfigUtils
-import de.tum.`in`.tumcampusapp.utils.Const
-import de.tum.`in`.tumcampusapp.utils.Utils
+import de.tum.`in`.tumcampusapp.utils.*
 import org.jetbrains.anko.doAsync
 import java.io.IOException
 import java.lang.Double.parseDouble
@@ -39,7 +35,7 @@ class LocationManager @Inject constructor(c: Context) {
     private val mContext: Context = c.applicationContext
     private val buildingToGpsDao: BuildingToGpsDao
     private var manager: android.location.LocationManager? = null
-    private val apiClient: LMSClient = ConfigUtils.getLMSClient(mContext)
+    private val apiClient: de.tum.`in`.tumcampusapp.api.generic.BaseAPI = ConfigUtils.getApiClient(mContext, Component.ROOMFINDER)
     private val cafeteriaLocalRepository: CafeteriaLocalRepository by lazy {
         CafeteriaLocalRepository(TcaDb.getInstance(c))
     }

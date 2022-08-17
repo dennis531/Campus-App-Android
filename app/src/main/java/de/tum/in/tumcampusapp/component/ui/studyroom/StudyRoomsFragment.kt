@@ -9,15 +9,17 @@ import android.widget.Spinner
 import android.widget.TextView
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForAccessingApi
 import de.tum.`in`.tumcampusapp.component.ui.studyroom.api.StudyRoomAPI
 import de.tum.`in`.tumcampusapp.component.ui.studyroom.model.StudyRoomGroup
 import de.tum.`in`.tumcampusapp.databinding.FragmentStudyRoomsBinding
+import de.tum.`in`.tumcampusapp.utils.Component
 import org.jetbrains.anko.support.v4.runOnUiThread
 
-class StudyRoomsFragment : FragmentForAccessingLMS<List<StudyRoomGroup>>(
+class StudyRoomsFragment : FragmentForAccessingApi<List<StudyRoomGroup>>(
     R.layout.fragment_study_rooms,
-    R.string.study_rooms
+    R.string.study_rooms,
+    Component.STUDYROOM
 ), AdapterView.OnItemSelectedListener {
 
     private val sectionsPagerAdapter by lazy { StudyRoomsPagerAdapter(childFragmentManager) }

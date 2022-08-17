@@ -1,8 +1,6 @@
 package de.tum.`in`.tumcampusapp.utils
 
 import android.content.Context
-import com.stripe.android.exception.APIException
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.CalendarController
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.api.LecturesAPI
@@ -14,8 +12,13 @@ import javax.inject.Inject
 
 class CacheManager @Inject constructor(private val context: Context) {
 
-    @Inject
-    lateinit var apiClient: LMSClient
+    private val calendarApiClient: CalendarAPI by lazy {
+        ConfigUtils.getApiClient(context, Component.CALENDAR) as CalendarAPI
+    }
+
+    private val lecturesApiClient: LecturesAPI by lazy {
+        ConfigUtils.getApiClient(context, Component.LECTURES) as LecturesAPI
+    }
 
     val cache: Cache
         get() = Cache(context.cacheDir, 10 * 1024 * 1024) // 10 MB
@@ -33,7 +36,7 @@ class CacheManager @Inject constructor(private val context: Context) {
         }
 
         try {
-            val events = (apiClient as CalendarAPI).getCalendar() ?: return
+            val events = calendarApiClient.getCalendar() ?: return
             CalendarController(context).importCalendar(events)
             loadRoomLocations()
         } catch (t: Throwable) {
@@ -53,7 +56,7 @@ class CacheManager @Inject constructor(private val context: Context) {
         }
 
         try {
-            val lectures = (apiClient as LecturesAPI).getPersonalLectures()
+            val lectures = lecturesApiClient.getPersonalLectures()
             val chatRoomController = ChatRoomController(context)
 //            chatRoomController.createLectureRooms(lectures) // TODO: Enable after chat is generalized
             Utils.log("Successfully updated personal lectures in background")

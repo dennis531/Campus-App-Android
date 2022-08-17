@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.other.general.RecentsDao
 import de.tum.`in`.tumcampusapp.component.other.general.model.Recent
 import de.tum.`in`.tumcampusapp.component.other.generic.adapter.NoResultsAdapter
@@ -28,7 +27,7 @@ class RoomFinderFragment : FragmentForSearchingInBackground<List<RoomFinderRoomI
     minLen = 3
 ) {
     @Inject
-    lateinit var apiClient: LMSClient
+    lateinit var apiClient: RoomFinderAPI
 
     private val recentsDao by lazy { TcaDb.getInstance(requireContext()).recentsDao() }
     private lateinit var adapter: RoomFinderListAdapter
@@ -78,7 +77,7 @@ class RoomFinderFragment : FragmentForSearchingInBackground<List<RoomFinderRoomI
 
     override fun onSearchInBackground(query: String): List<RoomFinderRoomInterface>? {
         return try {
-            (apiClient as RoomFinderAPI).searchRooms(query)
+            apiClient.searchRooms(query)
         } catch (t: Throwable) {
             Utils.log(t)
             null

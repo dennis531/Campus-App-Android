@@ -13,6 +13,7 @@ import de.tum.`in`.tumcampusapp.component.ui.chat.model.ChatRoom
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageLocalRepository
 import de.tum.`in`.tumcampusapp.component.ui.chat.repository.ChatMessageRemoteRepository
 import de.tum.`in`.tumcampusapp.database.TcaDb
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
 import java.util.concurrent.TimeUnit
@@ -21,7 +22,7 @@ class ChatMessagePollingWorker(context: Context, workerParams: WorkerParameters)
     Worker(context, workerParams) {
 
     private val tcaDb by lazy { TcaDb.getInstance(applicationContext) }
-    private val apiClient: ChatAPI by lazy { ConfigUtils.getLMSClient(applicationContext) as ChatAPI }
+    private val apiClient: ChatAPI by lazy { ConfigUtils.getApiClient(applicationContext, Component.CHAT) as ChatAPI }
     private val roomController: ChatRoomController by lazy { ChatRoomController(applicationContext) }
     private val chatMessageDao by lazy { TcaDb.getInstance(applicationContext).chatMessageDao() }
     private val notificationScheduler by lazy { NotificationScheduler(applicationContext) }

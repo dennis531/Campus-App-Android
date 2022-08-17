@@ -7,19 +7,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.component.other.general.RecentsDao
 import de.tum.`in`.tumcampusapp.component.other.general.model.Recent
 import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForSearching
-import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
 import de.tum.`in`.tumcampusapp.component.tumui.person.api.PersonAPI
 import de.tum.`in`.tumcampusapp.component.tumui.person.model.PersonInterface
 import de.tum.`in`.tumcampusapp.component.tumui.person.model.Person
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.databinding.FragmentPersonSearchBinding
 import de.tum.`in`.tumcampusapp.di.injector
-import de.tum.`in`.tumcampusapp.utils.Utils
-import io.reactivex.Single
 import javax.inject.Inject
 
 class PersonSearchFragment : FragmentForSearching<List<PersonInterface>>(
@@ -29,7 +25,7 @@ class PersonSearchFragment : FragmentForSearching<List<PersonInterface>>(
     minLength = 3
 ) {
     @Inject
-    lateinit var apiClient: LMSClient
+    lateinit var apiClient: PersonAPI
 
     private lateinit var recentsDao: RecentsDao
 
@@ -82,12 +78,7 @@ class PersonSearchFragment : FragmentForSearching<List<PersonInterface>>(
     }
 
     private fun searchPerson(query: String) {
-        if (apiClient !is PersonAPI) {
-            showError(R.string.error_function_not_available)
-            return
-        }
-
-        fetch { (apiClient as PersonAPI).searchPerson(query) }
+        fetch { apiClient.searchPerson(query) }
     }
 
     override fun onDownloadSuccessful(response: List<PersonInterface>) {

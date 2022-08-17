@@ -3,7 +3,7 @@ package de.tum.`in`.tumcampusapp.utils
 import android.content.Context
 import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.api.auth.OAuthManager
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
+import de.tum.`in`.tumcampusapp.api.generic.BaseAPI
 import de.tum.`in`.tumcampusapp.api.studip.StudipClient
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.api.generic.CafeteriaAPI
 import de.tum.`in`.tumcampusapp.component.ui.cafeteria.api.munich.MunichCafeteriaAPIClient
@@ -28,11 +28,22 @@ object ConfigUtils {
     }
 
     @JvmStatic
-    fun getLMSClient(context: Context): LMSClient {
-        return when (getConfig(ConfigConst.API, Api.STUDIP)) {
+    fun getApiClient(context: Context, component: Component): BaseAPI {
+        return when (component) {
+            Component.TRANSPORTATION -> getTransportationClient(context)
+            Component.CAFETERIA -> getCafeteriaClient(context)
+            else -> getCampusClient(context, component)
+        }
+    }
+
+    private fun getCampusClient(context: Context, component: Component): BaseAPI {
+        // Get individual component api or main api
+        val api = getConfig("${component.name}_API", null) ?: getConfig(ConfigConst.API, Api.STUDIP)
+
+        return when (api) {
             // Add more api clients here
             Api.STUDIP -> StudipClient.getInstance(context)
-            else -> throw IllegalStateException("API not known.")
+            else -> throw IllegalStateException("Campus API not known.")
         }
     }
 
@@ -49,12 +60,12 @@ object ConfigUtils {
         return when (getConfig(ConfigConst.CAFETERIA_API, CafeteriaApiEnum.MUNICH)) {
             // Add more transportation api clients here
             CafeteriaApiEnum.MUNICH -> MunichCafeteriaAPIClient.getInstance(context)
-            else -> throw IllegalStateException("Transportation API not known.")
+            else -> throw IllegalStateException("Cafeteria API not known.")
         }
     }
 
     @JvmStatic
-    fun getAuthManager(context: Context): AuthManager {
+    fun getAuthManager(context: Context): AuthManager { // TODO: Add component dependency
         return when (getConfig(ConfigConst.AUTH_METHOD, AuthMethod.OAUTH10A)) {
             // Add more authentication methods here
             AuthMethod.OAUTH10A -> OAuthManager(context)
@@ -65,7 +76,7 @@ object ConfigUtils {
     /**
      * Checks if the component is enabled in the config file, the required api interface is provided by the client
      * and the user has been authenticated. The authentication will be checked if the component needs an authenticated user
-     * which is set with [Component.needsLMSAccess].
+     * which is set with [Component.needsAuthentication].
      *
      * @param checkAuthentication Should the user authentication status be checked?
      */
@@ -77,27 +88,27 @@ object ConfigUtils {
             return false
         }
 
-        // Components without LMS API dependency
-        if (!component.requiresLMS) {
+        // Components without api dependency
+        if (!component.requiresAPI) {
             return true
         }
 
-        // Check if component needs LMS access and access is granted
-        if (checkAuthentication && needsComponentLMSAccess(component) && !getAuthManager(context).hasAccess()) {
+        // Check if component needs an authenticated user and access is granted
+        if (checkAuthentication && needsAuthentication(component) && !getAuthManager(context).hasAccess()) {
             return false
         }
 
-        // Components needing LMS API
-        return getLMSClient(context).hasAPI(component)
+        // Components needing api client
+        return getApiClient(context, component).hasAPI(component)
     }
 
     @JvmStatic
-    private fun needsComponentLMSAccess(component: Component?): Boolean {
+    private fun needsAuthentication(component: Component?): Boolean {
         if (component == null) {
             return false
         }
 
-        return component.needsLMSAccess
+        return component.needsAuthentication
     }
 
     @JvmStatic

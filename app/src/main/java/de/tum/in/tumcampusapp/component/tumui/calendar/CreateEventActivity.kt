@@ -20,11 +20,12 @@ import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.general.exception.ForbiddenException
 import de.tum.`in`.tumcampusapp.api.general.exception.NotFoundException
 import de.tum.`in`.tumcampusapp.api.general.exception.UnauthorizedException
-import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingApi
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.api.CalendarAPI
 import de.tum.`in`.tumcampusapp.component.tumui.calendar.model.*
 import de.tum.`in`.tumcampusapp.database.TcaDb
 import de.tum.`in`.tumcampusapp.databinding.ActivityCreateEventBinding
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import de.tum.`in`.tumcampusapp.utils.plusAssign
@@ -43,7 +44,7 @@ import kotlin.collections.ArrayList
 /**
  * Allows the user to create (and edit) a private event in TUMonline.
  */
-class CreateEventActivity : ActivityForAccessingLMS<String>(R.layout.activity_create_event) {
+class CreateEventActivity : ActivityForAccessingApi<String>(R.layout.activity_create_event, Component.CALENDAR) {
 
     private lateinit var start: DateTime
     private lateinit var end: DateTime

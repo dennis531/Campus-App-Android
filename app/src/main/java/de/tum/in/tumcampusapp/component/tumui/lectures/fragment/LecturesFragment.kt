@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.other.generic.adapter.NoResultsAdapter
 import de.tum.`in`.tumcampusapp.component.other.generic.fragment.FragmentForSearching
@@ -16,7 +15,6 @@ import de.tum.`in`.tumcampusapp.component.tumui.lectures.api.LecturesAPI
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 import de.tum.`in`.tumcampusapp.databinding.FragmentLecturesBinding
 import de.tum.`in`.tumcampusapp.di.injector
-import io.reactivex.Single
 import javax.inject.Inject
 
 class LecturesFragment : FragmentForSearching<List<AbstractLecture>>(
@@ -26,7 +24,7 @@ class LecturesFragment : FragmentForSearching<List<AbstractLecture>>(
     minLength = 4
 ) {
     @Inject
-    lateinit var apiClient: LMSClient
+    lateinit var apiClient: LecturesAPI
 
     private val binding by viewBinding(FragmentLecturesBinding::bind)
 
@@ -65,11 +63,11 @@ class LecturesFragment : FragmentForSearching<List<AbstractLecture>>(
     }
 
     private fun loadPersonalLectures(cacheControl: CacheControl) {
-        fetch { (apiClient as LecturesAPI).getPersonalLectures() }
+        fetch { apiClient.getPersonalLectures() }
     }
 
     private fun searchLectures(query: String) {
-        fetch { (apiClient as LecturesAPI).searchLectures(query) }
+        fetch { apiClient.searchLectures(query) }
     }
 
     override fun onDownloadSuccessful(response: List<AbstractLecture>) {

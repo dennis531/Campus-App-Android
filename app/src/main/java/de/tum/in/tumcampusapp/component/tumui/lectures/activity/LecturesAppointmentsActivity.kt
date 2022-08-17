@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
-import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingLMS
+import de.tum.`in`.tumcampusapp.component.other.generic.activity.ActivityForAccessingApi
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.adapter.LectureAppointmentsListAdapter
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.api.LecturesAPI
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.AbstractLecture
 import de.tum.`in`.tumcampusapp.component.tumui.lectures.model.LectureAppointmentInterface
 import de.tum.`in`.tumcampusapp.databinding.ActivityLecturesappointmentsBinding
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.Const
 
 /**
@@ -23,7 +24,7 @@ import de.tum.`in`.tumcampusapp.utils.Const
  *
  * NEEDS: stp_sp_nr and title set in incoming bundle (lecture id, title)
  */
-class LecturesAppointmentsActivity : ActivityForAccessingLMS<List<LectureAppointmentInterface>>(R.layout.activity_lecturesappointments) {
+class LecturesAppointmentsActivity : ActivityForAccessingApi<List<LectureAppointmentInterface>>(R.layout.activity_lecturesappointments, Component.LECTURES) {
 
     private var lectureId: String? = null
 

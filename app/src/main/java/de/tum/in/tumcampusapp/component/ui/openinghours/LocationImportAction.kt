@@ -1,7 +1,6 @@
 package de.tum.`in`.tumcampusapp.component.ui.openinghours
 
 import android.content.Context
-import de.tum.`in`.tumcampusapp.api.generic.LMSClient
 import de.tum.`in`.tumcampusapp.api.tumonline.CacheControl
 import de.tum.`in`.tumcampusapp.component.ui.openinghours.api.OpeningHoursAPI
 import de.tum.`in`.tumcampusapp.database.TcaDb
@@ -16,9 +15,12 @@ import javax.inject.Inject
  */
 class LocationImportAction @Inject constructor(
     private val context: Context,
-    private val database: TcaDb,
-    private val apiClient: LMSClient
+    private val database: TcaDb
 ) : DownloadWorker.Action {
+
+    private val apiClient: OpeningHoursAPI by lazy {
+        ConfigUtils.getApiClient(context, Component.OPENINGHOUR) as OpeningHoursAPI
+    }
 
     @Throws(IOException::class)
     override fun execute(cacheBehaviour: CacheControl) {
@@ -26,7 +28,7 @@ class LocationImportAction @Inject constructor(
             return
         }
 
-        val openingHours = (apiClient as OpeningHoursAPI).getOpeningHours()
+        val openingHours = apiClient.getOpeningHours()
         database.locationDao().removeCache()
         database.locationDao().replaceInto(openingHours)
     }

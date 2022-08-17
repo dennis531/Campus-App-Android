@@ -130,7 +130,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
         TcaDb tcaDb = TcaDb.Companion.getInstance(this);
 
         ChatMessageRemoteRepository remoteRepository = ChatMessageRemoteRepository.INSTANCE;
-        remoteRepository.setApiClient((ChatAPI) ConfigUtils.getLMSClient(this));
+        remoteRepository.setApiClient((ChatAPI) ConfigUtils.getApiClient(this, Component.CHAT));
 
         ChatMessageLocalRepository localRepository = ChatMessageLocalRepository.INSTANCE;
         localRepository.setDb(tcaDb);
@@ -333,7 +333,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
         ChatRoom leaveRoom = currentChatRoom;
 
         Disposable leaveRoomDisposable =
-                Completable.fromAction(() -> ((ChatAPI) ConfigUtils.getLMSClient(this)).leaveChatRoom(leaveRoom))
+                Completable.fromAction(() -> ((ChatAPI) ConfigUtils.getApiClient(this, Component.CHAT)).leaveChatRoom(leaveRoom))
                       .subscribeOn(Schedulers.io())
                       .observeOn(AndroidSchedulers.mainThread())
                       .subscribe(() -> {

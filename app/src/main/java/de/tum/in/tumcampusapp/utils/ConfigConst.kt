@@ -4,7 +4,8 @@ object ConfigConst {
     const val CAMPUS = "CAMPUS"
 
     const val API = "API"
-    const val API_BASE_URL = "API_BASE_URL"
+
+    const val STUDIP_API_BASE_URL = "STUDIP_API_BASE_URL"
 
     const val AUTH_METHOD = "AUTH_METHOD"
 

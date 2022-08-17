@@ -9,6 +9,7 @@ import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.api.TuitionFeesAPI
 import de.tum.`in`.tumcampusapp.component.tumui.tuitionfees.model.AbstractTuition
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.Card
 import de.tum.`in`.tumcampusapp.component.ui.overview.card.ProvidesCard
+import de.tum.`in`.tumcampusapp.utils.Component
 import de.tum.`in`.tumcampusapp.utils.ConfigConst
 import de.tum.`in`.tumcampusapp.utils.ConfigUtils
 import de.tum.`in`.tumcampusapp.utils.Utils
@@ -36,7 +37,7 @@ class TuitionFeeManager(private val context: Context) : ProvidesCard, ProvidesNo
         try {
             // Indicates if tuition is loaded from api
             val tuition = if (ConfigUtils.shouldTuitionLoadedFromApi()) {
-                (ConfigUtils.getLMSClient(context) as TuitionFeesAPI).getTuitionFeesStatus()
+                (ConfigUtils.getApiClient(context, Component.TUITIONFEES) as TuitionFeesAPI).getTuitionFeesStatus()
             } else {
                 ConfigUtils.getConfig(ConfigConst.TUITIONFEES_TUITION, null)
             }
