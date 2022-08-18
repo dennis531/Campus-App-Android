@@ -66,7 +66,7 @@ public final class ApiHelper {
         return client;
     }
 
-    public static OkHttpClient getOkHttpLMSClient(Context c) {
+    public static OkHttpClient getOkHttpAuthClient(Context c) {
         OkHttpClient client = getOkHttpClient(c);
 
         OkHttpClient.Builder builder = client.newBuilder();

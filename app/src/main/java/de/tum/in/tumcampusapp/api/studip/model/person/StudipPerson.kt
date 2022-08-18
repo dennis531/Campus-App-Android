@@ -7,6 +7,7 @@ import com.github.jasminb.jsonapi.annotations.Type
 import de.tum.`in`.tumcampusapp.component.tumui.person.model.InstituteInterface
 import de.tum.`in`.tumcampusapp.component.tumui.person.model.PersonInterface
 import de.tum.`in`.tumcampusapp.component.tumui.person.model.RoomInterface
+import de.tum.`in`.tumcampusapp.component.ui.onboarding.model.Identity
 import java.io.Serializable
 
 @Type("users")
@@ -62,6 +63,9 @@ class StudipPerson : PersonInterface {
     @Meta
     var meta: PersonMeta? = null
 
+    fun toIdentity(): Identity {
+        return Identity(id, username, fullName, email, imageUrl)
+    }
 }
 
 class PersonMeta : Serializable {

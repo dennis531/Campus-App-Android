@@ -10,14 +10,14 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.tum.`in`.tumcampusapp.R
+import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.api.auth.OAuthManager
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.api.OnboardingAPI
 import de.tum.`in`.tumcampusapp.component.other.generic.fragment.BaseFragment
-import de.tum.`in`.tumcampusapp.component.tumui.person.model.PersonInterface
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.di.OnboardingComponent
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.di.OnboardingComponentProvider
+import de.tum.`in`.tumcampusapp.component.ui.onboarding.model.IdentityInterface
 import de.tum.`in`.tumcampusapp.databinding.FragmentOnboardingOauthBinding
-import de.tum.`in`.tumcampusapp.utils.Const
 import de.tum.`in`.tumcampusapp.utils.Utils
 import de.tum.`in`.tumcampusapp.utils.plusAssign
 import io.reactivex.Observable
@@ -187,16 +187,8 @@ class OnboardingOAuth10aFragment : BaseFragment<String>(
             })
     }
 
-
-    private fun handleIdentity(person: PersonInterface) {
-        // Collect personal data
-        Utils.setSetting(requireContext(), Const.USERNAME, person.username)
-        Utils.setSetting(requireContext(), Const.EMPLOYEE_MODE, false)
-
-        Utils.setSetting(requireContext(), Const.PROFILE_ID, person.id)
-        Utils.setSetting(requireContext(), Const.PROFILE_PICTURE_URL, person.imageUrl)
-        Utils.setSetting(requireContext(), Const.PROFILE_EMAIL, person.email)
-        Utils.setSetting(requireContext(), Const.PROFILE_DISPLAY_NAME, person.fullName)
+    private fun handleIdentity(identity: IdentityInterface) {
+        AuthManager.saveIdentity(requireContext(), identity)
 
         showLoadingEnded()
         openNextOnboardingStep()

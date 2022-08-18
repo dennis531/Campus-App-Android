@@ -75,7 +75,7 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
 
     private fun setupSilentModeView() {
         with(binding) {
-            if (!ConfigUtils.isComponentEnabled(requireContext(), Component.CALENDAR)) {
+            if (!ConfigUtils.isComponentEnabled(requireContext(), Component.CALENDAR, false)) {
                 silentModeCheckBox.visibility = View.GONE
                 silentModeTextView.visibility = View.GONE
                 return

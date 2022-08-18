@@ -50,6 +50,7 @@ import de.tum.`in`.tumcampusapp.component.ui.messages.model.MessageMember
 import de.tum.`in`.tumcampusapp.component.ui.messages.model.MessageType
 import de.tum.`in`.tumcampusapp.component.ui.news.api.NewsAPI
 import de.tum.`in`.tumcampusapp.component.ui.news.model.AbstractNews
+import de.tum.`in`.tumcampusapp.component.ui.onboarding.model.IdentityInterface
 import de.tum.`in`.tumcampusapp.component.ui.openinghours.api.OpeningHoursAPI
 import de.tum.`in`.tumcampusapp.component.ui.openinghours.model.Location
 import de.tum.`in`.tumcampusapp.component.ui.studyroom.api.StudyRoomAPI
@@ -153,13 +154,14 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return StudipRoomCoordinate("52.2725028", "8.041081")
     }
 
-    override fun getIdentity(): PersonInterface {
+    override fun getIdentity(): IdentityInterface {
         // Institutes not required
-        val identity = apiService.getIdentity().execute().body()!!
+        val person = apiService.getIdentity().execute().body()!!
         // update userId
-        userId = identity.id
+        userId = person.id
 
-        return identity
+        // Convert StudipPerson to Identity instance
+        return person.toIdentity()
     }
 
     override fun searchPerson(query: String): List<PersonInterface> {
@@ -401,11 +403,11 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             return client!!
         }
 
-        private fun buildAPIClient(context: Context): StudipClient? {
+        private fun buildAPIClient(context: Context): StudipClient {
             // TODO: Make CacheManager more generic
             val cacheManager = CacheManager(context)
 
-            val client = ApiHelper.getOkHttpLMSClient(context)
+            val client = ApiHelper.getOkHttpAuthClient(context)
                 .newBuilder()
                 .addInterceptor(CheckErrorInterceptor(context))
                 .build()

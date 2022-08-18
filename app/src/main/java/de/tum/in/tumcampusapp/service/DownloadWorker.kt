@@ -112,10 +112,10 @@ class DownloadWorker(
 
             service.downloadAll(force)
 
-            val hasValidToken = ConfigUtils.getAuthManager(service.applicationContext).hasAccess()
+            val isAuthenticated = ConfigUtils.getAuthManager(service.applicationContext).hasAccess()
             val shouldFillCache = data.getBoolean(FILL_CACHE, false)
 
-            if (hasValidToken && shouldFillCache) {
+            if (isAuthenticated && shouldFillCache) {
                 val cacheManager = CacheManager(service.applicationContext)
                 cacheManager.fillCache()
             }
