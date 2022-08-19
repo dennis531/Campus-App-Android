@@ -47,13 +47,6 @@ abstract class AppModule {
         @JvmStatic
         @Singleton
         @Provides
-        fun provideAuthManager(
-            context: Context
-        ): AuthManager = ConfigUtils.getAuthManager(context)
-
-        @JvmStatic
-        @Singleton
-        @Provides
         fun provideDatabase(
             context: Context
         ): TcaDb = TcaDb.getInstance(context)

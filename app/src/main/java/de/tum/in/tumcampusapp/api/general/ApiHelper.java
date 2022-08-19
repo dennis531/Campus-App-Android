@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 import de.tum.in.tumcampusapp.BuildConfig;
 import de.tum.in.tumcampusapp.api.auth.AuthManager;
+import de.tum.in.tumcampusapp.config.Api;
 import de.tum.in.tumcampusapp.utils.ConfigUtils;
 import de.tum.in.tumcampusapp.utils.Utils;
 import okhttp3.CookieJar;
@@ -66,13 +67,13 @@ public final class ApiHelper {
         return client;
     }
 
-    public static OkHttpClient getOkHttpAuthClient(Context c) {
+    public static OkHttpClient getOkHttpAuthClient(Context c, Api api) {
         OkHttpClient client = getOkHttpClient(c);
 
         OkHttpClient.Builder builder = client.newBuilder();
 
         // Add authentication
-        AuthManager authManager = ConfigUtils.getAuthManager(c);
+        AuthManager authManager = ConfigUtils.getAuthManager(c, api);
         builder.addInterceptor(authManager.getInterceptor());
 
         return builder.build();

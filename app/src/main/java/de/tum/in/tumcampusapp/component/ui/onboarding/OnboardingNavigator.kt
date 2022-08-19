@@ -7,7 +7,6 @@ import de.tum.`in`.tumcampusapp.R
 import de.tum.`in`.tumcampusapp.api.auth.AuthManager
 import de.tum.`in`.tumcampusapp.component.ui.onboarding.di.OnboardingScope
 import de.tum.`in`.tumcampusapp.config.AuthMethod
-import de.tum.`in`.tumcampusapp.config.Config
 import de.tum.`in`.tumcampusapp.utils.*
 import javax.inject.Inject
 
@@ -15,8 +14,14 @@ import javax.inject.Inject
 class OnboardingNavigator @Inject constructor(
     private val activity: OnboardingActivity
 ) {
-    @Inject
-    lateinit var authManager: AuthManager
+
+    private val authManagers: List<AuthManager> by lazy {
+        ConfigUtils.getAuthManagers(activity)
+    }
+
+    private val authMethods: List<AuthMethod> by lazy {
+        ConfigUtils.getAuthMethods()
+    }
 
     private var didFinishFlow = false
 
@@ -24,18 +29,41 @@ class OnboardingNavigator @Inject constructor(
         get() = activity.supportFragmentManager
 
     fun openFirst() {
-        val first = when (ConfigUtils.getConfig(ConfigConst.AUTH_METHOD, AuthMethod.OAUTH10A)) {
-            // Add more authentication methods here
-            AuthMethod.OAUTH10A -> OnboardingOAuth10aFragment.newInstance()
-            else -> throw IllegalStateException("Authentication method not known.")
-        }
+        currentMethodIndex = INITIAL_INDEX
+
+        val first = getNextFragment()
 
         fragmentManager.beginTransaction()
             .replace(R.id.contentFrame, first)
             .commit()
     }
 
-    fun openNext(destination: Fragment) {
+    fun openNext() {
+        openFragment(getNextFragment())
+    }
+
+    /**
+     * Get the next authentication method and increments the current index
+     */
+    private fun getNextMethod(): AuthMethod? {
+        return authMethods.getOrNull(++currentMethodIndex)
+    }
+
+    /**
+     * Gets the next fragment
+     */
+    private fun getNextFragment(): Fragment {
+        // Return extras fragment if no next method exists
+        val authMethod = getNextMethod() ?: return OnboardingExtrasFragment.newInstance()
+
+        return when (authMethod) {
+            // Add more authentication methods here
+            AuthMethod.OAUTH10A -> OnboardingOAuth10aFragment.newInstance()
+            else -> throw IllegalStateException("Authentication method not known.")
+        }
+    }
+
+    fun openFragment(destination: Fragment) {
         fragmentManager.beginTransaction()
             .replace(R.id.contentFrame, destination)
             .addToBackStack(null)
@@ -54,7 +82,14 @@ class OnboardingNavigator @Inject constructor(
         if (!didFinishFlow) {
             // The user opened the onboarding screen and maybe filled out some information, but did
             // not finish it completely.
-            authManager.clear()
+            authManagers.forEach { it.clear() }
         }
+    }
+
+    companion object {
+        private const val INITIAL_INDEX = -1
+
+        @JvmStatic
+        private var currentMethodIndex: Int = INITIAL_INDEX
     }
 }

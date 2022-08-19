@@ -20,7 +20,7 @@ class GradesBackgroundUpdater @Inject constructor(
     }
 
     fun fetchGradesAndNotifyIfNecessary() {
-        if (ConfigUtils.getAuthManager(context).hasAccess()) {
+        if (ConfigUtils.getAuthManager(context, Component.GRADES).hasAccess()) {
             doAsync {
                 fetchGrades()
             }

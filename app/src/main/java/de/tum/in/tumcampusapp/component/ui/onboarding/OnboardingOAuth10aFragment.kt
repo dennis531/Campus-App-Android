@@ -195,7 +195,7 @@ class OnboardingOAuth10aFragment : BaseFragment<String>(
     }
 
     private fun openNextOnboardingStep() {
-        navigator.openNext(OnboardingExtrasFragment.newInstance())
+        navigator.openNext()
     }
 
     override fun onDestroy() {

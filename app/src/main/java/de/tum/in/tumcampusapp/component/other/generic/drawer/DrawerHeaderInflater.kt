@@ -24,7 +24,7 @@ class DrawerHeaderInflater(
         val emailTextView = headerView.findViewById<TextView>(R.id.emailTextView)
         val loginButton = headerView.findViewById<MaterialButton>(R.id.loginButton)
 
-        val isLoggedIn = ConfigUtils.getAuthManager(context).hasAccess()
+        val isLoggedIn = ConfigUtils.getAuthManagers(context).all { it.hasAccess() }
 
         if (isLoggedIn) {
             val name = Utils.getSetting(context, Const.PROFILE_DISPLAY_NAME, "")

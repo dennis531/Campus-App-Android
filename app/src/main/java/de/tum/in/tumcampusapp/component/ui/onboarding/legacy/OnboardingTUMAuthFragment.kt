@@ -217,7 +217,7 @@ class OnboardingStartFragment : BaseFragment<Unit>(
     }
 
     private fun openNextOnboardingStep() {
-        navigator.openNext(CheckTokenFragment.newInstance())
+        navigator.openFragment(CheckTokenFragment.newInstance())
     }
 
     override fun onDestroy() {

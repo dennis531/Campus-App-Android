@@ -35,14 +35,19 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
         ConfigUtils.getApiClient(requireContext(), Component.CHAT) as ChatAPI
     }
 
+    private val calendarAuthManager: AuthManager by lazy {
+        ConfigUtils.getAuthManager(requireContext(), Component.CALENDAR)
+    }
+
+    private val chatAuthManager: AuthManager by lazy {
+        ConfigUtils.getAuthManager(requireContext(), Component.CHAT)
+    }
+
     @Inject
     lateinit var cacheManager: CacheManager
 
     @Inject
     lateinit var chatRoomController: ChatRoomController
-
-    @Inject
-    lateinit var authManager: AuthManager
 
     @Inject
     lateinit var navigator: OnboardingNavigator
@@ -60,9 +65,7 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
         setupSilentModeView()
         setupGroupChatView()
 
-        if (authManager.hasAccess()) {
-            cacheManager.fillCache()
-        }
+        cacheManager.fillCache()
 
         with(binding) {
 //            bugReportsCheckBox.isChecked = Utils.getSettingBool(requireContext(), Const.BUG_REPORTS, true)
@@ -81,7 +84,7 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
                 return
             }
 
-            if (authManager.hasAccess()) {
+            if (calendarAuthManager.hasAccess()) {
                 silentModeCheckBox.isChecked =
                     Utils.getSettingBool(requireContext(), Const.SILENCE_SERVICE, false)
                 silentModeCheckBox.setOnCheckedChangeListener { _, isChecked ->
@@ -105,7 +108,7 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
                 return
             }
 
-            if (authManager.hasAccess()) {
+            if (chatAuthManager.hasAccess()) {
                 groupChatCheckBox.isChecked =
                     Utils.getSettingBool(requireContext(), Const.GROUP_CHAT_ENABLED, true)
             } else {

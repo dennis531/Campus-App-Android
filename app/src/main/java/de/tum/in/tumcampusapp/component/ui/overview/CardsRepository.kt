@@ -31,9 +31,6 @@ class CardsRepository @Inject constructor(
 
     private var cards = MutableLiveData<List<Card>>()
 
-    @Inject
-    lateinit var authManager: AuthManager
-
     /**
      * Starts refresh of [Card]s and returns the corresponding [LiveData]
      * through which the result can be received.

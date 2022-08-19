@@ -66,13 +66,14 @@ object Config {
 
     // API
     // To set a different api for a component, create a variable with the following format "{ComponentName}_API" (e.g. "LECTURES_API")
-    val API = Api.STUDIP
+    val API = Api.STUDIP // Default: Api.STUDIP
 
     // Studip API
     val STUDIP_API_BASE_URL = "http://192.168.178.91/studip/jsonapi.php/v1/" // Default: ""
 
     // Authentication
-    val AUTH_METHOD = AuthMethod.OAUTH10A
+    // To set a different authentication method for an api, create a variable with the following format "{ApiName}_AUTH_METHOD" (e.g. "STUDIP_AUTH_METHOD")
+    val AUTH_METHOD = AuthMethod.OAUTH10A // Default: AuthMethod.OAUTH10A
 
     // OAUTH
     val OAUTH_CONSUMER_KEY = "20952562292527a0bfcc2bf4425bbc6b0626fbee5"

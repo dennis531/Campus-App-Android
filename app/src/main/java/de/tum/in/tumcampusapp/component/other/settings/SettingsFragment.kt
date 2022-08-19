@@ -42,8 +42,13 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
     @Inject
     lateinit var cafeteriaLocalRepository: CafeteriaLocalRepository
 
-    @Inject
-    lateinit var authManager: AuthManager
+    private val calendarAuthManager: AuthManager by lazy {
+        ConfigUtils.getAuthManager(requireContext(), Component.CALENDAR)
+    }
+
+    private val authManagers: List<AuthManager> by lazy {
+        ConfigUtils.getAuthManagers(requireContext())
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -59,9 +64,12 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
 
         // Disables silence service and logout if the app is used without LMS access
         val silentSwitch = findPreference(Const.SILENCE_SERVICE) as? SwitchPreferenceCompat
-        val logoutButton = findPreference(BUTTON_LOGOUT)
-        if (!authManager.hasAccess()) {
+        if (!calendarAuthManager.hasAccess()) {
             silentSwitch?.isEnabled = false
+        }
+
+        val logoutButton = findPreference(BUTTON_LOGOUT)
+        if (authManagers.all { !it.hasAccess() }) {
             logoutButton?.isVisible = false
         }
 

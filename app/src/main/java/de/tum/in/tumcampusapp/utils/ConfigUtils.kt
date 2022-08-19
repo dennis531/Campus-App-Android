@@ -37,10 +37,7 @@ object ConfigUtils {
     }
 
     private fun getCampusClient(context: Context, component: Component): BaseAPI {
-        // Get individual component api or main api
-        val api = getConfig("${component.name}_API", null) ?: getConfig(ConfigConst.API, Api.STUDIP)
-
-        return when (api) {
+        return when (getApi(component)) {
             // Add more api clients here
             Api.STUDIP -> StudipClient.getInstance(context)
             else -> throw IllegalStateException("Campus API not known.")
@@ -64,9 +61,66 @@ object ConfigUtils {
         }
     }
 
+    /**
+     * Collects all configured APIs which requires authentication
+     */
+    private fun getAuthApis(): List<Api> {
+        val apis = ArrayList<Api>()
+
+        Component.values().forEach {
+            if (it.needsAuthentication) {
+                apis += getApi(it)
+            }
+        }
+
+        return apis.distinct()
+    }
+
+    /**
+     * Get the main api or a individual component api if set
+     */
+    private fun getApi(component: Component): Api =
+        getConfig("${component.name}_API", null) ?: getConfig(ConfigConst.API, Api.STUDIP)
+
+    /**
+     * Gets all needed authentication methods
+     */
+    fun getAuthMethods(): List<AuthMethod> {
+        val authMethods = ArrayList<AuthMethod>()
+
+        val apis = getAuthApis()
+        apis.forEach {
+            authMethods += getAuthMethod(it)
+        }
+
+        return authMethods.distinct()
+    }
+
+    /**
+     * Gets all authentication manager of configured authentication methods
+     */
+    fun getAuthManagers(context: Context): List<AuthManager> {
+        return getAuthMethods().map { getAuthManager(context, it) }
+    }
+
+    /**
+     * Get the main auth method or an individual api auth method if set
+     */
+    private fun getAuthMethod(api: Api): AuthMethod =
+        getConfig("${api.name}_AUTH_METHOD", null) ?: getConfig(ConfigConst.AUTH_METHOD, AuthMethod.OAUTH10A)
+
     @JvmStatic
-    fun getAuthManager(context: Context): AuthManager { // TODO: Add component dependency
-        return when (getConfig(ConfigConst.AUTH_METHOD, AuthMethod.OAUTH10A)) {
+    fun getAuthManager(context: Context, component: Component): AuthManager {
+        return getAuthManager(context, getApi(component))
+    }
+
+    @JvmStatic
+    fun getAuthManager(context: Context, api: Api): AuthManager {
+        return getAuthManager(context, getAuthMethod(api))
+    }
+
+    fun getAuthManager(context: Context, authMethod: AuthMethod): AuthManager {
+        return when (authMethod) {
             // Add more authentication methods here
             AuthMethod.OAUTH10A -> OAuthManager(context)
             else -> throw IllegalStateException("Authentication method not known.")
@@ -94,7 +148,7 @@ object ConfigUtils {
         }
 
         // Check if component needs an authenticated user and access is granted
-        if (checkAuthentication && needsAuthentication(component) && !getAuthManager(context).hasAccess()) {
+        if (checkAuthentication && needsAuthentication(component) && !getAuthManager(context, component).hasAccess()) {
             return false
         }
 

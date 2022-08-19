@@ -56,6 +56,7 @@ import de.tum.`in`.tumcampusapp.component.ui.openinghours.model.Location
 import de.tum.`in`.tumcampusapp.component.ui.studyroom.api.StudyRoomAPI
 import de.tum.`in`.tumcampusapp.component.ui.studyroom.model.StudyRoom
 import de.tum.`in`.tumcampusapp.component.ui.studyroom.model.StudyRoomGroup
+import de.tum.`in`.tumcampusapp.config.Api
 import de.tum.`in`.tumcampusapp.utils.*
 import okhttp3.Request
 import org.joda.time.DateTime
@@ -407,7 +408,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             // TODO: Make CacheManager more generic
             val cacheManager = CacheManager(context)
 
-            val client = ApiHelper.getOkHttpAuthClient(context)
+            val client = ApiHelper.getOkHttpAuthClient(context, Api.STUDIP)
                 .newBuilder()
                 .addInterceptor(CheckErrorInterceptor(context))
                 .build()
