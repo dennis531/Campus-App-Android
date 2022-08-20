@@ -3,5 +3,5 @@
     <!--<files-path name="files"/>-->
     <external-path
         name="images"
-        path="Android/data/de.tum.in.tumcampus/files/Pictures"/>
+        path="Android/data/de.uos.campusapp/files/Pictures"/>
 </paths>

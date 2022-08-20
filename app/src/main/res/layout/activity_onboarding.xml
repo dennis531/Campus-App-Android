@@ -5,4 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="de.tum.in.tumcampusapp.component.ui.onboarding.OnboardingActivity" />
+    tools:context="de.uos.campusapp.component.ui.onboarding.OnboardingActivity" />

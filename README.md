@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/TUM-Dev/Campus-Android.svg?branch=master)](https://travis-ci.org/TUM-Dev/Campus-Android)
-<a href="https://play.google.com/store/apps/details?id=de.tum.in.tumcampus">
+<a href="https://play.google.com/store/apps/details?id=de.uos.campusapp">
 <img src="https://play.google.com/intl/en_us/badges/images/badge_new.png" align="right">
 </a>
 

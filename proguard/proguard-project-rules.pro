@@ -5,4 +5,4 @@
 
 -dontobfuscate
 
--keep class de.tum.in.tumcampusapp.models.**{*;}
+-keep class de.uos.campusapp.models.**{*;}

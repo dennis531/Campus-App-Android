@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="de.tum.in.tumcampusapp"
+    package="de.uos.campusapp"
     android:installLocation="auto"
     tools:ignore="UnusedAttribute">
     <!-- Standard access rights -->
@@ -62,23 +62,23 @@
 
         <provider
             android:name=".component.tumui.roomfinder.RoomFinderSuggestionProvider"
-            android:authorities="de.tum.in.tumcampusapp.component.tumui.roomfinder.RoomFinderSuggestionProvider"
+            android:authorities="de.uos.campusapp.component.tumui.roomfinder.RoomFinderSuggestionProvider"
             android:exported="false" />
         <provider
             android:name=".component.tumui.person.PersonSearchSuggestionProvider"
-            android:authorities="de.tum.in.tumcampusapp.component.tumui.person.PersonSearchSuggestionProvider"
+            android:authorities="de.uos.campusapp.component.tumui.person.PersonSearchSuggestionProvider"
             android:exported="false" />
         <provider
             android:name=".component.ui.transportation.TransportationSuggestionProvider"
-            android:authorities="de.tum.in.tumcampusapp.component.ui.transportation.TransportationSuggestionProvider"
+            android:authorities="de.uos.campusapp.component.ui.transportation.TransportationSuggestionProvider"
             android:exported="false" />
         <provider
             android:name=".component.tumui.lectures.LectureSearchSuggestionProvider"
-            android:authorities="de.tum.in.tumcampusapp.component.tumui.lectures.LectureSearchSuggestionProvider"
+            android:authorities="de.uos.campusapp.component.tumui.lectures.LectureSearchSuggestionProvider"
             android:exported="false" />
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="de.tum.in.tumcampusapp.fileprovider"
+            android:authorities="de.uos.campusapp.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data
@@ -215,7 +215,7 @@
             android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.tum.in.tumcampusapp.component.tumui.lectures.activity.LectureDetailsActivity" />
+                android:value="de.uos.campusapp.component.tumui.lectures.activity.LectureDetailsActivity" />
         </activity>
         <activity
             android:name=".component.tumui.lectures.activity.LectureDetailsActivity"
@@ -225,7 +225,7 @@
             android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.tum.in.tumcampusapp.component.tumui.lectures.activity.LecturesPersonalActivity" />
+                android:value="de.uos.campusapp.component.tumui.lectures.activity.LecturesPersonalActivity" />
         </activity>
         <activity
             android:name=".component.tumui.lectures.activity.LecturesPersonalActivity"
@@ -262,7 +262,7 @@
             android:parentActivityName=".component.ui.cafeteria.activity.CafeteriaActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.tum.in.tumcampusapp.component.ui.cafeteria.activity.CafeteriaActivity" />
+                android:value="de.uos.campusapp.component.ui.cafeteria.activity.CafeteriaActivity" />
         </activity>
         <activity
             android:name=".component.tumui.person.PersonSearchActivity"
@@ -289,7 +289,7 @@
             android:parentActivityName=".component.tumui.person.PersonSearchActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.tum.in.tumcampusapp.component.tumui.person.PersonSearchActivity" />
+                android:value="de.uos.campusapp.component.tumui.person.PersonSearchActivity" />
         </activity>
         <activity
             android:name=".component.tumui.roomfinder.RoomFinderActivity"
@@ -317,7 +317,7 @@
             android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.tum.in.tumcampusapp.component.tumui.roomfinder.RoomFinderActivity" />
+                android:value="de.uos.campusapp.component.tumui.roomfinder.RoomFinderActivity" />
         </activity>
         <activity
             android:name=".component.tumui.tuitionfees.TuitionFeesActivity"
@@ -405,7 +405,7 @@
             android:parentActivityName=".component.ui.chat.activity.ChatRoomsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.tum.in.tumcampusapp.component.ui.chat.activity.ChatRoomsActivity" />
+                android:value="de.uos.campusapp.component.ui.chat.activity.ChatRoomsActivity" />
         </activity>
         <activity
             android:name=".component.ui.chat.activity.JoinRoomScanActivity"
@@ -416,7 +416,7 @@
             android:theme="@style/AppThemeFullscreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.tum.in.tumcampusapp.component.ui.chat.activity.ChatRoomsActivity" />
+                android:value="de.uos.campusapp.component.ui.chat.activity.ChatRoomsActivity" />
         </activity>
         <activity
             android:name=".component.tumui.feedback.FeedbackActivity"
@@ -456,7 +456,7 @@
             android:enabled="false" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="de.tum.in.newtumcampus.intent.action.TRANSPORTATION_WIDGET_FORCE_RELOAD" />
+                <action android:name="de.uos.campusapp.intent.action.TRANSPORTATION_WIDGET_FORCE_RELOAD" />
             </intent-filter>
 
             <meta-data

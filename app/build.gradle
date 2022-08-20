@@ -35,7 +35,7 @@ android {
         }
     }
     defaultConfig {
-        applicationId "de.tum.in.tumcampus"
+        applicationId "de.uos.campusapp"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 580
