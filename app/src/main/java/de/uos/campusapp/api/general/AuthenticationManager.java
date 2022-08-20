@@ -30,7 +30,7 @@ import de.uos.campusapp.api.general.model.UploadStatus;
 import de.uos.campusapp.api.tumonline.TUMOnlineClient;
 import de.uos.campusapp.api.tumonline.model.TokenConfirmation;
 import de.uos.campusapp.component.ui.chat.model.ChatMember;
-import de.uos.campusapp.service.legacy.FcmTokenHandler;
+//import de.uos.campusapp.service.legacy.FcmTokenHandler;
 import de.uos.campusapp.utils.Const;
 import de.uos.campusapp.utils.RSASigner;
 import de.uos.campusapp.utils.Utils;
@@ -262,7 +262,7 @@ public class AuthenticationManager {
         if (Utils.getSettingBool(mContext, Const.PUBLIC_KEY_UPLOADED, false)
             && GoogleApiAvailability.getInstance()
                                     .isGooglePlayServicesAvailable(mContext) == ConnectionResult.SUCCESS) {
-            FcmTokenHandler.checkSetup(mContext);
+//            FcmTokenHandler.checkSetup(mContext);
         }
     }
 

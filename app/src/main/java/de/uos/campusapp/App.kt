@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+//import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import de.uos.campusapp.component.notifications.NotificationUtils.setupNotificationChannels
@@ -41,9 +41,9 @@ open class App : Application() {
         setupPicasso()
         setupNotificationChannels(this)
         JodaTimeAndroid.init(this)
-        if (!testing) {
-            initRxJavaErrorHandler()
-        }
+//        if (!testing) {
+//            initRxJavaErrorHandler()
+//        }
         setupStrictMode()
         loadTheme()
         //BackendHelper.getBackendConnection()
@@ -95,9 +95,9 @@ open class App : Application() {
         }
     }
 
-    private fun initRxJavaErrorHandler() {
-        RxJavaPlugins.setErrorHandler(FirebaseCrashlytics.getInstance()::recordException)
-    }
+//    private fun initRxJavaErrorHandler() {
+//        RxJavaPlugins.setErrorHandler(FirebaseCrashlytics.getInstance()::recordException)
+//    }
 
     private fun loadTheme() {
         val theme = ThemeProvider(this).getThemeFromPreferences()

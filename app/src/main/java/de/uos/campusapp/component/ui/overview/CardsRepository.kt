@@ -3,7 +3,7 @@ package de.uos.campusapp.component.ui.overview
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+//import com.google.firebase.crashlytics.FirebaseCrashlytics
 import de.uos.campusapp.api.tumonline.CacheControl
 import de.uos.campusapp.component.tumui.calendar.CalendarController
 import de.uos.campusapp.component.tumui.tuitionfees.TuitionFeeManager
@@ -84,7 +84,7 @@ class CardsRepository @Inject constructor(
             } catch (e: Exception) {
                 // We still want to know about it though
                 Utils.log(e)
-                FirebaseCrashlytics.getInstance().recordException(e)
+//                FirebaseCrashlytics.getInstance().recordException(e)
             }
         }
 

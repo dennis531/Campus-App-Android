@@ -9,7 +9,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "com.github.ben-manes.versions"
-apply plugin: 'com.google.firebase.crashlytics'
+//apply plugin: 'com.google.firebase.crashlytics'
 apply from: '../gradle/scripts/pmd.gradle'
 apply from: '../gradle/scripts/jacoco.gradle'
 apply from: '../gradle/scripts/checkstyle.gradle'
@@ -130,10 +130,10 @@ dependencies {
     implementation "com.google.android.play:core-ktx:$play_core_services_kotlin_extension"
 
     // Firebase
-    implementation 'com.google.firebase:firebase-core:20.0.0'
-    implementation 'com.google.firebase:firebase-messaging:23.0.0'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.4'
-    implementation 'com.google.firebase:firebase-analytics-ktx:20.0.0'
+//    implementation 'com.google.firebase:firebase-core:20.0.0'
+//    implementation 'com.google.firebase:firebase-messaging:23.0.0'
+//    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.4'
+//    implementation 'com.google.firebase:firebase-analytics-ktx:20.0.0'
 
     // Helpers
     implementation 'com.google.code.gson:gson:2.8.6'
@@ -174,7 +174,6 @@ dependencies {
     // Authentication
     implementation 'se.akerfeldt:okhttp-signpost:1.1.0'
     implementation 'oauth.signpost:signpost-core:2.1.1'
-//    implementation 'com.google.oauth-client:google-oauth-client:1.33.3'
 
     // UI
     implementation 'se.emilsjolander:stickylistheaders:2.7.0'
@@ -208,9 +207,6 @@ dependencies {
     testImplementation 'com.android.support.test:runner:1.0.2'
     testImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     testImplementation "org.robolectric:robolectric:4.5.1"
-
-    // TicketSale
-    implementation 'com.stripe:stripe-android:8.1.0'
 
     // gRPC backend
     implementation 'io.grpc:grpc-okhttp:1.43.2' // CURRENT_GRPC_VERSION
