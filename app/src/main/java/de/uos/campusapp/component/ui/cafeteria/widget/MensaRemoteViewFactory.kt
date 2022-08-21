@@ -6,12 +6,12 @@ import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import de.uos.campusapp.R
 import de.uos.campusapp.component.ui.cafeteria.controller.CafeteriaManager
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
 import java.util.*
 import java.util.regex.Pattern
 
 class MensaRemoteViewFactory(private val applicationContext: Context) : RemoteViewsService.RemoteViewsFactory {
-    private var menus: List<CafeteriaMenu> = ArrayList()
+    private var menus: List<CafeteriaMenuItem> = ArrayList()
 
     override fun onCreate() {
         menus = CafeteriaManager(applicationContext).bestMatchCafeteriaMenus

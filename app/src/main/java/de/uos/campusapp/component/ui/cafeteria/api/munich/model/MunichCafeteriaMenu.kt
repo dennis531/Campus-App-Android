@@ -2,7 +2,7 @@ package de.uos.campusapp.component.ui.cafeteria.api.munich.model
 
 import com.google.gson.annotations.SerializedName
 import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenuPrice
+import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenuPriceInterface
 import org.joda.time.DateTime
 
 class MunichCafeteriaMenu(
@@ -17,7 +17,7 @@ class MunichCafeteriaMenu(
     @SerializedName("name")
     var name: String,
 ) {
-    val prices: List<CafeteriaMenuPrice>
+    val prices: List<CafeteriaMenuPriceInterface>
         get() = MunichCafeteriaPrices.getMenuPrices(type)
 
     fun toCafeteriaMenu(): CafeteriaMenu {

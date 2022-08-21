@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import de.uos.campusapp.R
 import de.uos.campusapp.component.ui.cafeteria.FavoriteDishDao
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
 import de.uos.campusapp.database.TcaDb
 import de.uos.campusapp.utils.splitOnChanged
 
@@ -40,7 +40,7 @@ class CafeteriaMenusAdapter(
 
     override fun getItemCount() = adapterItems.size
 
-    fun update(menus: List<CafeteriaMenu>) {
+    fun update(menus: List<CafeteriaMenuItem>) {
         val newItems = menus
 //                .filter(this::shouldShowMenu)
                 .splitOnChanged { it.type }
@@ -65,7 +65,7 @@ class CafeteriaMenusAdapter(
 //    }
 
     private fun createAdapterItemsForSection(
-        menus: List<CafeteriaMenu>
+        menus: List<CafeteriaMenuItem>
     ): List<CafeteriaMenuAdapterItem> {
         val header = CafeteriaMenuAdapterItem.Header(menus.first())
         val items = menus.map {

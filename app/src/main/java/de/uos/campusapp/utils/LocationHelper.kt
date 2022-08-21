@@ -1,11 +1,11 @@
 package de.uos.campusapp.utils
 
 import android.location.Location
-import de.uos.campusapp.component.ui.cafeteria.model.Cafeteria
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaItem
 
 object LocationHelper {
 
-    fun calculateDistanceToCafeteria(cafeteria: Cafeteria, location: Location): Float? {
+    fun calculateDistanceToCafeteria(cafeteria: CafeteriaItem, location: Location): Float? {
         if (cafeteria.latitude == null || cafeteria.longitude == null) {
             return null
         }

@@ -8,8 +8,8 @@ import de.uos.campusapp.api.general.DateSerializer
 import de.uos.campusapp.api.tumonline.CacheControl
 import de.uos.campusapp.api.tumonline.interceptors.CacheResponseInterceptor
 import de.uos.campusapp.component.ui.cafeteria.api.generic.CafeteriaAPI
+import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteriaMenu
 import de.uos.campusapp.component.ui.cafeteria.model.Cafeteria
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
 import de.uos.campusapp.utils.CacheManager
 import org.joda.time.DateTime
 import retrofit2.Retrofit
@@ -25,7 +25,7 @@ class MunichCafeteriaAPIClient(private val apiService: MunichCafeteriaAPIService
         return Gson().fromJson(json, Array<Cafeteria>::class.java).toList()
     }
 
-    override fun getMenus(): List<CafeteriaMenu> {
+    override fun getMenus(): List<AbstractCafeteriaMenu> {
         val response = apiService.getMenus(CacheControl.BYPASS_CACHE.header).execute().body()!!
 
         val menus = response.menus + response.sideDishes

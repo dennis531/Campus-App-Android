@@ -3,6 +3,8 @@ package de.uos.campusapp.utils
 object ConfigConst {
     const val CAMPUS = "CAMPUS"
 
+    const val ORGANISATION_NAME = "ORGANISATION_NAME"
+
     const val API = "API"
 
     const val STUDIP_API_BASE_URL = "STUDIP_API_BASE_URL"

@@ -1,10 +1,12 @@
-package de.uos.campusapp.api.studip.model.grades
+package de.uos.campusapp.component.tumui.grades.model
 
-import de.uos.campusapp.component.tumui.grades.model.AbstractExam
 import org.joda.time.DateTime
 
-class StudipExam(
-    override val id: String?,
+/**
+ * Simple implementation of [AbstractExam]
+ */
+class Exam(
+    override val id: String,
     override val course: String,
     override val semester: String,
     override val date: DateTime? = null,
@@ -12,5 +14,4 @@ class StudipExam(
     override val grade: Double? = null,
     override val type: String? = null,
     override val program: String? = null
-) : AbstractExam() {
-}
+) : AbstractExam()

@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenuPriceItem
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuPriceItem
 
 @Dao
 interface CafeteriaMenuPriceDao {

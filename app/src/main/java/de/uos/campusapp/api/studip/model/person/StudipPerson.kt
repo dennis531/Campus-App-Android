@@ -26,9 +26,6 @@ class StudipPerson : PersonInterface {
     override var fullName: String = ""
 
     @JsonIgnore
-    override var gender: String = ""
-
-    @JsonIgnore
     override var phoneNumbers: List<String>? = null
         get() = institutes?.mapNotNull { (it as? StudipInstitute)?.phone }
     @JsonIgnore
@@ -49,9 +46,6 @@ class StudipPerson : PersonInterface {
     @JsonIgnore
     override var rooms: List<RoomInterface>? = null
         get() = institutes?.mapNotNull { (it as? StudipInstitute)?.location?.let { l -> StudipRoom(l) } }
-
-    @JsonProperty("address")
-    override var address: String = ""
 
     @JsonIgnore
     override var imageUrl: String = ""

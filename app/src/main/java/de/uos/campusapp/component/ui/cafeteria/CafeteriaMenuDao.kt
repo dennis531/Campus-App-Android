@@ -1,7 +1,7 @@
 package de.uos.campusapp.component.ui.cafeteria
 
 import androidx.room.*
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
 import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenuWithPrices
 import io.reactivex.Flowable
 import org.joda.time.DateTime
@@ -16,7 +16,7 @@ interface CafeteriaMenuDao {
     fun removeCache()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(cafeteriaMenus: List<CafeteriaMenu>)
+    fun insert(cafeteriaMenus: List<CafeteriaMenuItem>)
 
     @Query("SELECT strftime('%d-%m-%Y', date) FROM cafeteriaMenu " +
             "WHERE date > date('now','localtime') AND cafeteriaId=:cafeteriaId AND name=:dishName " +
@@ -25,7 +25,7 @@ interface CafeteriaMenuDao {
 
     @Query("SELECT * FROM cafeteriaMenu " +
             "WHERE cafeteriaId = :cafeteriaId AND date = :date ORDER BY type ASC")
-    fun getCafeteriaMenus(cafeteriaId: String, date: DateTime): List<CafeteriaMenu>
+    fun getCafeteriaMenus(cafeteriaId: String, date: DateTime): List<CafeteriaMenuItem>
 
     @Transaction
     @Query("SELECT * FROM cafeteriaMenu " +

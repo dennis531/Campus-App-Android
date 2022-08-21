@@ -1,10 +1,10 @@
 package de.uos.campusapp.component.ui.cafeteria.repository
 
 import de.uos.campusapp.component.ui.cafeteria.controller.CafeteriaManager
-import de.uos.campusapp.component.ui.cafeteria.model.Cafeteria
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenuPriceItem
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaWithMenus
+import de.uos.campusapp.component.ui.cafeteria.model.*
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaItem
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuPriceItem
 import de.uos.campusapp.database.TcaDb
 import de.uos.campusapp.utils.sync.model.Sync
 import io.reactivex.Flowable
@@ -31,8 +31,8 @@ class CafeteriaLocalRepository @Inject constructor(
 
     // Menu methods //
 
-    fun getCafeteriaMenus(id: String, date: DateTime): List<CafeteriaMenu> {
-        return database.cafeteriaMenuDao().getMenusWithPrices(id, date).map { it.toCafeteriaMenu() }
+    fun getCafeteriaMenus(id: String, date: DateTime): List<CafeteriaMenuItem> {
+        return database.cafeteriaMenuDao().getMenusWithPrices(id, date).map { it.toCafeteriaMenuItem() }
     }
 
     fun getAllMenuDates(): List<DateTime> = database.cafeteriaMenuDao().allDates
@@ -49,12 +49,12 @@ class CafeteriaLocalRepository @Inject constructor(
 
     // Canteen methods //
 
-    fun getAllCafeterias(): Flowable<List<Cafeteria>> = database.cafeteriaDao().all
+    fun getAllCafeterias(): Flowable<List<CafeteriaItem>> = database.cafeteriaDao().all
 
-    fun getCafeteria(id: String): Cafeteria? = database.cafeteriaDao().getById(id)
+    fun getCafeteria(id: String): CafeteriaItem? = database.cafeteriaDao().getById(id)
 
-    fun addCafeterias(cafeterias: List<Cafeteria>) = executor.execute {
-        database.cafeteriaDao().insert(cafeterias)
+    fun addCafeterias(cafeterias: List<AbstractCafeteria>) = executor.execute {
+        database.cafeteriaDao().insert(cafeterias.map { it.toCafeteriaItem() })
     }
 
     // Sync methods //

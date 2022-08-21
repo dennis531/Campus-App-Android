@@ -1,12 +1,9 @@
 package de.uos.campusapp.component.ui.cafeteria.model
 
 /**
- * CafeteriaMenuPrice
- *
- * @param role price category, e.g. Studierende
- * @param amount price, e.g. 2.7
+ * Simple implementation of [CafeteriaMenuPriceInterface]
  */
-open class CafeteriaMenuPrice(
-    open var role: CafeteriaRole,
-    open var amount: Double
-)
+data class CafeteriaMenuPrice(
+    override var role: CafeteriaRole,
+    override var amount: Double
+) : CafeteriaMenuPriceInterface

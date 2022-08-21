@@ -3,7 +3,7 @@ package de.uos.campusapp.component.tumui.tuitionfees.model
 import org.joda.time.DateTime
 
 /**
- * Concrete class holding tuition information.
+ * Simple implementation of [AbstractTuition] holding tuition information.
  */
 class Tuition(
     override val start: DateTime,

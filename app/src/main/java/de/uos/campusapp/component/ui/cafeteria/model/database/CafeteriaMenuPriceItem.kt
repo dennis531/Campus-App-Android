@@ -1,4 +1,4 @@
-package de.uos.campusapp.component.ui.cafeteria.model
+package de.uos.campusapp.component.ui.cafeteria.model.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

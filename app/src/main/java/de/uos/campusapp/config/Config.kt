@@ -64,6 +64,9 @@ object Config {
         ))
     )
 
+    // Name of organisation
+    val ORGANISATION_NAME = R.string.organisation
+
     // API
     // To set a different api for a component, create a variable with the following format "{ComponentName}_API" (e.g. "LECTURES_API")
     val API = Api.STUDIP // Default: Api.STUDIP

@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
-import de.uos.campusapp.component.ui.cafeteria.model.FavoriteDish
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
+import de.uos.campusapp.component.ui.cafeteria.model.database.FavoriteDish
 
 @Dao
 interface FavoriteDishDao {
@@ -22,7 +22,7 @@ interface FavoriteDishDao {
     @Query("SELECT cafeteriaMenu.* FROM favoriteDish " +
             "INNER JOIN cafeteriaMenu ON cafeteriaMenu.cafeteriaId = favoriteDish.cafeteriaId " +
             "AND favoriteDish.dishName = cafeteriaMenu.name WHERE cafeteriaMenu.date = :dayMonthYear")
-    fun getFavouritedCafeteriaMenuOnDate(dayMonthYear: String): List<CafeteriaMenu>
+    fun getFavouritedCafeteriaMenuOnDate(dayMonthYear: String): List<CafeteriaMenuItem>
 
     @Query("DELETE FROM favoriteDish")
     fun removeCache()

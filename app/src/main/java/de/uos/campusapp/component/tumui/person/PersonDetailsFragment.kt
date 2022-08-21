@@ -173,7 +173,7 @@ class PersonDetailsFragment : BaseFragment<PersonInterface>(
         person.rooms?.let { rooms ->
             rooms.forEach { room ->
                 if (room.getFullLocation().isNotBlank()) {
-                    contactItems.add(RoomContactItem(room.getFullLocation(), room.getQueryString())) // Todo: Is number needed for Roomfinder?
+                    contactItems.add(RoomContactItem(room.getFullLocation(), room.getQueryString()))
                 }
             }
         }

@@ -9,7 +9,8 @@ import de.uos.campusapp.component.ui.cafeteria.CafeteriaMenuDao
 import de.uos.campusapp.component.ui.cafeteria.CafeteriaMenuPriceDao
 import de.uos.campusapp.component.ui.cafeteria.CafeteriaNotificationSettings
 import de.uos.campusapp.component.ui.cafeteria.FavoriteDishDao
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
+import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteriaMenu
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
 import de.uos.campusapp.database.TcaDb
 import de.uos.campusapp.utils.ConfigUtils
 import de.uos.campusapp.utils.DateTimeUtils
@@ -57,12 +58,14 @@ constructor(private val context: Context) {
             })
     }
 
-    private fun onDownloadSuccess(response: List<CafeteriaMenu>) {
+    private fun onDownloadSuccess(response: List<AbstractCafeteriaMenu>) {
+        val cafeteriaMenuItems = response.map { it.toCafeteriaMenuItem() }
+
         menuDao.removeCache()
-        menuDao.insert(response)
+        menuDao.insert(cafeteriaMenuItems)
 
         menuPriceDao.removeCache()
-        response.forEach {
+        cafeteriaMenuItems.forEach {
             menuPriceDao.insert(it.getCafeteriaMenuPriceItems())
         }
 
@@ -90,7 +93,7 @@ constructor(private val context: Context) {
      * @param date The date for which to return the favorite dishes served
      * @return the favourite dishes at the given date
      */
-    fun getFavoriteDishesServed(queriedMensaId: String, date: DateTime): List<CafeteriaMenu> {
+    fun getFavoriteDishesServed(queriedMensaId: String, date: DateTime): List<CafeteriaMenuItem> {
         val dateString = DateTimeUtils.getDateString(date)
 
         val upcomingServings = favoriteDishDao.getFavouritedCafeteriaMenuOnDate(dateString)

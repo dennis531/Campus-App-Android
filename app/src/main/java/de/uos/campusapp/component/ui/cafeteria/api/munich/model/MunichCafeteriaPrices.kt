@@ -1,6 +1,7 @@
 package de.uos.campusapp.component.ui.cafeteria.api.munich.model
 
 import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenuPrice
+import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenuPriceInterface
 import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaRole
 
 /**
@@ -122,8 +123,8 @@ object MunichCafeteriaPrices {
      * Gets a list of cafeteria menu prices of the given menu type
      */
     @JvmStatic
-    fun getMenuPrices(menuType: String): List<CafeteriaMenuPrice> {
-        val menuPrices = mutableListOf<CafeteriaMenuPrice>()
+    fun getMenuPrices(menuType: String): List<CafeteriaMenuPriceInterface> {
+        val menuPrices = mutableListOf<CafeteriaMenuPriceInterface>()
 
         val studentPrice = STUDENT_PRICES[menuType]
         val employeePrice = STUDENT_PRICES[menuType]

@@ -3,6 +3,7 @@ package de.uos.campusapp.component.ui.cafeteria.model
 import android.content.Context
 import android.content.Intent
 import de.uos.campusapp.component.ui.cafeteria.activity.CafeteriaActivity
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
 import de.uos.campusapp.utils.Const
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
@@ -11,7 +12,7 @@ import java.util.*
 data class CafeteriaWithMenus(val id: String) {
 
     var name: String? = null
-    var menus: List<CafeteriaMenu> = ArrayList()
+    var menus: List<CafeteriaMenuItem> = ArrayList()
     var menuDates: List<DateTime> = ArrayList()
 
     val nextMenuDate: DateTime

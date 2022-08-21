@@ -10,15 +10,27 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 
+/**
+ * Represents an exam
+ *
+ * @property id Identifier
+ * @property course Course name (e.g. Theoretical Computer Science)
+ * @property semester Semester name of exam (e.g. WS 2022/23)
+ * @property date Date of exam (optional)
+ * @property examiner Name of examiner (optional)
+ * @property grade Grade (e.g. 1.6 or 2.3) (optional)
+ * @property type Type of exam (e.g. written or oral) (optional)
+ * @property program Study program (e.g. B.Sc. Computer Science) (optional)
+ */
 abstract class AbstractExam : Comparable<AbstractExam>, SimpleStickyListHeadersAdapter.SimpleStickyListItem {
-    abstract val id: String?
+    abstract val id: String
     abstract val course: String
     abstract val semester: String
     abstract val date: DateTime?
     abstract val examiner: String?
-    abstract val grade: Double? // e.g. 1.6 or 2.3
+    abstract val grade: Double?
     abstract val type: String?
-    abstract val program: String? // Studiengang
+    abstract val program: String?
 
     override fun getHeadName() = semester
 

@@ -16,30 +16,25 @@ import de.uos.campusapp.api.studip.model.calendar.StudipCalendarEvent
 import de.uos.campusapp.api.studip.model.calendar.StudipCourseEvent
 import de.uos.campusapp.api.studip.model.chat.StudipBlubberComment
 import de.uos.campusapp.api.studip.model.chat.StudipBlubberThread
-import de.uos.campusapp.api.studip.model.grades.StudipExam
 import de.uos.campusapp.api.studip.model.lectures.StudipLecture
 import de.uos.campusapp.api.studip.model.lectures.StudipLectureAppointment
 import de.uos.campusapp.api.studip.model.messages.StudipMessage
 import de.uos.campusapp.api.studip.model.news.StudipNews
 import de.uos.campusapp.api.studip.model.person.StudipInstitute
 import de.uos.campusapp.api.studip.model.person.StudipPerson
-import de.uos.campusapp.api.studip.model.roomfinder.StudipRoomCoordinate
-import de.uos.campusapp.api.studip.model.roomfinder.StudipRoomSchedule
 import de.uos.campusapp.component.tumui.calendar.api.CalendarAPI
 import de.uos.campusapp.component.tumui.calendar.model.CalendarItem
 import de.uos.campusapp.component.tumui.calendar.model.AbstractEvent
 import de.uos.campusapp.component.tumui.grades.api.GradesAPI
 import de.uos.campusapp.component.tumui.grades.model.AbstractExam
+import de.uos.campusapp.component.tumui.grades.model.Exam
 import de.uos.campusapp.component.tumui.lectures.api.LecturesAPI
 import de.uos.campusapp.component.tumui.lectures.model.AbstractLecture
 import de.uos.campusapp.component.tumui.lectures.model.LectureAppointmentInterface
 import de.uos.campusapp.component.tumui.person.api.PersonAPI
 import de.uos.campusapp.component.tumui.person.model.PersonInterface
 import de.uos.campusapp.component.tumui.roomfinder.api.RoomFinderAPI
-import de.uos.campusapp.component.tumui.roomfinder.model.RoomFinderCoordinateInterface
-import de.uos.campusapp.component.tumui.roomfinder.model.RoomFinderRoom
-import de.uos.campusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
-import de.uos.campusapp.component.tumui.roomfinder.model.RoomFinderScheduleInterface
+import de.uos.campusapp.component.tumui.roomfinder.model.*
 import de.uos.campusapp.component.ui.chat.api.ChatAPI
 import de.uos.campusapp.component.ui.chat.model.ChatMember
 import de.uos.campusapp.component.ui.chat.model.ChatMessage
@@ -80,13 +75,13 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     private var userId = Utils.getSetting(context, Const.PROFILE_ID, "")
 
     override fun getGrades(): List<AbstractExam> {
-        val exam1 = StudipExam(
+        val exam1 = Exam(
             "123",
             "Info A",
             "WS 2016",
         )
 
-        val exam2 = StudipExam(
+        val exam2 = Exam(
             "456",
             "Info D",
             "SS 2018",
@@ -97,7 +92,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             "B.Sc. Informatik"
         )
 
-        val exam3 = StudipExam(
+        val exam3 = Exam(
             "789",
             "Info C",
             "SS 2018",
@@ -108,7 +103,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             "B.Sc. Informatik"
         )
 
-        val exam4 = StudipExam(
+        val exam4 = Exam(
             "789",
             "Info B",
             "SS 2018",
@@ -125,7 +120,6 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     override fun searchRooms(query: String): List<RoomFinderRoomInterface> {
         val room1 = RoomFinderRoom(
             "123",
-            "12",
             "42/E04",
             "Heger-Tor-Wall 12",
             "Campus Innenstadt",
@@ -135,24 +129,19 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
 
         val room2 = RoomFinderRoom(
             "456",
-            "12",
-            "42/E01",
-            null,
-            null,
-            null,
-            null
+            "42/E01"
         )
         return listOf(room1, room2)
     }
 
     override fun fetchRoomSchedule(room: RoomFinderRoomInterface): List<RoomFinderScheduleInterface>? {
-        val schedule1 = StudipRoomSchedule("1", "Präsentation", DateTime.now(), DateTime.now().plusHours(2))
-        val schedule2 = StudipRoomSchedule("2", "Versammlung", DateTime.now().plusHours(4), DateTime.now().plusHours(6))
+        val schedule1 = RoomFinderSchedule("1", "Präsentation", DateTime.now(), DateTime.now().plusHours(2))
+        val schedule2 = RoomFinderSchedule("2", "Versammlung", DateTime.now().plusHours(4), DateTime.now().plusHours(6))
         return listOf(schedule1, schedule2)
     }
 
     override fun fetchRoomCoordinates(room: RoomFinderRoomInterface): RoomFinderCoordinateInterface? {
-        return StudipRoomCoordinate("52.2725028", "8.041081")
+        return RoomFinderCoordinate("52.2725028", "8.041081")
     }
 
     override fun getIdentity(): IdentityInterface {

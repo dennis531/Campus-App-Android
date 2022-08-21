@@ -18,7 +18,7 @@ import de.uos.campusapp.component.ui.cafeteria.activity.CafeteriaNotificationSet
 import de.uos.campusapp.component.ui.cafeteria.controller.CafeteriaManager
 import de.uos.campusapp.component.ui.cafeteria.details.CafeteriaDetailsSectionsPagerAdapter
 import de.uos.campusapp.component.ui.cafeteria.details.CafeteriaViewModel
-import de.uos.campusapp.component.ui.cafeteria.model.Cafeteria
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaItem
 import de.uos.campusapp.databinding.FragmentCafeteriaBinding
 import de.uos.campusapp.di.ViewModelFactory
 import de.uos.campusapp.di.injector
@@ -49,14 +49,14 @@ class CafeteriaFragment : FragmentForDownloadingExternal(
         ConfigUtils.getConfig<Int?>(ConfigConst.CAFETERIA_INGREDIENTS_TEXT, null)
     }
 
-    private var cafeterias = mutableListOf<Cafeteria>()
+    private var cafeterias = mutableListOf<CafeteriaItem>()
 
     private val cafeteriaViewModel: CafeteriaViewModel by lazy {
         val factory = ViewModelFactory(viewModelProvider)
         ViewModelProvider(this, factory).get(CafeteriaViewModel::class.java)
     }
 
-    private val adapter: ArrayAdapter<Cafeteria> by lazy { createArrayAdapter() }
+    private val adapter: ArrayAdapter<CafeteriaItem> by lazy { createArrayAdapter() }
     private val sectionsPagerAdapter: CafeteriaDetailsSectionsPagerAdapter by lazy {
         CafeteriaDetailsSectionsPagerAdapter(childFragmentManager)
     }
@@ -104,7 +104,7 @@ class CafeteriaFragment : FragmentForDownloadingExternal(
         cafeteriaViewModel.fetchCafeterias(location)
     }
 
-    private fun updateCafeterias(newCafeterias: List<Cafeteria>) {
+    private fun updateCafeterias(newCafeterias: List<CafeteriaItem>) {
         cafeterias.clear()
         cafeterias.addAll(newCafeterias)
 
@@ -114,7 +114,7 @@ class CafeteriaFragment : FragmentForDownloadingExternal(
         initCafeteriaSpinner()
     }
 
-    private fun onNewCafeteriaSelected(cafeteria: Cafeteria) {
+    private fun onNewCafeteriaSelected(cafeteria: CafeteriaItem) {
         sectionsPagerAdapter.setCafeteriaId(cafeteria.id)
         cafeteriaViewModel.fetchMenuDates()
     }
@@ -160,8 +160,8 @@ class CafeteriaFragment : FragmentForDownloadingExternal(
         }
     }
 
-    private fun createArrayAdapter(): ArrayAdapter<Cafeteria> {
-        return object : ArrayAdapter<Cafeteria>(
+    private fun createArrayAdapter(): ArrayAdapter<CafeteriaItem> {
+        return object : ArrayAdapter<CafeteriaItem>(
             requireContext(), R.layout.simple_spinner_item_actionbar) {
             private val inflater = LayoutInflater.from(context)
 

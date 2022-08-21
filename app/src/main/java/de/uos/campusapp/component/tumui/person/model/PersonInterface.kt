@@ -2,6 +2,31 @@ package de.uos.campusapp.component.tumui.person.model
 
 import java.io.Serializable
 
+/**
+ * Represents a person
+ *
+ * @property id
+ *
+ * @property firstName First name
+ * @property lastName Last name
+ * @property username Username, e.g. RZID
+ * @property title Title (optional)
+ * @property fullName Complete name
+ *
+ * @property phoneNumbers Phone numbers (optional)
+ * @property mobilephone Mobile number (optional)
+ * @property email Email address (optional)
+ * @property fax Fax address (optional)
+ * @property homepage Homepage (optional)
+ *
+ * @property institutes Related institutes (optional)
+ * @property consultationHours Consultation hours (optional)
+ * @property rooms Rooms (optional)
+ *
+ * @property imageUrl Profile image url (optional)
+ *
+ * @property additionalInfo More information (optional)
+ */
 interface PersonInterface : Serializable {
     val id: String
 
@@ -11,8 +36,6 @@ interface PersonInterface : Serializable {
     var title: String
     var fullName: String
 
-    var gender: String
-
     var phoneNumbers: List<String>? // Work phone numbers
     var mobilephone: String
     var email: String
@@ -20,11 +43,8 @@ interface PersonInterface : Serializable {
     var homepage: String
 
     var institutes: List<InstituteInterface>?
-
     var consultationHours: String
-
     var rooms: List<RoomInterface>?
-    var address: String
 
     var imageUrl: String // profile image url
 
@@ -32,13 +52,5 @@ interface PersonInterface : Serializable {
 
     companion object {
         private const val serialVersionUID = 6906210675497296501L
-
-//        @JvmStatic fun fromRecent(r: Recent): PersonInterface {
-//            val split = r.name.split("\\$".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-//            val p = Class.forName(r.clazz).newInstance() as PersonInterface
-//            p.id = split[0]
-//            p.fullName = split[1]
-//            return p
-//        }
     }
 }

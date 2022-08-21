@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
 import de.uos.campusapp.databinding.FragmentCafeteriadetailsSectionBinding
 import de.uos.campusapp.di.ViewModelFactory
 import de.uos.campusapp.di.injector
@@ -73,7 +73,7 @@ class CafeteriaDetailsSectionFragment : Fragment() {
             val adapter = CafeteriaMenusAdapter(requireContext(), true, null)
             menusRecyclerView.adapter = adapter
 
-            cafeteriaViewModel.cafeteriaMenus.observe(viewLifecycleOwner, Observer<List<CafeteriaMenu>> { adapter.update(it) })
+            cafeteriaViewModel.cafeteriaMenus.observe(viewLifecycleOwner, Observer<List<CafeteriaMenuItem>> { adapter.update(it) })
             cafeteriaViewModel.fetchCafeteriaMenus(cafeteriaId, menuDate)
         }
     }

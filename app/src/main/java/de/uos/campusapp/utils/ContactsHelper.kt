@@ -79,12 +79,13 @@ class ContactsHelper {
                 .build())
 
             // Add organisations
+            val organisationResId = ConfigUtils.getConfig(ConfigConst.ORGANISATION_NAME, R.string.organisation)
             person.institutes?.let { institutes ->
                 institutes.forEach { institute ->
                     ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
                             .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactID)
                             .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE)
-                            .withValue(ContactsContract.CommonDataKinds.Organization.COMPANY, context.getString(R.string.organisation))
+                            .withValue(ContactsContract.CommonDataKinds.Organization.COMPANY, context.getString(organisationResId))
                             .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE)
                             .withValue(ContactsContract.CommonDataKinds.Organization.TITLE, institute.name)
                             .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE)

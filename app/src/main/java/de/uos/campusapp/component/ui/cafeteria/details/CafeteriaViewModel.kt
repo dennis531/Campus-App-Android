@@ -4,8 +4,8 @@ import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import de.uos.campusapp.component.ui.cafeteria.model.Cafeteria
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaItem
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.uos.campusapp.utils.LocationHelper.calculateDistanceToCafeteria
 import de.uos.campusapp.utils.Utils
@@ -20,14 +20,14 @@ class CafeteriaViewModel @Inject constructor(
     private val localRepository: CafeteriaLocalRepository
 ) : ViewModel() {
 
-    private val _cafeterias = MutableLiveData<List<Cafeteria>>()
-    val cafeterias: LiveData<List<Cafeteria>> = _cafeterias
+    private val _cafeterias = MutableLiveData<List<CafeteriaItem>>()
+    val cafeterias: LiveData<List<CafeteriaItem>> = _cafeterias
 
-    private val _selectedCafeteria = MutableLiveData<Cafeteria>()
-    val selectedCafeteria: LiveData<Cafeteria> = _selectedCafeteria
+    private val _selectedCafeteria = MutableLiveData<CafeteriaItem>()
+    val selectedCafeteria: LiveData<CafeteriaItem> = _selectedCafeteria
 
-    private val _cafeteriaMenus = MutableLiveData<List<CafeteriaMenu>>()
-    val cafeteriaMenus: LiveData<List<CafeteriaMenu>> = _cafeteriaMenus
+    private val _cafeteriaMenus = MutableLiveData<List<CafeteriaMenuItem>>()
+    val cafeteriaMenus: LiveData<List<CafeteriaMenuItem>> = _cafeteriaMenus
 
     private val _menuDates = MutableLiveData<List<DateTime>>()
     val menuDates: LiveData<List<DateTime>> = _menuDates
@@ -38,16 +38,16 @@ class CafeteriaViewModel @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     /**
-     * Updates the currently selected [Cafeteria] and posts a new value to [selectedCafeteria].
+     * Updates the currently selected [CafeteriaItem] and posts a new value to [selectedCafeteria].
      *
-     * @param cafeteria The newly selected [Cafeteria]
+     * @param cafeteria The newly selected [CafeteriaItem]
      */
-    fun updateSelectedCafeteria(cafeteria: Cafeteria) {
+    fun updateSelectedCafeteria(cafeteria: CafeteriaItem) {
         _selectedCafeteria.postValue(cafeteria)
     }
 
     /**
-     * Fetches all [Cafeteria]s around the provided [Location] from the database and posts the
+     * Fetches all [CafeteriaItem]s around the provided [Location] from the database and posts the
      * results to [cafeterias].
      *
      * @param location The current [Location]
@@ -83,9 +83,9 @@ class CafeteriaViewModel @Inject constructor(
      * Adds the distance between user and cafeteria to model.
      */
     private fun transformCafeteria(
-        cafeterias: List<Cafeteria>,
+        cafeterias: List<CafeteriaItem>,
         location: Location
-    ): List<Cafeteria> {
+    ): List<CafeteriaItem> {
         return cafeterias.map {
             it.distance = calculateDistanceToCafeteria(it, location)
             it

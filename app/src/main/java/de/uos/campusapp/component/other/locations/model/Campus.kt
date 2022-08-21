@@ -3,7 +3,7 @@ package de.uos.campusapp.component.other.locations.model
 import android.content.Context
 import android.location.Location
 import androidx.annotation.StringRes
-import de.uos.campusapp.component.ui.cafeteria.model.Cafeteria
+import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteria
 import de.uos.campusapp.component.ui.transportation.model.Station
 
 /**
@@ -14,7 +14,7 @@ class Campus {
     private val name: Any
     val latitude: Double
     val longitude: Double
-    val cafeterias: List<Cafeteria>?
+    val cafeterias: List<AbstractCafeteria>?
     val stations: List<Station>?
 
     /**
@@ -27,7 +27,7 @@ class Campus {
         name: String,
         latitude: Double,
         longitude: Double,
-        cafeterias: List<Cafeteria>? = null,
+        cafeterias: List<AbstractCafeteria>? = null,
         stations: List<Station>? = null
     ) {
         this.id = id
@@ -48,7 +48,7 @@ class Campus {
         @StringRes nameResId: Int,
         latitude: Double,
         longitude: Double,
-        cafeterias: List<Cafeteria>? = null,
+        cafeterias: List<AbstractCafeteria>? = null,
         stations: List<Station>? = null
     ) {
         this.id = id

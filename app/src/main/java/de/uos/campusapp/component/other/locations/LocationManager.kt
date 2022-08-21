@@ -16,7 +16,7 @@ import de.uos.campusapp.component.tumui.calendar.CalendarController
 import de.uos.campusapp.component.tumui.roomfinder.api.RoomFinderAPI
 import de.uos.campusapp.component.tumui.roomfinder.model.RoomFinderCoordinateInterface
 import de.uos.campusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
-import de.uos.campusapp.component.ui.cafeteria.model.Cafeteria
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaItem
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.uos.campusapp.component.ui.transportation.model.Station
 import de.uos.campusapp.database.TcaDb
@@ -87,7 +87,7 @@ class LocationManager @Inject constructor(c: Context) {
      *
      * @return Campus id
      */
-    private fun getCafeterias(): List<Cafeteria> {
+    private fun getCafeterias(): List<CafeteriaItem> {
         val location = getCurrentOrNextLocation()
 
         val cafeterias = cafeteriaLocalRepository.getAllCafeterias()

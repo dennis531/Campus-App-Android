@@ -10,7 +10,7 @@ import de.uos.campusapp.api.general.model.TUMCabeVerification;
 import de.uos.campusapp.api.general.model.UploadStatus;
 import de.uos.campusapp.component.tumui.feedback.model.Feedback;
 import de.uos.campusapp.component.tumui.feedback.model.FeedbackResult;
-import de.uos.campusapp.component.ui.cafeteria.model.Cafeteria;
+import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteria;
 import de.uos.campusapp.component.ui.openinghours.model.Location;
 import de.uos.campusapp.component.ui.chat.model.ChatMember;
 import de.uos.campusapp.component.ui.chat.model.ChatMessage;
@@ -118,7 +118,7 @@ public interface TUMCabeAPIService {
     Call<FeedbackResult> sendFeedbackImage(@Part MultipartBody.Part image, @Path("image") int imageNr, @Path("id") String feedbackId);
 
     @GET(API_CAFETERIAS)
-    Observable<List<Cafeteria>> getCafeterias();
+    Observable<List<AbstractCafeteria>> getCafeterias();
 
 //    @GET(API_NEWS + "{lastNewsId}")
 //    Call<List<NewsItem>> getNews(@Path("lastNewsId") String lastNewsId);

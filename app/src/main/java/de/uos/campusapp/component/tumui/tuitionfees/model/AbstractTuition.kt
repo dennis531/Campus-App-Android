@@ -13,6 +13,11 @@ import java.util.*
 
 /**
  * Abstract class holding tuition information.
+ *
+ * @property start start of re-registration period
+ * @property deadline end of re-registration period
+ * @property semester tuition semester name
+ * @property amount amount of tuition fee
  */
 abstract class AbstractTuition {
     abstract val start: DateTime

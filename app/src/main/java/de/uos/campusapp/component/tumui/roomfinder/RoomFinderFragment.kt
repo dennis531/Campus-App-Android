@@ -108,7 +108,7 @@ class RoomFinderFragment : FragmentForSearchingInBackground<List<RoomFinderRoomI
      * a given room. Also adds this room to the recent queries.
      */
     private fun openRoomDetails(room: RoomFinderRoomInterface) {
-        val values = "${room.id};${room.buildingId};${room.name};${room.address};${room.campus};${room.info};${room.imageUrl}"
+        val values = "${room.id};${room.name};${room.address};${room.campus};${room.info};${room.imageUrl}"
         recentsDao.insert(Recent(values, RecentsDao.ROOMS))
 
         // Start detail activity

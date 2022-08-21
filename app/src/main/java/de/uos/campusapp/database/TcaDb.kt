@@ -25,10 +25,10 @@ import de.uos.campusapp.component.ui.cafeteria.CafeteriaDao
 import de.uos.campusapp.component.ui.cafeteria.CafeteriaMenuDao
 import de.uos.campusapp.component.ui.cafeteria.CafeteriaMenuPriceDao
 import de.uos.campusapp.component.ui.cafeteria.FavoriteDishDao
-import de.uos.campusapp.component.ui.cafeteria.model.Cafeteria
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenuPriceItem
-import de.uos.campusapp.component.ui.cafeteria.model.FavoriteDish
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaItem
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuPriceItem
+import de.uos.campusapp.component.ui.cafeteria.model.database.FavoriteDish
 import de.uos.campusapp.component.ui.chat.ChatMessageDao
 import de.uos.campusapp.component.ui.chat.ChatRoomDao
 import de.uos.campusapp.component.ui.chat.model.ChatMessage
@@ -53,8 +53,8 @@ import de.uos.campusapp.utils.sync.model.Sync
 import java.util.concurrent.ExecutionException
 
 @Database(version = 1, entities = [
-    Cafeteria::class,
-    CafeteriaMenu::class,
+    CafeteriaItem::class,
+    CafeteriaMenuItem::class,
     CafeteriaMenuPriceItem::class,
     FavoriteDish::class,
     Sync::class,

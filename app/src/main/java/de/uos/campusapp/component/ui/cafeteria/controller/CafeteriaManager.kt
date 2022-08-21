@@ -6,7 +6,7 @@ import de.uos.campusapp.api.tumonline.CacheControl
 import de.uos.campusapp.component.notifications.ProvidesNotifications
 import de.uos.campusapp.component.other.locations.LocationManager
 import de.uos.campusapp.component.ui.cafeteria.CafeteriaMenuCard
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
 import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaWithMenus
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.uos.campusapp.component.ui.overview.card.Card
@@ -29,10 +29,10 @@ class CafeteriaManager @Inject constructor(private val context: Context) : Provi
     }
 
     /**
-     * Returns a list of [CafeteriaMenu]s of the best-matching cafeteria. If there's no
+     * Returns a list of [CafeteriaMenuItem]s of the best-matching cafeteria. If there's no
      * best-matching cafeteria, it returns an empty list.
      */
-    val bestMatchCafeteriaMenus: List<CafeteriaMenu>
+    val bestMatchCafeteriaMenus: List<CafeteriaMenuItem>
         get() {
             val cafeteriaId = bestMatchMensaId
             return if (cafeteriaId == Const.NO_CAFETERIA_FOUND) {
@@ -82,7 +82,7 @@ class CafeteriaManager @Inject constructor(private val context: Context) : Provi
         return Utils.getSettingBool(context, "card_cafeteria_phone", true)
     }
 
-    private fun getCafeteriaMenusByCafeteriaId(cafeteriaId: String): List<CafeteriaMenu> {
+    private fun getCafeteriaMenusByCafeteriaId(cafeteriaId: String): List<CafeteriaMenuItem> {
         val cafeteria = CafeteriaWithMenus(cafeteriaId)
 
         cafeteria.menuDates = localRepository.getAllMenuDates()

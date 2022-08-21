@@ -5,8 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import de.uos.campusapp.R
 import de.uos.campusapp.component.ui.cafeteria.FavoriteDishDao
-import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaMenu
-import de.uos.campusapp.component.ui.cafeteria.model.FavoriteDish
+import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
+import de.uos.campusapp.component.ui.cafeteria.model.database.FavoriteDish
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
@@ -19,7 +19,7 @@ sealed class CafeteriaMenuAdapterItem {
         listener: (() -> Unit)?
     )
 
-    data class Header(val menu: CafeteriaMenu) : CafeteriaMenuAdapterItem() {
+    data class Header(val menu: CafeteriaMenuItem) : CafeteriaMenuAdapterItem() {
 
         override val id: String
             get() = "header_${menu.id}"
@@ -36,7 +36,7 @@ sealed class CafeteriaMenuAdapterItem {
     }
 
     data class Item(
-        val menu: CafeteriaMenu,
+        val menu: CafeteriaMenuItem,
         val isFavorite: Boolean = false,
         val isBigLayout: Boolean,
         val favoriteDishDao: FavoriteDishDao

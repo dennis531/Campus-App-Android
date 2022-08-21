@@ -11,6 +11,18 @@ import de.uos.campusapp.utils.DateTimeUtils
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 
+/**
+ * Represents an event in the calendar
+ *
+ * @property id Identifier
+ * @property title Title
+ * @property type Type of event (Default: CalendarItemType.LECTURE)
+ * @property description Description (optional)
+ * @property dtstart Event start time (Default: DateTime())
+ * @property dtend Event end time (Default: DateTime())
+ * @property location Location (optional)
+ * @property isEditable Can this event be changed or deleted? (Default: false)
+ */
 abstract class AbstractEvent {
     abstract val id: String?
     abstract val title: String

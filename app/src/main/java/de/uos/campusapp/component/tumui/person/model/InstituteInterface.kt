@@ -2,6 +2,11 @@ package de.uos.campusapp.component.tumui.person.model
 
 import java.io.Serializable
 
+/**
+ * Represents an institute
+ *
+ * @property name Institute name
+ */
 interface InstituteInterface : Serializable {
     var name: String
 
