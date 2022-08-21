@@ -110,12 +110,12 @@ class MainFragment : BaseFragment<Unit>(
         // The earliest possible re-trigger of a review prompt occurs after half a year
         val lastReviewDate = Utils.getSetting(requireContext(), Const.LAST_REVIEW_PROMPT, "0").toLong()
 
-        if (DateTime.now().minusMonths(6).isAfter(lastReviewDate) &&
-                Utils.getSetting(requireContext(), Const.USERNAME, "").isNotEmpty() &&
-                Utils.getSettingBool(requireContext(), Const.HAS_VISITED_GRADES, false) &&
-                Utils.getSettingBool(requireContext(), Const.HAS_VISITED_CALENDAR, false)) {
-            triggerReviewPrompt()
-        }
+//        if (DateTime.now().minusMonths(6).isAfter(lastReviewDate) &&
+//                Utils.getSetting(requireContext(), Const.USERNAME, "").isNotEmpty() &&
+//                Utils.getSettingBool(requireContext(), Const.HAS_VISITED_GRADES, false) &&
+//                Utils.getSettingBool(requireContext(), Const.HAS_VISITED_CALENDAR, false)) {
+//            triggerReviewPrompt()
+//        }
     }
 
     override fun onResume() {
