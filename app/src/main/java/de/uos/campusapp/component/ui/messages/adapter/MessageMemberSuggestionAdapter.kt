@@ -8,18 +8,18 @@ import android.widget.BaseAdapter
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
-import de.uos.campusapp.component.ui.messages.model.MessageMember
+import de.uos.campusapp.component.ui.messages.model.AbstractMessageMember
 
 class MessageMemberSuggestionAdapter(
     private val context: Context,
-    private var members: List<MessageMember>
+    private var members: List<AbstractMessageMember>
 ): BaseAdapter(), Filterable {
 
     override fun getCount(): Int {
         return members.size
     }
 
-    override fun getItem(position: Int): MessageMember {
+    override fun getItem(position: Int): AbstractMessageMember {
         return members[position]
     }
 
@@ -36,7 +36,7 @@ class MessageMemberSuggestionAdapter(
         return view
     }
 
-    fun updateSuggestions(members: List<MessageMember>) {
+    fun updateSuggestions(members: List<AbstractMessageMember>) {
         this.members = members
         notifyDataSetChanged()
     }

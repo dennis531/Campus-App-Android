@@ -1,6 +1,6 @@
 package de.uos.campusapp.component.ui.chat.repository
 
-import de.uos.campusapp.component.ui.chat.model.ChatMessage
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem
 import de.uos.campusapp.database.TcaDb
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -15,27 +15,27 @@ object ChatMessageLocalRepository {
 
     fun deleteOldEntries() = db.chatMessageDao().deleteOldEntries()
 
-    fun addToUnsent(message: ChatMessage) {
+    fun addToUnsent(message: ChatMessageItem) {
         executor.execute { db.chatMessageDao().replaceMessage(message) }
     }
 
-    fun getAllChatMessagesList(room: String): List<ChatMessage> = db.chatMessageDao().getAll(room)
+    fun getAllChatMessagesList(room: String): List<ChatMessageItem> = db.chatMessageDao().getAll(room)
 
     fun getNumberUnread(room: String): Int = db.chatMessageDao().getNumberUnread(room)
 
-    fun getUnsent(): List<ChatMessage> = db.chatMessageDao().unsent
+    fun getUnsent(): List<ChatMessageItem> = db.chatMessageDao().unsent
 
-    fun getUnsentInChatRoom(roomId: String): List<ChatMessage> = db.chatMessageDao().getUnsentInChatRoom(roomId)
+    fun getUnsentInChatRoom(roomId: String): List<ChatMessageItem> = db.chatMessageDao().getUnsentInChatRoom(roomId)
 
-    fun replaceMessages(chatMessages: List<ChatMessage>) {
+    fun replaceMessages(chatMessages: List<ChatMessageItem>) {
         chatMessages.forEach { replaceMessage(it) }
     }
 
-    fun replaceMessage(chatMessage: ChatMessage) {
+    fun replaceMessage(chatMessage: ChatMessageItem) {
         executor.execute { db.chatMessageDao().replaceMessage(chatMessage) }
     }
 
-    fun removeUnsent(chatMessage: ChatMessage) {
+    fun removeUnsent(chatMessage: ChatMessageItem) {
         executor.execute { db.chatMessageDao().removeUnsent(chatMessage.text) }
     }
 }

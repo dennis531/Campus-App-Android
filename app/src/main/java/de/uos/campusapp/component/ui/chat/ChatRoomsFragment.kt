@@ -30,6 +30,7 @@ import de.uos.campusapp.component.ui.chat.activity.JoinRoomScanActivity
 import de.uos.campusapp.component.ui.chat.adapter.ChatRoomListAdapter
 import de.uos.campusapp.component.ui.chat.api.ChatAPI
 import de.uos.campusapp.component.ui.chat.model.ChatMember
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom
 import de.uos.campusapp.component.ui.chat.model.ChatRoom
 import de.uos.campusapp.component.ui.chat.model.ChatRoomAndLastMessage
 import de.uos.campusapp.databinding.FragmentChatRoomsBinding
@@ -40,18 +41,18 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.support.v4.runOnUiThread
 
-class ChatRoomsFragment : FragmentForAccessingApi<List<ChatRoom>>(
+class ChatRoomsFragment : FragmentForAccessingApi<List<AbstractChatRoom>>(
     R.layout.fragment_chat_rooms,
     R.string.chat_rooms,
     Component.CHAT
 ) {
 
-    private var currentMode = ChatRoom.MODE_JOINED
+    private var currentMode = AbstractChatRoom.MODE_JOINED
     private val manager: ChatRoomController by lazy {
         ChatRoomController(requireContext())
     }
 
-    private var currentChatRoom: ChatRoom? = null
+    private var currentChatRoom: AbstractChatRoom? = null
     private var currentChatMember: ChatMember? = null
 
     private lateinit var chatRoomsAdapter: ChatRoomListAdapter
@@ -111,7 +112,7 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<ChatRoom>>(
         fetch { (apiClient as ChatAPI).getChatRooms() }
     }
 
-    override fun onDownloadSuccessful(response: List<ChatRoom>) {
+    override fun onDownloadSuccessful(response: List<AbstractChatRoom>) {
         val chatRooms = response
 
         // We're starting more background work, so we show a loading indicator again
@@ -124,7 +125,7 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<ChatRoom>>(
         handler.post { updateDatabase(chatRooms) }
     }
 
-    private fun updateDatabase(chatRooms: List<ChatRoom>) {
+    private fun updateDatabase(chatRooms: List<AbstractChatRoom>) {
         populateCurrentChatMember()
 
         val currentChatMember = currentChatMember
@@ -164,7 +165,7 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<ChatRoom>>(
     private fun onItemClick(adapterView: AdapterView<*>, v: View, position: Int, id: Long) {
         val item = binding.chatRoomsListView.getItemAtPosition(position) as ChatRoomAndLastMessage
 
-        val room = ChatRoom.fromChatRoomDbRow(item.chatRoomDbRow!!)
+        val room = AbstractChatRoom.fromChatRoomDbRow(item.chatRoomDbRow!!)
 
         if (room.joined) {
             moveToChatActivity(room)
@@ -177,7 +178,7 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<ChatRoom>>(
      * Creates a given chat room if it does not exist and joins it
      * Works asynchronously.
      */
-    private fun joinChatRoom(room: ChatRoom) {
+    private fun joinChatRoom(room: AbstractChatRoom) {
         Utils.logVerbose("join chat room ${room.title}")
         if (this.currentChatMember == null) {
             Utils.showToast(requireContext(), getString(R.string.chat_not_setup))
@@ -203,7 +204,7 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<ChatRoom>>(
                 manager.join(currentChatRoom)
 
                 // When we show joined chat rooms open chat room directly
-                if (currentMode == ChatRoom.MODE_JOINED) {
+                if (currentMode == AbstractChatRoom.MODE_JOINED) {
                     moveToChatActivity(currentChatRoom!!)
                 } else { // Otherwise show a nice information, that we added the room
                     val rooms = manager.getAllByStatus(currentMode)
@@ -223,7 +224,7 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<ChatRoom>>(
     /**
      * Opens [ChatActivity]
      */
-    private fun moveToChatActivity(room: ChatRoom) {
+    private fun moveToChatActivity(room: AbstractChatRoom) {
         // We are sure that both currentChatRoom and currentChatMember exist at this point
         val intent = Intent(requireContext(), ChatActivity::class.java)
         intent.putExtra(Const.CURRENT_CHAT_ROOM, Gson().toJson(room))
@@ -290,7 +291,7 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<ChatRoom>>(
             return
         }
 
-        currentChatRoom = ChatRoom(title = name)
+        currentChatRoom = ChatRoom("0", name)
 
         compositeDisposable += Single.fromCallable { (apiClient as ChatAPI).createChatRoom(currentChatRoom!!) }
             .subscribeOn(Schedulers.io())
@@ -309,7 +310,7 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<ChatRoom>>(
                 manager.join(currentChatRoom)
 
                 // When we show joined chat rooms open chat room directly
-                if (currentMode == ChatRoom.MODE_JOINED) {
+                if (currentMode == AbstractChatRoom.MODE_JOINED) {
                     moveToChatActivity(currentChatRoom!!)
                 } else { // Otherwise show a nice information, that we added the room
                     val rooms = manager.getAllByStatus(currentMode)
@@ -361,7 +362,7 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<ChatRoom>>(
         if (requestCode == JOIN_ROOM_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             val roomJson = data.getStringExtra("room") ?: return
 
-            joinChatRoom(Gson().fromJson(roomJson, ChatRoom::class.java))
+            joinChatRoom(Gson().fromJson(roomJson, AbstractChatRoom::class.java))
         }
     }
 

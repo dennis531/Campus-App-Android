@@ -12,8 +12,8 @@ class Message(
     override val subject: String,
     override val text: String,
     override var type: MessageType,
-    override val sender: MessageMember?,
-    override val recipients: List<MessageMember>,
+    override val sender: AbstractMessageMember?,
+    override val recipients: List<AbstractMessageMember>,
     override val date: DateTime
 ) : AbstractMessage() {
 
@@ -22,8 +22,8 @@ class Message(
         parcel.readString()!!,
         parcel.readString()!!,
         MessageType.valueOf(parcel.readString()!!),
-        parcel.readParcelable(MessageMember::class.java.classLoader),
-        parcel.readParcelableArray(MessageMember::class.java.classLoader)!!.toList() as List<MessageMember>,
+        parcel.readParcelable(AbstractMessageMember::class.java.classLoader),
+        parcel.readParcelableArray(AbstractMessageMember::class.java.classLoader)!!.toList() as List<AbstractMessageMember>,
         DateTimeUtils.getDateTime(parcel.readString()!!)
     )
 }

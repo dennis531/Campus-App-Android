@@ -17,8 +17,8 @@ import de.uos.campusapp.component.notifications.model.InstantNotification
 import de.uos.campusapp.component.notifications.persistence.NotificationType
 import de.uos.campusapp.component.ui.chat.activity.ChatActivity
 import de.uos.campusapp.component.ui.chat.activity.ChatRoomsActivity
-import de.uos.campusapp.component.ui.chat.model.ChatMessage
-import de.uos.campusapp.component.ui.chat.model.ChatRoom
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom
 import de.uos.campusapp.component.ui.overview.CardManager
 import de.uos.campusapp.component.ui.overview.MainActivity
 import de.uos.campusapp.utils.Const
@@ -26,8 +26,8 @@ import de.uos.campusapp.utils.Utils
 
 class ChatNotificationProvider(
     context: Context,
-    private val chatRoom: ChatRoom,
-    private val newMessages: List<ChatMessage>
+    private val chatRoom: AbstractChatRoom,
+    private val newMessages: List<ChatMessageItem>
 ) : NotificationProvider(context) {
 
     private val sound: Uri = Uri.parse("android.resource://${context.packageName}/${R.raw.message}")

@@ -9,7 +9,7 @@ import org.robolectric.annotation.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.uos.campusapp.component.ui.chat.model.ChatMessage;
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem;
 import de.uos.campusapp.component.ui.chat.model.ChatPublicKey;
 
 import static org.junit.Assert.assertFalse;
@@ -21,7 +21,7 @@ public class ChatMessageValidatorTestCase {
 
     private ChatMessageValidator validator;
     private List<ChatPublicKey> publicKeyFixtures;
-    private List<ChatMessage> messageFixtures;
+    private List<ChatMessageItem> messageFixtures;
 
     @Before
     public void setUp() {
@@ -64,8 +64,8 @@ public class ChatMessageValidatorTestCase {
         return list;
     }
 
-    private ChatMessage buildChatMessage(String text, String signature) {
-        ChatMessage message = new ChatMessage(text);
+    private ChatMessageItem buildChatMessage(String text, String signature) {
+        ChatMessageItem message = new ChatMessageItem(text);
         message.setSignature(signature);
 
         return message;
@@ -78,7 +78,7 @@ public class ChatMessageValidatorTestCase {
     @Test
     public void testAsciiValidMessageOneKey() {
         validator = new ChatMessageValidator(buildPubkeyList(0, 1));
-        ChatMessage message = messageFixtures.get(0);
+        ChatMessageItem message = messageFixtures.get(0);
 
         assertTrue(validator.validate(message));
     }
@@ -90,7 +90,7 @@ public class ChatMessageValidatorTestCase {
     @Test
     public void testAsciiInvalidMessageOneKey() {
         validator = new ChatMessageValidator(buildPubkeyList(0, 1));
-        ChatMessage message = messageFixtures.get(0);
+        ChatMessageItem message = messageFixtures.get(0);
         // Take a signature of a different message
         message.setSignature(messageFixtures.get(1)
                                             .getSignature());
@@ -104,7 +104,7 @@ public class ChatMessageValidatorTestCase {
     @Test
     public void testUnicodeValidMessageOneKey() {
         validator = new ChatMessageValidator(buildPubkeyList(0, 1));
-        ChatMessage message = messageFixtures.get(1);
+        ChatMessageItem message = messageFixtures.get(1);
 
         assertTrue(validator.validate(message));
     }
@@ -115,7 +115,7 @@ public class ChatMessageValidatorTestCase {
     @Test
     public void testUnicodeKoreanValidMessageOneKey() {
         validator = new ChatMessageValidator(buildPubkeyList(0, 1));
-        ChatMessage message = messageFixtures.get(2);
+        ChatMessageItem message = messageFixtures.get(2);
 
         assertTrue(validator.validate(message));
     }
@@ -127,7 +127,7 @@ public class ChatMessageValidatorTestCase {
     @Test
     public void testInvalidBase64Signature() {
         validator = new ChatMessageValidator(buildPubkeyList(0, 1));
-        ChatMessage message = buildChatMessage("This is a message!", "This is not valid base64...");
+        ChatMessageItem message = buildChatMessage("This is a message!", "This is not valid base64...");
 
         assertFalse(validator.validate(message));
     }
@@ -142,7 +142,7 @@ public class ChatMessageValidatorTestCase {
         list.get(0)
             .setKey("This is not valid base 64");
         validator = new ChatMessageValidator(list);
-        ChatMessage message = messageFixtures.get(0);
+        ChatMessageItem message = messageFixtures.get(0);
 
         assertFalse(validator.validate(message));
     }
@@ -155,7 +155,7 @@ public class ChatMessageValidatorTestCase {
     public void testNoPublicKeys() {
         validator = new ChatMessageValidator(new ArrayList<>());
 
-        for (ChatMessage message : messageFixtures) {
+        for (ChatMessageItem message : messageFixtures) {
             assertFalse(validator.validate(message));
         }
     }
@@ -170,7 +170,7 @@ public class ChatMessageValidatorTestCase {
         list.add(new ChatPublicKey("This is not a valid key"));
         list.add(publicKeyFixtures.get(0));
         validator = new ChatMessageValidator(list);
-        ChatMessage message = messageFixtures.get(0);
+        ChatMessageItem message = messageFixtures.get(0);
 
         assertTrue(validator.validate(message));
     }

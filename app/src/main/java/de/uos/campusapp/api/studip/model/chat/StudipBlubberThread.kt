@@ -7,10 +7,10 @@ import com.github.jasminb.jsonapi.annotations.Relationship
 import com.github.jasminb.jsonapi.annotations.Type
 import de.uos.campusapp.api.studip.model.lectures.StudipLecture
 import de.uos.campusapp.api.studip.model.person.StudipPerson
-import de.uos.campusapp.component.ui.chat.model.ChatRoom
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom
 
 @Type("blubber-threads")
-class StudipBlubberThread : ChatRoom() {
+class StudipBlubberThread : AbstractChatRoom() {
     @Id
     override var id: String = "0"
 

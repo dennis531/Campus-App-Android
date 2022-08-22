@@ -10,7 +10,7 @@ import com.google.gson.Gson
 import de.uos.campusapp.R
 import de.uos.campusapp.component.other.navigation.NavDestination
 import de.uos.campusapp.component.ui.chat.activity.ChatActivity
-import de.uos.campusapp.component.ui.chat.model.ChatMessage
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem
 import de.uos.campusapp.component.ui.chat.model.ChatRoom
 import de.uos.campusapp.component.ui.chat.model.ChatRoomDbRow
 import de.uos.campusapp.component.ui.overview.CardInteractionListener
@@ -30,7 +30,7 @@ class ChatMessagesCard(
     room: ChatRoomDbRow
 ) : Card(CARD_CHAT, context, Component.CHAT, "card_chat") {
 
-    private var mUnread: List<ChatMessage> = ArrayList()
+    private var mUnread: List<ChatMessageItem> = ArrayList()
     private var nrUnread = 0
     private var mRoomName = ""
     private var mRoomId = "0"

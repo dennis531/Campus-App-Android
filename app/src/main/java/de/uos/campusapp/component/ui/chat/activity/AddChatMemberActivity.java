@@ -22,7 +22,7 @@ import de.uos.campusapp.component.other.generic.activity.BaseActivity;
 import de.uos.campusapp.component.ui.chat.adapter.MemberSuggestionsListAdapter;
 import de.uos.campusapp.component.ui.chat.api.ChatAPI;
 import de.uos.campusapp.component.ui.chat.model.ChatMember;
-import de.uos.campusapp.component.ui.chat.model.ChatRoom;
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom;
 import de.uos.campusapp.database.TcaDb;
 import de.uos.campusapp.utils.Component;
 import de.uos.campusapp.utils.ConfigUtils;
@@ -40,7 +40,7 @@ import io.reactivex.schedulers.Schedulers;
 public class AddChatMemberActivity extends BaseActivity {
     private static final int THRESHOLD = 3; // min number of characters before getting suggestions
     private static final int DELAY = 1000; // millis after user stopped typing before getting suggestions
-    private ChatRoom room;
+    private AbstractChatRoom room;
     private ChatAPI apiClient;
     private CompositeDisposable compositeDisposable;
     private AutoCompleteTextView searchView;
@@ -62,7 +62,7 @@ public class AddChatMemberActivity extends BaseActivity {
         delayHandler = new Handler();
 
         String encodedRoom = getIntent().getStringExtra(Const.CURRENT_CHAT_ROOM);
-        room = new Gson().fromJson(encodedRoom, ChatRoom.class);
+        room = new Gson().fromJson(encodedRoom, AbstractChatRoom.class);
         Utils.log("ChatRoom: " + room.getTitle() + " (roomId: " + room.getId() + ")");
 
         apiClient = (ChatAPI) ConfigUtils.getApiClient(this, Component.CHAT);

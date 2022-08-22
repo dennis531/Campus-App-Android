@@ -18,10 +18,7 @@ import de.uos.campusapp.R
 import de.uos.campusapp.component.other.generic.fragment.BaseFragment
 import de.uos.campusapp.component.ui.messages.MessagesController
 import de.uos.campusapp.component.ui.messages.adapter.MessageMemberSuggestionAdapter
-import de.uos.campusapp.component.ui.messages.model.AbstractMessage
-import de.uos.campusapp.component.ui.messages.model.Message
-import de.uos.campusapp.component.ui.messages.model.MessageMember
-import de.uos.campusapp.component.ui.messages.model.MessageType
+import de.uos.campusapp.component.ui.messages.model.*
 import de.uos.campusapp.databinding.FragmentCreateMessageBinding
 import de.uos.campusapp.di.injector
 import de.uos.campusapp.service.SendMessageWorker
@@ -46,7 +43,7 @@ class CreateMessageFragment : BaseFragment<Unit>(
 
     private var replyMessage: AbstractMessage? = null
 
-    private val recipients: MutableList<MessageMember> = mutableListOf()
+    private val recipients: MutableList<AbstractMessageMember> = mutableListOf()
     private val recipientSuggestionAdapter by lazy {
         MessageMemberSuggestionAdapter(requireContext(), emptyList())
     }
@@ -160,7 +157,7 @@ class CreateMessageFragment : BaseFragment<Unit>(
             })
     }
 
-    private fun addRecipient(recipient: MessageMember) {
+    private fun addRecipient(recipient: AbstractMessageMember) {
         with(binding) {
             if (recipients.contains(recipient)) {
                 recipientsAutoCompleteTextView.error = getString(R.string.error_recipient_selected)

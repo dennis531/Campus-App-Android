@@ -31,7 +31,7 @@ import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuPrice
 import de.uos.campusapp.component.ui.cafeteria.model.database.FavoriteDish
 import de.uos.campusapp.component.ui.chat.ChatMessageDao
 import de.uos.campusapp.component.ui.chat.ChatRoomDao
-import de.uos.campusapp.component.ui.chat.model.ChatMessage
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem
 import de.uos.campusapp.component.ui.chat.model.ChatRoomDbRow
 import de.uos.campusapp.component.ui.messages.MessageDao
 import de.uos.campusapp.component.ui.messages.model.MessageItem
@@ -59,7 +59,7 @@ import java.util.concurrent.ExecutionException
     FavoriteDish::class,
     Sync::class,
     BuildingToGps::class,
-    ChatMessage::class,
+    ChatMessageItem::class,
     Location::class,
     NewsItem::class,
     MessageItem::class,

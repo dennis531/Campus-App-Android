@@ -13,8 +13,8 @@ import de.uos.campusapp.component.tumui.feedback.model.FeedbackResult;
 import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteria;
 import de.uos.campusapp.component.ui.openinghours.model.Location;
 import de.uos.campusapp.component.ui.chat.model.ChatMember;
-import de.uos.campusapp.component.ui.chat.model.ChatMessage;
-import de.uos.campusapp.component.ui.chat.model.ChatRoom;
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem;
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom;
 import de.uos.campusapp.component.ui.updatenote.model.UpdateNote;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -40,30 +40,30 @@ public interface TUMCabeAPIService {
 
     //Group chat
     @POST(API_CHAT_ROOMS)
-    Call<ChatRoom> createRoom(@Body TUMCabeVerification verification);
+    Call<AbstractChatRoom> createRoom(@Body TUMCabeVerification verification);
 
     @GET(API_CHAT_ROOMS + "{room}")
-    Call<ChatRoom> getChatRoom(@Path("room") int id);
+    Call<AbstractChatRoom> getChatRoom(@Path("room") int id);
 
     @POST(API_CHAT_ROOMS + "{room}/leave/")
-    Call<ChatRoom> leaveChatRoom(@Path("room") int roomId, @Body TUMCabeVerification verification);
+    Call<AbstractChatRoom> leaveChatRoom(@Path("room") int roomId, @Body TUMCabeVerification verification);
 
     @POST(API_CHAT_ROOMS + "{room}/add/{member}")
-    Call<ChatRoom> addUserToChat(@Path("room") int roomId, @Path("member") int userId, @Body TUMCabeVerification verification);
+    Call<AbstractChatRoom> addUserToChat(@Path("room") int roomId, @Path("member") int userId, @Body TUMCabeVerification verification);
 
     //Get/Update single message
     @PUT(API_CHAT_ROOMS + "{room}/message/")
-    Observable<ChatMessage> sendMessage(@Path("room") int roomId, @Body TUMCabeVerification message);
+    Observable<ChatMessageItem> sendMessage(@Path("room") int roomId, @Body TUMCabeVerification message);
 
     @PUT(API_CHAT_ROOMS + "{room}/message/{message}/")
-    Observable<ChatMessage> updateMessage(@Path("room") int roomId, @Path("message") String messageId, @Body TUMCabeVerification message);
+    Observable<ChatMessageItem> updateMessage(@Path("room") int roomId, @Path("message") String messageId, @Body TUMCabeVerification message);
 
     //Get all recent messages or older ones
     @POST(API_CHAT_ROOMS + "{room}/messages/{page}/")
-    Observable<List<ChatMessage>> getMessages(@Path("room") int roomId, @Path("page") long messageId, @Body TUMCabeVerification verification);
+    Observable<List<ChatMessageItem>> getMessages(@Path("room") int roomId, @Path("page") long messageId, @Body TUMCabeVerification verification);
 
     @POST(API_CHAT_ROOMS + "{room}/messages/")
-    Observable<List<ChatMessage>> getNewMessages(@Path("room") int roomId, @Body TUMCabeVerification verification);
+    Observable<List<ChatMessageItem>> getNewMessages(@Path("room") int roomId, @Body TUMCabeVerification verification);
 
     @POST(API_CHAT_MEMBERS)
     Call<ChatMember> createMember(@Body ChatMember chatMember);
@@ -75,7 +75,7 @@ public interface TUMCabeAPIService {
     Call<List<ChatMember>> searchMemberByName(@Path("query") String nameQuery);
 
     @POST(API_CHAT_MEMBERS + "{memberId}/rooms/")
-    Call<List<ChatRoom>> getMemberRooms(@Path("memberId") int memberId, @Body TUMCabeVerification verification);
+    Call<List<AbstractChatRoom>> getMemberRooms(@Path("memberId") int memberId, @Body TUMCabeVerification verification);
 
     @POST(API_MEMBERS + "uploadIds/{lrzId}/")
     Observable<TUMCabeStatus> uploadObfuscatedIds(@Path("lrzId") String lrzId, @Body ObfuscatedIdsUpload ids);

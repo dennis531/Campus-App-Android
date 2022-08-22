@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import de.uos.campusapp.component.ui.chat.model.ChatMessage
-import de.uos.campusapp.component.ui.chat.model.ChatRoom
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageLocalRepository
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageRemoteRepository
 import de.uos.campusapp.utils.Const
@@ -24,22 +24,22 @@ class ChatMessageViewModel(
 
     fun deleteOldEntries() = localRepository.deleteOldEntries()
 
-    fun addToUnsent(message: ChatMessage) = localRepository.addToUnsent(message)
+    fun addToUnsent(message: ChatMessageItem) = localRepository.addToUnsent(message)
 
-    fun getAll(room: String): List<ChatMessage> = localRepository.getAllChatMessagesList(room)
+    fun getAll(room: String): List<ChatMessageItem> = localRepository.getAllChatMessagesList(room)
 
     fun getNumberUnread(room: String): Int = localRepository.getNumberUnread(room)
 
-    fun getUnsent(): List<ChatMessage> = localRepository.getUnsent()
+    fun getUnsent(): List<ChatMessageItem> = localRepository.getUnsent()
 
-    fun getUnsentInChatRoom(room: ChatRoom): List<ChatMessage> {
+    fun getUnsentInChatRoom(room: AbstractChatRoom): List<ChatMessageItem> {
         return localRepository.getUnsentInChatRoom(room.id)
     }
 
     fun getOlderMessages(
-        room: ChatRoom,
-        message: ChatMessage,
-    ): Observable<List<ChatMessage>> {
+        room: AbstractChatRoom,
+        message: ChatMessageItem,
+    ): Observable<List<ChatMessageItem>> {
         return remoteRepository
                 .getMessages(room, message)
                 .subscribeOn(Schedulers.io())
@@ -48,8 +48,8 @@ class ChatMessageViewModel(
     }
 
     fun getNewMessages(
-        room: ChatRoom,
-    ): Observable<List<ChatMessage>> {
+        room: AbstractChatRoom,
+    ): Observable<List<ChatMessageItem>> {
         return remoteRepository
                 .getNewMessages(room)
                 .subscribeOn(Schedulers.io())
@@ -57,13 +57,13 @@ class ChatMessageViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun sendMessage(room: ChatRoom, chatMessage: ChatMessage, context: Context): Disposable {
+    fun sendMessage(room: AbstractChatRoom, chatMessage: ChatMessageItem, context: Context): Disposable {
         val broadcastManager = LocalBroadcastManager.getInstance(context)
 
         return remoteRepository.sendMessage(room, chatMessage)
                 .subscribeOn(Schedulers.io())
                 .subscribe({ message ->
-                    message.sendingStatus = ChatMessage.STATUS_SENT
+                    message.sendingStatus = ChatMessageItem.STATUS_SENT
                     localRepository.replaceMessage(message)
                     localRepository.removeUnsent(chatMessage)
 
@@ -74,7 +74,7 @@ class ChatMessageViewModel(
                     broadcastManager.sendBroadcast(intent)
                 }, { t ->
                     Utils.logWithTag("ChatMessageViewModel", t.message ?: "unknown")
-                    chatMessage.sendingStatus = ChatMessage.STATUS_ERROR
+                    chatMessage.sendingStatus = ChatMessageItem.STATUS_ERROR
                     localRepository.replaceMessage(chatMessage)
                     val intent = Intent(Const.CHAT_BROADCAST_NAME)
                     broadcastManager.sendBroadcast(intent)

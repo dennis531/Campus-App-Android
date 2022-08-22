@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import de.uos.campusapp.component.ui.chat.model.ChatMember
-import de.uos.campusapp.component.ui.messages.model.MessageMember
+import de.uos.campusapp.component.ui.messages.model.AbstractMessageMember
 import de.uos.campusapp.utils.DateTimeUtils
 import de.uos.campusapp.utils.tryOrNull
 import org.joda.time.DateTime
@@ -29,20 +29,20 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromMessageMember(member: MessageMember?): String = Gson().toJson(member)
+    fun fromMessageMember(member: AbstractMessageMember?): String = Gson().toJson(member)
 
     @TypeConverter
-    fun toMessageMember(member: String): MessageMember? {
-        return tryOrNull { Gson().fromJson(member, MessageMember::class.java) }
+    fun toMessageMember(member: String): AbstractMessageMember? {
+        return tryOrNull { Gson().fromJson(member, AbstractMessageMember::class.java) }
     }
 
     @TypeConverter
-    fun fromMessageMemberList(members: List<MessageMember>?): String = Gson().toJson(members)
+    fun fromMessageMemberList(members: List<AbstractMessageMember>?): String = Gson().toJson(members)
 
     @TypeConverter
-    fun toMessageMemberList(member: String): List<MessageMember>? {
+    fun toMessageMemberList(member: String): List<AbstractMessageMember>? {
         return tryOrNull {
-            val type = object : TypeToken<List<MessageMember>>() {}.type
+            val type = object : TypeToken<List<AbstractMessageMember>>() {}.type
             Gson().fromJson(member, type)
         }
     }

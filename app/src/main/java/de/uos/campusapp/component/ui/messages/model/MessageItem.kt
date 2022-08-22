@@ -14,8 +14,8 @@ data class MessageItem(
     val text: String,
     @ColumnInfo(name = "type_id")
     val typeId: Int,
-    val sender: MessageMember?,
-    val recipients: List<MessageMember>,
+    val sender: AbstractMessageMember?,
+    val recipients: List<AbstractMessageMember>,
     val date: DateTime
 ) {
     val type: MessageType

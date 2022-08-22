@@ -19,14 +19,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import de.uos.campusapp.R;
 import de.uos.campusapp.component.ui.chat.model.ChatMember;
-import de.uos.campusapp.component.ui.chat.model.ChatMessage;
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem;
 
 public class ChatHistoryAdapter extends BaseAdapter {
 
     private static final int OUTGOING_MESSAGE = 0;
     private static final int INCOMING_MESSAGE = 1;
 
-    private List<ChatMessage> chatHistoryList = new ArrayList<>();
+    private List<ChatMessageItem> chatHistoryList = new ArrayList<>();
 
     private Context mContext;
     private OnRetrySendListener mRetryListener;
@@ -39,13 +39,13 @@ public class ChatHistoryAdapter extends BaseAdapter {
         currentChatMember = member;
     }
 
-    public void updateHistory(List<ChatMessage> newHistory) {
+    public void updateHistory(List<ChatMessageItem> newHistory) {
         chatHistoryList = newHistory;
         sortHistory();
         notifyDataSetChanged();
     }
 
-    public void addHistory(List<ChatMessage> newHistory) {
+    public void addHistory(List<ChatMessageItem> newHistory) {
         chatHistoryList.addAll(newHistory);
         sortHistory();
         notifyDataSetChanged();
@@ -61,7 +61,7 @@ public class ChatHistoryAdapter extends BaseAdapter {
     }
 
     @Override
-    public ChatMessage getItem(int position) {
+    public ChatMessageItem getItem(int position) {
         return chatHistoryList.get(position);
     }
 
@@ -90,7 +90,7 @@ public class ChatHistoryAdapter extends BaseAdapter {
         int layout = isOutgoing ? R.layout.activity_chat_history_row_outgoing
                                 : R.layout.activity_chat_history_row_incoming;
 
-        ChatMessage message = getItem(position);
+        ChatMessageItem message = getItem(position);
         ViewHolder holder;
 
         if (convertView == null) {
@@ -105,13 +105,13 @@ public class ChatHistoryAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void add(ChatMessage unsentMessage) {
+    public void add(ChatMessageItem unsentMessage) {
         chatHistoryList.add(unsentMessage);
         notifyDataSetChanged();
     }
 
     public interface OnRetrySendListener {
-        void onRetrySending(ChatMessage message);
+        void onRetrySending(ChatMessageItem message);
     }
 
     // Layout of the list row
@@ -137,12 +137,12 @@ public class ChatHistoryAdapter extends BaseAdapter {
             }
         }
 
-        public void bind(Context context, ChatMessage message,
+        public void bind(Context context, ChatMessageItem message,
                          boolean isOutgoingMessage, OnRetrySendListener retryListener) {
             messageTextView.setText(message.getText());
 
             if (isOutgoingMessage) {
-                boolean isSending = message.getSendingStatus() == ChatMessage.STATUS_SENDING;
+                boolean isSending = message.getSendingStatus() == ChatMessageItem.STATUS_SENDING;
                 statusImageView.setVisibility(isSending ? View.GONE : View.VISIBLE);
                 sendingProgressBar.setVisibility(isSending ? View.VISIBLE : View.GONE);
                 updateSendingStatus(context, message);
@@ -155,8 +155,8 @@ public class ChatHistoryAdapter extends BaseAdapter {
         }
 
         private void resendIfError(Context context,
-                                   ChatMessage message, OnRetrySendListener retryListener) {
-            if (message.getSendingStatus() == ChatMessage.STATUS_ERROR) {
+                                   ChatMessageItem message, OnRetrySendListener retryListener) {
+            if (message.getSendingStatus() == ChatMessageItem.STATUS_ERROR) {
                 AlertDialog dialog = new AlertDialog.Builder(context)
                         .setMessage(R.string.chat_message_try_again)
                         .setPositiveButton(R.string.retry, (dialogInterface, i) -> {
@@ -174,8 +174,8 @@ public class ChatHistoryAdapter extends BaseAdapter {
             }
         }
 
-        private void updateSendingStatus(Context context, ChatMessage message) {
-            boolean inProgress = message.getSendingStatus() == ChatMessage.STATUS_SENDING;
+        private void updateSendingStatus(Context context, ChatMessageItem message) {
+            boolean inProgress = message.getSendingStatus() == ChatMessageItem.STATUS_SENDING;
 
             statusImageView.setVisibility(inProgress ? View.GONE : View.VISIBLE);
             sendingProgressBar.setVisibility(inProgress ? View.VISIBLE : View.GONE);
@@ -188,7 +188,7 @@ public class ChatHistoryAdapter extends BaseAdapter {
                 return;
             }
 
-            boolean isError = message.getSendingStatus() == ChatMessage.STATUS_ERROR;
+            boolean isError = message.getSendingStatus() == ChatMessageItem.STATUS_ERROR;
 
             Drawable statusIcon;
             int iconTint;

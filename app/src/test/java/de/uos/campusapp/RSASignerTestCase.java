@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.uos.campusapp.api.general.AuthenticationManager;
-import de.uos.campusapp.component.ui.chat.model.ChatMessage;
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem;
 import de.uos.campusapp.utils.RSASigner;
 import de.uos.campusapp.utils.Utils;
 
@@ -28,7 +28,7 @@ public class RSASignerTestCase {
 
     private RSASigner signer;
     private PrivateKey privateKeyFixture;
-    private List<ChatMessage> messageFixtures;
+    private List<ChatMessageItem> messageFixtures;
 
     private static PrivateKey buildPrivateKey(String privateKeyString) {
         byte[] privateKeyBytes = Base64.decode(privateKeyString, Base64.DEFAULT);
@@ -77,8 +77,8 @@ public class RSASignerTestCase {
                         "MES0525W5YVR0knzoKw=\n"));
     }
 
-    private ChatMessage buildChatMessage(String text, String signature) {
-        ChatMessage message = new ChatMessage(text);
+    private ChatMessageItem buildChatMessage(String text, String signature) {
+        ChatMessageItem message = new ChatMessageItem(text);
         message.setSignature(signature);
         return message;
     }
@@ -89,7 +89,7 @@ public class RSASignerTestCase {
     @Test
     public void testAsciiMessageSigning() {
         signer = new RSASigner(privateKeyFixture);
-        ChatMessage message = messageFixtures.get(0);
+        ChatMessageItem message = messageFixtures.get(0);
 
         assertThat(signer.sign(message.getText())).isEqualTo(message.getSignature());
     }
@@ -100,7 +100,7 @@ public class RSASignerTestCase {
     @Test
     public void testUnicodeMessageSigning() {
         signer = new RSASigner(privateKeyFixture);
-        ChatMessage message = messageFixtures.get(1);
+        ChatMessageItem message = messageFixtures.get(1);
 
         assertThat(signer.sign(message.getText())).isEqualTo(message.getSignature());
     }
@@ -111,7 +111,7 @@ public class RSASignerTestCase {
     @Test
     public void testUnicodeKoreanMessageSigning() {
         signer = new RSASigner(privateKeyFixture);
-        ChatMessage message = messageFixtures.get(2);
+        ChatMessageItem message = messageFixtures.get(2);
 
         assertThat(signer.sign(message.getText())).isEqualTo(message.getSignature());
     }

@@ -13,7 +13,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.uos.campusapp.api.tumonline.CacheControl;
-import de.uos.campusapp.component.ui.chat.model.ChatRoom;
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom;
 import de.uos.campusapp.component.ui.chat.model.ChatRoomAndLastMessage;
 import de.uos.campusapp.component.ui.chat.model.ChatRoomDbRow;
 import de.uos.campusapp.component.ui.overview.card.Card;
@@ -52,7 +52,7 @@ public class ChatRoomController implements ProvidesCard {
      * @return List of chat messages
      */
     public List<ChatRoomAndLastMessage> getAllByStatus(int joined) {
-        if (joined == ChatRoom.MODE_JOINED) {
+        if (joined == AbstractChatRoom.MODE_JOINED) {
             return chatRoomDao.getAllRoomsJoinedList();
         } else {
             return chatRoomDao.getAllRoomsNotJoinedList();
@@ -62,13 +62,13 @@ public class ChatRoomController implements ProvidesCard {
     /**
      * Saves the given chat rooms into database
      */
-    public void replaceIntoRooms(Collection<ChatRoom> rooms) {
+    public void replaceIntoRooms(Collection<AbstractChatRoom> rooms) {
         if (rooms == null || rooms.isEmpty()) {
             Utils.log("No rooms passed, can't insert anything.");
             return;
         }
 
-        for (ChatRoom room : rooms) {
+        for (AbstractChatRoom room : rooms) {
             ChatRoomDbRow existingRoom = chatRoomDao.getRoomById(room.getId());
 
             if (existingRoom == null) {
@@ -80,11 +80,11 @@ public class ChatRoomController implements ProvidesCard {
         }
     }
 
-    public void join(ChatRoom currentChatRoom) {
+    public void join(AbstractChatRoom currentChatRoom) {
         chatRoomDao.updateJoinedRooms(currentChatRoom.getId(), currentChatRoom.getTitle());
     }
 
-    public void leave(ChatRoom currentChatRoom) {
+    public void leave(AbstractChatRoom currentChatRoom) {
         chatRoomDao.updateLeftRooms(currentChatRoom.getId(), currentChatRoom.getTitle());
     }
 

@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import de.uos.campusapp.R
-import de.uos.campusapp.component.ui.chat.model.ChatMessage
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem
 import de.uos.campusapp.component.ui.overview.CardInteractionListener
 import de.uos.campusapp.component.ui.overview.card.CardViewHolder
 
@@ -17,7 +17,7 @@ class ChatMessagesCardViewHolder(
     private val contentContainerLayout = itemView.findViewById<LinearLayout>(R.id.contentContainerLayout)
 
     @Suppress("UNUSED_PARAMETER")
-    fun bind(roomName: String, roomId: String, unreadMessages: List<ChatMessage>) {
+    fun bind(roomName: String, roomId: String, unreadMessages: List<ChatMessageItem>) {
         with(itemView) {
             chatRoomNameTextView.text = if (unreadMessages.size > 5) {
                 context.getString(R.string.card_message_title, roomName, unreadMessages.size)

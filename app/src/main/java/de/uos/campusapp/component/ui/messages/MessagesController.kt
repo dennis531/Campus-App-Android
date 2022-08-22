@@ -6,7 +6,7 @@ import de.uos.campusapp.api.tumonline.CacheControl
 import de.uos.campusapp.component.notifications.NotificationScheduler
 import de.uos.campusapp.component.notifications.ProvidesNotifications
 import de.uos.campusapp.component.ui.messages.model.AbstractMessage
-import de.uos.campusapp.component.ui.messages.model.MessageMember
+import de.uos.campusapp.component.ui.messages.model.AbstractMessageMember
 import de.uos.campusapp.component.ui.messages.model.MessageType
 import de.uos.campusapp.component.ui.messages.repository.MessagesLocalRepository
 import de.uos.campusapp.component.ui.messages.repository.MessagesRemoteRepository
@@ -96,7 +96,7 @@ class MessagesController @Inject constructor(
         localRepository.deleteMessage(message)
     }
 
-    fun searchRecipients(query: String): List<MessageMember> {
+    fun searchRecipients(query: String): List<AbstractMessageMember> {
         return remoteRepository.searchRecipients(query)
     }
 

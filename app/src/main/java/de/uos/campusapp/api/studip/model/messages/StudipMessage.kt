@@ -8,6 +8,7 @@ import com.github.jasminb.jsonapi.annotations.Relationship
 import com.github.jasminb.jsonapi.annotations.Type
 import de.uos.campusapp.api.studip.model.person.StudipPerson
 import de.uos.campusapp.component.ui.messages.model.AbstractMessage
+import de.uos.campusapp.component.ui.messages.model.AbstractMessageMember
 import de.uos.campusapp.component.ui.messages.model.MessageMember
 import de.uos.campusapp.component.ui.messages.model.MessageType
 import org.joda.time.DateTime
@@ -43,14 +44,14 @@ class StudipMessage() : AbstractMessage() {
     var studipSender: StudipPerson? = null
 
     @JsonIgnore
-    override var sender: MessageMember? = null
+    override var sender: AbstractMessageMember? = null
         get() = studipSender?.let { MessageMember(it.id, it.fullName) }
 
     @Relationship("recipients")
     var studipRecipients: List<StudipPerson>? = null
 
     @JsonIgnore
-    override var recipients: List<MessageMember> = emptyList()
+    override var recipients: List<AbstractMessageMember> = emptyList()
         get() = studipRecipients?.map { MessageMember(it.id, it.fullName) } ?: emptyList()
 
     @JsonIgnore

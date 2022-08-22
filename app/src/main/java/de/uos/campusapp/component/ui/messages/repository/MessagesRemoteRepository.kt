@@ -3,7 +3,7 @@ package de.uos.campusapp.component.ui.messages.repository
 import android.content.Context
 import de.uos.campusapp.component.ui.messages.api.MessagesAPI
 import de.uos.campusapp.component.ui.messages.model.AbstractMessage
-import de.uos.campusapp.component.ui.messages.model.MessageMember
+import de.uos.campusapp.component.ui.messages.model.AbstractMessageMember
 import de.uos.campusapp.component.ui.messages.model.MessageType
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
@@ -28,7 +28,7 @@ class MessagesRemoteRepository @Inject constructor(
         apiClient.deleteMessage(message)
     }
 
-    fun searchRecipients(query: String): List<MessageMember> {
+    fun searchRecipients(query: String): List<AbstractMessageMember> {
         return apiClient.searchRecipient(query)
     }
 }

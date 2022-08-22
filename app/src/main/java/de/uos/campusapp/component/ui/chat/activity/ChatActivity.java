@@ -39,8 +39,8 @@ import de.uos.campusapp.component.ui.chat.ChatRoomController;
 import de.uos.campusapp.component.ui.chat.api.ChatAPI;
 import de.uos.campusapp.component.ui.chat.adapter.ChatHistoryAdapter;
 import de.uos.campusapp.component.ui.chat.model.ChatMember;
-import de.uos.campusapp.component.ui.chat.model.ChatMessage;
-import de.uos.campusapp.component.ui.chat.model.ChatRoom;
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem;
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom;
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageLocalRepository;
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageRemoteRepository;
 import de.uos.campusapp.component.ui.overview.CardManager;
@@ -70,7 +70,7 @@ import static android.os.Build.VERSION.SDK_INT;
 public class ChatActivity extends ActivityForDownloadingExternal
         implements AbsListView.OnScrollListener, ChatHistoryAdapter.OnRetrySendListener {
 
-    public static ChatRoom mCurrentOpenChatRoom; // determines whether there will be a notification or not
+    public static AbstractChatRoom mCurrentOpenChatRoom; // determines whether there will be a notification or not
 
     private ChatMessageViewModel chatMessageViewModel;
     private CompositeDisposable disposables = new CompositeDisposable();
@@ -80,7 +80,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
     private EditText messageEditText;
     private ProgressBar progressbar;
 
-    private ChatRoom currentChatRoom;
+    private AbstractChatRoom currentChatRoom;
     private ChatMember currentChatMember;
     private boolean isLoadingMore;
 
@@ -118,7 +118,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
 
     private void setupToolbarTitle() {
         String encodedChatRoom = getIntent().getStringExtra(Const.CURRENT_CHAT_ROOM);
-        currentChatRoom = new Gson().fromJson(encodedChatRoom, ChatRoom.class);
+        currentChatRoom = new Gson().fromJson(encodedChatRoom, AbstractChatRoom.class);
         currentChatMember = Utils.getSetting(this, Const.CHAT_MEMBER, ChatMember.class);
 
         if (getSupportActionBar() != null) {
@@ -165,11 +165,11 @@ public class ChatActivity extends ActivityForDownloadingExternal
     private void pollNewMessages() {
         Utils.log("Poll new messages");
 
-        Observable<List<ChatMessage>> observable = chatMessageViewModel.getNewMessages(currentChatRoom);
+        Observable<List<ChatMessageItem>> observable = chatMessageViewModel.getNewMessages(currentChatRoom);
         disposables.add(observable.subscribe(this::processNewMessages, Utils::log));
     }
 
-    private void processNewMessages(List<ChatMessage> newMessages) {
+    private void processNewMessages(List<ChatMessageItem> newMessages) {
         // poll messages every 30 seconds
         pollingHandler.postDelayed(this::pollNewMessages, 30000);
 
@@ -186,7 +186,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
     private void handleBroadcastReceive(Intent intent) {
         Utils.logVerbose("Message sent. Trying to parse...");
 
-        ChatMessage chat = intent.getParcelableExtra(Const.CHAT_MESSAGE);
+        ChatMessageItem chat = intent.getParcelableExtra(Const.CHAT_MESSAGE);
         if (chat != null) {
             handleSuccessBroadcast(chat);
         } else {
@@ -199,7 +199,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
         getNextHistoryFromServer(true);
     }
 
-    private void handleSuccessBroadcast(ChatMessage chat) {
+    private void handleSuccessBroadcast(ChatMessageItem chat) {
         if (!chat.getRoomId().equals(currentChatRoom.getId()) || chatHistoryAdapter == null) {
             return;
         }
@@ -256,11 +256,11 @@ public class ChatActivity extends ActivityForDownloadingExternal
         super.onNewIntent(intent);
 
         // Try to get the room from the extras
-        ChatRoom room = null;
+        AbstractChatRoom room = null;
         if (intent.getExtras() != null) {
             String value = intent.getExtras()
                                  .getString(Const.CURRENT_CHAT_ROOM);
-            room = new Gson().fromJson(value, ChatRoom.class);
+            room = new Gson().fromJson(value, AbstractChatRoom.class);
         }
 
         // Check, maybe it wasn't there
@@ -330,7 +330,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
     }
 
     private void leaveChatRoom() {
-        ChatRoom leaveRoom = currentChatRoom;
+        AbstractChatRoom leaveRoom = currentChatRoom;
 
         Disposable leaveRoomDisposable =
                 Completable.fromAction(() -> ((ChatAPI) ConfigUtils.getApiClient(this, Component.CHAT)).leaveChatRoom(leaveRoom))
@@ -356,9 +356,9 @@ public class ChatActivity extends ActivityForDownloadingExternal
             return;
         }
 
-        ChatMessage message = new ChatMessage(text, currentChatMember);
+        ChatMessageItem message = new ChatMessageItem(text, currentChatMember);
         message.setRoomId(currentChatRoom.getId());
-        message.setSendingStatus(ChatMessage.STATUS_SENDING);
+        message.setSendingStatus(ChatMessageItem.STATUS_SENDING);
         chatHistoryAdapter.add(message);
         chatMessageViewModel.addToUnsent(message);
 
@@ -367,12 +367,12 @@ public class ChatActivity extends ActivityForDownloadingExternal
     }
 
     @Override
-    public void onRetrySending(ChatMessage message) {
+    public void onRetrySending(ChatMessageItem message) {
         //chatMessageViewModel.removeUnsent(message);
-        message.setSendingStatus(ChatMessage.STATUS_SENDING);
+        message.setSendingStatus(ChatMessageItem.STATUS_SENDING);
         sendMessage(message.getText());
 
-        List<ChatMessage> messages = chatMessageViewModel.getAll(currentChatRoom.getId());
+        List<ChatMessageItem> messages = chatMessageViewModel.getAll(currentChatRoom.getId());
         chatHistoryAdapter.updateHistory(messages);
     }
 
@@ -425,21 +425,21 @@ public class ChatActivity extends ActivityForDownloadingExternal
     private void getNextHistoryFromServer(boolean hasNewMessage) {
         isLoadingMore = true;
 
-        Observable<List<ChatMessage>> observable;
+        Observable<List<ChatMessageItem>> observable;
 
         if (hasNewMessage || chatHistoryAdapter.isEmpty()) {
             observable = chatMessageViewModel.getNewMessages(currentChatRoom);
         } else {
-            ChatMessage latestMessage = chatHistoryAdapter.getItem(0);
+            ChatMessageItem latestMessage = chatHistoryAdapter.getItem(0);
             observable = chatMessageViewModel.getOlderMessages(currentChatRoom, latestMessage);
         }
 
         disposables.add(observable.subscribe(messages -> showMessages(messages, hasNewMessage), Utils::log));
     }
 
-    private void showMessages(List<ChatMessage> messages, boolean hasNewMessages) {
+    private void showMessages(List<ChatMessageItem> messages, boolean hasNewMessages) {
         if (hasNewMessages) {
-            List<ChatMessage> unsent = chatMessageViewModel.getUnsentInChatRoom(currentChatRoom);
+            List<ChatMessageItem> unsent = chatMessageViewModel.getUnsentInChatRoom(currentChatRoom);
             messages.addAll(unsent);
         }
 

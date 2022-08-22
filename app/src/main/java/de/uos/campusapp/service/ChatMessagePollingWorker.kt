@@ -8,8 +8,8 @@ import de.uos.campusapp.component.ui.chat.ChatMessageViewModel
 import de.uos.campusapp.component.ui.chat.ChatNotificationProvider
 import de.uos.campusapp.component.ui.chat.ChatRoomController
 import de.uos.campusapp.component.ui.chat.api.ChatAPI
-import de.uos.campusapp.component.ui.chat.model.ChatMessage
-import de.uos.campusapp.component.ui.chat.model.ChatRoom
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageLocalRepository
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageRemoteRepository
 import de.uos.campusapp.database.TcaDb
@@ -34,8 +34,8 @@ class ChatMessagePollingWorker(context: Context, workerParams: WorkerParameters)
 
         val viewModel = ChatMessageViewModel(ChatMessageLocalRepository, ChatMessageRemoteRepository)
 
-        val rooms = roomController.getAllByStatus(ChatRoom.MODE_JOINED).map {
-            ChatRoom.fromChatRoomDbRow(it.chatRoomDbRow!!)
+        val rooms = roomController.getAllByStatus(AbstractChatRoom.MODE_JOINED).map {
+            AbstractChatRoom.fromChatRoomDbRow(it.chatRoomDbRow!!)
         }
 
         // collect all new messages from each chat room
@@ -46,7 +46,7 @@ class ChatMessagePollingWorker(context: Context, workerParams: WorkerParameters)
         return Result.success()
     }
 
-    private fun onDataLoaded(room: ChatRoom) {
+    private fun onDataLoaded(room: AbstractChatRoom) {
         if (chatMessageDao.getNumberUnread(room.id) == 0) {
             return
         }
@@ -56,7 +56,7 @@ class ChatMessagePollingWorker(context: Context, workerParams: WorkerParameters)
         showNotification(room, messages)
     }
 
-    private fun showNotification(room: ChatRoom, messages: List<ChatMessage>) {
+    private fun showNotification(room: AbstractChatRoom, messages: List<ChatMessageItem>) {
         val provider = ChatNotificationProvider(applicationContext, room, messages)
         val notification = provider.buildNotification() ?: return
         notificationScheduler.schedule(notification)

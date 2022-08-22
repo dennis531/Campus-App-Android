@@ -26,8 +26,8 @@ abstract class AbstractMessage: Parcelable {
     abstract val subject: String
     abstract val text: String
     abstract var type: MessageType
-    abstract val sender: MessageMember?
-    abstract val recipients: List<MessageMember>
+    abstract val sender: AbstractMessageMember?
+    abstract val recipients: List<AbstractMessageMember>
     abstract val date: DateTime
 
     val formattedDate: String

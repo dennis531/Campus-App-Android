@@ -8,7 +8,7 @@ import de.uos.campusapp.api.auth.exception.AuthException
 import de.uos.campusapp.component.ui.chat.ChatMessageViewModel
 import de.uos.campusapp.component.ui.chat.ChatRoomController
 import de.uos.campusapp.component.ui.chat.api.ChatAPI
-import de.uos.campusapp.component.ui.chat.model.ChatRoom
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageLocalRepository
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageRemoteRepository
 import de.uos.campusapp.database.TcaDb
@@ -38,7 +38,7 @@ class SendChatMessageWorker(context: Context, workerParams: WorkerParameters) :
             viewModel.getUnsent()
                     .asSequence()
                     .forEach {
-                        val room = ChatRoom.fromChatRoomDbRow(roomController.getRoomById(it.roomId))
+                        val room = AbstractChatRoom.fromChatRoomDbRow(roomController.getRoomById(it.roomId))
                         viewModel.sendMessage(room, it, applicationContext)
                     }
             success()

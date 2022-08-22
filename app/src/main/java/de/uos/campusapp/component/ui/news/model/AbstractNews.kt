@@ -2,12 +2,22 @@ package de.uos.campusapp.component.ui.news.model
 
 import org.joda.time.DateTime
 
+/**
+ * Represents a news
+ *
+ * @property id
+ * @property title Message title
+ * @property link Message URL link. Directs the user to this URL when clicking on the news. (optional)
+ * @property imageUrl (optional)
+ * @property content Message text with HTML markup (optional)
+ * @property date Date of news
+ */
 abstract class AbstractNews {
     abstract val id: String
     abstract val title: String
     abstract val link: String?
     abstract val imageUrl: String?
-    abstract val content: String? // HTML Text allowed
+    abstract val content: String?
     abstract val date: DateTime
 
     open fun toNewsItem(): NewsItem {

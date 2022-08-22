@@ -25,8 +25,8 @@ import de.uos.campusapp.component.tumui.feedback.model.Feedback;
 import de.uos.campusapp.component.tumui.feedback.model.FeedbackResult;
 import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteria;
 import de.uos.campusapp.component.ui.chat.model.ChatMember;
-import de.uos.campusapp.component.ui.chat.model.ChatMessage;
-import de.uos.campusapp.component.ui.chat.model.ChatRoom;
+import de.uos.campusapp.component.ui.chat.model.ChatMessageItem;
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom;
 import de.uos.campusapp.component.ui.openinghours.model.Location;
 import de.uos.campusapp.component.ui.updatenote.model.UpdateNote;
 import de.uos.campusapp.utils.Const;
@@ -113,20 +113,20 @@ public final class TUMCabeClient {
         return verification;
     }
 
-    public void createRoom(ChatRoom chatRoom, TUMCabeVerification verification, Callback<ChatRoom> cb) {
+    public void createRoom(AbstractChatRoom chatRoom, TUMCabeVerification verification, Callback<AbstractChatRoom> cb) {
         verification.setData(chatRoom);
         service.createRoom(verification)
                 .enqueue(cb);
     }
 
-    public ChatRoom createRoom(ChatRoom chatRoom, TUMCabeVerification verification) throws IOException {
+    public AbstractChatRoom createRoom(AbstractChatRoom chatRoom, TUMCabeVerification verification) throws IOException {
         verification.setData(chatRoom);
         return service.createRoom(verification)
                 .execute()
                 .body();
     }
 
-    public ChatRoom getChatRoom(int id) throws IOException {
+    public AbstractChatRoom getChatRoom(int id) throws IOException {
         return service.getChatRoom(id)
                 .execute()
                 .body();
@@ -138,18 +138,18 @@ public final class TUMCabeClient {
                 .body();
     }
 
-    public void leaveChatRoom(ChatRoom chatRoom, TUMCabeVerification verification, Callback<ChatRoom> cb) {
+    public void leaveChatRoom(AbstractChatRoom chatRoom, TUMCabeVerification verification, Callback<AbstractChatRoom> cb) {
 //        service.leaveChatRoom(chatRoom.getId(), verification)
 //                .enqueue(cb);
     }
 
-    public void addUserToChat(ChatRoom chatRoom, ChatMember member, TUMCabeVerification verification, Callback<ChatRoom> cb) {
+    public void addUserToChat(AbstractChatRoom chatRoom, ChatMember member, TUMCabeVerification verification, Callback<AbstractChatRoom> cb) {
 //        service.addUserToChat(chatRoom.getId(), member.getId(), verification)
 //                .enqueue(cb);
     }
 
-    public Observable<ChatMessage> sendMessage(int roomId, TUMCabeVerification verification) {
-        ChatMessage message = (ChatMessage) verification.getData();
+    public Observable<ChatMessageItem> sendMessage(int roomId, TUMCabeVerification verification) {
+        ChatMessageItem message = (ChatMessageItem) verification.getData();
         if (message == null) {
             throw new IllegalStateException("TUMCabeVerification data is not a ChatMessage");
         }
@@ -161,15 +161,15 @@ public final class TUMCabeClient {
         return service.updateMessage(roomId, message.getId(), verification);
     }
 
-    public Observable<List<ChatMessage>> getMessages(int roomId, long messageId, @Body TUMCabeVerification verification) {
+    public Observable<List<ChatMessageItem>> getMessages(int roomId, long messageId, @Body TUMCabeVerification verification) {
         return service.getMessages(roomId, messageId, verification);
     }
 
-    public Observable<List<ChatMessage>> getNewMessages(int roomId, @Body TUMCabeVerification verification) {
+    public Observable<List<ChatMessageItem>> getNewMessages(int roomId, @Body TUMCabeVerification verification) {
         return service.getNewMessages(roomId, verification);
     }
 
-    public List<ChatRoom> getMemberRooms(int memberId, TUMCabeVerification verification) throws IOException {
+    public List<AbstractChatRoom> getMemberRooms(int memberId, TUMCabeVerification verification) throws IOException {
         return service.getMemberRooms(memberId, verification)
                 .execute()
                 .body();

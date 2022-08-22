@@ -7,13 +7,13 @@ import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Relationship
 import com.github.jasminb.jsonapi.annotations.Type
 import de.uos.campusapp.api.studip.model.person.StudipPerson
+import de.uos.campusapp.component.ui.chat.model.AbstractChatMessage
 import de.uos.campusapp.component.ui.chat.model.ChatMember
-import de.uos.campusapp.component.ui.chat.model.ChatMessage
 import org.joda.time.DateTime
 
 @Type("blubber-comments")
 @JsonIgnoreProperties("sendingStatus")
-class StudipBlubberComment() : ChatMessage() {
+class StudipBlubberComment() : AbstractChatMessage() {
     @Id
     var apiId: String? = null
 
@@ -47,7 +47,7 @@ class StudipBlubberComment() : ChatMessage() {
             return author?.let { ChatMember(it.id, it.username, it.fullName) } ?: ChatMember()
         }
 
-    constructor(message: ChatMessage) : this()  {
+    constructor(message: AbstractChatMessage) : this()  {
         text = message.text
         timestampIso = message.timestamp.toString()
     }

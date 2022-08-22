@@ -36,11 +36,12 @@ import de.uos.campusapp.component.tumui.person.model.PersonInterface
 import de.uos.campusapp.component.tumui.roomfinder.api.RoomFinderAPI
 import de.uos.campusapp.component.tumui.roomfinder.model.*
 import de.uos.campusapp.component.ui.chat.api.ChatAPI
+import de.uos.campusapp.component.ui.chat.model.AbstractChatMessage
 import de.uos.campusapp.component.ui.chat.model.ChatMember
-import de.uos.campusapp.component.ui.chat.model.ChatMessage
-import de.uos.campusapp.component.ui.chat.model.ChatRoom
+import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom
 import de.uos.campusapp.component.ui.messages.api.MessagesAPI
 import de.uos.campusapp.component.ui.messages.model.AbstractMessage
+import de.uos.campusapp.component.ui.messages.model.AbstractMessageMember
 import de.uos.campusapp.component.ui.messages.model.MessageMember
 import de.uos.campusapp.component.ui.messages.model.MessageType
 import de.uos.campusapp.component.ui.news.api.NewsAPI
@@ -210,20 +211,20 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return apiService.getNews().execute().body()!!
     }
 
-    override fun getChatRooms(): List<ChatRoom> {
+    override fun getChatRooms(): List<AbstractChatRoom> {
         return apiService.getChatRooms().execute().body()!!
     }
 
-    override fun createChatRoom(chatRoom: ChatRoom): ChatRoom? {
+    override fun createChatRoom(chatRoom: AbstractChatRoom): AbstractChatRoom? {
         // Not supported by the STUD.IP json api
         return null
     }
 
-    override fun leaveChatRoom(chatRoom: ChatRoom) {
+    override fun leaveChatRoom(chatRoom: AbstractChatRoom) {
         // Not supported by the STUD.IP json api
     }
 
-    override fun getChatMessages(chatRoom: ChatRoom, latestMessage: ChatMessage?): List<ChatMessage> {
+    override fun getChatMessages(chatRoom: AbstractChatRoom, latestMessage: AbstractChatMessage?): List<AbstractChatMessage> {
         if (latestMessage != null) {
             val oldMessages =  apiService.getOlderChatMessages(chatRoom.id, latestMessage.timestamp.toString()).execute().body()!!.toMutableList()
 
@@ -238,7 +239,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return apiService.getChatMessages(chatRoom.id).execute().body()!!
     }
 
-    override fun sendChatMessage(chatRoom: ChatRoom, message: ChatMessage): ChatMessage {
+    override fun sendChatMessage(chatRoom: AbstractChatRoom, message: AbstractChatMessage): AbstractChatMessage {
         return apiService.sendChatMessage(chatRoom.id, StudipBlubberComment(message)).execute().body()!!
     }
 
@@ -247,7 +248,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return null
     }
 
-    override fun addMemberToChatRoom(chatRoom: ChatRoom, member: ChatMember): ChatRoom? {
+    override fun addMemberToChatRoom(chatRoom: AbstractChatRoom, member: ChatMember): AbstractChatRoom? {
         // Not supported by the STUD.IP json api
         return null
     }
@@ -373,7 +374,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         apiService.deleteMessage(message.id).execute()
     }
 
-    override fun searchRecipient(query: String): List<MessageMember> {
+    override fun searchRecipient(query: String): List<AbstractMessageMember> {
         return apiService.searchPerson(query).execute().body()!!
             .map { MessageMember(it.id, it.fullName) }
     }

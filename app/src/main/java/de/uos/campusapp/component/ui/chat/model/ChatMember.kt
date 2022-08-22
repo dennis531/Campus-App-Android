@@ -3,12 +3,22 @@ package de.uos.campusapp.component.ui.chat.model
 import android.os.Parcel
 import android.os.Parcelable
 
+/**
+ * Holds information about a chat member
+ *
+ * @property id
+ * @property username User name, e.g. RZID
+ * @property displayName Name displayed in chat
+ */
 open class ChatMember() : Parcelable {
 
     open var id: String = "0"
     open var username: String = ""
     open var displayName: String = ""
 
+    /**
+     * Create a chat member with the required information
+     */
     constructor(id: String, username: String, displayName: String) : this() {
         this.id = id
         this.username = username
@@ -21,9 +31,7 @@ open class ChatMember() : Parcelable {
         displayName = parcel.readString()!!
     }
 
-    override fun toString(): String {
-        return displayName as String
-    }
+    override fun toString(): String = displayName
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
