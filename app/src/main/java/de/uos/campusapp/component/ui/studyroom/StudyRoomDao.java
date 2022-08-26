@@ -7,18 +7,18 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import de.uos.campusapp.component.ui.studyroom.model.StudyRoom;
+import de.uos.campusapp.component.ui.studyroom.model.StudyRoomItem;
 
 @Dao
 public interface StudyRoomDao {
 
     @Query("SELECT * FROM study_rooms WHERE group_id = :groupId")
-    List<StudyRoom> getAll(String groupId);
+    List<StudyRoomItem> getAll(String groupId);
 
     @Query("DELETE FROM study_rooms")
     void removeCache();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(StudyRoom... studyRooms);
+    void insert(StudyRoomItem... studyRooms);
 
 }

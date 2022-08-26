@@ -27,7 +27,7 @@ import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteria;
 import de.uos.campusapp.component.ui.chat.model.ChatMember;
 import de.uos.campusapp.component.ui.chat.model.ChatMessageItem;
 import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom;
-import de.uos.campusapp.component.ui.openinghours.model.Location;
+import de.uos.campusapp.component.ui.openinghours.model.LocationItem;
 import de.uos.campusapp.component.ui.updatenote.model.UpdateNote;
 import de.uos.campusapp.utils.Const;
 import de.uos.campusapp.utils.Utils;
@@ -290,7 +290,7 @@ public final class TUMCabeClient {
         return service.getUpdateNote(version).execute().body();
     }
 
-    public List<Location> fetchOpeningHours(String language) throws IOException {
+    public List<LocationItem> fetchOpeningHours(String language) throws IOException {
         return service.getOpeningHours(language)
                       .execute()
                       .body();

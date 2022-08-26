@@ -13,14 +13,14 @@ import de.uos.campusapp.component.ui.overview.CardInteractionListener
 import de.uos.campusapp.component.ui.overview.CardManager.CARD_TRANSPORTATION
 import de.uos.campusapp.component.ui.overview.card.Card
 import de.uos.campusapp.component.ui.overview.card.CardViewHolder
-import de.uos.campusapp.component.ui.transportation.model.Departure
-import de.uos.campusapp.component.ui.transportation.model.Station
+import de.uos.campusapp.component.ui.transportation.model.AbstractDeparture
+import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 import de.uos.campusapp.utils.Component
 
 /**
  * Card that shows MVV departure times
  */
-class TransportationCard(context: Context, val station: Station, val departures: List<Departure>) : Card(CARD_TRANSPORTATION, context, Component.TRANSPORTATION, "card_transportation") {
+class TransportationCard(context: Context, val station: AbstractStation, val departures: List<AbstractDeparture>) : Card(CARD_TRANSPORTATION, context, Component.TRANSPORTATION, "card_transportation") {
 
     override val optionsMenuResId: Int
         get() = R.menu.card_popup_menu

@@ -18,7 +18,7 @@ class WidgetDepartures(
     stationId: String = "",
     var useLocation: Boolean = false,
     var autoReload: Boolean = false,
-    var departures: MutableList<Departure> = ArrayList()
+    var departures: MutableList<AbstractDeparture> = ArrayList()
 ) {
 
     private var lastLoad: Long = 0
@@ -57,7 +57,7 @@ class WidgetDepartures(
      *
      * @return The list of departures
      */
-    fun getDepartures(context: Context, forceServerLoad: Boolean): List<Departure> {
+    fun getDepartures(context: Context, forceServerLoad: Boolean): List<AbstractDeparture> {
         // download only if there is no data or the last loading is more than X min ago
         val shouldAutoReload = System.currentTimeMillis() - this.lastLoad > TransportationWidget.DOWNLOAD_DELAY
         if (this.departures.isEmpty() || forceServerLoad || this.autoReload && shouldAutoReload) {

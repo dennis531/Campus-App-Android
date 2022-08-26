@@ -16,7 +16,7 @@ import de.uos.campusapp.component.other.generic.activity.ActivityForSearching
 import de.uos.campusapp.component.other.generic.adapter.NoResultsAdapter
 import de.uos.campusapp.component.ui.transportation.TransportationSuggestionProvider
 import de.uos.campusapp.component.ui.transportation.TransportController
-import de.uos.campusapp.component.ui.transportation.model.Station
+import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 import de.uos.campusapp.component.ui.transportation.model.WidgetDepartures
 import de.uos.campusapp.database.TcaDb
 import de.uos.campusapp.utils.Component
@@ -30,7 +30,7 @@ class TransportationWidgetConfigureActivity : ActivityForSearching<Unit>(
 
     private var appWidgetId: Int = 0
     private lateinit var listViewResults: ListView
-    private lateinit var adapterStations: ArrayAdapter<Station>
+    private lateinit var adapterStations: ArrayAdapter<AbstractStation>
     private lateinit var recentsDao: RecentsDao
 
     private lateinit var widgetDepartures: WidgetDepartures
@@ -68,7 +68,7 @@ class TransportationWidgetConfigureActivity : ActivityForSearching<Unit>(
 
         listViewResults = findViewById(R.id.activity_transport_listview_result)
         listViewResults.setOnItemClickListener { adapterView, _, position, _ ->
-            val station = adapterView.adapter.getItem(position) as Station
+            val station = adapterView.adapter.getItem(position) as AbstractStation
             widgetDepartures.station = station.name
             widgetDepartures.stationId = station.id
             saveAndReturn()
@@ -110,7 +110,7 @@ class TransportationWidgetConfigureActivity : ActivityForSearching<Unit>(
                 })
     }
 
-    private fun displayStations(stations: List<Station>) {
+    private fun displayStations(stations: List<AbstractStation>) {
         showLoadingEnded()
 
         if (stations.isEmpty()) {

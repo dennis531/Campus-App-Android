@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.uos.campusapp.R;
 import de.uos.campusapp.component.other.generic.adapter.EqualSpacingItemDecoration;
-import de.uos.campusapp.component.ui.openinghours.model.Location;
+import de.uos.campusapp.component.ui.openinghours.model.LocationItem;
 import de.uos.campusapp.database.TcaDb;
 
 /**
@@ -61,7 +61,7 @@ public class OpeningHoursDetailFragment extends Fragment {
         // load all locations from category
         LocationDao dao = TcaDb.Companion.getInstance(getActivity())
                                          .locationDao();
-        List<Location> locations = dao.getAllOfCategory(mItemCategory);
+        List<LocationItem> locations = dao.getAllOfCategory(mItemCategory);
 
         RecyclerView recyclerView = rootView.findViewById(R.id.fragment_item_detail_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -77,7 +77,7 @@ public class OpeningHoursDetailFragment extends Fragment {
     /**
      * change presentation of locations in the list
      */
-    public static void bindLocationToView(View view, Location location) {
+    public static void bindLocationToView(View view, LocationItem location) {
         TextView locationTextView = view.findViewById(R.id.headerTextView);
         locationTextView.setText(location.getName());
 
@@ -123,9 +123,9 @@ public class OpeningHoursDetailFragment extends Fragment {
     }
 
     private class OpeningHoursDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        final List<Location> locations;
+        final List<LocationItem> locations;
 
-        OpeningHoursDetailAdapter(List<Location> locations) {
+        OpeningHoursDetailAdapter(List<LocationItem> locations) {
             this.locations = locations;
         }
 

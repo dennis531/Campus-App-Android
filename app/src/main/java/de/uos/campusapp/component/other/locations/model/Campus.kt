@@ -4,7 +4,7 @@ import android.content.Context
 import android.location.Location
 import androidx.annotation.StringRes
 import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteria
-import de.uos.campusapp.component.ui.transportation.model.Station
+import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 
 /**
  * Holds campus configurations
@@ -15,7 +15,7 @@ class Campus {
     val latitude: Double
     val longitude: Double
     val cafeterias: List<AbstractCafeteria>?
-    val stations: List<Station>?
+    val stations: List<AbstractStation>?
 
     /**
     * @param id unique identifier like a short name, "X" is reserved for "no default campus"
@@ -28,7 +28,7 @@ class Campus {
         latitude: Double,
         longitude: Double,
         cafeterias: List<AbstractCafeteria>? = null,
-        stations: List<Station>? = null
+        stations: List<AbstractStation>? = null
     ) {
         this.id = id
         this.name = name
@@ -49,7 +49,7 @@ class Campus {
         latitude: Double,
         longitude: Double,
         cafeterias: List<AbstractCafeteria>? = null,
-        stations: List<Station>? = null
+        stations: List<AbstractStation>? = null
     ) {
         this.id = id
         this.name = nameResId

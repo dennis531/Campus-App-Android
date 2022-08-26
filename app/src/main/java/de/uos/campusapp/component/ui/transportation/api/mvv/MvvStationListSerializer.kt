@@ -2,6 +2,7 @@ package de.uos.campusapp.component.ui.transportation.api.mvv
 
 import com.google.gson.*
 import de.uos.campusapp.component.ui.transportation.api.mvv.model.MvvStationList
+import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 import de.uos.campusapp.component.ui.transportation.model.Station
 import java.lang.reflect.Type
 
@@ -37,7 +38,7 @@ class MvvStationListSerializer : JsonDeserializer<MvvStationList> {
         throw JsonParseException("Unknown MvvStationList: $json")
     }
 
-    private fun getStation(json: JsonObject): Station {
+    private fun getStation(json: JsonObject): AbstractStation {
         return Station(
             json.getAsJsonObject("ref").get("id").asString,
             json.get("name").asString,

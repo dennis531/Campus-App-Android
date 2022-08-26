@@ -38,11 +38,11 @@ import de.uos.campusapp.component.ui.messages.model.MessageItem
 import de.uos.campusapp.component.ui.news.NewsDao
 import de.uos.campusapp.component.ui.news.model.NewsItem
 import de.uos.campusapp.component.ui.openinghours.LocationDao
-import de.uos.campusapp.component.ui.openinghours.model.Location
+import de.uos.campusapp.component.ui.openinghours.model.LocationItem
 import de.uos.campusapp.component.ui.studyroom.StudyRoomDao
 import de.uos.campusapp.component.ui.studyroom.StudyRoomGroupDao
-import de.uos.campusapp.component.ui.studyroom.model.StudyRoom
-import de.uos.campusapp.component.ui.studyroom.model.StudyRoomGroup
+import de.uos.campusapp.component.ui.studyroom.model.StudyRoomItem
+import de.uos.campusapp.component.ui.studyroom.model.StudyRoomGroupItem
 import de.uos.campusapp.component.ui.transportation.TransportDao
 import de.uos.campusapp.component.ui.transportation.model.TransportFavorites
 import de.uos.campusapp.component.ui.transportation.model.WidgetsTransport
@@ -60,7 +60,7 @@ import java.util.concurrent.ExecutionException
     Sync::class,
     BuildingToGps::class,
     ChatMessageItem::class,
-    Location::class,
+    LocationItem::class,
     NewsItem::class,
     MessageItem::class,
     CalendarItem::class,
@@ -68,8 +68,8 @@ import java.util.concurrent.ExecutionException
     RoomLocations::class,
     WidgetsTimetableBlacklist::class,
     Recent::class,
-    StudyRoomGroup::class,
-    StudyRoom::class,
+    StudyRoomGroupItem::class,
+    StudyRoomItem::class,
     TransportFavorites::class,
     WidgetsTransport::class,
     ChatRoomDbRow::class,

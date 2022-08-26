@@ -12,8 +12,8 @@ import de.uos.campusapp.component.ui.overview.card.Card
 import de.uos.campusapp.component.ui.overview.card.ProvidesCard
 import de.uos.campusapp.component.ui.transportation.model.TransportFavorites
 import de.uos.campusapp.component.ui.transportation.model.WidgetsTransport
-import de.uos.campusapp.component.ui.transportation.model.Departure
-import de.uos.campusapp.component.ui.transportation.model.Station
+import de.uos.campusapp.component.ui.transportation.model.AbstractDeparture
+import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 import de.uos.campusapp.component.ui.transportation.model.WidgetDepartures
 import de.uos.campusapp.database.TcaDb
 import de.uos.campusapp.utils.ConfigUtils
@@ -169,7 +169,7 @@ class TransportController(private val context: Context) : ProvidesCard, Provides
          * @return List of departures
          */
         @JvmStatic
-        fun getDeparturesFromExternal(context: Context, station: Station): Observable<List<Departure>> {
+        fun getDeparturesFromExternal(context: Context, station: AbstractStation): Observable<List<AbstractDeparture>> {
             return Observable.fromCallable { ConfigUtils.getTransportationClient(context).getDepartures(station) }
                 .onErrorReturn { emptyList() }
                 .map { it.sortedBy { departure -> departure.departureTime } }
@@ -182,15 +182,15 @@ class TransportController(private val context: Context) : ProvidesCard, Provides
          * @return List of StationResult
          */
         @JvmStatic
-        fun getStationsFromExternal(context: Context, prefix: String): Observable<List<Station>> {
+        fun getStationsFromExternal(context: Context, prefix: String): Observable<List<AbstractStation>> {
             return Observable.fromCallable { ConfigUtils.getTransportationClient(context).getStations(prefix) }
                 .map { it.sortedByDescending { station -> station.quality } }
         }
 
         @JvmStatic
-        fun getRecentStations(recents: Collection<Recent>): List<Station> {
+        fun getRecentStations(recents: Collection<Recent>): List<AbstractStation> {
             return recents.mapNotNull {
-                Station.fromRecent(it)
+                AbstractStation.fromRecent(it)
             }
         }
     }

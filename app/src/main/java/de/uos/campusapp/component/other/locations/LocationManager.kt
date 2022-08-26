@@ -18,7 +18,7 @@ import de.uos.campusapp.component.tumui.roomfinder.model.RoomFinderCoordinateInt
 import de.uos.campusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
 import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaItem
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
-import de.uos.campusapp.component.ui.transportation.model.Station
+import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 import de.uos.campusapp.database.TcaDb
 import de.uos.campusapp.utils.*
 import org.jetbrains.anko.doAsync
@@ -162,7 +162,7 @@ class LocationManager @Inject constructor(c: Context) {
      *
      * @return Name of the station or null if the user is not near any campus or campus has no station
      */
-    fun getStation(): Station? {
+    fun getStation(): AbstractStation? {
         val campus = getCurrentCampus() ?: return null
 
         // Campus has no associated station

@@ -11,12 +11,13 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
 import de.uos.campusapp.component.other.generic.fragment.FragmentForAccessingApi
 import de.uos.campusapp.component.ui.studyroom.api.StudyRoomAPI
-import de.uos.campusapp.component.ui.studyroom.model.StudyRoomGroup
+import de.uos.campusapp.component.ui.studyroom.model.AbstractStudyRoomGroup
+import de.uos.campusapp.component.ui.studyroom.model.StudyRoomGroupItem
 import de.uos.campusapp.databinding.FragmentStudyRoomsBinding
 import de.uos.campusapp.utils.Component
 import org.jetbrains.anko.support.v4.runOnUiThread
 
-class StudyRoomsFragment : FragmentForAccessingApi<List<StudyRoomGroup>>(
+class StudyRoomsFragment : FragmentForAccessingApi<List<AbstractStudyRoomGroup>>(
     R.layout.fragment_study_rooms,
     R.string.study_rooms,
     Component.STUDYROOM
@@ -25,7 +26,7 @@ class StudyRoomsFragment : FragmentForAccessingApi<List<StudyRoomGroup>>(
     private val sectionsPagerAdapter by lazy { StudyRoomsPagerAdapter(childFragmentManager) }
     private val studyRoomGroupManager by lazy { StudyRoomGroupManager(requireContext()) }
 
-    private var groups = emptyList<StudyRoomGroup>()
+    private var groups = emptyList<StudyRoomGroupItem>()
     private var groupId: String = "-1"
 
     private val binding by viewBinding(FragmentStudyRoomsBinding::bind)
@@ -33,7 +34,7 @@ class StudyRoomsFragment : FragmentForAccessingApi<List<StudyRoomGroup>>(
     // Drop-down navigation
     private val studyRoomGroupsSpinner: Spinner
         get() {
-            val groupAdapter = object : ArrayAdapter<StudyRoomGroup>(
+            val groupAdapter = object : ArrayAdapter<StudyRoomGroupItem>(
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
                 android.R.id.text1,
@@ -89,10 +90,11 @@ class StudyRoomsFragment : FragmentForAccessingApi<List<StudyRoomGroup>>(
         fetch { (apiClient as StudyRoomAPI).getStudyRoomGroups() }
     }
 
-    override fun onDownloadSuccessful(response: List<StudyRoomGroup>) {
-        studyRoomGroupManager.updateDatabase(response) {
+    override fun onDownloadSuccessful(response: List<AbstractStudyRoomGroup>) {
+        val items = response.map { it.toStudyRoomGroup() }
+        studyRoomGroupManager.updateDatabase(items) {
             runOnUiThread {
-                groups = response
+                groups = items
                 displayStudyRooms()
             }
         }

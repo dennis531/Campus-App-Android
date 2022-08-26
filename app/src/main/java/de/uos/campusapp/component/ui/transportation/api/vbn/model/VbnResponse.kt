@@ -1,6 +1,7 @@
 package de.uos.campusapp.component.ui.transportation.api.vbn.model
 
 import com.google.gson.annotations.SerializedName
+import de.uos.campusapp.component.ui.transportation.model.AbstractDeparture
 import de.uos.campusapp.component.ui.transportation.model.Departure
 import de.uos.campusapp.component.ui.transportation.model.SimpleSymbol
 
@@ -10,7 +11,7 @@ data class VbnResponse(
     @SerializedName("times")
     val times: List<VbnTime> = emptyList()
 ) {
-    fun toDepartureList(): List<Departure> {
+    fun toDepartureList(): List<AbstractDeparture> {
         return times.map {
             Departure(
                 it.headsign,

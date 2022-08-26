@@ -11,7 +11,7 @@ import de.uos.campusapp.api.general.model.UploadStatus;
 import de.uos.campusapp.component.tumui.feedback.model.Feedback;
 import de.uos.campusapp.component.tumui.feedback.model.FeedbackResult;
 import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteria;
-import de.uos.campusapp.component.ui.openinghours.model.Location;
+import de.uos.campusapp.component.ui.openinghours.model.LocationItem;
 import de.uos.campusapp.component.ui.chat.model.ChatMember;
 import de.uos.campusapp.component.ui.chat.model.ChatMessageItem;
 import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom;
@@ -135,6 +135,6 @@ public interface TUMCabeAPIService {
 
     // Opening Hours
     @GET(API_OPENING_HOURS + "{language}")
-    Call<List<Location>> getOpeningHours(@Path("language") String language);
+    Call<List<LocationItem>> getOpeningHours(@Path("language") String language);
 
 }

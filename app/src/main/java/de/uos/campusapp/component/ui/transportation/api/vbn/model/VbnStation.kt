@@ -1,5 +1,6 @@
 package de.uos.campusapp.component.ui.transportation.api.vbn.model
 
+import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 import de.uos.campusapp.component.ui.transportation.model.Station
 
 data class VbnStation(
@@ -9,7 +10,7 @@ data class VbnStation(
     val lon: Double = 0.0,
     val dist: Int = 0
 ) {
-    fun toStation(): Station {
+    fun toStation(): AbstractStation {
         return Station(id, name)
     }
 }

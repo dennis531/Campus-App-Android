@@ -11,7 +11,7 @@ import de.uos.campusapp.R
 import de.uos.campusapp.component.other.general.RecentsDao
 import de.uos.campusapp.component.other.generic.activity.ActivityForSearching
 import de.uos.campusapp.component.other.generic.adapter.NoResultsAdapter
-import de.uos.campusapp.component.ui.transportation.model.Station
+import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 import de.uos.campusapp.database.TcaDb
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.Utils
@@ -30,7 +30,7 @@ class TransportationActivity : ActivityForSearching<Unit>(
 ), OnItemClickListener {
 
     private lateinit var listViewResults: ListView
-    private lateinit var adapterStations: ArrayAdapter<Station>
+    private lateinit var adapterStations: ArrayAdapter<AbstractStation>
     private lateinit var recentsDao: RecentsDao
 
     private val disposable = CompositeDisposable()
@@ -61,7 +61,7 @@ class TransportationActivity : ActivityForSearching<Unit>(
      * Click on station in list
      */
     override fun onItemClick(av: AdapterView<*>, v: View, position: Int, id: Long) {
-        val stationResult = av.adapter.getItem(position) as Station
+        val stationResult = av.adapter.getItem(position) as AbstractStation
         transitionToDetailsActivity(stationResult)
     }
 
@@ -70,7 +70,7 @@ class TransportationActivity : ActivityForSearching<Unit>(
      *
      * @param stationResult the station to show
      */
-    private fun transitionToDetailsActivity(stationResult: Station) {
+    private fun transitionToDetailsActivity(stationResult: AbstractStation) {
         val intent = Intent(this, TransportationDetailsActivity::class.java)
         intent.putExtra(TransportationDetailsActivity.EXTRA_STATION, stationResult.name)
         intent.putExtra(TransportationDetailsActivity.EXTRA_STATION_ID, stationResult.id)
@@ -102,7 +102,7 @@ class TransportationActivity : ActivityForSearching<Unit>(
                 })
     }
 
-    private fun displayStations(stations: List<Station>) {
+    private fun displayStations(stations: List<AbstractStation>) {
         showLoadingEnded()
 
         if (stations.isEmpty()) {

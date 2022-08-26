@@ -1,7 +1,7 @@
 package de.uos.campusapp.component.ui.openinghours.api
 
-import de.uos.campusapp.component.ui.openinghours.model.Location
+import de.uos.campusapp.component.ui.openinghours.model.AbstractLocation
 
 interface OpeningHoursAPI {
-    fun getOpeningHours(): List<Location>
+    fun getOpeningHours(): List<AbstractLocation>
 }

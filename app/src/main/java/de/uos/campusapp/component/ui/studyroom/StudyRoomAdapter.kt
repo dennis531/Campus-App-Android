@@ -10,14 +10,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import de.uos.campusapp.R
 import de.uos.campusapp.component.tumui.roomfinder.RoomFinderActivity
-import de.uos.campusapp.component.ui.studyroom.model.StudyRoom
+import de.uos.campusapp.component.ui.studyroom.model.StudyRoomItem
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
 import de.uos.campusapp.utils.Utils
 import org.joda.time.format.DateTimeFormat
 import java.util.*
 
-class StudyRoomAdapter(private val fragment: Fragment, private val studyRooms: List<StudyRoom>) :
+class StudyRoomAdapter(private val fragment: Fragment, private val studyRooms: List<StudyRoomItem>) :
         RecyclerView.Adapter<StudyRoomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudyRoomViewHolder {

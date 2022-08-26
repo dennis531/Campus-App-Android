@@ -6,8 +6,8 @@ import android.widget.TextView
 import de.uos.campusapp.R
 import de.uos.campusapp.component.ui.overview.CardInteractionListener
 import de.uos.campusapp.component.ui.overview.card.CardViewHolder
-import de.uos.campusapp.component.ui.transportation.model.Departure
-import de.uos.campusapp.component.ui.transportation.model.Station
+import de.uos.campusapp.component.ui.transportation.model.AbstractDeparture
+import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 import kotlin.math.min
 
 class TransportationCardViewHolder(
@@ -15,7 +15,7 @@ class TransportationCardViewHolder(
     interactionListener: CardInteractionListener
 ) : CardViewHolder(itemView, interactionListener) {
 
-    fun bind(station: Station, departures: List<Departure>) {
+    fun bind(station: AbstractStation, departures: List<AbstractDeparture>) {
         with(itemView) {
             val controller = TransportController(context)
             val items = min(departures.size, 5)

@@ -1,8 +1,8 @@
 package de.uos.campusapp.component.ui.studyroom
 
 import android.content.Context
-import de.uos.campusapp.component.ui.studyroom.model.StudyRoom
-import de.uos.campusapp.component.ui.studyroom.model.StudyRoomGroup
+import de.uos.campusapp.component.ui.studyroom.model.StudyRoomItem
+import de.uos.campusapp.component.ui.studyroom.model.StudyRoomGroupItem
 import de.uos.campusapp.database.TcaDb
 import org.jetbrains.anko.doAsync
 
@@ -20,7 +20,7 @@ class StudyRoomGroupManager(context: Context) {
         groupsDao = db.studyRoomGroupDao()
     }
 
-    fun updateDatabase(groups: List<StudyRoomGroup>, callback: () -> Unit) {
+    fun updateDatabase(groups: List<StudyRoomGroupItem>, callback: () -> Unit) {
         doAsync {
             groupsDao.removeCache()
             roomsDao.removeCache()
@@ -42,7 +42,7 @@ class StudyRoomGroupManager(context: Context) {
         }
     }
 
-    fun getAllStudyRoomsForGroup(groupId: String): List<StudyRoom> {
+    fun getAllStudyRoomsForGroup(groupId: String): List<StudyRoomItem> {
         return roomsDao.getAll(groupId).sorted()
     }
 }

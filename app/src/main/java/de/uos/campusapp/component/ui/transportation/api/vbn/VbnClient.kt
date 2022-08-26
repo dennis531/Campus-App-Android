@@ -5,8 +5,8 @@ import com.google.gson.GsonBuilder
 import de.uos.campusapp.api.general.ApiHelper
 import de.uos.campusapp.component.other.locations.LocationManager
 import de.uos.campusapp.component.ui.transportation.api.generic.TransportationAPI
-import de.uos.campusapp.component.ui.transportation.model.Departure
-import de.uos.campusapp.component.ui.transportation.model.Station
+import de.uos.campusapp.component.ui.transportation.model.AbstractDeparture
+import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,7 +18,7 @@ class VbnClient(val service: VbnApiService, context: Context): TransportationAPI
     /**
      * Only delivers the nearest stations because the OpenTripPlaner API doesn't support search by name.
      */
-    override fun getStations(query: String, maxResults: Int): List<Station> {
+    override fun getStations(query: String, maxResults: Int): List<AbstractStation> {
         //
         val location = locationManager.getCurrentOrNextLocation()
 
@@ -34,7 +34,7 @@ class VbnClient(val service: VbnApiService, context: Context): TransportationAPI
         return stations
     }
 
-    override fun getDepartures(station: Station): List<Departure> {
+    override fun getDepartures(station: AbstractStation): List<AbstractDeparture> {
         val response = service.getDepartures(station.id).execute().body()!!
 
         return response.map { it.toDepartureList() }.flatten()

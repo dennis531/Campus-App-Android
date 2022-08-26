@@ -48,10 +48,10 @@ import de.uos.campusapp.component.ui.news.api.NewsAPI
 import de.uos.campusapp.component.ui.news.model.AbstractNews
 import de.uos.campusapp.component.ui.onboarding.model.IdentityInterface
 import de.uos.campusapp.component.ui.openinghours.api.OpeningHoursAPI
+import de.uos.campusapp.component.ui.openinghours.model.AbstractLocation
 import de.uos.campusapp.component.ui.openinghours.model.Location
 import de.uos.campusapp.component.ui.studyroom.api.StudyRoomAPI
-import de.uos.campusapp.component.ui.studyroom.model.StudyRoom
-import de.uos.campusapp.component.ui.studyroom.model.StudyRoomGroup
+import de.uos.campusapp.component.ui.studyroom.model.*
 import de.uos.campusapp.config.Api
 import de.uos.campusapp.utils.*
 import okhttp3.Request
@@ -253,7 +253,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return null
     }
 
-    override fun getOpeningHours(): List<Location> {
+    override fun getOpeningHours(): List<AbstractLocation> {
         val location1 = Location(
             "1",
             "Bibliothek",
@@ -290,12 +290,11 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return listOf(location1, location2, location3)
     }
 
-    override fun getStudyRoomGroups(): List<StudyRoomGroup> {
+    override fun getStudyRoomGroups(): List<AbstractStudyRoomGroup> {
         val studyRoom1 = StudyRoom(
             "1",
             "96/E01",
             "Einzelarbeitsraum",
-            "1",
             occupiedUntil = DateTime.now().plusHours(2)
         )
 
@@ -303,7 +302,6 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             "2",
             "96/E02",
             "Gruppenarbeitsraum",
-            "1",
             freeUntil = DateTime.now().plusHours(3)
         )
 
@@ -317,21 +315,18 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             "3",
             "21/E01",
             "Einzelarbeitsraum",
-            "2",
         )
 
         val studyRoom4 = StudyRoom(
             "4",
             "21/E02",
             "Gruppenarbeitsraum",
-            "2",
         )
 
         val studyRoom5 = StudyRoom(
             "5",
             "21/E03",
             "Gruppenarbeitsraum 2",
-            "2",
             occupiedUntil = DateTime.now().plusHours(2)
         )
 
@@ -339,7 +334,6 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             "6",
             "21/E04",
             "Gruppenarbeitsraum",
-            "2",
             freeUntil = DateTime.now().plusHours(1)
         )
 

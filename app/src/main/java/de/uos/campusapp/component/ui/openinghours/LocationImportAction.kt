@@ -29,6 +29,8 @@ class LocationImportAction @Inject constructor(
         }
 
         val openingHours = apiClient.getOpeningHours()
+            .map { it.toLocationItem() }
+
         database.locationDao().removeCache()
         database.locationDao().replaceInto(openingHours)
     }

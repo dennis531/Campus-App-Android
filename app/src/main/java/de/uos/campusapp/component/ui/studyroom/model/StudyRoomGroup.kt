@@ -1,22 +1,10 @@
 package de.uos.campusapp.component.ui.studyroom.model
 
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
-
 /**
- * Representation of a study room group
+ * Simple implementation of [AbstractStudyRoomGroup]
  */
-@Entity(tableName = "study_room_groups")
-open class StudyRoomGroup(
-    @PrimaryKey
-    open var id: String = "-1",
-    open var name: String = "",
-    @Ignore
-    open var rooms: List<StudyRoom> = emptyList()
-) : Comparable<StudyRoomGroup> {
-
-    override fun toString() = name
-
-    override fun compareTo(other: StudyRoomGroup) = name.compareTo(other.name)
-}
+data class StudyRoomGroup(
+    override var id: String,
+    override var name: String,
+    override var rooms: List<AbstractStudyRoom>
+) : AbstractStudyRoomGroup()

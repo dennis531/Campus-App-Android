@@ -10,7 +10,7 @@ import de.uos.campusapp.R
 import de.uos.campusapp.component.other.general.RecentsDao
 import de.uos.campusapp.component.other.general.model.Recent
 import de.uos.campusapp.component.other.generic.activity.ProgressActivity
-import de.uos.campusapp.component.ui.transportation.model.Departure
+import de.uos.campusapp.component.ui.transportation.model.AbstractDeparture
 import de.uos.campusapp.component.ui.transportation.model.Station
 import de.uos.campusapp.database.TcaDb
 import de.uos.campusapp.utils.Utils
@@ -98,7 +98,7 @@ class TransportationDetailsActivity : ProgressActivity<Unit>(R.layout.activity_t
      *
      * @param results List of departures
      */
-    private fun displayResults(results: List<Departure>?) {
+    private fun displayResults(results: List<AbstractDeparture>?) {
         showLoadingEnded()
         if (results == null || results.isEmpty()) {
             showError(R.string.no_departures_found)

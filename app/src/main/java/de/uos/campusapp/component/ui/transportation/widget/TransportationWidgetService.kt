@@ -8,7 +8,7 @@ import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import de.uos.campusapp.R
 import de.uos.campusapp.component.ui.transportation.TransportController
-import de.uos.campusapp.component.ui.transportation.model.Departure
+import de.uos.campusapp.component.ui.transportation.model.AbstractDeparture
 import java.util.*
 
 @SuppressLint("Registered")
@@ -19,7 +19,7 @@ class TransportationWidgetService : RemoteViewsService() {
     }
 
     private inner class TransportationRemoteViewFactory internal constructor(private val applicationContext: Context, intent: Intent) : RemoteViewsFactory {
-        private var departures: List<Departure> = ArrayList()
+        private var departures: List<AbstractDeparture> = ArrayList()
         private val appWidgetID: Int = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
         private val forceLoadDepartures: Boolean = intent.getBooleanExtra(TransportationWidget.TRANSPORTATION_WIDGET_FORCE_RELOAD, true)
 
