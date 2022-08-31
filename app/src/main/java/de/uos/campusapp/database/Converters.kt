@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import de.uos.campusapp.component.ui.chat.model.ChatMember
 import de.uos.campusapp.component.ui.messages.model.AbstractMessageMember
+import de.uos.campusapp.component.ui.messages.model.MessageMember
 import de.uos.campusapp.utils.DateTimeUtils
 import de.uos.campusapp.utils.tryOrNull
 import org.joda.time.DateTime
@@ -33,7 +34,7 @@ class Converters {
 
     @TypeConverter
     fun toMessageMember(member: String): AbstractMessageMember? {
-        return tryOrNull { Gson().fromJson(member, AbstractMessageMember::class.java) }
+        return tryOrNull { Gson().fromJson(member, MessageMember::class.java) }
     }
 
     @TypeConverter
@@ -42,7 +43,7 @@ class Converters {
     @TypeConverter
     fun toMessageMemberList(member: String): List<AbstractMessageMember>? {
         return tryOrNull {
-            val type = object : TypeToken<List<AbstractMessageMember>>() {}.type
+            val type = object : TypeToken<List<MessageMember>>() {}.type
             Gson().fromJson(member, type)
         }
     }
