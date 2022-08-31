@@ -41,6 +41,7 @@ import de.uos.campusapp.component.ui.chat.adapter.ChatHistoryAdapter;
 import de.uos.campusapp.component.ui.chat.model.ChatMember;
 import de.uos.campusapp.component.ui.chat.model.ChatMessageItem;
 import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom;
+import de.uos.campusapp.component.ui.chat.model.ChatRoom;
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageLocalRepository;
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageRemoteRepository;
 import de.uos.campusapp.component.ui.overview.CardManager;
@@ -118,7 +119,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
 
     private void setupToolbarTitle() {
         String encodedChatRoom = getIntent().getStringExtra(Const.CURRENT_CHAT_ROOM);
-        currentChatRoom = new Gson().fromJson(encodedChatRoom, AbstractChatRoom.class);
+        currentChatRoom = new Gson().fromJson(encodedChatRoom, ChatRoom.class);
         currentChatMember = Utils.getSetting(this, Const.CHAT_MEMBER, ChatMember.class);
 
         if (getSupportActionBar() != null) {

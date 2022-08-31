@@ -191,6 +191,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         preference.entryValues = campusIds.toTypedArray()
         preference.setDefaultValue(defaultValue)
         preference.run { summary = entries[findIndexOfValue(Utils.getSetting(context, key, defaultValue))] }
+
+        // Force to check the default value if no value is set
+        if (preference.value == null) {
+            preference.value = defaultValue
+        }
     }
 
     private fun initCafeteriaCardSelections() {
