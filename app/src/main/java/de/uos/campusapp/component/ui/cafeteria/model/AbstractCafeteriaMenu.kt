@@ -11,7 +11,7 @@ import org.joda.time.DateTime
  * @property name Menu name
  * @property date Menu date
  * @property type Menu type, e.g. "Bio"
- * @property prices List of prices
+ * @property prices List of prices (optional)
  */
 abstract class AbstractCafeteriaMenu {
     abstract var id: String

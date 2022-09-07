@@ -18,6 +18,7 @@ import de.uos.campusapp.api.studip.model.chat.StudipBlubberComment
 import de.uos.campusapp.api.studip.model.chat.StudipBlubberThread
 import de.uos.campusapp.api.studip.model.lectures.StudipLecture
 import de.uos.campusapp.api.studip.model.lectures.StudipLectureAppointment
+import de.uos.campusapp.api.studip.model.lectures.StudipLectureFile
 import de.uos.campusapp.api.studip.model.messages.StudipMessage
 import de.uos.campusapp.api.studip.model.news.StudipNews
 import de.uos.campusapp.api.studip.model.person.StudipInstitute
@@ -30,6 +31,7 @@ import de.uos.campusapp.component.tumui.grades.model.AbstractExam
 import de.uos.campusapp.component.tumui.grades.model.Exam
 import de.uos.campusapp.component.tumui.lectures.api.LecturesAPI
 import de.uos.campusapp.component.tumui.lectures.model.AbstractLecture
+import de.uos.campusapp.component.tumui.lectures.model.FileInterface
 import de.uos.campusapp.component.tumui.lectures.model.LectureAppointmentInterface
 import de.uos.campusapp.component.tumui.person.api.PersonAPI
 import de.uos.campusapp.component.tumui.person.model.PersonInterface
@@ -58,6 +60,7 @@ import okhttp3.Request
 import org.joda.time.DateTime
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import java.io.InputStream
 import java.net.URL
 
 class StudipClient(private val apiService: StudipAPIService, context: Context, val converter: ResourceConverter) :
@@ -171,7 +174,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     }
 
     /**
-     * Returns only Kalendereinträge und nicht Stundenplan
+     * Returns only Kalendereinträge and not Stundenplan
      */
     override fun getCalendar(): List<AbstractEvent>? {
         if (userId.isEmpty()) throw UnauthorizedException()
@@ -194,6 +197,10 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return apiService.getPersonalLectures(userId).execute().body()!!
     }
 
+    override fun searchLectures(query: String): List<AbstractLecture> {
+        return apiService.searchLectures(query).execute().body()!!
+    }
+
     override fun getLectureDetails(id: String): AbstractLecture {
         return apiService.getLecture(id).execute().body()!!
     }
@@ -203,8 +210,14 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return apiService.getLectureEvents(id).execute().body()!!.map { StudipLectureAppointment.fromStudipBaseEvent(it) }
     }
 
-    override fun searchLectures(query: String): List<AbstractLecture> {
-        return apiService.searchLectures(query).execute().body()!!
+    override fun getLectureFiles(id: String): List<FileInterface>? {
+        // Only show downloadable files
+        return apiService.getLectureFiles(id).execute().body()!!
+            .filter { it.isDownloadable }
+    }
+
+    override fun downloadLectureFile(file: FileInterface): InputStream? {
+        return apiService.downloadLectureFile(file.id).execute().body()!!.byteStream()
     }
 
     override fun getNews(): List<AbstractNews> {
@@ -412,6 +425,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
                 StudipCalendarEvent::class.java,
                 StudipCourseEvent::class.java,
                 StudipLecture::class.java,
+                StudipLectureFile::class.java,
                 StudipNews::class.java,
                 StudipBlubberThread::class.java,
                 StudipBlubberComment::class.java,

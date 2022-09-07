@@ -4,6 +4,7 @@ import de.uos.campusapp.api.studip.model.calendar.StudipCourseEvent
 import de.uos.campusapp.api.studip.model.chat.StudipBlubberComment
 import de.uos.campusapp.api.studip.model.chat.StudipBlubberThread
 import de.uos.campusapp.api.studip.model.lectures.StudipLecture
+import de.uos.campusapp.api.studip.model.lectures.StudipLectureFile
 import de.uos.campusapp.api.studip.model.messages.StudipMessage
 import de.uos.campusapp.api.studip.model.news.StudipNews
 import de.uos.campusapp.api.studip.model.person.StudipInstitute
@@ -33,14 +34,21 @@ interface StudipAPIService {
     @GET("users/{id}/courses?include=institute,start-semester,end-semester")
     fun getPersonalLectures(@Path("id") id: String): Call<List<StudipLecture>>
 
+    @GET("courses?include=institute,start-semester,end-semester")
+    fun searchLectures(@Query("filter[q]") query: String): Call<List<StudipLecture>>
+
     @GET("courses/{id}?include=institute,start-semester,end-semester")
     fun getLecture(@Path("id") id: String): Call<StudipLecture>
 
     @GET("courses/{id}/events?page[limit]=100")
     fun getLectureEvents(@Path("id") id: String): Call<List<StudipCourseEvent>>
 
-    @GET("courses?include=institute,start-semester,end-semester")
-    fun searchLectures(@Query("filter[q]") query: String): Call<List<StudipLecture>>
+    @GET("courses/{id}/file-refs?include=owner")
+    fun getLectureFiles(@Path("id") id: String): Call<List<StudipLectureFile>>
+
+    @GET("file-refs/{id}/content")
+    @Streaming
+    fun downloadLectureFile(@Path("id") id: String): Call<ResponseBody>
 
 
     @GET("studip/news")

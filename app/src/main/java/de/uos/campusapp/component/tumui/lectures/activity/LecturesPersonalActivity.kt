@@ -10,8 +10,6 @@ import de.uos.campusapp.utils.Component
 /**
  * This activity presents the user's lectures. The results can be filtered by the semester.
  * This activity uses the same models as FindLectures.
- *
- * HINT: a TUMOnline access token is needed
  */
 class LecturesPersonalActivity : BaseActivity(R.layout.activity_lectures, Component.LECTURES) {
 

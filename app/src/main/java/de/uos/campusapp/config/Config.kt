@@ -126,6 +126,9 @@ object Config {
     // Radius of the circular region
     val GEOFENCING_RADIUS_IN_METER = 50 * 1000f // 50 Km; default: 0f
 
+    // Lectures options
+    val LECTURES_SHOW_FILES = true // Lecture Files can be listed and downloaded; default: false
+
     // Tuition fees options
     // if true and tuition api is provided, the tuition will be loaded from the selected api
     val TUITIONFEES_FROM_API = false // Default: false

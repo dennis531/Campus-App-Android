@@ -218,6 +218,16 @@
                 android:value="de.uos.campusapp.component.tumui.lectures.activity.LectureDetailsActivity" />
         </activity>
         <activity
+            android:name=".component.tumui.lectures.activity.LectureFilesActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/lecture_files"
+            android:parentActivityName=".component.tumui.lectures.activity.LectureFilesActivity"
+            android:theme="@style/AppTheme.NoDrawerLayout" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.uos.campusapp.component.tumui.lectures.activity.LectureDetailsActivity" />
+        </activity>
+        <activity
             android:name=".component.tumui.lectures.activity.LectureDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/lectures_information"

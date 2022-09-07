@@ -24,7 +24,7 @@ import okio.BufferedSource;
 
 import static okhttp3.internal.platform.Platform.INFO;
 
-public final class TumHttpLoggingInterceptor implements Interceptor {
+public final class LoggingInterceptor implements Interceptor {
 
     private static final Charset UTF8 = Charset.forName("UTF-8");
     private final Logger logger;
@@ -39,7 +39,7 @@ public final class TumHttpLoggingInterceptor implements Interceptor {
                                             .log(message, INFO, null);
     }
 
-    public TumHttpLoggingInterceptor(Logger logger) {
+    public LoggingInterceptor(Logger logger) {
         this.logger = logger;
     }
 

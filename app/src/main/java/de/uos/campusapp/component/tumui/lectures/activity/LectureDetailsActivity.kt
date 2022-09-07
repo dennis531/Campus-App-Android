@@ -3,6 +3,8 @@ package de.uos.campusapp.component.tumui.lectures.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
 import de.uos.campusapp.R
@@ -12,6 +14,8 @@ import de.uos.campusapp.component.tumui.lectures.api.LecturesAPI
 import de.uos.campusapp.component.tumui.lectures.model.AbstractLecture
 import de.uos.campusapp.databinding.ActivityLecturedetailsBinding
 import de.uos.campusapp.utils.Component
+import de.uos.campusapp.utils.ConfigConst
+import de.uos.campusapp.utils.ConfigUtils
 import de.uos.campusapp.utils.Const
 
 /**
@@ -130,5 +134,40 @@ class LectureDetailsActivity : ActivityForAccessingApi<AbstractLecture>(R.layout
             appointmentsButton.isEnabled = true
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu_activity_lecture_detail, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val menuItemOpenFiles = menu?.findItem(R.id.action_open_lecture_files)
+        // Only show files if configured
+        menuItemOpenFiles?.isVisible = ConfigUtils.getConfig(ConfigConst.LECTURES_SHOW_FILES, false)
+
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_open_lecture_files -> {
+                openLectureFilesActivity()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun openLectureFilesActivity() {
+        // LectureFiles need the name and id of the facing lecture
+        val bundle = Bundle()
+        bundle.putString(AbstractLecture.Lecture_ID, currentItem.id)
+        bundle.putString(Const.TITLE_EXTRA, currentItem.title)
+
+        val intent = Intent(this, LectureFilesActivity::class.java)
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 }

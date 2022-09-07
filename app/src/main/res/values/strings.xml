@@ -250,6 +250,14 @@
     <string name="lec_method">Method</string>
     <string name="lec_target">Targets</string>
     <string name="examination_aids">Examination aids</string>
+    <string name="lecture_files">Lecture files</string>
+    <string name="no_files">No files available</string>
+    <string name="file_open_failure_format_string">%s can not be opened</string>
+    <string name="author_format_string">Author: %s</string>
+    <string name="size_format_string">Size: %s</string>
+    <string name="download_success_format_string">%s downloaded successfully</string>
+    <string name="download_error">Download failed</string>
+    <string name="download_not_finished">Previous download not finished</string>
 
     <!-- Tuition fees -->
     <string name="outstanding_balance">Outstanding balance</string>

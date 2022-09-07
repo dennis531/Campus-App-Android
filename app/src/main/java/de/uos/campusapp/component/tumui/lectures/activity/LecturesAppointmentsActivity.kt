@@ -15,14 +15,10 @@ import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.Const
 
 /**
- * This activity provides the appointment dates to a given lecture using the
- * TUMOnline web service.
+ * This activity provides the appointment dates to a given lecture
  *
  *
- * HINT: a valid TUM Online token is needed
- *
- *
- * NEEDS: stp_sp_nr and title set in incoming bundle (lecture id, title)
+ * NEEDS: id and title set in incoming bundle (lecture id, title)
  */
 class LecturesAppointmentsActivity : ActivityForAccessingApi<List<LectureAppointmentInterface>>(R.layout.activity_lecturesappointments, Component.LECTURES) {
 

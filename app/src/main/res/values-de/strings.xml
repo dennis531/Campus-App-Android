@@ -197,6 +197,14 @@
     <string name="lec_method">Methode</string>
     <string name="lec_target">Ziele</string>
     <string name="examination_aids">Prüfungshilfsmittel</string>
+    <string name="lecture_files">Vorlesungsdateien</string>
+    <string name="no_files">Keine Dateien verfügbar</string>
+    <string name="file_open_failure_format_string">%s kann nicht geöffnet werden</string>
+    <string name="author_format_string">Autor: %s</string>
+    <string name="size_format_string">Größe: %s</string>
+    <string name="download_success_format_string">%s erfolgreich heruntergeladen</string>
+    <string name="download_error">Download fehlgeschlagen</string>
+    <string name="download_not_finished">Vorheriger Download nicht beendet</string>
 
     <!-- Tuition fees -->
     <string name="outstanding_balance">Offener Betrag</string>

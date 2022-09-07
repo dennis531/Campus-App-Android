@@ -60,7 +60,7 @@ public final class ApiHelper {
         builder.connectTimeout(ApiHelper.HTTP_TIMEOUT, TimeUnit.MILLISECONDS);
         builder.readTimeout(ApiHelper.HTTP_TIMEOUT, TimeUnit.MILLISECONDS);
 
-        builder.addNetworkInterceptor(new TumHttpLoggingInterceptor(message -> Utils.logWithTag(TAG, message)));
+        builder.addNetworkInterceptor(new LoggingInterceptor(message -> Utils.logWithTag(TAG, message)));
 
         //Save it to the static handle and return
         client = builder.build();
