@@ -2,7 +2,7 @@ package de.uos.campusapp.models.tumo
 
 import com.tickaroo.tikxml.TikXml
 import de.uos.campusapp.TestApp
-import de.uos.campusapp.component.tumui.person.model.IdentitySet
+import de.uos.campusapp.component.ui.person.model.IdentitySet
 import okio.buffer
 import okio.source
 import org.junit.Test

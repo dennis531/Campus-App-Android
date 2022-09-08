@@ -1,9 +1,9 @@
 package de.uos.campusapp.utils
 
 import android.content.Context
-import de.uos.campusapp.component.tumui.calendar.CalendarController
-import de.uos.campusapp.component.tumui.calendar.api.CalendarAPI
-import de.uos.campusapp.component.tumui.lectures.api.LecturesAPI
+import de.uos.campusapp.component.ui.calendar.CalendarController
+import de.uos.campusapp.component.ui.calendar.api.CalendarAPI
+import de.uos.campusapp.component.ui.lectures.api.LecturesAPI
 import de.uos.campusapp.component.ui.chat.ChatRoomController
 import de.uos.campusapp.service.QueryLocationsService
 import okhttp3.Cache
@@ -50,6 +50,9 @@ class CacheManager @Inject constructor(private val context: Context) {
         }
     }
 
+    /**
+     * TODO: Remove?
+     */
     private fun syncPersonalLectures() {
         if(!ConfigUtils.isComponentEnabled(context, Component.LECTURES) || !ConfigUtils.isComponentEnabled(context, Component.CHAT)) {
             return

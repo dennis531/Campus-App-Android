@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteException
 import androidx.core.app.JobIntentService
 import androidx.core.content.ContextCompat
 import de.uos.campusapp.component.other.locations.LocationManager
-import de.uos.campusapp.component.tumui.calendar.CalendarController
-import de.uos.campusapp.component.tumui.calendar.model.CalendarItem
+import de.uos.campusapp.component.ui.calendar.CalendarController
+import de.uos.campusapp.component.ui.calendar.model.CalendarItem
 import de.uos.campusapp.component.other.locations.model.RoomLocations
 import de.uos.campusapp.database.TcaDb
 import de.uos.campusapp.utils.Component

@@ -6,7 +6,7 @@ import android.preference.PreferenceManager
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dagger.Module
 import dagger.Provides
-import de.uos.campusapp.api.general.TUMCabeClient
+import de.uos.campusapp.api.tumcabe.TUMCabeClient
 import de.uos.campusapp.api.tumonline.TUMOnlineClient
 import de.uos.campusapp.database.TcaDb
 import javax.inject.Singleton
@@ -27,20 +27,6 @@ abstract class AppModule {
         fun provideSharedPreferences(
             context: Context
         ): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-
-        @JvmStatic
-        @Singleton
-        @Provides
-        fun provideTUMCabeClient( // TODO: Remove
-            context: Context
-        ): TUMCabeClient = TUMCabeClient.getInstance(context)
-
-        @JvmStatic
-        @Singleton
-        @Provides
-        fun provideTUMOnlineClient( // TODO: Remove
-            context: Context
-        ): TUMOnlineClient = TUMOnlineClient.getInstance(context)
 
         @JvmStatic
         @Singleton

@@ -12,10 +12,10 @@ import com.google.android.gms.common.GoogleApiAvailability
 import de.uos.campusapp.component.other.locations.model.BuildingToGps
 import de.uos.campusapp.component.other.locations.model.Campus
 import de.uos.campusapp.component.other.locations.model.Geo
-import de.uos.campusapp.component.tumui.calendar.CalendarController
-import de.uos.campusapp.component.tumui.roomfinder.api.RoomFinderAPI
-import de.uos.campusapp.component.tumui.roomfinder.model.RoomFinderCoordinateInterface
-import de.uos.campusapp.component.tumui.roomfinder.model.RoomFinderRoomInterface
+import de.uos.campusapp.component.ui.calendar.CalendarController
+import de.uos.campusapp.component.ui.roomfinder.api.RoomFinderAPI
+import de.uos.campusapp.component.ui.roomfinder.model.RoomFinderCoordinateInterface
+import de.uos.campusapp.component.ui.roomfinder.model.RoomFinderRoomInterface
 import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaItem
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.uos.campusapp.component.ui.transportation.model.AbstractStation

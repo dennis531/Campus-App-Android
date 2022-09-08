@@ -10,7 +10,7 @@ import android.os.Build
 import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.core.app.JobIntentService
-import de.uos.campusapp.component.tumui.calendar.CalendarController
+import de.uos.campusapp.component.ui.calendar.CalendarController
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
 import de.uos.campusapp.utils.Const

@@ -4,7 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import de.uos.campusapp.component.tumui.calendar.model.CalendarItem;
+import de.uos.campusapp.component.ui.calendar.model.CalendarItem;
 import de.uos.campusapp.component.other.locations.model.RoomLocations;
 
 @Dao

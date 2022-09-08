@@ -16,10 +16,10 @@ import java.util.List;
 
 import de.uos.campusapp.TestApp;
 import de.uos.campusapp.component.other.locations.RoomLocationsDao;
-import de.uos.campusapp.component.tumui.calendar.CalendarDao;
-import de.uos.campusapp.component.tumui.calendar.WidgetsTimetableBlacklistDao;
-import de.uos.campusapp.component.tumui.calendar.model.CalendarItem;
-import de.uos.campusapp.component.tumui.calendar.model.WidgetsTimetableBlacklist;
+import de.uos.campusapp.component.ui.calendar.CalendarDao;
+import de.uos.campusapp.component.ui.calendar.WidgetsTimetableBlacklistDao;
+import de.uos.campusapp.component.ui.calendar.model.CalendarItem;
+import de.uos.campusapp.component.ui.calendar.model.WidgetsTimetableBlacklist;
 import de.uos.campusapp.component.other.locations.model.RoomLocations;
 import de.uos.campusapp.database.TcaDb;
 

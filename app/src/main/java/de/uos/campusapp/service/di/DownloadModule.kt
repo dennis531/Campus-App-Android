@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.res.AssetManager
 import dagger.Module
 import dagger.Provides
-import de.uos.campusapp.component.tumui.grades.GradesBackgroundUpdater
-import de.uos.campusapp.component.tumui.grades.GradesDownloadAction
+import de.uos.campusapp.component.ui.grades.GradesBackgroundUpdater
+import de.uos.campusapp.component.ui.grades.GradesDownloadAction
 import de.uos.campusapp.component.ui.cafeteria.CafeteriaDownloadAction
 import de.uos.campusapp.component.ui.cafeteria.controller.CafeteriaMenuManager
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaRemoteRepository

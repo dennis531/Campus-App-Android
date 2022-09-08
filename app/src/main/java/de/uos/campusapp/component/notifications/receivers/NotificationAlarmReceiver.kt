@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import de.uos.campusapp.component.notifications.NotificationScheduler
 import de.uos.campusapp.component.notifications.persistence.NotificationType
-import de.uos.campusapp.component.tumui.tuitionfees.TuitionFeesNotificationProvider
+import de.uos.campusapp.component.ui.tuitionfees.TuitionFeesNotificationProvider
 import de.uos.campusapp.component.ui.cafeteria.CafeteriaNotificationProvider
 import de.uos.campusapp.component.ui.transportation.TransportNotificationProvider
 import de.uos.campusapp.utils.Const

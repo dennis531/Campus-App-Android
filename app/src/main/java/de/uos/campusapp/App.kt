@@ -14,8 +14,8 @@ import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import de.uos.campusapp.component.notifications.NotificationUtils.setupNotificationChannels
 import de.uos.campusapp.component.other.settings.ThemeProvider
-import de.uos.campusapp.component.tumui.calendar.CalendarActivity
-import de.uos.campusapp.component.tumui.calendar.widget.TimetableWidget
+import de.uos.campusapp.component.ui.calendar.CalendarActivity
+import de.uos.campusapp.component.ui.calendar.widget.TimetableWidget
 import de.uos.campusapp.component.ui.cafeteria.activity.CafeteriaActivity
 import de.uos.campusapp.component.ui.cafeteria.widget.MensaWidget
 import de.uos.campusapp.component.ui.transportation.widget.TransportationWidget
@@ -24,7 +24,6 @@ import de.uos.campusapp.di.DaggerAppComponent
 import de.uos.campusapp.service.GeofencingStartupReceiver
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
-import io.reactivex.plugins.RxJavaPlugins
 import net.danlew.android.joda.JodaTimeAndroid
 
 open class App : Application() {

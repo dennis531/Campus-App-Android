@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.*
 import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Meta
 import com.github.jasminb.jsonapi.annotations.Type
-import de.uos.campusapp.component.tumui.person.model.InstituteInterface
-import de.uos.campusapp.component.tumui.person.model.PersonInterface
-import de.uos.campusapp.component.tumui.person.model.RoomInterface
+import de.uos.campusapp.component.ui.person.model.InstituteInterface
+import de.uos.campusapp.component.ui.person.model.PersonInterface
+import de.uos.campusapp.component.ui.person.model.RoomInterface
 import de.uos.campusapp.component.ui.onboarding.model.Identity
 import java.io.Serializable
 

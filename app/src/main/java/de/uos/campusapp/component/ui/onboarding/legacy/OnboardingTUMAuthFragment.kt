@@ -9,8 +9,8 @@ import androidx.core.content.ContextCompat
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
-import de.uos.campusapp.api.general.AuthenticationManager
-import de.uos.campusapp.api.general.exception.NoPublicKey
+import de.uos.campusapp.api.auth.legacy.AuthenticationManager
+import de.uos.campusapp.api.auth.legacy.exception.NoPublicKey
 import de.uos.campusapp.api.tumonline.TUMOnlineClient
 import de.uos.campusapp.api.general.exception.UnauthorizedException
 import de.uos.campusapp.api.general.exception.UnknownErrorException
@@ -49,8 +49,9 @@ class OnboardingStartFragment : BaseFragment<Unit>(
     @Inject
     lateinit var authManager: AuthenticationManager
 
-    @Inject
-    lateinit var tumOnlineClient: TUMOnlineClient
+    private val tumOnlineClient: TUMOnlineClient by lazy {
+        TUMOnlineClient.getInstance(requireContext())
+    }
 
     @Inject
     lateinit var navigator: OnboardingNavigator

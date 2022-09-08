@@ -4,10 +4,10 @@ import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import de.uos.campusapp.component.other.settings.SettingsFragment
-import de.uos.campusapp.component.tumui.feedback.di.FeedbackComponent
-import de.uos.campusapp.component.tumui.lectures.di.LecturesComponent
-import de.uos.campusapp.component.tumui.person.di.PersonComponent
-import de.uos.campusapp.component.tumui.roomfinder.di.RoomFinderComponent
+import de.uos.campusapp.component.ui.feedback.di.FeedbackComponent
+import de.uos.campusapp.component.ui.lectures.di.LecturesComponent
+import de.uos.campusapp.component.ui.person.di.PersonComponent
+import de.uos.campusapp.component.ui.roomfinder.di.RoomFinderComponent
 import de.uos.campusapp.component.ui.cafeteria.di.CafeteriaComponent
 import de.uos.campusapp.component.ui.messages.di.MessagesComponent
 import de.uos.campusapp.component.ui.news.di.NewsComponent

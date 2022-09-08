@@ -1,6 +1,6 @@
 package de.uos.campusapp.api.studip.model.person
 
-import de.uos.campusapp.component.tumui.person.model.RoomInterface
+import de.uos.campusapp.component.ui.person.model.RoomInterface
 
 class StudipRoom(
     override var location: String = "",

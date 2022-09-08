@@ -6,7 +6,7 @@ import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Relationship
 import com.github.jasminb.jsonapi.annotations.Type
 import de.uos.campusapp.api.studip.model.person.StudipPerson
-import de.uos.campusapp.component.tumui.lectures.model.FileInterface
+import de.uos.campusapp.component.ui.lectures.model.FileInterface
 import org.joda.time.DateTime
 
 @Type("file-refs")

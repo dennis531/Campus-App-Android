@@ -15,7 +15,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.uos.campusapp.api.general.AuthenticationManager;
+import de.uos.campusapp.api.auth.legacy.AuthenticationManager;
 import de.uos.campusapp.component.ui.chat.model.ChatMessageItem;
 import de.uos.campusapp.utils.RSASigner;
 import de.uos.campusapp.utils.Utils;

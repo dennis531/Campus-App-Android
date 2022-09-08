@@ -8,7 +8,7 @@ import android.os.RemoteException
 import android.provider.ContactsContract
 import com.squareup.picasso.Picasso
 import de.uos.campusapp.R
-import de.uos.campusapp.component.tumui.person.model.PersonInterface
+import de.uos.campusapp.component.ui.person.model.PersonInterface
 import org.jetbrains.anko.runOnUiThread
 import java.io.ByteArrayOutputStream
 import java.io.IOException

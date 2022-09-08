@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 //import com.google.firebase.crashlytics.FirebaseCrashlytics
 import de.uos.campusapp.api.tumonline.CacheControl
-import de.uos.campusapp.component.tumui.calendar.CalendarController
-import de.uos.campusapp.component.tumui.tuitionfees.TuitionFeeManager
+import de.uos.campusapp.component.ui.calendar.CalendarController
+import de.uos.campusapp.component.ui.tuitionfees.TuitionFeeManager
 import de.uos.campusapp.component.ui.cafeteria.controller.CafeteriaManager
 import de.uos.campusapp.component.ui.chat.ChatRoomController
 import de.uos.campusapp.component.ui.eduroam.EduroamCard

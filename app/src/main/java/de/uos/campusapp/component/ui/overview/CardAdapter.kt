@@ -3,8 +3,8 @@ package de.uos.campusapp.component.ui.overview
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import de.uos.campusapp.component.tumui.calendar.NextLectureCard
-import de.uos.campusapp.component.tumui.tuitionfees.TuitionFeesCard
+import de.uos.campusapp.component.ui.calendar.NextLectureCard
+import de.uos.campusapp.component.ui.tuitionfees.TuitionFeesCard
 import de.uos.campusapp.component.ui.cafeteria.CafeteriaMenuCard
 import de.uos.campusapp.component.ui.chat.ChatMessagesCard
 import de.uos.campusapp.component.ui.eduroam.EduroamCard

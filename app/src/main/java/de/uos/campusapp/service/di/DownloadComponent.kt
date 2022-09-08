@@ -1,7 +1,7 @@
 package de.uos.campusapp.service.di
 
 import dagger.Subcomponent
-import de.uos.campusapp.component.tumui.grades.GradeNotificationDeleteReceiver
+import de.uos.campusapp.component.ui.grades.GradeNotificationDeleteReceiver
 import de.uos.campusapp.component.ui.onboarding.StartupActivity
 import de.uos.campusapp.service.DownloadWorker
 

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Relationship
 import com.github.jasminb.jsonapi.annotations.Type
-import de.uos.campusapp.component.tumui.person.model.InstituteInterface
+import de.uos.campusapp.component.ui.person.model.InstituteInterface
 import java.io.Serializable
 
 @Type("institute-memberships")

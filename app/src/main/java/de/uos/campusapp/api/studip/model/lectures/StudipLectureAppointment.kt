@@ -1,7 +1,7 @@
 package de.uos.campusapp.api.studip.model.lectures
 
 import de.uos.campusapp.api.studip.model.calendar.StudipBaseEvent
-import de.uos.campusapp.component.tumui.lectures.model.LectureAppointmentInterface
+import de.uos.campusapp.component.ui.lectures.model.LectureAppointmentInterface
 import org.joda.time.DateTime
 
 class StudipLectureAppointment(

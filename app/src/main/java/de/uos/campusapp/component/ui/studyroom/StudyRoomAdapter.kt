@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import de.uos.campusapp.R
-import de.uos.campusapp.component.tumui.roomfinder.RoomFinderActivity
+import de.uos.campusapp.component.ui.roomfinder.RoomFinderActivity
 import de.uos.campusapp.component.ui.studyroom.model.StudyRoomItem
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils

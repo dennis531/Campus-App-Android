@@ -3,7 +3,7 @@ package de.uos.campusapp.config
 import androidx.annotation.Keep
 import de.uos.campusapp.R
 import de.uos.campusapp.component.other.locations.model.Campus
-import de.uos.campusapp.component.tumui.tuitionfees.model.Tuition
+import de.uos.campusapp.component.ui.tuitionfees.model.Tuition
 import de.uos.campusapp.component.ui.cafeteria.model.Cafeteria
 import de.uos.campusapp.component.ui.transportation.model.Station
 import de.uos.campusapp.utils.DateTimeUtils

@@ -61,20 +61,20 @@
         </receiver>
 
         <provider
-            android:name=".component.tumui.roomfinder.RoomFinderSuggestionProvider"
-            android:authorities="de.uos.campusapp.component.tumui.roomfinder.RoomFinderSuggestionProvider"
+            android:name="de.uos.campusapp.component.ui.roomfinder.RoomFinderSuggestionProvider"
+            android:authorities="de.uos.campusapp.component.ui.roomfinder.RoomFinderSuggestionProvider"
             android:exported="false" />
         <provider
-            android:name=".component.tumui.person.PersonSearchSuggestionProvider"
-            android:authorities="de.uos.campusapp.component.tumui.person.PersonSearchSuggestionProvider"
+            android:name="de.uos.campusapp.component.ui.person.PersonSearchSuggestionProvider"
+            android:authorities="de.uos.campusapp.component.ui.person.PersonSearchSuggestionProvider"
             android:exported="false" />
         <provider
             android:name=".component.ui.transportation.TransportationSuggestionProvider"
             android:authorities="de.uos.campusapp.component.ui.transportation.TransportationSuggestionProvider"
             android:exported="false" />
         <provider
-            android:name=".component.tumui.lectures.LectureSearchSuggestionProvider"
-            android:authorities="de.uos.campusapp.component.tumui.lectures.LectureSearchSuggestionProvider"
+            android:name="de.uos.campusapp.component.ui.lectures.LectureSearchSuggestionProvider"
+            android:authorities="de.uos.campusapp.component.ui.lectures.LectureSearchSuggestionProvider"
             android:exported="false" />
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -150,7 +150,7 @@
                 android:value=".component.ui.overview.MainActivity" />
         </activity>
         <activity
-            android:name=".component.tumui.grades.GradesActivity"
+            android:name="de.uos.campusapp.component.ui.grades.GradesActivity"
             android:label="@string/empty_string"
             android:launchMode="singleTop"
             android:parentActivityName=".component.ui.overview.MainActivity" >
@@ -208,37 +208,37 @@
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".component.ui.transportation.TransportationActivity" />
         <activity
-            android:name=".component.tumui.lectures.activity.LecturesAppointmentsActivity"
+            android:name="de.uos.campusapp.component.ui.lectures.activity.LecturesAppointmentsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/lectures_appointments"
-            android:parentActivityName=".component.tumui.lectures.activity.LectureDetailsActivity"
+            android:parentActivityName="de.uos.campusapp.component.ui.lectures.activity.LectureDetailsActivity"
             android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.uos.campusapp.component.tumui.lectures.activity.LectureDetailsActivity" />
+                android:value="de.uos.campusapp.component.ui.lectures.activity.LectureDetailsActivity" />
         </activity>
         <activity
-            android:name=".component.tumui.lectures.activity.LectureFilesActivity"
+            android:name="de.uos.campusapp.component.ui.lectures.activity.LectureFilesActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/lecture_files"
-            android:parentActivityName=".component.tumui.lectures.activity.LectureFilesActivity"
+            android:parentActivityName="de.uos.campusapp.component.ui.lectures.activity.LectureFilesActivity"
             android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.uos.campusapp.component.tumui.lectures.activity.LectureDetailsActivity" />
+                android:value="de.uos.campusapp.component.ui.lectures.activity.LectureDetailsActivity" />
         </activity>
         <activity
-            android:name=".component.tumui.lectures.activity.LectureDetailsActivity"
+            android:name="de.uos.campusapp.component.ui.lectures.activity.LectureDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/lectures_information"
-            android:parentActivityName=".component.tumui.lectures.activity.LecturesPersonalActivity"
+            android:parentActivityName="de.uos.campusapp.component.ui.lectures.activity.LecturesPersonalActivity"
             android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.uos.campusapp.component.tumui.lectures.activity.LecturesPersonalActivity" />
+                android:value="de.uos.campusapp.component.ui.lectures.activity.LecturesPersonalActivity" />
         </activity>
         <activity
-            android:name=".component.tumui.lectures.activity.LecturesPersonalActivity"
+            android:name="de.uos.campusapp.component.ui.lectures.activity.LecturesPersonalActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/my_lectures"
             android:launchMode="singleTop"
@@ -275,7 +275,7 @@
                 android:value="de.uos.campusapp.component.ui.cafeteria.activity.CafeteriaActivity" />
         </activity>
         <activity
-            android:name=".component.tumui.person.PersonSearchActivity"
+            android:name="de.uos.campusapp.component.ui.person.PersonSearchActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/person_search"
             android:launchMode="singleTop"
@@ -292,17 +292,17 @@
                 android:value=".component.ui.overview.MainActivity" />
         </activity>
         <activity
-            android:name=".component.tumui.person.PersonDetailsActivity"
+            android:name="de.uos.campusapp.component.ui.person.PersonDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/person_information"
-            android:theme="@style/AppTheme.NoDrawerLayout" >
-            android:parentActivityName=".component.tumui.person.PersonSearchActivity">
+            android:theme="@style/AppTheme.NoDrawerLayout"
+            android:parentActivityName=".component.ui.person.PersonSearchActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.uos.campusapp.component.tumui.person.PersonSearchActivity" />
+                android:value="de.uos.campusapp.component.ui.person.PersonSearchActivity" />
         </activity>
         <activity
-            android:name=".component.tumui.roomfinder.RoomFinderActivity"
+            android:name="de.uos.campusapp.component.ui.roomfinder.RoomFinderActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/roomfinder"
             android:launchMode="singleTop"
@@ -320,17 +320,17 @@
                 android:resource="@xml/searchable_rooms" />
         </activity>
         <activity
-            android:name=".component.tumui.roomfinder.RoomFinderDetailsActivity"
+            android:name="de.uos.campusapp.component.ui.roomfinder.RoomFinderDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/roomfinder"
-            android:parentActivityName=".component.tumui.roomfinder.RoomFinderActivity"
+            android:parentActivityName="de.uos.campusapp.component.ui.roomfinder.RoomFinderActivity"
             android:theme="@style/AppTheme.NoDrawerLayout" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.uos.campusapp.component.tumui.roomfinder.RoomFinderActivity" />
+                android:value="de.uos.campusapp.component.ui.roomfinder.RoomFinderActivity" />
         </activity>
         <activity
-            android:name=".component.tumui.tuitionfees.TuitionFeesActivity"
+            android:name="de.uos.campusapp.component.ui.tuitionfees.TuitionFeesActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/tuition_fees"
             android:launchMode="singleTop"
@@ -383,7 +383,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".component.tumui.calendar.CalendarActivity"
+            android:name="de.uos.campusapp.component.ui.calendar.CalendarActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/calendar"
             android:launchMode="singleTop"
@@ -393,9 +393,9 @@
                 android:value=".component.ui.overview.MainActivity" />
         </activity>
         <activity
-            android:name=".component.tumui.calendar.CreateEventActivity"
+            android:name="de.uos.campusapp.component.ui.calendar.CreateEventActivity"
             android:label="@string/activity_create_event_title"
-            android:parentActivityName=".component.tumui.calendar.CalendarActivity" >
+            android:parentActivityName="de.uos.campusapp.component.ui.calendar.CalendarActivity" >
         </activity>
         <activity
             android:name=".component.ui.chat.activity.ChatRoomsActivity"
@@ -429,11 +429,11 @@
                 android:value="de.uos.campusapp.component.ui.chat.activity.ChatRoomsActivity" />
         </activity>
         <activity
-            android:name=".component.tumui.feedback.FeedbackActivity"
+            android:name="de.uos.campusapp.component.ui.feedback.FeedbackActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/feedback"
             android:launchMode="singleTop"
-            android:parentActivityName=".component.tumui.feedback.FeedbackActivity"
+            android:parentActivityName="de.uos.campusapp.component.ui.feedback.FeedbackActivity"
             android:theme="@style/AppTheme.NoDrawerLayout" />
         <activity
             android:name=".component.ui.chat.activity.AddChatMemberActivity"
@@ -499,7 +499,7 @@
             </intent-filter>
         </activity> <!-- receiver for the TimetableWidget -->
         <receiver
-            android:name=".component.tumui.calendar.widget.TimetableWidget"
+            android:name="de.uos.campusapp.component.ui.calendar.widget.TimetableWidget"
             android:label="@string/timetable_widget"
             android:enabled="false" >
             <intent-filter>
@@ -512,11 +512,11 @@
         </receiver>
 
         <service
-            android:name=".component.tumui.calendar.widget.TimetableWidgetService"
+            android:name="de.uos.campusapp.component.ui.calendar.widget.TimetableWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <activity
-            android:name=".component.tumui.calendar.widget.TimetableWidgetConfigureActivity"
+            android:name="de.uos.campusapp.component.ui.calendar.widget.TimetableWidgetConfigureActivity"
             android:allowTaskReparenting="false"
             android:configChanges="orientation|screenSize"
             android:excludeFromRecents="true"
@@ -546,15 +546,6 @@
             android:name=".service.QueryLocationsService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-<!--        <service-->
-<!--            android:name=".service.FcmReceiverService"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true"-->
-<!--            android:stopWithTask="false" >-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
         <service
             android:name=".service.GeofencingRegistrationService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
@@ -571,7 +562,7 @@
         </receiver>
         <receiver android:name=".component.notifications.receivers.NotificationReceiver" />
         <receiver android:name=".component.notifications.receivers.NotificationAlarmReceiver" />
-        <receiver android:name=".component.tumui.grades.GradeNotificationDeleteReceiver" />
+        <receiver android:name="de.uos.campusapp.component.ui.grades.GradeNotificationDeleteReceiver" />
     </application>
 
 </manifest>

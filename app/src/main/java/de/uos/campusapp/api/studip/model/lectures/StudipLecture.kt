@@ -6,7 +6,7 @@ import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Relationship
 import com.github.jasminb.jsonapi.annotations.Type
 import de.uos.campusapp.api.studip.model.person.InstituteRelationship
-import de.uos.campusapp.component.tumui.lectures.model.AbstractLecture
+import de.uos.campusapp.component.ui.lectures.model.AbstractLecture
 
 @Type("courses")
 class StudipLecture : AbstractLecture() {

@@ -1,10 +1,10 @@
 package de.uos.campusapp.api.generic
 
-import de.uos.campusapp.component.tumui.calendar.api.CalendarAPI
-import de.uos.campusapp.component.tumui.grades.api.GradesAPI
-import de.uos.campusapp.component.tumui.lectures.api.LecturesAPI
-import de.uos.campusapp.component.tumui.person.api.PersonAPI
-import de.uos.campusapp.component.tumui.roomfinder.api.RoomFinderAPI
+import de.uos.campusapp.component.ui.calendar.api.CalendarAPI
+import de.uos.campusapp.component.ui.grades.api.GradesAPI
+import de.uos.campusapp.component.ui.lectures.api.LecturesAPI
+import de.uos.campusapp.component.ui.person.api.PersonAPI
+import de.uos.campusapp.component.ui.roomfinder.api.RoomFinderAPI
 import de.uos.campusapp.component.ui.cafeteria.api.generic.CafeteriaAPI
 import de.uos.campusapp.component.ui.chat.api.ChatAPI
 import de.uos.campusapp.component.ui.messages.api.MessagesAPI

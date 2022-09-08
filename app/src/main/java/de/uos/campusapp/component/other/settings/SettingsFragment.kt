@@ -16,7 +16,7 @@ import androidx.preference.*
 import de.uos.campusapp.R
 import de.uos.campusapp.api.auth.AuthManager
 import de.uos.campusapp.component.other.locations.model.Campus
-import de.uos.campusapp.component.tumui.calendar.CalendarController
+import de.uos.campusapp.component.ui.calendar.CalendarController
 import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaRole
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.uos.campusapp.component.ui.eduroam.SetupEduroamActivity

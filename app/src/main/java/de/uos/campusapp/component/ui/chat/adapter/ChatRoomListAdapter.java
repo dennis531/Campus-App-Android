@@ -15,7 +15,7 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import de.uos.campusapp.R;
-import de.uos.campusapp.component.tumui.lectures.activity.LecturesPersonalActivity;
+import de.uos.campusapp.component.ui.lectures.activity.LecturesPersonalActivity;
 import de.uos.campusapp.component.ui.chat.activity.ChatRoomsActivity;
 import de.uos.campusapp.component.ui.chat.model.ChatRoomAndLastMessage;
 import de.uos.campusapp.component.ui.chat.model.ChatRoomDbRow;

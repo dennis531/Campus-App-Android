@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 import de.uos.campusapp.BuildConfig;
 import de.uos.campusapp.api.auth.AuthManager;
+import de.uos.campusapp.api.auth.legacy.AuthenticationManager;
 import de.uos.campusapp.config.Api;
 import de.uos.campusapp.utils.ConfigUtils;
 import de.uos.campusapp.utils.Utils;
@@ -46,9 +47,6 @@ public final class ApiHelper {
         //Start building the http client
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .cookieJar(cookieJar);
-
-        // Disable gzip for requests as TUMonline
-        builder.addInterceptor(ApiHelper.disableGzip()); // TODO Remove?
 
         //Add the device identifying header
         builder.addInterceptor(ApiHelper.getDeviceInterceptor(c));
@@ -78,15 +76,6 @@ public final class ApiHelper {
 
         return builder.build();
 
-    }
-
-    private static Interceptor disableGzip() {
-        return chain -> {
-            Request.Builder newRequest = chain.request()
-                                              .newBuilder()
-                                              .addHeader("Accept-Encoding", "identity");
-            return chain.proceed(newRequest.build());
-        };
     }
 
     private static Interceptor getDeviceInterceptor(final Context c) {

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Type
-import de.uos.campusapp.component.tumui.calendar.model.CalendarItemType
-import de.uos.campusapp.component.tumui.calendar.model.AbstractEvent
+import de.uos.campusapp.component.ui.calendar.model.CalendarItemType
+import de.uos.campusapp.component.ui.calendar.model.AbstractEvent
 import org.joda.time.DateTime
 
 open class StudipBaseEvent: AbstractEvent() {

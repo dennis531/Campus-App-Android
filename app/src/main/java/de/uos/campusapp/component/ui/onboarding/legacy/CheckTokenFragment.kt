@@ -10,7 +10,7 @@ import de.uos.campusapp.api.tumonline.TUMOnlineClient
 import de.uos.campusapp.api.general.exception.UnauthorizedException
 import de.uos.campusapp.component.other.generic.fragment.BaseFragment
 import de.uos.campusapp.component.ui.onboarding.OnboardingNavigator
-//import de.tum.`in`.de.uos.de.uos.campusapp.component.tumui.person.model.IdentitySet
+//import de.tum.`in`.de.uos.de.uos.campusapp.component.ui.person.model.IdentitySet
 import de.uos.campusapp.component.ui.onboarding.di.OnboardingComponent
 import de.uos.campusapp.component.ui.onboarding.di.OnboardingComponentProvider
 import de.uos.campusapp.databinding.FragmentCheckTokenBinding
@@ -37,8 +37,9 @@ class CheckTokenFragment : BaseFragment<Unit>(
         (requireActivity() as OnboardingComponentProvider).onboardingComponent()
     }
 
-    @Inject
-    lateinit var tumOnlineClient: TUMOnlineClient
+    private val tumOnlineClient: TUMOnlineClient by lazy {
+        TUMOnlineClient.getInstance(requireContext())
+    }
 
     @Inject
     lateinit var navigator: OnboardingNavigator

@@ -7,7 +7,7 @@ import de.uos.campusapp.component.notifications.NotificationScheduler
 import de.uos.campusapp.component.notifications.ProvidesNotifications
 import de.uos.campusapp.component.other.general.model.Recent
 import de.uos.campusapp.component.other.locations.LocationManager
-import de.uos.campusapp.component.tumui.calendar.model.AbstractEvent
+import de.uos.campusapp.component.ui.calendar.model.AbstractEvent
 import de.uos.campusapp.component.ui.overview.card.Card
 import de.uos.campusapp.component.ui.overview.card.ProvidesCard
 import de.uos.campusapp.component.ui.transportation.model.TransportFavorites

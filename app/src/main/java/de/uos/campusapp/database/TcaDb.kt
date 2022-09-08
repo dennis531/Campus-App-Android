@@ -15,11 +15,11 @@ import de.uos.campusapp.component.other.general.model.Recent
 import de.uos.campusapp.component.other.locations.BuildingToGpsDao
 import de.uos.campusapp.component.other.locations.RoomLocationsDao
 import de.uos.campusapp.component.other.locations.model.BuildingToGps
-import de.uos.campusapp.component.tumui.calendar.CalendarDao
-import de.uos.campusapp.component.tumui.calendar.WidgetsTimetableBlacklistDao
-import de.uos.campusapp.component.tumui.calendar.model.CalendarItem
-import de.uos.campusapp.component.tumui.calendar.model.EventSeriesMapping
-import de.uos.campusapp.component.tumui.calendar.model.WidgetsTimetableBlacklist
+import de.uos.campusapp.component.ui.calendar.CalendarDao
+import de.uos.campusapp.component.ui.calendar.WidgetsTimetableBlacklistDao
+import de.uos.campusapp.component.ui.calendar.model.CalendarItem
+import de.uos.campusapp.component.ui.calendar.model.EventSeriesMapping
+import de.uos.campusapp.component.ui.calendar.model.WidgetsTimetableBlacklist
 import de.uos.campusapp.component.other.locations.model.RoomLocations
 import de.uos.campusapp.component.ui.cafeteria.CafeteriaDao
 import de.uos.campusapp.component.ui.cafeteria.CafeteriaMenuDao

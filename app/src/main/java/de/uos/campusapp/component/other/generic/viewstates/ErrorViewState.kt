@@ -4,7 +4,7 @@ import de.uos.campusapp.R
 
 /**
  * Represents the view state in case of an error. This class is mostly used in [ProgressActivity]
- * when a request to the TUMonline API fails.
+ * when a request to the API fails.
  *
  * @param iconResId The resource ID of any icon that should be displayed, optional
  * @param headerResId The resource ID of any header text that should be displayed, optional
