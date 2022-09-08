@@ -8,6 +8,7 @@ object ConfigConst {
     const val API = "API"
 
     const val STUDIP_API_BASE_URL = "STUDIP_API_BASE_URL"
+    const val STUDIP_BASE_URL = "STUDIP_BASE_URL"
 
     const val AUTH_METHOD = "AUTH_METHOD"
 
@@ -45,6 +46,7 @@ object ConfigConst {
     const val GEOFENCING_RADIUS_IN_METER = "GEOFENCING_RADIUS_IN_METER"
 
     const val LECTURES_SHOW_FILES = "LECTURES_SHOW_FILES"
+    const val LECTURES_SHOW_RECORDS = "LECTURES_SHOW_RECORDS"
 
     const val TUITIONFEES_TUITION = "TUITIONFEES_TUITION"
     const val TUITIONFEES_FROM_API = "TUITIONFEES_FROM_API"

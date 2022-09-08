@@ -251,6 +251,8 @@
     <string name="lec_target">Targets</string>
     <string name="examination_aids">Examination aids</string>
     <string name="lecture_files">Lecture files</string>
+    <string name="lecture_recordings">Lecture recordings</string>
+    <string name="recordings_open_failed">Lecture recordings can not be opened</string>
     <string name="no_files">No files available</string>
     <string name="file_open_failure_format_string">%s can not be opened</string>
     <string name="author_format_string">Author: %s</string>

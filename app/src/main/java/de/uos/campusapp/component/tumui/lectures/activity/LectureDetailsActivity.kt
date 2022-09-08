@@ -1,6 +1,7 @@
 package de.uos.campusapp.component.tumui.lectures.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -13,10 +14,11 @@ import de.uos.campusapp.component.other.generic.activity.ActivityForAccessingApi
 import de.uos.campusapp.component.tumui.lectures.api.LecturesAPI
 import de.uos.campusapp.component.tumui.lectures.model.AbstractLecture
 import de.uos.campusapp.databinding.ActivityLecturedetailsBinding
-import de.uos.campusapp.utils.Component
-import de.uos.campusapp.utils.ConfigConst
-import de.uos.campusapp.utils.ConfigUtils
-import de.uos.campusapp.utils.Const
+import de.uos.campusapp.utils.*
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 /**
  * This Activity will show all details found on the TUMOnline web service
@@ -37,6 +39,8 @@ class LectureDetailsActivity : ActivityForAccessingApi<AbstractLecture>(R.layout
 
     private lateinit var currentItem: AbstractLecture
     private lateinit var mLectureId: String
+
+    private val compositeDisposable = CompositeDisposable()
 
     private lateinit var binding: ActivityLecturedetailsBinding
 
@@ -144,8 +148,11 @@ class LectureDetailsActivity : ActivityForAccessingApi<AbstractLecture>(R.layout
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         val menuItemOpenFiles = menu?.findItem(R.id.action_open_lecture_files)
-        // Only show files if configured
+        val menuItemOpenRecords = menu?.findItem(R.id.action_open_lecture_recordings)
+
+        // Only menu items if configured
         menuItemOpenFiles?.isVisible = ConfigUtils.getConfig(ConfigConst.LECTURES_SHOW_FILES, false)
+        menuItemOpenRecords?.isVisible = ConfigUtils.getConfig(ConfigConst.LECTURES_SHOW_RECORDS, false)
 
         return super.onPrepareOptionsMenu(menu)
     }
@@ -154,6 +161,16 @@ class LectureDetailsActivity : ActivityForAccessingApi<AbstractLecture>(R.layout
         return when (item.itemId) {
             R.id.action_open_lecture_files -> {
                 openLectureFilesActivity()
+                true
+            }
+            R.id.action_open_lecture_recordings -> {
+                compositeDisposable += Single.fromCallable { (apiClient as LecturesAPI).getLectureRecordingsUrl(mLectureId)!! }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::openLectureRecords) {
+                        Utils.log(it)
+                        Utils.showToast(this, R.string.recordings_open_failed)
+                    }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -169,5 +186,15 @@ class LectureDetailsActivity : ActivityForAccessingApi<AbstractLecture>(R.layout
         val intent = Intent(this, LectureFilesActivity::class.java)
         intent.putExtras(bundle)
         startActivity(intent)
+    }
+
+    private fun openLectureRecords(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
     }
 }

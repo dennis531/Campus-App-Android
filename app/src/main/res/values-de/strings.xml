@@ -198,6 +198,8 @@
     <string name="lec_target">Ziele</string>
     <string name="examination_aids">Prüfungshilfsmittel</string>
     <string name="lecture_files">Vorlesungsdateien</string>
+    <string name="lecture_recordings">Vorlesungsaufzeichnungen</string>
+    <string name="recordings_open_failed">Vorlesungsaufzeichnungen können nicht geöffnet werden</string>
     <string name="no_files">Keine Dateien verfügbar</string>
     <string name="file_open_failure_format_string">%s kann nicht geöffnet werden</string>
     <string name="author_format_string">Autor: %s</string>

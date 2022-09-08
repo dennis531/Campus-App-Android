@@ -73,6 +73,7 @@ object Config {
 
     // Studip API
     val STUDIP_API_BASE_URL = "http://192.168.178.91/studip/jsonapi.php/v1/" // Default: ""
+    val STUDIP_BASE_URL = "http://192.168.178.91/studip/" // Default: ""
 
     // Authentication
     // To set a different authentication method for an api, create a variable with the following format "{ApiName}_AUTH_METHOD" (e.g. "STUDIP_AUTH_METHOD")
@@ -128,6 +129,7 @@ object Config {
 
     // Lectures options
     val LECTURES_SHOW_FILES = true // Lecture Files can be listed and downloaded; default: false
+    val LECTURES_SHOW_RECORDS = true // Lecture Records menu item will be displayed in lecture details; default: false
 
     // Tuition fees options
     // if true and tuition api is provided, the tuition will be loaded from the selected api

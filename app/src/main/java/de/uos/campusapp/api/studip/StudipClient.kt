@@ -220,6 +220,11 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return apiService.downloadLectureFile(file.id).execute().body()!!.byteStream()
     }
 
+    override fun getLectureRecordingsUrl(id: String): String? {
+        // Requires the opencast plugin in Stud.IP
+        return "${STUDIP_BASE_URL}plugins.php/opencast/course/index?cid=$id"
+    }
+
     override fun getNews(): List<AbstractNews> {
         return apiService.getNews().execute().body()!!
     }
@@ -389,7 +394,8 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     companion object {
         private var client: StudipClient? = null
 
-        private val STUDIP_BASE_URL = ConfigUtils.getConfig(ConfigConst.STUDIP_API_BASE_URL, "")
+        private val STUDIP_BASE_URL = ConfigUtils.getConfig(ConfigConst.STUDIP_BASE_URL, "")
+        private val STUDIP_API_BASE_URL = ConfigUtils.getConfig(ConfigConst.STUDIP_API_BASE_URL, "")
 
         @JvmStatic
         @Synchronized
@@ -434,7 +440,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
 
             // Set up relationship resolver
             resourceConverter.setGlobalResolver { relationshipURL ->
-                val baseUrl = URL(STUDIP_BASE_URL)
+                val baseUrl = URL(STUDIP_API_BASE_URL)
                 val requestUrl = URL(baseUrl.protocol, baseUrl.host, baseUrl.port, relationshipURL)
                 Utils.log("Request-Url: $requestUrl")
 
@@ -445,7 +451,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
             val jsonapiConverterFactory = JSONAPIConverterFactory(resourceConverter)
 
             val apiService = Retrofit.Builder()
-                .baseUrl(STUDIP_BASE_URL)
+                .baseUrl(STUDIP_API_BASE_URL)
                 .client(client)
                 .addConverterFactory(jsonapiConverterFactory)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
