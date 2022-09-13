@@ -335,7 +335,7 @@
     <string name="card_settings_instruction">If you want to hide a card permanently or you want to be notified if a new card is available open card-settings by long pressing on a card</string>
 
     <!-- Cafeteria -->
-    <string name="cafeteria_ingredients">(f) meatless dish
+    <string name="cafeteria_ingredients_munich">(f) meatless dish
         \n(v) vegan dish
         \n(S) dish with pork
         \n(R) dish with beef
@@ -351,6 +351,45 @@
         \n9 with sweeteners
         \n10 contains a source of phenylalanine
         \n11 with sugar and sweeteners</string>
+    <string name="cafeteria_ingredients_os">1 with colourant
+        \n2 with preservative
+		\n3 with antioxidant
+		\n4 with flavour enhancer
+		\n5 Sulphurised
+		\n6 Blackened
+		\n7 Waxed
+		\n8 with phosphate
+		\n9 with sweeteners
+		\n10 contains a source of phenylalanine
+		\n13 Pork
+		\n14 Beef
+		\n15 with alcohol
+		\n16 Klimateller
+		\n17 Garlic
+		\n18 Species-appropriate animal husbandry
+		\n19 Organic DE-ÖKO-039
+		\n20 Vegetarian
+		\n21 Vegan
+		\n22 not vegan/vegetarian
+		\n23 Organic menu
+		\n24 From sustainably managed fisheries
+		\n25 with gelatin
+		\n40 Poultry
+		\n43 Fish
+		\na Cereals containing gluten
+		\nb Crustaceans
+		\nc Hen’s egg
+		\nd Fish
+		\ne Peanuts
+		\nf Soya
+		\ng Milk and lactose
+		\nh Nuts
+		\ni Celery
+		\nj Mustard
+		\nk Sulphur dioxide and sulphites
+		\nl Lupin
+		\nm Sesame seeds
+		\nn Molluscs</string>
     <string name="action_ingredients">Ingredients</string>
     <string name="cafeteria_no_ingredients">No ingredients provided</string>
     <string name="cafeteria_notification_settings">Cafeteria Notification Settings</string>

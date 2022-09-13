@@ -25,7 +25,7 @@ class MunichCafeteriaAPIClient(private val apiService: MunichCafeteriaAPIService
         return Gson().fromJson(json, Array<Cafeteria>::class.java).toList()
     }
 
-    override fun getMenus(): List<AbstractCafeteriaMenu> {
+    override fun getCafeteriaMenus(): List<AbstractCafeteriaMenu> {
         val response = apiService.getMenus(CacheControl.BYPASS_CACHE.header).execute().body()!!
 
         val menus = response.menus + response.sideDishes

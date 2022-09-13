@@ -25,6 +25,8 @@ import de.uos.campusapp.service.GeofencingStartupReceiver
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
 import net.danlew.android.joda.JodaTimeAndroid
+import org.joda.time.DateTimeZone
+import java.util.*
 
 open class App : Application() {
 
@@ -40,6 +42,8 @@ open class App : Application() {
         setupPicasso()
         setupNotificationChannels(this)
         JodaTimeAndroid.init(this)
+        // Set device timezone as default
+        DateTimeZone.setDefault(DateTimeZone.forTimeZone(TimeZone.getDefault()))
 //        if (!testing) {
 //            initRxJavaErrorHandler()
 //        }

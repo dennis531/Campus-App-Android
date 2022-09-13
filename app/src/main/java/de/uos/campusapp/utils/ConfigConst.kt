@@ -10,6 +10,8 @@ object ConfigConst {
     const val STUDIP_API_BASE_URL = "STUDIP_API_BASE_URL"
     const val STUDIP_BASE_URL = "STUDIP_BASE_URL"
 
+    const val UOS_BACKEND_API_BASE_URL = "UOS_BACKEND_API_BASE_URL"
+
     const val AUTH_METHOD = "AUTH_METHOD"
 
     const val OAUTH_CONSUMER_KEY = "OAUTH_CONSUMER_KEY"

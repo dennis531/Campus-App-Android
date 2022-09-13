@@ -48,7 +48,7 @@ constructor(private val context: Context) {
     fun downloadMenus(cacheControl: CacheControl) {
         // Responses from the cafeteria API are cached for one day. If the download is forced,
         // we add a "no-cache" header to the request.
-        Single.fromCallable {ConfigUtils.getCafeteriaClient(context).getMenus()}
+        Single.fromCallable {ConfigUtils.getCafeteriaClient(context).getCafeteriaMenus()}
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->

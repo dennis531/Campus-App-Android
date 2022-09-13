@@ -5,6 +5,7 @@ import de.uos.campusapp.api.auth.AuthManager
 import de.uos.campusapp.api.auth.OAuthManager
 import de.uos.campusapp.api.generic.BaseAPI
 import de.uos.campusapp.api.studip.StudipClient
+import de.uos.campusapp.api.uosbackend.UOSBackendAPIClient
 import de.uos.campusapp.component.ui.cafeteria.api.generic.CafeteriaAPI
 import de.uos.campusapp.component.ui.cafeteria.api.munich.MunichCafeteriaAPIClient
 import de.uos.campusapp.component.ui.transportation.api.mvv.MvvClient
@@ -55,8 +56,9 @@ object ConfigUtils {
 
     fun getCafeteriaClient(context: Context): CafeteriaAPI {
         return when (getConfig(ConfigConst.CAFETERIA_API, CafeteriaApiEnum.MUNICH)) {
-            // Add more transportation api clients here
+            // Add more cafeteria api clients here
             CafeteriaApiEnum.MUNICH -> MunichCafeteriaAPIClient.getInstance(context)
+            CafeteriaApiEnum.UOS_BACKEND -> UOSBackendAPIClient.getInstance(context)
             else -> throw IllegalStateException("Cafeteria API not known.")
         }
     }

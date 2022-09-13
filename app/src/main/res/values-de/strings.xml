@@ -276,7 +276,7 @@
     <string name="card_settings_instruction">Wenn du eine Karte dauerhaft ausblenden willst oder bei neuen Karten benachrichtigt werden willst öffne die Karten-Einstellungen indem du lange auf eine Karte drückst</string>
 
     <!-- Cafeteria -->
-    <string name="cafeteria_ingredients">(f) fleischloses Gericht
+    <string name="cafeteria_ingredients_munich">(f) fleischloses Gericht
         \n(v) veganes Gericht
 		\n(S) Gericht mit Schweinefleisch
 		\n(R) Gericht mit Rindfleisch
@@ -292,6 +292,45 @@
 		\n9 mit Süßungsmitteln
 		\n10 enthält eine Phenylalaninquelle
 		\n11 mit einer Zuckerart und Süßungsmitteln</string>
+    <string name="cafeteria_ingredients_os">1 mit Farbstoff
+        \n2 mit Konservierungsstoff
+		\n3 mit Antioxidationsmittel
+		\n4 mit Geschmacksverstärker
+		\n5 Geschwefelt
+		\n6 Geschwärzt
+		\n7 Gewachst
+		\n8 mit Phosphat
+		\n9 mit Süßungsmittel
+		\n10 Enthält eine Phenylalaninquelle
+		\n13 Schweinefleisch
+		\n14 Rindfleisch
+		\n15 mit Alkohol
+		\n16 Klimateller
+		\n17 Knoblauch
+		\n18 Artgerechte Tierhaltung
+		\n19 Bio DE-ÖKO-039
+		\n20 Vegetarisch
+		\n21 Vegan
+		\n22 nicht vegan/vegetarisch
+		\n23 Bio-Menü
+		\n24 Aus nachhaltiger Fischerei
+		\n25 mit Gelatine
+		\n40 Geflügel
+		\n43 Fisch
+		\na Glutenhaltiges Getreide
+		\nb Krebstiere
+		\nc Hühnerei
+		\nd Fisch
+		\ne Erdnüsse
+		\nf Soja
+		\ng Milch und Laktose
+		\nh Schalenfrüchte (Nüsse)
+		\ni Sellerie
+		\nj Senf
+		\nk Schwefeldioxid und Sulfite
+		\nl Lupine
+		\nm Sesam
+		\nn Weichtiere</string>
     <string name="action_ingredients">Inhaltsstoffe</string>
     <string name="cafeteria_no_ingredients">Keine Inhaltsstoffe angegeben</string>
     <string name="cafeteria_notification_settings">Mensa Benachrichtigungen</string>

@@ -28,7 +28,8 @@ enum class TransportationApi {
 }
 
 enum class CafeteriaApi {
-    MUNICH
+    MUNICH,
+    UOS_BACKEND
 }
 
 /**
@@ -43,9 +44,7 @@ object Config {
     val CAMPUS = listOf<Campus>(
         // Coordinates of "Schlossinnenhof"
         Campus("I", "Campus Innenstadt", 52.27158, 8.04426, listOf(
-            Cafeteria("422", "Mensa Garching"),
-            Cafeteria("527", "StuCafé Boltzmannstraße"),
-            Cafeteria("524", "StuCafé Mensa Garching"),
+            Cafeteria("1", "Mensa Schlossgarten"),
         ), listOf(
             Station("1:000009071781", "Universität/Osnabrück Halle"),
             Station("1:000009071700", "Neumarkt"),
@@ -53,9 +52,7 @@ object Config {
         )),
         // Coordinates of "Mensavorplatz"
         Campus("W", "Campus Westerberg", 52.28431, 8.02342, listOf(
-            Cafeteria("423", "Mensa Weihenstephan"),
-            Cafeteria("526", "StuCafé Akademie"),
-            Cafeteria("525", "StuCafé Mensa-WST"),
+            Cafeteria("0", "Mensa Westerberg"),
         ), listOf(
             Station("1:000009071756", "Campus Westerberg"),
             Station("1:000009071624", "Botanischer Garten"),
@@ -74,6 +71,9 @@ object Config {
     // Studip API
     val STUDIP_API_BASE_URL = "http://192.168.178.91/studip/jsonapi.php/v1/" // Default: ""
     val STUDIP_BASE_URL = "http://192.168.178.91/studip/" // Default: ""
+
+    // UOS Backend API
+    val UOS_BACKEND_API_BASE_URL = "http://192.168.178.91:8000/api/"
 
     // Authentication
     // To set a different authentication method for an api, create a variable with the following format "{ApiName}_AUTH_METHOD" (e.g. "STUDIP_AUTH_METHOD")
@@ -152,6 +152,6 @@ object Config {
     val TRANSPORTATION_API = TransportationApi.VBN // Default: MVV
 
     // Cafeteria options
-    val CAFETERIA_API = CafeteriaApi.MUNICH
-    val CAFETERIA_INGREDIENTS_TEXT = R.string.cafeteria_ingredients // Edit the ingredients text in strings.xml; default: null
+    val CAFETERIA_API = CafeteriaApi.UOS_BACKEND
+    val CAFETERIA_INGREDIENTS_TEXT = R.string.cafeteria_ingredients_os // Edit the ingredients text in strings.xml; default: null
 }

@@ -12,3 +12,8 @@
 # Gson specific classes
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.stream.** { *; }
+
+# Prevent classes with @SerializedName annotations from beeing removed
+-keep,allowobfuscation class * {
+  @com.google.gson.annotations.SerializedName <fields>;
+}

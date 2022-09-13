@@ -26,7 +26,6 @@ class CacheManager @Inject constructor(private val context: Context) {
     fun fillCache() {
         doAsync {
             syncCalendar()
-            syncPersonalLectures()
         }
     }
 
@@ -47,24 +46,6 @@ class CacheManager @Inject constructor(private val context: Context) {
     private fun loadRoomLocations() {
         doAsync {
             QueryLocationsService.enqueueWork(context)
-        }
-    }
-
-    /**
-     * TODO: Remove?
-     */
-    private fun syncPersonalLectures() {
-        if(!ConfigUtils.isComponentEnabled(context, Component.LECTURES) || !ConfigUtils.isComponentEnabled(context, Component.CHAT)) {
-            return
-        }
-
-        try {
-            val lectures = lecturesApiClient.getPersonalLectures()
-            val chatRoomController = ChatRoomController(context)
-//            chatRoomController.createLectureRooms(lectures) // TODO: Enable after chat is generalized
-            Utils.log("Successfully updated personal lectures in background")
-        } catch (t: Throwable) {
-            Utils.log(t, "Error loading personal lectures in background")
         }
     }
 

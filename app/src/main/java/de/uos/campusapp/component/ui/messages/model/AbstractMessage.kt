@@ -37,7 +37,7 @@ abstract class AbstractMessage: Parcelable {
         get() = sender != null && type != MessageType.OUTBOX
 
     fun getIntent(context: Context): Intent {
-       return Intent(context, MessagesDetailsActivity::class.java).also {
+        return Intent(context, MessagesDetailsActivity::class.java).also {
             it.putExtra(MessagesDetailsActivity.EXTRA_MESSAGE, this)
         }
     }
@@ -45,8 +45,6 @@ abstract class AbstractMessage: Parcelable {
     fun toMessageItem(): MessageItem {
         return MessageItem(id, subject, text, type.id, sender, recipients, date)
     }
-
-
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)

@@ -10,5 +10,5 @@ interface CafeteriaAPI: BaseAPI {
     /**
      * Gets menus of all cafeterias
      */
-    fun getMenus(): List<AbstractCafeteriaMenu>
+    fun getCafeteriaMenus(): List<AbstractCafeteriaMenu>
 }

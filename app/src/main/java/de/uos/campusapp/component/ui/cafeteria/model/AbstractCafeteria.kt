@@ -7,7 +7,7 @@ import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaItem
  *
  * @property id Cafeteria ID, e.g. 412
  * @property name Name, e.g. MensaX
- * @property address Address, e.g. Boltzmannstr. 3 (optional)
+ * @property address Address, e.g. "Arcisstr. 17, München" (optional)
  * @property latitude Coordinates of the cafeteria (optional)
  * @property longitude Coordinates of the cafeteria (optional)
  */

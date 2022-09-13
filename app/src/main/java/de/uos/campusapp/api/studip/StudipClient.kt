@@ -413,6 +413,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
 
             val client = ApiHelper.getOkHttpAuthClient(context, Api.STUDIP)
                 .newBuilder()
+                .cache(cacheManager.cache)
                 .addInterceptor(CheckErrorInterceptor(context))
                 .build()
 
