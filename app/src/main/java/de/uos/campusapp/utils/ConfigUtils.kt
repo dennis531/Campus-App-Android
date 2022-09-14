@@ -15,7 +15,6 @@ import de.uos.campusapp.config.Config
 import de.uos.campusapp.config.TransportationApi as TransportApiEnum
 import de.uos.campusapp.config.CafeteriaApi as CafeteriaApiEnum
 import de.uos.campusapp.component.ui.transportation.api.generic.TransportationAPI
-import de.uos.campusapp.component.ui.transportation.api.vbn.VbnClient
 
 object ConfigUtils {
     @JvmStatic
@@ -49,7 +48,7 @@ object ConfigUtils {
         return when (getConfig(ConfigConst.TRANSPORTATION_API, TransportApiEnum.MVV)) {
             // Add more transportation api clients here
             TransportApiEnum.MVV -> MvvClient.getInstance(context)
-            TransportApiEnum.VBN -> VbnClient.getInstance(context)
+            TransportApiEnum.VBN -> UOSBackendAPIClient.getInstance(context)
             else -> throw IllegalStateException("Transportation API not known.")
         }
     }

@@ -1,4 +1,4 @@
-package de.uos.campusapp.component.ui.transportation.api.vbn.model
+package de.uos.campusapp.api.uosbackend.model.transportation
 
 import com.google.gson.annotations.SerializedName
 import org.joda.time.DateTime

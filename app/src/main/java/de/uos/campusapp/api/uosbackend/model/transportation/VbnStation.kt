@@ -1,4 +1,4 @@
-package de.uos.campusapp.component.ui.transportation.api.vbn.model
+package de.uos.campusapp.api.uosbackend.model.transportation
 
 import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 import de.uos.campusapp.component.ui.transportation.model.Station
