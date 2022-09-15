@@ -34,7 +34,7 @@ abstract class AbstractLecture : Comparable<AbstractLecture>, SimpleStickyListHe
 
     override fun getHeadName() = semester ?: title
 
-    override fun getHeaderId() = id
+    override fun getHeaderId() = semester ?: title
 
     companion object {
         @JvmField
