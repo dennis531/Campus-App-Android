@@ -29,7 +29,7 @@ class NoInternetViewState : ErrorViewState(
 )
 
 class FailedLMSViewState(messageResId: Int) : ErrorViewState(
-        headerResId = R.string.error_accessing_lms_header,
+        headerResId = R.string.error_accessing_api_header,
         messageResId = messageResId
 )
 

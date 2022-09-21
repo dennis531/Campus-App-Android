@@ -1,4 +1,4 @@
-package de.uos.campusapp.component.ui.feedback
+package de.uos.campusapp.component.ui.legacy.feedback
 
 import android.Manifest.permission.*
 import android.content.Context
@@ -15,9 +15,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import de.uos.campusapp.R
 import de.uos.campusapp.api.tumcabe.TUMCabeClient
-import de.uos.campusapp.component.ui.feedback.di.LrzId
-import de.uos.campusapp.component.ui.feedback.model.Feedback
-import de.uos.campusapp.component.ui.feedback.model.FeedbackResult
+import de.uos.campusapp.component.ui.legacy.feedback.di.LrzId
+import de.uos.campusapp.component.ui.legacy.feedback.model.Feedback
+import de.uos.campusapp.component.ui.legacy.feedback.model.FeedbackResult
 import de.uos.campusapp.utils.Const
 import de.uos.campusapp.utils.ImageUtils
 import de.uos.campusapp.utils.Utils

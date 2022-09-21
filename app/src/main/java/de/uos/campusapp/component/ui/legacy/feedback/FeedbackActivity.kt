@@ -1,4 +1,4 @@
-package de.uos.campusapp.component.ui.feedback
+package de.uos.campusapp.component.ui.legacy.feedback
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -25,11 +25,11 @@ import com.jakewharton.rxbinding3.widget.textChanges
 import com.patloew.rxlocation.RxLocation
 import de.uos.campusapp.R
 import de.uos.campusapp.component.other.generic.activity.BaseActivity
-import de.uos.campusapp.component.ui.feedback.FeedbackPresenter.Companion.PERMISSION_CAMERA
-import de.uos.campusapp.component.ui.feedback.FeedbackPresenter.Companion.PERMISSION_FILES
-import de.uos.campusapp.component.ui.feedback.FeedbackPresenter.Companion.PERMISSION_LOCATION
-import de.uos.campusapp.component.ui.feedback.FeedbackPresenter.Companion.REQUEST_GALLERY
-import de.uos.campusapp.component.ui.feedback.FeedbackPresenter.Companion.REQUEST_TAKE_PHOTO
+import de.uos.campusapp.component.ui.legacy.feedback.FeedbackPresenter.Companion.PERMISSION_CAMERA
+import de.uos.campusapp.component.ui.legacy.feedback.FeedbackPresenter.Companion.PERMISSION_FILES
+import de.uos.campusapp.component.ui.legacy.feedback.FeedbackPresenter.Companion.PERMISSION_LOCATION
+import de.uos.campusapp.component.ui.legacy.feedback.FeedbackPresenter.Companion.REQUEST_GALLERY
+import de.uos.campusapp.component.ui.legacy.feedback.FeedbackPresenter.Companion.REQUEST_TAKE_PHOTO
 import de.uos.campusapp.databinding.ActivityFeedbackBinding
 import de.uos.campusapp.utils.Const
 import de.uos.campusapp.utils.Utils

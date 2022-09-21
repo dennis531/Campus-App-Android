@@ -1,12 +1,12 @@
-package de.uos.campusapp.component.ui.feedback.di
+package de.uos.campusapp.component.ui.legacy.feedback.di
 
 import dagger.Binds
 import dagger.BindsInstance
 import dagger.Module
 import dagger.Subcomponent
-import de.uos.campusapp.component.ui.feedback.FeedbackActivity
-import de.uos.campusapp.component.ui.feedback.FeedbackContract
-import de.uos.campusapp.component.ui.feedback.FeedbackPresenter
+import de.uos.campusapp.component.ui.legacy.feedback.FeedbackActivity
+import de.uos.campusapp.component.ui.legacy.feedback.FeedbackContract
+import de.uos.campusapp.component.ui.legacy.feedback.FeedbackPresenter
 
 @Subcomponent(modules = [FeedbackModule::class])
 interface FeedbackComponent {

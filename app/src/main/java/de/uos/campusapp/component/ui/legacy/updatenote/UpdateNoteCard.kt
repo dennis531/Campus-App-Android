@@ -1,4 +1,4 @@
-package de.uos.campusapp.component.ui.updatenote
+package de.uos.campusapp.component.ui.legacy.updatenote
 
 import android.content.Context
 import android.content.SharedPreferences

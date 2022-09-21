@@ -4,7 +4,7 @@ import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import de.uos.campusapp.component.other.settings.SettingsFragment
-import de.uos.campusapp.component.ui.feedback.di.FeedbackComponent
+import de.uos.campusapp.component.ui.legacy.feedback.di.FeedbackComponent
 import de.uos.campusapp.component.ui.lectures.di.LecturesComponent
 import de.uos.campusapp.component.ui.person.di.PersonComponent
 import de.uos.campusapp.component.ui.roomfinder.di.RoomFinderComponent

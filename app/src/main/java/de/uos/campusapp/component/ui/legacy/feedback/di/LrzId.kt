@@ -1,4 +1,4 @@
-package de.uos.campusapp.component.ui.feedback.di
+package de.uos.campusapp.component.ui.legacy.feedback.di
 
 import javax.inject.Named
 

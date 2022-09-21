@@ -1,4 +1,4 @@
-package de.uos.campusapp.component.ui.feedback.model
+package de.uos.campusapp.component.ui.legacy.feedback.model
 
 data class FeedbackResult(
     var success: String = "",

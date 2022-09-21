@@ -87,6 +87,8 @@ public class ChatActivity extends ActivityForDownloadingExternal
 
     private Handler pollingHandler;
 
+    private final int POLLING_INTERVAL = 30000;  // Polls every 30 seconds
+
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -156,7 +158,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
         handlerThread.start();
 
         pollingHandler = new Handler(handlerThread.getLooper());
-        pollingHandler.postDelayed(this::pollNewMessages, 30000);
+        pollingHandler.postDelayed(this::pollNewMessages, POLLING_INTERVAL);
 
         IntentFilter filter = new IntentFilter(Const.CHAT_BROADCAST_NAME);
         LocalBroadcastManager.getInstance(this)
@@ -172,7 +174,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
 
     private void processNewMessages(List<ChatMessageItem> newMessages) {
         // poll messages every 30 seconds
-        pollingHandler.postDelayed(this::pollNewMessages, 30000);
+        pollingHandler.postDelayed(this::pollNewMessages, POLLING_INTERVAL);
 
         // No new messages available
         if (chatMessageViewModel.getNumberUnread(currentChatRoom.getId()) == 0 || chatHistoryAdapter == null) {

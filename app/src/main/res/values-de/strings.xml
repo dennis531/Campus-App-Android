@@ -101,7 +101,7 @@
 
     <!-- Startup Wizard -->
     <string name="onboarding">Einrichtung</string>
-    <string name="not_connected_to_lms">Nicht verbunden</string>
+    <string name="not_connected_to_api">Nicht verbunden</string>
     <string name="connect_to_your_campus">Mit deinem Campus verbinden</string>
     <string name="welcome_tum_msg">Um den Zugriff auf TUMonline-Dienste zu ermöglichen, wird deine <b>TUM-Kennung</b> benötigt.\n\nDie Kennung hat das Format <i>ga12abc</i>.</string>
     <string name="button_skip">Überspringen</string>
@@ -570,7 +570,7 @@ Signatur: %5$s</string>
     <string name="event_title">Titel</string>
     <string name="calendar_refresh">Aktualisieren</string>
     <string name="event_delete_title">Termin löschen?</string>
-    <string name="delete_event_info">Der Termin wird in deinem LMS gelöscht.</string>
+    <string name="delete_event_info">Der Termin wird in deinem Campus gelöscht.</string>
     <string name="delete_event_confirmation">Termin wurde gelöscht</string>
     <string name="delete_event_error">Fehler: Termin konnte nicht gelöscht werden</string>
     <string name="delete">Löschen</string>
@@ -651,8 +651,8 @@ Signatur: %5$s</string>
     <string name="open_settings">Einstellungen öffnen</string>
     <string name="not_available">Nicht verfügbar</string>
 
-    <string name="error_accessing_lms_header">Fehler beim Zugriff auf LMS</string>
-    <string name="error_accessing_lms_body">Bitte stelle sicher, dass das du authentifiziert bist und die entsprechenden Rechte besitzt.</string>
+    <string name="error_accessing_api_header">Fehler beim Zugriff auf externes System</string>
+    <string name="error_accessing_api_body">Bitte stelle sicher, dass das du authentifiziert bist und die entsprechenden Rechte besitzt.</string>
     <string name="error_no_access_token_setup_header">Kein TUMonline-Access-Token gefunden</string>
     <string name="error_no_access_token_setup_body">Bitte erzeuge ein TUMonline-Access-Token in den Einstellungen, um TUMonline-Funktionen nutzen zu können.</string>
     <string name="error_access_token_already_set_generate_new">Dein Access-Token ist bereits gesetzt. Wenn du ein neues Token generierst, wird das alte unbrauchbar.</string>

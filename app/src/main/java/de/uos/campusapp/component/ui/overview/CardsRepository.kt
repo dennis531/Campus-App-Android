@@ -17,7 +17,7 @@ import de.uos.campusapp.component.ui.onboarding.LoginPromptCard
 import de.uos.campusapp.component.ui.overview.card.Card
 import de.uos.campusapp.component.ui.overview.card.ProvidesCard
 import de.uos.campusapp.component.ui.transportation.TransportController
-import de.uos.campusapp.component.ui.updatenote.UpdateNoteCard
+import de.uos.campusapp.component.ui.legacy.updatenote.UpdateNoteCard
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
 import de.uos.campusapp.utils.Utils

@@ -429,11 +429,11 @@
                 android:value="de.uos.campusapp.component.ui.chat.activity.ChatRoomsActivity" />
         </activity>
         <activity
-            android:name="de.uos.campusapp.component.ui.feedback.FeedbackActivity"
+            android:name="de.uos.campusapp.component.ui.legacy.feedback.FeedbackActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/feedback"
             android:launchMode="singleTop"
-            android:parentActivityName="de.uos.campusapp.component.ui.feedback.FeedbackActivity"
+            android:parentActivityName="de.uos.campusapp.component.ui.legacy.feedback.FeedbackActivity"
             android:theme="@style/AppTheme.NoDrawerLayout" />
         <activity
             android:name=".component.ui.chat.activity.AddChatMemberActivity"

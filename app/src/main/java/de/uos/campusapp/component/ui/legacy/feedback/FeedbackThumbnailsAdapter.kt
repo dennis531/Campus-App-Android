@@ -1,4 +1,4 @@
-package de.uos.campusapp.component.ui.feedback
+package de.uos.campusapp.component.ui.legacy.feedback
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

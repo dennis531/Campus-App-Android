@@ -282,7 +282,7 @@ abstract class BaseFragment<T>(
         }
     }
 
-    private fun showFailedLMSLayout(messageResId: Int = R.string.error_accessing_lms_body) {
+    private fun showFailedLMSLayout(messageResId: Int = R.string.error_accessing_api_body) {
         runOnUiThread {
             showError(FailedLMSViewState(messageResId))
         }

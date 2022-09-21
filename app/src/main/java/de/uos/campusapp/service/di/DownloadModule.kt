@@ -14,7 +14,7 @@ import de.uos.campusapp.component.ui.messages.MessagesDownloadAction
 import de.uos.campusapp.component.ui.news.NewsController
 import de.uos.campusapp.component.ui.news.NewsDownloadAction
 import de.uos.campusapp.component.ui.openinghours.LocationImportAction
-import de.uos.campusapp.component.ui.updatenote.UpdateNoteDownloadAction
+import de.uos.campusapp.component.ui.legacy.updatenote.UpdateNoteDownloadAction
 import de.uos.campusapp.database.TcaDb
 import de.uos.campusapp.service.DownloadWorker
 

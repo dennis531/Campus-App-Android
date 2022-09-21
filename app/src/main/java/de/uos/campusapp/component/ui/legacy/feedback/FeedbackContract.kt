@@ -1,10 +1,10 @@
-package de.uos.campusapp.component.ui.feedback
+package de.uos.campusapp.component.ui.legacy.feedback
 
 import android.content.Intent
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
-import de.uos.campusapp.component.ui.feedback.model.Feedback
+import de.uos.campusapp.component.ui.legacy.feedback.model.Feedback
 import io.reactivex.Observable
 
 interface FeedbackContract {

@@ -15,7 +15,7 @@ import de.uos.campusapp.component.ui.onboarding.LoginPromptCard
 import de.uos.campusapp.component.ui.overview.card.Card
 import de.uos.campusapp.component.ui.overview.card.CardViewHolder
 import de.uos.campusapp.component.ui.transportation.TransportationCard
-import de.uos.campusapp.component.ui.updatenote.UpdateNoteCard
+import de.uos.campusapp.component.ui.legacy.updatenote.UpdateNoteCard
 import java.util.*
 
 /**

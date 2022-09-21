@@ -48,9 +48,9 @@
     <string name="no_schedules_available">No schedules available</string>
     <string name="search_rooms">Search rooms</string>
 
-    <!-- TUMonline errors -->
-    <string name="error_accessing_lms_header">Error accessing LMS</string>
-    <string name="error_accessing_lms_body">Please make sure you are authenticated and has the corresponding rights.</string>
+    <!-- API errors -->
+    <string name="error_accessing_api_header">Error accessing external system</string>
+    <string name="error_accessing_api_body">Please make sure you are authenticated and has the corresponding rights.</string>
 
     <string name="error_no_access_token_setup_header">No TUMonline access token was set</string>
     <string name="error_no_access_token_setup_body">Please set your TUMonline access token in the <i>Settings</i> to access TUMonline features.</string>
@@ -87,7 +87,7 @@
 
     <!-- Exam/Grades -->
     <string name="average_grade">Average grade</string>
-    <string name="average_grade_hint">Estimated average. Please refer to your LMS for the precise one.</string>
+    <string name="average_grade_hint">Estimated average. Please refer to your Campus for the precise one.</string>
     <string name="show_column_chart">Show Column Chart</string>
     <string name="show_pie_chart">Show Pie Chart</string>
     <string name="result_extra">Result:&#160;</string>
@@ -117,7 +117,7 @@
     <string name="open_wizard_detail">The Startup-Wizard helps you in order to set the basic preferences for accessing the campus services and the layout of this App.</string>
     <string name="account" translatable="false">Account</string>
     <string name="logout">Log out</string>
-    <string name="logout_title">Disconnect from LMS</string>
+    <string name="logout_title">Disconnect from Campus</string>
     <string name="logout_message">Are you sure you want to log out?</string>
     <string name="logout_error_title">Logout failed</string>
     <string name="logout_try_again">Do you want to try again?</string>
@@ -161,7 +161,7 @@
 
     <!-- Startup Wizard -->
     <string name="onboarding">Onboarding</string>
-    <string name="not_connected_to_lms">Not connected</string>
+    <string name="not_connected_to_api">Not connected</string>
     <string name="connect_to_your_campus">Connect to your Campus</string>
     <string name="welcome_tum_msg">To setup TUMonline access, you need to provide your <b>TUM ID</b>.\n\nThe ID has the format <i>ga12abc</i>.</string>
     <string name="button_skip">Skip</string>
@@ -669,7 +669,7 @@ Signature: %5$s</string>
     <string name="event_title">Title</string>
     <string name="calendar_refresh">Refresh</string>
     <string name="event_delete_title">Delete Appointment?</string>
-    <string name="delete_event_info">The appointment will be deleted from your LMS.</string>
+    <string name="delete_event_info">The appointment will be deleted from your campus.</string>
     <string name="delete_event_confirmation">Event was deleted</string>
     <string name="delete_event_error">Error: Event could not be deleted</string>
     <string name="delete">Delete</string>

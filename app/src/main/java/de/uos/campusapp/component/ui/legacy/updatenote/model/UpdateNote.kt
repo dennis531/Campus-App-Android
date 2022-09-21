@@ -1,4 +1,4 @@
-package de.uos.campusapp.component.ui.updatenote.model
+package de.uos.campusapp.component.ui.legacy.updatenote.model
 
 import com.google.gson.annotations.SerializedName
 
