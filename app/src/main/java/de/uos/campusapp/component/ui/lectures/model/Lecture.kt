@@ -6,7 +6,7 @@ package de.uos.campusapp.component.ui.lectures.model
 class Lecture(
     override val id: String,
     override val title: String,
-    override val semester: String? = null,
+    override val semester: LectureSemesterInterface? = null,
     override val mainLanguage: String? = null,
     override val lectureContent: String? = null,
     override val duration: String? = null,

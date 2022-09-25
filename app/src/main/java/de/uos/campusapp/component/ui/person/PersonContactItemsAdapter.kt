@@ -1,5 +1,6 @@
 package de.uos.campusapp.component.ui.person
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -64,10 +65,9 @@ class PersonContactItemsAdapter(
         }
 
         private fun handleItemClick(context: Context, intent: Intent) {
-            val canHandleIntent = intent.resolveActivity(context.packageManager) != null
-            if (canHandleIntent) {
+            try {
                 context.startActivity(intent)
-            } else {
+            } catch (e: ActivityNotFoundException) {
                 Utils.showToast(context, R.string.action_cant_be_performed)
             }
         }

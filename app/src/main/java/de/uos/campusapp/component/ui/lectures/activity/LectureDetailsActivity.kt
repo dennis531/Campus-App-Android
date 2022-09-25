@@ -81,7 +81,7 @@ class LectureDetailsActivity : ActivityForAccessingApi<AbstractLecture>(R.layout
         with(binding) {
             lectureNameTextView.text = currentItem.title
 
-            val strLectureLanguage = StringBuilder(currentItem.semester ?: getString(R.string.unknown))
+            val strLectureLanguage = StringBuilder(currentItem.semester?.title ?: getString(R.string.unknown))
             if (!currentItem.mainLanguage.isNullOrBlank()) {
                 strLectureLanguage.append(" - ").append(currentItem.mainLanguage)
             }

@@ -42,7 +42,7 @@ public interface ChatMessageDao {
     @Query("SELECT c.* FROM chat_message c, chat_room r "
            + "LEFT JOIN (SELECT _id, timestamp FROM chat_message) last ON (last._id=r.last_read) "
            + "WHERE c.roomId=:room AND c.roomId = r.id "
-           + "AND CASE WHEN last.timestamp IS NOT NULL THEN last.timestamp < c.timestamp ELSE 1 END "
+           + "AND CASE WHEN last.timestamp IS NOT NULL THEN last.timestamp < c.timestamp ELSE 0 END "
            + "ORDER BY c.timestamp DESC LIMIT 5")
     List<ChatMessageItem> getLastUnread(String room);
 
@@ -50,6 +50,6 @@ public interface ChatMessageDao {
            + "FROM chat_message c, chat_room r "
            + "LEFT JOIN (SELECT _id, timestamp FROM chat_message) last ON (last._id=r.last_read) "
            + "WHERE c.roomId=:room AND c.roomId = r.id "
-           + "AND CASE WHEN last.timestamp IS NOT NULL THEN last.timestamp < c.timestamp ELSE 1 END")
+           + "AND CASE WHEN last.timestamp IS NOT NULL THEN last.timestamp < c.timestamp ELSE 0 END")
     int getNumberUnread(String room);
 }

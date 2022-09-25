@@ -21,8 +21,8 @@ public interface ChatRoomDao {
            "LEFT JOIN (SELECT count(*) as count, c.roomId "
                     + "FROM chat_message c, chat_room cr "
                     + "LEFT JOIN (SELECT _id, timestamp FROM chat_message) last ON (last._id=cr.last_read) "
-                    + "WHERE c.roomId = cr.id "
-                    + "AND CASE WHEN last.timestamp IS NOT NULL THEN last.timestamp < c.timestamp ELSE 1 END "
+                    + "WHERE  c.roomId = cr.id "
+                    + "AND CASE WHEN last.timestamp IS NOT NULL THEN last.timestamp < c.timestamp ELSE 0 END "
                     + "GROUP BY c.roomId) unread on (unread.roomId=r.id) " +
            "LEFT JOIN (SELECT MAX(timestamp) timestamp, text, roomId FROM chat_message GROUP BY roomId) m ON (m.roomId=r.id) " +
            "WHERE joined=1 " +

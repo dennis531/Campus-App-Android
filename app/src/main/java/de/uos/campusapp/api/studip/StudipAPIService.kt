@@ -31,7 +31,7 @@ interface StudipAPIService {
     @GET("users/{id}/events")
     fun getCalendar(@Path("id") id: String): Call<ResponseBody>
 
-    @GET("users/{id}/courses?include=institute,start-semester,end-semester")
+    @GET("users/{id}/courses?include=institute,start-semester,end-semester&page[limit]=100")
     fun getPersonalLectures(@Path("id") id: String): Call<List<StudipLecture>>
 
     @GET("courses?include=institute,start-semester,end-semester")
@@ -40,7 +40,7 @@ interface StudipAPIService {
     @GET("courses/{id}?include=institute,start-semester,end-semester")
     fun getLecture(@Path("id") id: String): Call<StudipLecture>
 
-    @GET("courses/{id}/events?page[limit]=100")
+    @GET("courses/{id}/events?page[limit]=1000")
     fun getLectureEvents(@Path("id") id: String): Call<List<StudipCourseEvent>>
 
     @GET("courses/{id}/file-refs?include=owner")
@@ -58,20 +58,25 @@ interface StudipAPIService {
     @GET("blubber-threads?include=context,mentions")
     fun getChatRooms(): Call<List<StudipBlubberThread>>
 
-    @GET("blubber-threads/{id}/comments?include=author")
-    fun getChatMessages(@Path("id") id: String): Call<List<StudipBlubberComment>>
-
-    @GET("blubber-threads/{id}/comments?include=author")
-    fun getOlderChatMessages(@Path("id") id: String, @Query("filter[before]") before: String): Call<List<StudipBlubberComment>>
+    /**
+     * Gets 1000 messages between [since] and [before].
+     * Unfortunately, the API sorts the messages in ascending order by the mkdate
+     */
+    @GET("blubber-threads/{id}/comments?include=author&page[limit]=1000")
+    fun getChatMessages(
+        @Path("id") id: String,
+        @Query("filter[since]") since: String,
+        @Query("filter[before]") before: String?
+    ): Call<List<StudipBlubberComment>>
 
     @POST("blubber-threads/{id}/comments")
     fun sendChatMessage(@Path("id") roomId: String, @Body message: StudipBlubberComment): Call<StudipBlubberComment>
 
 
-    @GET("users/{id}/inbox?include=sender,recipients")
+    @GET("users/{id}/inbox?include=sender,recipients&page[limit]=10")
     fun getInboxMessages(@Path("id") userId: String): Call<List<StudipMessage>>
 
-    @GET("users/{id}/outbox?include=sender,recipients")
+    @GET("users/{id}/outbox?include=sender,recipients&page[limit]=10")
     fun getOutboxMessages(@Path("id") userId: String): Call<List<StudipMessage>>
 
     @POST("messages")

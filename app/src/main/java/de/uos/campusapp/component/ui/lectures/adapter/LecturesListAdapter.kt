@@ -51,7 +51,7 @@ class LecturesListAdapter(context: Context, results: MutableList<AbstractLecture
 
         val details = StringBuilder()
         details.addDetail(lecture.lectureType)
-        details.addDetail(lecture.semester)
+        details.addDetail(lecture.semester?.title)
 
         if (!lecture.duration.isNullOrBlank()) {
             details.addDetail("${lecture.duration} SWS")

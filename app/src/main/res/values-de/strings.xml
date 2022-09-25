@@ -49,7 +49,7 @@
 
     <!-- Exam/Grades -->
     <string name="average_grade">Durchschnittsnote</string>
-    <string name="average_grade_hint">Deinen präzisen Schnitt findest Du in deiner Lernplattform.</string>
+    <string name="average_grade_hint">Deinen präzisen Schnitt findest Du in deinem Campus System.</string>
     <string name="show_column_chart">Zeige als Balkendiagramm</string>
     <string name="show_pie_chart">Zeige als Tortendiagramm</string>
     <string name="result_extra">Ergebnis:&#160;</string>
@@ -113,7 +113,7 @@
     <string name="set_silent_mode">Bei Aktivierung wird sich das Gerät bei einer aktuell stattfindenden Vorlesung lautlos schalten.</string>
     <string name="set_background_mode">Aktiviere oder deaktiviere den <i>Hintergrundmodus</i>. Bei Aktivierung werden einmal am Tag im Hintergrund alle Inhalte heruntergeladen, um deine Campus App auf den neusten Stand zu halten.</string>
     <string name="goto_campus">Starte Campus App</string>
-    <string name="oauth_msg">Um den Zugriff auf alle Funktionen der App zu erhalten, musst du auf der nächsten Seite den Zugriff auf deine Lernplattform erlauben.\n\nDiese App speichert nicht dein Passwort.\n\nNach dem Einrichten kannst du:\n &#8226; auf deinen Kalender zugreifen\n &#8226; Details zu deinen Vorlesungen erfahren\n &#8226; deine Noten ansehen\n &#8226; deinen Studienbeitragsstatus prüfen\n &#8226; mit Komilitonen aus deinen Vorlesungen chatten</string>
+    <string name="oauth_msg">Um den Zugriff auf alle Funktionen der App zu erhalten, musst du auf der nächsten Seite den Zugriff auf dein Campus System erlauben.\n\nDiese App speichert nicht dein Passwort.\n\nNach dem Einrichten kannst du:\n &#8226; auf deinen Kalender zugreifen\n &#8226; Details zu deinen Vorlesungen erfahren\n &#8226; deine Noten ansehen\n &#8226; deinen Studienbeitragsstatus prüfen\n &#8226; mit Komilitonen aus deinen Vorlesungen chatten</string>
 
     <!-- News -->
     <string name="no_link_existing">Kein Link gefunden.</string>
@@ -129,6 +129,7 @@
     <string name="delete_message_body">Bist du sicher, dass du die Nachricht löschen willst?</string>
     <string name="sender_format_string">Von: %s</string>
     <string name="recipients_format_string">An: %s</string>
+    <string name="recipients_count_format_string">%d Personen</string>
     <string name="new_messages_format_string">%d neue Nachrichten</string>
     <string name="new_message">Neue Nachricht</string>
     <string name="message_sending">Nachricht wird gesendet…</string>
@@ -679,7 +680,7 @@ Signatur: %5$s</string>
     <string name="including_format_string">inklusive %s</string>
     <string name="logout">Abmelden</string>
     <string name="logout_message">Bist du sicher, dass du dich abmelden willst?</string>
-    <string name="logout_title">Verbindung zur Lernplattform löschen</string>
+    <string name="logout_title">Verbindung zum Campus löschen</string>
     <string name="logout_error_title">Logout ist fehlgeschlagen</string>
     <string name="logout_try_again">Erneut versuchen?</string>
     <string name="message_send_error">Nachricht konnte nicht gesendet werden</string>

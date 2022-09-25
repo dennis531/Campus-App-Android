@@ -74,8 +74,8 @@ class MessagesDetailsFragment : Fragment() {
             senderTextView.text = getString(R.string.sender_format_string, message.sender?.name)
             senderTextView.isVisible = message.sender != null
 
-            val recipientNames = message.recipients.joinToString(", ") { it.name }
-            recipientsTextView.text = getString(R.string.recipients_format_string, recipientNames)
+            val recipientsText = message.getRecipientsText(requireContext())
+            recipientsTextView.text = getString(R.string.recipients_format_string, recipientsText)
             recipientsTextView.isVisible = message.recipients.isNotEmpty()
 
             dateTextView.text = message.formattedDate

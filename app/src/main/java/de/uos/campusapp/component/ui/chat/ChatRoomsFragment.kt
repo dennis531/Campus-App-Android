@@ -59,11 +59,14 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<AbstractChatRoom>>(
 
     private val compositeDisposable = CompositeDisposable()
 
+    private val handlerThread = HandlerThread("UpdateDatabaseThread")
+
     private val binding by viewBinding(FragmentChatRoomsBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        handlerThread.start()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,9 +120,6 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<AbstractChatRoom>>(
 
         // We're starting more background work, so we show a loading indicator again
         showLoadingStart()
-
-        val handlerThread = HandlerThread("UpdateDatabaseThread")
-        handlerThread.start()
 
         val handler = Handler(handlerThread.looper)
         handler.post { updateDatabase(chatRooms) }
@@ -369,6 +369,7 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<AbstractChatRoom>>(
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.dispose()
+        handlerThread.quitSafely()
     }
 
     private companion object {

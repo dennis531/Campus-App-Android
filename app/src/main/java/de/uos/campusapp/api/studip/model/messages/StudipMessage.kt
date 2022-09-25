@@ -32,7 +32,7 @@ class StudipMessage() : AbstractMessage() {
         get() {
             if (!field.startsWith("<!--HTML-->")) {
                 // System messages are not html formatted
-                return field.replace("\n", "<br>")
+                return field.replace("\n", "<br />")
             }
             return field
         }

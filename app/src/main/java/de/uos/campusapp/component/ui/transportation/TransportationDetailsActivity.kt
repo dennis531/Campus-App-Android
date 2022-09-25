@@ -51,6 +51,7 @@ class TransportationDetailsActivity : ProgressActivity<Unit>(R.layout.activity_t
         title = location
         val locationID = intent.getStringExtra(EXTRA_STATION_ID)!!
 
+        disableRefresh()
         showLoadingStart()
         loadDetails(location, locationID)
     }

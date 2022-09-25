@@ -455,6 +455,8 @@ public class ChatActivity extends ActivityForDownloadingExternal
             chatHistoryAdapter.updateHistory(messages);
         } else {
             chatHistoryAdapter.addHistory(messages);
+            // Scroll to last visible message
+            messagesListView.setSelection(messages.size());
         }
 
         // We remove the progress indicator in the header view if all messages are loaded

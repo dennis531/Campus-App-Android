@@ -68,7 +68,7 @@ class MessagesAdapter(
                 if (message.recipients.size > 1) {
                     memberTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_outline_people_24px, 0, 0, 0)
                 }
-                memberTextView.text = message.recipients.joinToString("\n")
+                memberTextView.text = message.getRecipientsText(context)
                 memberTextView.isVisible = message.recipients.isNotEmpty()
             }
 

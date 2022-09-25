@@ -116,7 +116,7 @@ public class EduroamController {
         conf.allowedProtocols.set(Protocol.RSN);
         conf.status = WifiConfiguration.Status.ENABLED;
 
-        setupEnterpriseConfigAPI18(conf, identity, networkPass);
+        setupEnterpriseConfig(conf.enterpriseConfig, identity, networkPass);
 
         // Add eduroam to wifi networks
         if (update) {
@@ -138,11 +138,11 @@ public class EduroamController {
         return true;
     }
 
-    private void setupEnterpriseConfigAPI18(WifiConfiguration conf, String identity, String networkPass) {
-        conf.enterpriseConfig.setIdentity(identity);
-        conf.enterpriseConfig.setPassword(networkPass);
-        conf.enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.PWD);
-    }
+//    private void setupEnterpriseConfigAPI18(WifiConfiguration conf, String identity, String networkPass) {
+//        conf.enterpriseConfig.setIdentity(identity);
+//        conf.enterpriseConfig.setPassword(networkPass);
+//        conf.enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.PWD);
+//    }
 
     /**
      * Adds a eduroam network suggestion to the wifi manager. The suggestion is not visible in the
@@ -177,25 +177,34 @@ public class EduroamController {
      */
     @RequiresApi(api = Build.VERSION_CODES.Q)
     private WifiNetworkSuggestion getEduroamSuggestion(String identity, String networkPass) {
-        String radiusDomain = ConfigUtils.getConfig(ConfigConst.EDUROAM_RADIUS_DOMAIN, "");
-
-        List<String> anonymousIds = ConfigUtils.getConfig(ConfigConst.EDUROAM_ANONYMOUS_IDENTITIES, Collections.emptyList());
-        String anonymousId = !anonymousIds.isEmpty() ? anonymousIds.get(0) : "";
-
         WifiEnterpriseConfig enterpriseConfig = new WifiEnterpriseConfig();
-        enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.TTLS);
-        enterpriseConfig.setIdentity(identity);
-        enterpriseConfig.setPassword(networkPass);
-        enterpriseConfig.setDomainSuffixMatch(radiusDomain);
-        enterpriseConfig.setPhase2Method(WifiEnterpriseConfig.Phase2.MSCHAPV2);
-        enterpriseConfig.setAnonymousIdentity(anonymousId);
-        enterpriseConfig.setCaCertificate(getEduroamCertificate());
+        setupEnterpriseConfig(enterpriseConfig, identity, networkPass);
 
         WifiNetworkSuggestion.Builder builder = new WifiNetworkSuggestion.Builder();
         return builder
                 .setSsid(Const.EDUROAM_SSID)
                 .setWpa2EnterpriseConfig(enterpriseConfig)
                 .build();
+    }
+
+    private void setupEnterpriseConfig(WifiEnterpriseConfig enterpriseConfig, String identity, String networkPass) {
+        String radiusDomain = ConfigUtils.getConfig(ConfigConst.EDUROAM_RADIUS_DOMAIN, "");
+
+        List<String> anonymousIds = ConfigUtils.getConfig(ConfigConst.EDUROAM_ANONYMOUS_IDENTITIES, Collections.emptyList());
+        String anonymousId = !anonymousIds.isEmpty() ? anonymousIds.get(0) : "";
+
+        enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.TTLS);
+        enterpriseConfig.setIdentity(identity);
+        enterpriseConfig.setPassword(networkPass);
+        enterpriseConfig.setPhase2Method(WifiEnterpriseConfig.Phase2.MSCHAPV2);
+        enterpriseConfig.setAnonymousIdentity(anonymousId);
+        enterpriseConfig.setCaCertificate(getEduroamCertificate());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            enterpriseConfig.setDomainSuffixMatch(radiusDomain);
+        } else {
+            enterpriseConfig.setSubjectMatch(radiusDomain);
+        }
     }
 
     @Nullable

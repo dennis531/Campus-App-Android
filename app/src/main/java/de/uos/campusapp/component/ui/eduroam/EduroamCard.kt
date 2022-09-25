@@ -48,7 +48,12 @@ class EduroamCard(context: Context) : Card(CardManager.CARD_EDUROAM, context, Co
             return false
         }
 
-        return wifi.connectionInfo.ssid == Const.EDUROAM_SSID
+        // If API level >= 17, the SSID will be returned surrounded by double quotation marks
+        val connectedSSID = wifi.connectionInfo.ssid
+            .replace("^\"".toRegex(), "")
+            .replace("\"$".toRegex(), "")
+
+        return connectedSSID == Const.EDUROAM_SSID
     }
 
     private fun eduroamAvailable(wifi: WifiManager): Boolean {
@@ -69,7 +74,7 @@ class EduroamCard(context: Context) : Card(CardManager.CARD_EDUROAM, context, Co
     override fun discard(editor: SharedPreferences.Editor) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         prefs.edit().putBoolean("card_eduroam_start", false)
-                .apply()
+            .apply()
     }
 
     override fun getId(): Int {

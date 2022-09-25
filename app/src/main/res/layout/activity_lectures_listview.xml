@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight=".80"
+        android:layout_weight=".75"
         android:orientation="vertical">
 
         <TextView
@@ -75,7 +75,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight=".20"
+        android:layout_weight=".25"
         android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible">

@@ -46,13 +46,10 @@ abstract class ProgressActivity<T>(
     private var apiCall: Call<T>? = null
     private var hadSuccessfulRequest = false
 
-    private val contentView: ViewGroup by lazy {
-        findViewById<ViewGroup>(android.R.id.content).getChildAt(0) as ViewGroup
-    }
+    private val contentView: ViewGroup
+        get() =  findViewById<ViewGroup>(android.R.id.content).getChildAt(0) as ViewGroup
 
-    protected val swipeRefreshLayout: SwipeRefreshLayout? by lazy {
-        findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
-    }
+    protected var swipeRefreshLayout: SwipeRefreshLayout? = null
 
     private val errorLayoutsContainer: FrameLayout by lazy {
         findViewById<FrameLayout>(R.id.errors_layout)
@@ -93,6 +90,7 @@ abstract class ProgressActivity<T>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        swipeRefreshLayout = findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
         // If content is refreshable setup the SwipeRefreshLayout
         swipeRefreshLayout?.apply {
             setOnRefreshListener(this@ProgressActivity)
@@ -354,6 +352,7 @@ abstract class ProgressActivity<T>(
         super.onDestroy()
         loadingDisposable.dispose()
         apiCall?.cancel()
+        swipeRefreshLayout = null
         if (registered) {
             connectivityManager.unregisterNetworkCallback(networkCallback)
             registered = false

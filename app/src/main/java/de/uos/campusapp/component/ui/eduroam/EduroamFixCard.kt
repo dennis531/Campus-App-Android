@@ -114,7 +114,8 @@ class EduroamFixCard(
         if (SDK_INT < M && !isValidSubjectMatchAPI18(eduroam)) {
             errors.add(context.getString(R.string.wifi_dns_name_not_set))
         } else if (SDK_INT >= M &&
-                (eduroam.enterpriseConfig.altSubjectMatch != "DNS:$radiusDNS" || eduroam.enterpriseConfig.domainSuffixMatch != radiusDNS) &&
+                eduroam.enterpriseConfig.altSubjectMatch != "DNS:$radiusDNS" &&
+                eduroam.enterpriseConfig.domainSuffixMatch != radiusDNS &&
                 !isValidSubjectMatchAPI18(eduroam)) {
             errors.add(context.getString(R.string.wifi_dns_name_not_set))
         }

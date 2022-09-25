@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcel
 import android.os.Parcelable
+import de.uos.campusapp.R
 import de.uos.campusapp.component.ui.messages.activity.MessagesDetailsActivity
 import de.uos.campusapp.utils.DateTimeUtils
 import org.joda.time.DateTime
@@ -17,7 +18,7 @@ import org.joda.time.format.DateTimeFormat
  * @property subject Message subject
  * @property text Message content (Html formatted)
  * @property type Message type
- * @property sender Message sender
+ * @property sender Message sender (optional)
  * @property recipients List of recipients (required for outgoing messages)
  * @property date Message date
  */
@@ -35,6 +36,22 @@ abstract class AbstractMessage: Parcelable {
 
     val replyable: Boolean
         get() = sender != null && type != MessageType.OUTBOX
+
+    /**
+     * Constructs shortened, formatted recipients string
+     */
+    fun getRecipientsText(context: Context): String {
+            val recipientsNames = recipients
+                .filter { it.name.isNotEmpty() }
+                .map { it.name }
+
+            if (recipients.size > 3 || recipientsNames.isEmpty()) {
+                // Return number of persons if more than 3 recipients or no names are given
+                return context.getString(R.string.recipients_count_format_string, recipients.size)
+            }
+
+            return recipientsNames.joinToString(", ")
+        }
 
     fun getIntent(context: Context): Intent {
         return Intent(context, MessagesDetailsActivity::class.java).also {

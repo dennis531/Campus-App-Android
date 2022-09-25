@@ -23,6 +23,13 @@ class StudipNews: AbstractNews() {
 
     @JsonProperty("content")
     override val content: String? = null
+        get() {
+            if (field != null && field.startsWith("<!--HTML-->")) {
+                // Remove paragraph in listings, as a line break is automatically created after the list mark
+                return field.replace(REMOVE_LIST_PARAGRAPH_REGEX.toRegex(RegexOption.DOT_MATCHES_ALL), "$1$2$3")
+            }
+            return field
+        }
 
     @JsonProperty("publication-start")
     private val startDate: String = ""
@@ -30,4 +37,8 @@ class StudipNews: AbstractNews() {
     @JsonIgnore
     override var date: DateTime = DateTime()
         get() = DateTime(startDate)
+
+    companion object {
+        private const val REMOVE_LIST_PARAGRAPH_REGEX = "(<li>.*?)<p>(.*?)</p>(.*?</li>)"
+    }
 }

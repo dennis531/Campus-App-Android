@@ -100,7 +100,7 @@ class StartupActivity : BaseActivity(R.layout.activity_startup, Component.ONBOAR
     private fun initApp() {
         // Migrate all settings - we somehow ended up having two different shared prefs: join them
         // back together
-        Utils.migrateSharedPreferences(this)
+//        Utils.migrateSharedPreferences(this)
 
         // Check that we have a private key setup in order to authenticate this device
 //        authManager.generatePrivateKey(null)

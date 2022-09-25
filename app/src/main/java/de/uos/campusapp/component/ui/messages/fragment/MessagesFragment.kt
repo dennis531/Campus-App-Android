@@ -10,7 +10,7 @@ import com.google.android.material.tabs.TabLayout
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
 import de.uos.campusapp.api.tumonline.CacheControl
-import de.uos.campusapp.component.other.generic.fragment.FragmentForDownloadingExternal
+import de.uos.campusapp.component.other.generic.fragment.BaseFragment
 import de.uos.campusapp.component.ui.messages.MessagesController
 import de.uos.campusapp.component.ui.messages.activity.CreateMessageActivity
 import de.uos.campusapp.component.ui.messages.adapter.MessagesAdapter
@@ -28,7 +28,7 @@ import javax.inject.Inject
 /**
  * A fragment representing a list of messages.
  */
-class MessagesFragment : FragmentForDownloadingExternal(
+class MessagesFragment : BaseFragment<Unit>(
     R.layout.fragment_messages,
     R.string.messages
 ) {
@@ -38,9 +38,6 @@ class MessagesFragment : FragmentForDownloadingExternal(
 
     @Inject
     lateinit var messagesDownloadAction: DownloadWorker.Action
-
-    override val method: DownloadWorker.Action
-        get() = messagesDownloadAction
 
     private var selectedMessageType: MessageType = MessageType.INBOX
 
@@ -74,7 +71,8 @@ class MessagesFragment : FragmentForDownloadingExternal(
             startActivity(intent)
         }
 
-        requestDownload(CacheControl.USE_CACHE)
+        // TODO: Uncomment when caching is provided
+//         requestDownload(CacheControl.USE_CACHE)
     }
 
     private fun setupTabs() {
@@ -82,7 +80,7 @@ class MessagesFragment : FragmentForDownloadingExternal(
             messagesTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     selectedMessageType = MessageType.valueOf(tab.tag as String)
-                    loadMessages()
+                    showMessages()
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) = Unit
@@ -100,13 +98,26 @@ class MessagesFragment : FragmentForDownloadingExternal(
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-
+    override fun onRefresh() {
+        // Only update messages when user refreshes manually
         loadMessages()
     }
 
     private fun loadMessages() {
+        fetch { messagesDownloadAction.execute(CacheControl.BYPASS_CACHE) }
+    }
+
+    override fun onEmptyDownloadResponse() {
+        showMessages()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        showMessages()
+    }
+
+    private fun showMessages() {
         messages = manager.getAllMessagesByType(selectedMessageType)
 
         with(binding) {

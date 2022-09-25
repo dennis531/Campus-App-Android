@@ -24,6 +24,8 @@ import de.uos.campusapp.di.DaggerAppComponent
 import de.uos.campusapp.service.GeofencingStartupReceiver
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
+import de.uos.campusapp.utils.Utils
+import io.reactivex.plugins.RxJavaPlugins
 import net.danlew.android.joda.JodaTimeAndroid
 import org.joda.time.DateTimeZone
 import java.util.*
@@ -44,9 +46,9 @@ open class App : Application() {
         JodaTimeAndroid.init(this)
         // Set device timezone as default
         DateTimeZone.setDefault(DateTimeZone.forTimeZone(TimeZone.getDefault()))
-//        if (!testing) {
-//            initRxJavaErrorHandler()
-//        }
+        if (!testing) {
+            initRxJavaErrorHandler()
+        }
         setupStrictMode()
         loadTheme()
         //BackendHelper.getBackendConnection()
@@ -98,9 +100,9 @@ open class App : Application() {
         }
     }
 
-//    private fun initRxJavaErrorHandler() {
-//        RxJavaPlugins.setErrorHandler(FirebaseCrashlytics.getInstance()::recordException)
-//    }
+    private fun initRxJavaErrorHandler() {
+        RxJavaPlugins.setErrorHandler(Utils::log)
+    }
 
     private fun loadTheme() {
         val theme = ThemeProvider(this).getThemeFromPreferences()

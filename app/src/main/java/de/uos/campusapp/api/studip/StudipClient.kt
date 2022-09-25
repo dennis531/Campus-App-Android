@@ -243,18 +243,30 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     }
 
     override fun getChatMessages(chatRoom: AbstractChatRoom, latestMessage: AbstractChatMessage?): List<AbstractChatMessage> {
+        // Get older messages
         if (latestMessage != null) {
-            val oldMessages =  apiService.getOlderChatMessages(chatRoom.id, latestMessage.timestamp.toString()).execute().body()!!.toMutableList()
+            // If all messages are older than one month than the latest message, the messages cannot be loaded due to the ascending message order
+            val oldMessages =  apiService.getChatMessages(
+                chatRoom.id,
+                latestMessage.timestamp.minusMonths(1).toString(),
+                latestMessage.timestamp.toString()
+            ).execute().body()!!.toMutableList()
 
             // Remove duplicate lastMessage from response
             if (oldMessages.isNotEmpty()) {
-                oldMessages.removeAt(0)
+                oldMessages.removeLastOrNull()
             }
 
             return oldMessages
         }
 
-        return apiService.getChatMessages(chatRoom.id).execute().body()!!
+        // Get new messages
+        // If the last message is older than one month, the messages cannot be loaded due to the ascending message order
+        return apiService.getChatMessages(
+            chatRoom.id,
+            DateTime.now().minusMonths(1).toString(),
+            null
+        ).execute().body()!!
     }
 
     override fun sendChatMessage(chatRoom: AbstractChatRoom, message: AbstractChatMessage): AbstractChatMessage {

@@ -7,6 +7,9 @@ import com.github.jasminb.jsonapi.annotations.Relationship
 import com.github.jasminb.jsonapi.annotations.Type
 import de.uos.campusapp.api.studip.model.person.InstituteRelationship
 import de.uos.campusapp.component.ui.lectures.model.AbstractLecture
+import de.uos.campusapp.component.ui.lectures.model.LectureSemester
+import de.uos.campusapp.component.ui.lectures.model.LectureSemesterInterface
+import org.joda.time.DateTime
 
 @Type("courses")
 class StudipLecture : AbstractLecture() {
@@ -23,8 +26,15 @@ class StudipLecture : AbstractLecture() {
     private val endSemester: StudipSemester? = null
 
     @JsonIgnore
-    override var semester: String? = null
-        get() = getFormattedSemester()
+    override var semester: LectureSemesterInterface? = null
+        get() {
+            // Try to create semester instance if null
+            if (field == null) {
+                field = getLectureSemester()
+            }
+
+            return field
+        }
 
     @JsonIgnore
     override val mainLanguage: String? = null
@@ -67,6 +77,25 @@ class StudipLecture : AbstractLecture() {
         }
     }
 
+    /**
+     * Constructs a lecture semester
+     */
+    private fun getLectureSemester(): LectureSemesterInterface? {
+        val semesterName = getFormattedSemester() ?: return null
+
+        // Parse semester start date
+        val startDate = if (startSemester?.start != null) {
+            DateTime(startSemester.start)
+        } else {
+            null
+        }
+
+        return LectureSemester(semesterName, startDate)
+    }
+
+    /**
+     * Builds a semester name from start semester and end semester
+     */
     private fun getFormattedSemester(): String? {
         val hasStartSemester = startSemester != null && startSemester.title.isNotBlank()
         val hasEndSemester = endSemester != null && endSemester.title.isNotBlank()

@@ -57,13 +57,10 @@ abstract class BaseFragment<T>(
     private val toolbar: Toolbar?
         get() = requireActivity().findViewById<Toolbar?>(R.id.toolbar)
 
-    private val contentView: ViewGroup by lazy {
-        requireActivity().findViewById<ViewGroup>(android.R.id.content).getChildAt(0) as ViewGroup
-    }
+    private val contentView: ViewGroup
+        get() =  requireActivity().findViewById<ViewGroup>(android.R.id.content).getChildAt(0) as ViewGroup
 
-    protected val swipeRefreshLayout: SwipeRefreshLayout? by lazy {
-        requireActivity().findViewById<SwipeRefreshLayout?>(R.id.swipeRefreshLayout)
-    }
+    protected var swipeRefreshLayout: SwipeRefreshLayout? = null
 
     private val errorLayoutsContainer: FrameLayout by lazy {
         requireActivity().findViewById<FrameLayout>(R.id.errors_layout)
@@ -115,6 +112,8 @@ abstract class BaseFragment<T>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
+
+        swipeRefreshLayout = requireActivity().findViewById<SwipeRefreshLayout?>(R.id.swipeRefreshLayout)
         // If content is refreshable setup the SwipeRefreshLayout
         swipeRefreshLayout?.apply {
             setOnRefreshListener(this@BaseFragment)
@@ -416,6 +415,7 @@ abstract class BaseFragment<T>(
 
     override fun onDestroyView() {
         apiCall?.cancel()
+        swipeRefreshLayout = null
         super.onDestroyView()
     }
 
