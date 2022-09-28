@@ -47,7 +47,8 @@ class ChatMessagePollingWorker(context: Context, workerParams: WorkerParameters)
     }
 
     private fun onDataLoaded(room: AbstractChatRoom) {
-        if (chatMessageDao.getNumberUnread(room.id) == 0) {
+        // Show notification only if unread messages have not been notified before
+        if(chatMessageDao.getNumberUnreadAndUnnotified(room.id) == 0) {
             return
         }
 
@@ -60,6 +61,7 @@ class ChatMessagePollingWorker(context: Context, workerParams: WorkerParameters)
         val provider = ChatNotificationProvider(applicationContext, room, messages)
         val notification = provider.buildNotification() ?: return
         notificationScheduler.schedule(notification)
+        chatMessageDao.markAsNotified(room.id)
     }
 
     companion object {

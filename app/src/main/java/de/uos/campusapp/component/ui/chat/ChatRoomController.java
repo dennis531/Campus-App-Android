@@ -72,7 +72,7 @@ public class ChatRoomController implements ProvidesCard {
             ChatRoomDbRow existingRoom = chatRoomDao.getRoomById(room.getId());
 
             if (existingRoom == null) {
-                ChatRoomDbRow chatRoom = new ChatRoomDbRow(room.getId(), room.getTitle(), room.getJoined(), room.getMembers(), null);
+                ChatRoomDbRow chatRoom = new ChatRoomDbRow(room.getId(), room.getTitle(), room.getJoined(), room.getMembers(), null, null);
                 chatRoomDao.replaceRoom(chatRoom);
             } else {
                 chatRoomDao.updateRoom(room.getId(), room.getTitle(), room.getJoined(), room.getMembers());

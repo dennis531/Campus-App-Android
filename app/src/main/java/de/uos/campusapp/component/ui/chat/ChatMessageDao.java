@@ -24,6 +24,13 @@ public interface ChatMessageDao {
            + "WHERE id=:room")
     void markAsRead(String room);
 
+    @Query("UPDATE chat_room SET last_notified = "
+               + "(SELECT MAX(_id) FROM chat_message WHERE timestamp = "
+                    + "(SELECT MAX(timestamp) FROM chat_message WHERE roomId=:room) "
+               + "AND roomId=:room) "
+           + "WHERE id=:room")
+    void markAsNotified(String room);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void replaceMessage(ChatMessageItem m);
 
@@ -52,4 +59,13 @@ public interface ChatMessageDao {
            + "WHERE c.roomId=:room AND c.roomId = r.id "
            + "AND CASE WHEN last.timestamp IS NOT NULL THEN last.timestamp < c.timestamp ELSE 0 END")
     int getNumberUnread(String room);
+
+    @Query("SELECT count(*) "
+           + "FROM chat_message c, chat_room r "
+           + "LEFT JOIN (SELECT _id, timestamp FROM chat_message) last_notified ON (last_notified._id=r.last_notified) "
+           + "LEFT JOIN (SELECT _id, timestamp FROM chat_message) last_read ON (last_read._id=r.last_read) "
+           + "WHERE c.roomId=:room AND c.roomId = r.id "
+           + "AND CASE WHEN last_notified.timestamp IS NOT NULL THEN last_notified.timestamp < c.timestamp ELSE 1 END "
+           + "AND CASE WHEN last_read.timestamp IS NOT NULL THEN last_read.timestamp < c.timestamp ELSE 0 END")
+    int getNumberUnreadAndUnnotified(String room);
 }
