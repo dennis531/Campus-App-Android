@@ -12,7 +12,7 @@ import de.uos.campusapp.component.other.general.model.Recent
 import de.uos.campusapp.component.other.generic.activity.ProgressActivity
 import de.uos.campusapp.component.ui.transportation.model.AbstractDeparture
 import de.uos.campusapp.component.ui.transportation.model.Station
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Utils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -37,7 +37,7 @@ class TransportationDetailsActivity : ProgressActivity<Unit>(R.layout.activity_t
         super.onCreate(savedInstanceState)
 
         // get all stations from db
-        recentsDao = TcaDb.getInstance(this).recentsDao()
+        recentsDao = CaDb.getInstance(this).recentsDao()
         transportManager = TransportController(this)
         gson = Gson()
         mViewResults = this.findViewById(R.id.activity_transport_result)

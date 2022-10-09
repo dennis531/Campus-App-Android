@@ -23,7 +23,7 @@ import de.uos.campusapp.api.general.exception.UnauthorizedException
 import de.uos.campusapp.component.other.generic.activity.ActivityForAccessingApi
 import de.uos.campusapp.component.ui.calendar.api.CalendarAPI
 import de.uos.campusapp.component.ui.calendar.model.*
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.databinding.ActivityCreateEventBinding
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.Const
@@ -284,7 +284,7 @@ class CreateEventActivity : ActivityForAccessingApi<String>(R.layout.activity_cr
 
     private fun editEvent() {
         val eventId = intent.getStringExtra(Const.EVENT_NR) ?: return
-        val seriesId = TcaDb.getInstance(this).calendarDao().getSeriesIdForEvent(eventId)
+        val seriesId = CaDb.getInstance(this).calendarDao().getSeriesIdForEvent(eventId)
         repeatHelper.seriesId = seriesId
         // Because we don't show a loading screen for the delete request (only for the create
         // request), we use a short Toast to let the user know that something is happening.
@@ -295,7 +295,7 @@ class CreateEventActivity : ActivityForAccessingApi<String>(R.layout.activity_cr
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Utils.log("Event successfully deleted (now creating the edited version)")
-                TcaDb.getInstance(this@CreateEventActivity).calendarDao().delete(eventId)
+                CaDb.getInstance(this@CreateEventActivity).calendarDao().delete(eventId)
                 createEvent()
             }, {
                 Utils.log(it)
@@ -372,10 +372,10 @@ class CreateEventActivity : ActivityForAccessingApi<String>(R.layout.activity_cr
     override fun onDownloadSuccessful(response: String) {
         events[apiCallsFetched++].let {
             it.id = response
-            TcaDb.getInstance(this).calendarDao().insert(it)
+            CaDb.getInstance(this).calendarDao().insert(it)
             if (!repeatHelper.isNotRepeating() || isEditing) {
                 if (repeatHelper.seriesId != null) {
-                    TcaDb.getInstance(this).calendarDao().insert(EventSeriesMapping(repeatHelper.seriesId!!, response))
+                    CaDb.getInstance(this).calendarDao().insert(EventSeriesMapping(repeatHelper.seriesId!!, response))
                 }
             }
         }

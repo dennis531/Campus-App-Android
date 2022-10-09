@@ -15,7 +15,7 @@ import de.uos.campusapp.component.ui.news.NewsController
 import de.uos.campusapp.component.ui.news.NewsDownloadAction
 import de.uos.campusapp.component.ui.openinghours.LocationImportAction
 import de.uos.campusapp.component.ui.legacy.updatenote.UpdateNoteDownloadAction
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.service.DownloadWorker
 
 /**
@@ -43,7 +43,7 @@ object DownloadModule {
     @Provides
     fun provideLocationImportAction(
         context: Context,
-        database: TcaDb,
+        database: CaDb,
     ): LocationImportAction = LocationImportAction(context, database)
 
     @JvmStatic

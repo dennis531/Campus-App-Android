@@ -11,7 +11,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import de.uos.campusapp.TestApp;
-import de.uos.campusapp.database.TcaDb;
+import de.uos.campusapp.database.CaDb;
 import de.uos.campusapp.utils.sync.SyncDao;
 import de.uos.campusapp.utils.sync.SyncManager;
 import de.uos.campusapp.utils.sync.model.Sync;
@@ -27,16 +27,16 @@ public class SyncManagerTest {
 
     @Before
     public void setUp() {
-        dao = TcaDb.Companion.getInstance(RuntimeEnvironment.application)
-                             .syncDao();
+        dao = CaDb.Companion.getInstance(RuntimeEnvironment.application)
+                            .syncDao();
         dao.removeCache();
         syncManager = new SyncManager(RuntimeEnvironment.application);
     }
 
     @After
     public void tearDown() {
-        TcaDb.Companion.getInstance(RuntimeEnvironment.application)
-                       .close();
+        CaDb.Companion.getInstance(RuntimeEnvironment.application)
+                      .close();
     }
 
     /**

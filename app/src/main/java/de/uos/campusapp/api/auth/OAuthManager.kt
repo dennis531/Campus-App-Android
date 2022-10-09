@@ -15,6 +15,9 @@ import se.akerfeldt.okhttp.signpost.OkHttpOAuthProvider
 import se.akerfeldt.okhttp.signpost.SigningInterceptor
 import javax.inject.Inject
 
+/**
+ * Authentication manager for the OAuth 1.0a standard
+ */
 class OAuthManager @Inject constructor(private val context: Context) : AuthManager() {
     private val callbackURLScheme = context.getString(R.string.oauth_callback_scheme)
     private val callbackURLHost = context.getString(R.string.oauth_callback_host)
@@ -72,11 +75,12 @@ class OAuthManager @Inject constructor(private val context: Context) : AuthManag
         Utils.setSetting(context, Const.ACCESS_TOKEN_SECRET, tokenSecret)
     }
 
-    fun getConsumer(): OkHttpOAuthConsumer {
+    private fun getConsumer(): OkHttpOAuthConsumer {
         try {
+            // Ensure that tokens are set
             consumer.setTokenWithSecret(getAccessToken(), getAccessTokenSecret())
         } catch (e: AuthException) {
-            Utils.log(e)
+            Utils.log("No access tokens are set")
         }
         return consumer
     }
@@ -95,6 +99,7 @@ class OAuthManager @Inject constructor(private val context: Context) : AuthManag
             ConfigUtils.getConfig(ConfigConst.OAUTH_CONSUMER_KEY, ""),
             ConfigUtils.getConfig(ConfigConst.OAUTH_CONSUMER_SECRET, "")
         )
+
         private val provider = OkHttpOAuthProvider(
             ConfigUtils.getConfig(ConfigConst.OAUTH_REQUEST_TOKEN_URL, ""),
             ConfigUtils.getConfig(ConfigConst.OAUTH_ACCESS_TOKEN_URL, ""),

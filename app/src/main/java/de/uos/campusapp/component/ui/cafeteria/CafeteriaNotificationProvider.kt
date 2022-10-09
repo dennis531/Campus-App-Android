@@ -11,7 +11,7 @@ import de.uos.campusapp.component.notifications.persistence.NotificationType
 import de.uos.campusapp.component.other.locations.LocationManager
 import de.uos.campusapp.component.ui.cafeteria.controller.CafeteriaMenuManager
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Const
 import de.uos.campusapp.utils.DateTimeUtils
 import org.joda.time.DateTime
@@ -19,7 +19,7 @@ import org.joda.time.DateTime
 class CafeteriaNotificationProvider(context: Context) : NotificationProvider(context) {
 
     private val cafeteriaMenuManager = CafeteriaMenuManager(context)
-    private val cafeteriaLocalRepository = CafeteriaLocalRepository(TcaDb.getInstance(context))
+    private val cafeteriaLocalRepository = CafeteriaLocalRepository(CaDb.getInstance(context))
 
     override fun getNotificationBuilder(): NotificationCompat.Builder {
         return NotificationCompat.Builder(context, Const.NOTIFICATION_CHANNEL_CAFETERIA)

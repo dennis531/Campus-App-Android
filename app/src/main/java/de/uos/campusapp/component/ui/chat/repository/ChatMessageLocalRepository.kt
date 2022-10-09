@@ -1,7 +1,7 @@
 package de.uos.campusapp.component.ui.chat.repository
 
 import de.uos.campusapp.component.ui.chat.model.ChatMessageItem
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
@@ -9,7 +9,7 @@ object ChatMessageLocalRepository {
 
     private val executor: Executor = Executors.newSingleThreadExecutor()
 
-    lateinit var db: TcaDb
+    lateinit var db: CaDb
 
     fun markAsRead(room: String) = db.chatMessageDao().markAsRead(room)
 

@@ -6,14 +6,34 @@ import de.uos.campusapp.utils.Const
 import de.uos.campusapp.utils.Utils
 import okhttp3.Interceptor
 
+/**
+ * Abstract authentication manager providing general authentication function like
+ * requesting the authenication status of the user.
+ *
+ * This class does not provide any authentication mechanisms.
+ * The implementation of the these mechanism should be handled in the subclasses.
+ */
 abstract class AuthManager {
+    /**
+     * Checks if the user is authenticated
+     */
     abstract fun hasAccess(): Boolean
+
+    /**
+     * Clears all authentication values like access tokens
+     */
     abstract fun clear()
 
+    /**
+     * Returns the authentication interceptor for the okhttp3 client
+     */
     abstract fun getInterceptor(): Interceptor
     
     companion object {
 
+        /**
+         * Saves all user information in preferences
+         */
         fun saveIdentity(context: Context, identity: IdentityInterface) {
             // Collect personal data
             Utils.setSetting(context, Const.USERNAME, identity.username)

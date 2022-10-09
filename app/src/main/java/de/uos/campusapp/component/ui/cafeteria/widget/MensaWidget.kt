@@ -11,7 +11,7 @@ import de.uos.campusapp.R
 import de.uos.campusapp.component.ui.cafeteria.activity.CafeteriaActivity
 import de.uos.campusapp.component.ui.cafeteria.controller.CafeteriaManager
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Const
 import org.joda.time.format.DateTimeFormat
 
@@ -23,7 +23,7 @@ class MensaWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
 
-        val localRepository = CafeteriaLocalRepository(TcaDb.getInstance(context))
+        val localRepository = CafeteriaLocalRepository(CaDb.getInstance(context))
         val mensaManager = CafeteriaManager(context)
 
         val cafeteriaId = mensaManager.bestMatchMensaId

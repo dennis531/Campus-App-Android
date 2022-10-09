@@ -17,7 +17,7 @@ import java.util.List;
 import de.uos.campusapp.TestApp;
 import de.uos.campusapp.component.ui.news.NewsDao;
 import de.uos.campusapp.component.ui.news.model.NewsItem;
-import de.uos.campusapp.database.TcaDb;
+import de.uos.campusapp.database.CaDb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,7 +30,7 @@ public class NewsDaoTest {
 
     @Before
     public void setUp() {
-        dao = TcaDb.Companion.getInstance(RuntimeEnvironment.application).newsDao();
+        dao = CaDb.Companion.getInstance(RuntimeEnvironment.application).newsDao();
         newsIdx = 0;
         JodaTimeAndroid.init(RuntimeEnvironment.application);
     }
@@ -38,7 +38,7 @@ public class NewsDaoTest {
     @After
     public void tearDown() {
         dao.flush();
-        TcaDb.Companion.getInstance(RuntimeEnvironment.application).close();
+        CaDb.Companion.getInstance(RuntimeEnvironment.application).close();
     }
 
     private NewsItem createNewsItem(String source, DateTime date) {

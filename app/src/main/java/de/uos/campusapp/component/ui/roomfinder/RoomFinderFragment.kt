@@ -13,7 +13,7 @@ import de.uos.campusapp.component.other.generic.fragment.FragmentForSearchingInB
 import de.uos.campusapp.component.ui.roomfinder.api.RoomFinderAPI
 import de.uos.campusapp.component.ui.roomfinder.model.RoomFinderRoom
 import de.uos.campusapp.component.ui.roomfinder.model.RoomFinderRoomInterface
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.databinding.FragmentRoomfinderBinding
 import de.uos.campusapp.di.injector
 import de.uos.campusapp.utils.NetUtils
@@ -29,7 +29,7 @@ class RoomFinderFragment : FragmentForSearchingInBackground<List<RoomFinderRoomI
     @Inject
     lateinit var apiClient: RoomFinderAPI
 
-    private val recentsDao by lazy { TcaDb.getInstance(requireContext()).recentsDao() }
+    private val recentsDao by lazy { CaDb.getInstance(requireContext()).recentsDao() }
     private lateinit var adapter: RoomFinderListAdapter
 
     private val recents: List<RoomFinderRoomInterface>

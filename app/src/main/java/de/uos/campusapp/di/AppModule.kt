@@ -6,9 +6,7 @@ import android.preference.PreferenceManager
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import dagger.Module
 import dagger.Provides
-import de.uos.campusapp.api.tumcabe.TUMCabeClient
-import de.uos.campusapp.api.tumonline.TUMOnlineClient
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import javax.inject.Singleton
 
 /**
@@ -33,7 +31,7 @@ abstract class AppModule {
         @Provides
         fun provideDatabase(
             context: Context
-        ): TcaDb = TcaDb.getInstance(context)
+        ): CaDb = CaDb.getInstance(context)
 
         @JvmStatic
         @Singleton

@@ -76,7 +76,7 @@ import java.util.concurrent.ExecutionException
     ScheduledNotification::class,
     ActiveAlarm::class])
 @TypeConverters(Converters::class)
-abstract class TcaDb : RoomDatabase() {
+abstract class CaDb : RoomDatabase() {
 
     abstract fun cafeteriaDao(): CafeteriaDao
 
@@ -128,13 +128,13 @@ abstract class TcaDb : RoomDatabase() {
 //                Migration6to7()
 //        )
 
-        private var instance: TcaDb? = null
+        private var instance: CaDb? = null
 
         @Synchronized
-        fun getInstance(context: Context): TcaDb {
+        fun getInstance(context: Context): CaDb {
             var instance = this.instance
             if (instance == null) {
-                instance = Room.databaseBuilder(context.applicationContext, TcaDb::class.java, Const.DATABASE_NAME)
+                instance = Room.databaseBuilder(context.applicationContext, CaDb::class.java, Const.DATABASE_NAME)
                         .allowMainThreadQueries()
 //                        .addMigrations(*migrations)
                         .build()
@@ -159,7 +159,7 @@ abstract class TcaDb : RoomDatabase() {
             val cacheManager = CacheManager(c)
             cacheManager.clearCache()
 
-            TcaDb.getInstance(c).clearAllTables()
+            CaDb.getInstance(c).clearAllTables()
         }
     }
 }

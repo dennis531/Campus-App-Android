@@ -11,7 +11,7 @@ import de.uos.campusapp.component.ui.cafeteria.CafeteriaNotificationSettings
 import de.uos.campusapp.component.ui.cafeteria.FavoriteDishDao
 import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteriaMenu
 import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.ConfigUtils
 import de.uos.campusapp.utils.DateTimeUtils
 import de.uos.campusapp.utils.Utils
@@ -33,7 +33,7 @@ constructor(private val context: Context) {
     private val favoriteDishDao: FavoriteDishDao
 
     init {
-        val db = TcaDb.getInstance(context)
+        val db = CaDb.getInstance(context)
         menuDao = db.cafeteriaMenuDao()
         menuPriceDao = db.cafeteriaMenuPriceDao()
         favoriteDishDao = db.favoriteDishDao()

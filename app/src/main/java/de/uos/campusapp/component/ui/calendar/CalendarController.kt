@@ -18,7 +18,7 @@ import de.uos.campusapp.component.ui.calendar.model.AbstractEvent
 import de.uos.campusapp.component.ui.calendar.model.WidgetsTimetableBlacklist
 import de.uos.campusapp.component.ui.overview.card.Card
 import de.uos.campusapp.component.ui.overview.card.ProvidesCard
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Const
 import de.uos.campusapp.utils.Utils
 import de.uos.campusapp.utils.sync.SyncManager
@@ -30,9 +30,9 @@ import java.util.*
  */
 class CalendarController(private val context: Context) : ProvidesCard, ProvidesNotifications {
 
-    private val calendarDao: CalendarDao = TcaDb.getInstance(context).calendarDao()
-    private val roomLocationsDao: RoomLocationsDao = TcaDb.getInstance(context).roomLocationsDao()
-    private val widgetsTimetableBlacklistDao: WidgetsTimetableBlacklistDao = TcaDb.getInstance(context).widgetsTimetableBlacklistDao()
+    private val calendarDao: CalendarDao = CaDb.getInstance(context).calendarDao()
+    private val roomLocationsDao: RoomLocationsDao = CaDb.getInstance(context).roomLocationsDao()
+    private val widgetsTimetableBlacklistDao: WidgetsTimetableBlacklistDao = CaDb.getInstance(context).widgetsTimetableBlacklistDao()
 
     /**
      * Get current lecture from the database
@@ -245,7 +245,7 @@ class CalendarController(private val context: Context) : ProvidesCard, ProvidesN
                 }
             }
 
-            val calendarDao = TcaDb.getInstance(context).calendarDao()
+            val calendarDao = CaDb.getInstance(context).calendarDao()
             val calendarItems = calendarDao.allNotCancelled
 
             for (calendarItem in calendarItems) {

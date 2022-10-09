@@ -11,7 +11,7 @@ import de.uos.campusapp.component.ui.chat.api.ChatAPI
 import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageLocalRepository
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageRemoteRepository
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
 import de.uos.campusapp.utils.Utils
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit
 class SendChatMessageWorker(context: Context, workerParams: WorkerParameters) :
         Worker(context, workerParams) {
 
-    private val tcaDb by lazy { TcaDb.getInstance(applicationContext) }
+    private val tcaDb by lazy { CaDb.getInstance(applicationContext) }
     private val apiClient: ChatAPI by lazy { ConfigUtils.getApiClient(applicationContext, Component.CHAT) as ChatAPI }
     private val roomController: ChatRoomController by lazy { ChatRoomController(applicationContext) }
 

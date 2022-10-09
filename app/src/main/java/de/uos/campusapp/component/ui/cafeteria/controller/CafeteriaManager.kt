@@ -11,7 +11,7 @@ import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaWithMenus
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.uos.campusapp.component.ui.overview.card.Card
 import de.uos.campusapp.component.ui.overview.card.ProvidesCard
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Const
 import de.uos.campusapp.utils.Utils
 import java.util.*
@@ -24,7 +24,7 @@ class CafeteriaManager @Inject constructor(private val context: Context) : Provi
     val localRepository: CafeteriaLocalRepository
 
     init {
-        val db = TcaDb.getInstance(context)
+        val db = CaDb.getInstance(context)
         localRepository = CafeteriaLocalRepository(db)
     }
 

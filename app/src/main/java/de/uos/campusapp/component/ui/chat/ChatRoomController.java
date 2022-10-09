@@ -18,7 +18,7 @@ import de.uos.campusapp.component.ui.chat.model.ChatRoomAndLastMessage;
 import de.uos.campusapp.component.ui.chat.model.ChatRoomDbRow;
 import de.uos.campusapp.component.ui.overview.card.Card;
 import de.uos.campusapp.component.ui.overview.card.ProvidesCard;
-import de.uos.campusapp.database.TcaDb;
+import de.uos.campusapp.database.CaDb;
 import de.uos.campusapp.utils.Utils;
 
 /**
@@ -37,7 +37,7 @@ public class ChatRoomController implements ProvidesCard {
     @Inject
     public ChatRoomController(Context context) {
         mContext = context;
-        TcaDb db = TcaDb.Companion.getInstance(context);
+        CaDb db = CaDb.Companion.getInstance(context);
         chatRoomDao = db.chatRoomDao();
     }
 

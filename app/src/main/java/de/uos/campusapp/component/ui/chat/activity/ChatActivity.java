@@ -45,7 +45,7 @@ import de.uos.campusapp.component.ui.chat.model.ChatRoom;
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageLocalRepository;
 import de.uos.campusapp.component.ui.chat.repository.ChatMessageRemoteRepository;
 import de.uos.campusapp.component.ui.overview.CardManager;
-import de.uos.campusapp.database.TcaDb;
+import de.uos.campusapp.database.CaDb;
 import de.uos.campusapp.service.DownloadWorker;
 import de.uos.campusapp.service.SendChatMessageWorker;
 import de.uos.campusapp.utils.Component;
@@ -130,13 +130,13 @@ public class ChatActivity extends ActivityForDownloadingExternal
     }
 
     private void initChatMessageViewModel() {
-        TcaDb tcaDb = TcaDb.Companion.getInstance(this);
+        CaDb caDb = CaDb.Companion.getInstance(this);
 
         ChatMessageRemoteRepository remoteRepository = ChatMessageRemoteRepository.INSTANCE;
         remoteRepository.setApiClient((ChatAPI) ConfigUtils.getApiClient(this, Component.CHAT));
 
         ChatMessageLocalRepository localRepository = ChatMessageLocalRepository.INSTANCE;
-        localRepository.setDb(tcaDb);
+        localRepository.setDb(caDb);
 
         chatMessageViewModel = new ChatMessageViewModel(localRepository, remoteRepository);
     }

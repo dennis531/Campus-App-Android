@@ -21,7 +21,7 @@ import de.uos.campusapp.component.ui.calendar.WidgetsTimetableBlacklistDao;
 import de.uos.campusapp.component.ui.calendar.model.CalendarItem;
 import de.uos.campusapp.component.ui.calendar.model.WidgetsTimetableBlacklist;
 import de.uos.campusapp.component.other.locations.model.RoomLocations;
-import de.uos.campusapp.database.TcaDb;
+import de.uos.campusapp.database.CaDb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,12 +36,12 @@ public class CalendarDaoTest {
 
     @Before
     public void setUp() {
-        dao = TcaDb.Companion.getInstance(RuntimeEnvironment.application)
-                             .calendarDao();
-        wtbDao = TcaDb.Companion.getInstance(RuntimeEnvironment.application)
-                                .widgetsTimetableBlacklistDao();
-        rlDao = TcaDb.Companion.getInstance(RuntimeEnvironment.application)
-                               .roomLocationsDao();
+        dao = CaDb.Companion.getInstance(RuntimeEnvironment.application)
+                            .calendarDao();
+        wtbDao = CaDb.Companion.getInstance(RuntimeEnvironment.application)
+                               .widgetsTimetableBlacklistDao();
+        rlDao = CaDb.Companion.getInstance(RuntimeEnvironment.application)
+                              .roomLocationsDao();
         nr = 0;
         JodaTimeAndroid.init(RuntimeEnvironment.application);
     }
@@ -51,8 +51,8 @@ public class CalendarDaoTest {
         dao.flush();
         wtbDao.flush();
         rlDao.flush();
-        TcaDb.Companion.getInstance(RuntimeEnvironment.application)
-                       .close();
+        CaDb.Companion.getInstance(RuntimeEnvironment.application)
+                      .close();
     }
 
     private CalendarItem createCalendarItem(String status, DateTime startDate) {

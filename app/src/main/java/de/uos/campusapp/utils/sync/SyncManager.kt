@@ -1,7 +1,7 @@
 package de.uos.campusapp.utils.sync
 
 import android.content.Context
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.sync.model.Sync
 import org.joda.time.DateTime
 
@@ -10,7 +10,7 @@ import org.joda.time.DateTime
  */
 class SyncManager(context: Context) {
 
-    private val dao: SyncDao = TcaDb.getInstance(context).syncDao()
+    private val dao: SyncDao = CaDb.getInstance(context).syncDao()
 
     /**
      * Checks if a new sync is needed or if data is up-to-date

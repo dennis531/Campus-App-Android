@@ -3,12 +3,11 @@ package de.uos.campusapp.component.ui.cafeteria.details
 import android.content.Context
 import de.uos.campusapp.R
 import de.uos.campusapp.component.ui.openinghours.LocationDao
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import org.joda.time.DateTime
-import java.util.*
 
 class OpenHoursHelper(private val context: Context) {
-    private val dao: LocationDao = TcaDb.getInstance(context).locationDao()
+    private val dao: LocationDao = CaDb.getInstance(context).locationDao()
 
     /**
      * Converts the opening hours into more readable format.

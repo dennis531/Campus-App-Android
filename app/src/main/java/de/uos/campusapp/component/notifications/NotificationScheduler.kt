@@ -12,7 +12,7 @@ import de.uos.campusapp.component.notifications.persistence.ActiveAlarm
 import de.uos.campusapp.component.notifications.persistence.NotificationType
 import de.uos.campusapp.component.notifications.receivers.NotificationAlarmReceiver
 import de.uos.campusapp.component.notifications.receivers.NotificationReceiver
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Const
 import org.jetbrains.anko.alarmManager
 import org.jetbrains.anko.notificationManager
@@ -177,20 +177,20 @@ class NotificationScheduler @Inject constructor(private val context: Context) {
 
     companion object {
         private fun addActiveAlarm(context: Context, id: Long) {
-            TcaDb.getInstance(context)
+            CaDb.getInstance(context)
                     .activeNotificationsDao()
                     .addActiveAlarm(ActiveAlarm(id))
         }
 
         fun removeActiveAlarm(context: Context, id: Long) {
-            TcaDb.getInstance(context)
+            CaDb.getInstance(context)
                     .activeNotificationsDao()
                     .deleteActiveAlarm(ActiveAlarm(id))
         }
 
         @JvmStatic
         fun maxRemainingAlarms(context: Context): Int {
-            return TcaDb.getInstance(context)
+            return CaDb.getInstance(context)
                     .activeNotificationsDao()
                     .maxAlarmsToSchedule()
         }

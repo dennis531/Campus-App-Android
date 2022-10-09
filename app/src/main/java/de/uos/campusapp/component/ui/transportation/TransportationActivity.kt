@@ -12,7 +12,7 @@ import de.uos.campusapp.component.other.general.RecentsDao
 import de.uos.campusapp.component.other.generic.activity.ActivityForSearching
 import de.uos.campusapp.component.other.generic.adapter.NoResultsAdapter
 import de.uos.campusapp.component.ui.transportation.model.AbstractStation
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.Utils
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -38,7 +38,7 @@ class TransportationActivity : ActivityForSearching<Unit>(
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        recentsDao = TcaDb.getInstance(this)
+        recentsDao = CaDb.getInstance(this)
                 .recentsDao()
 
         listViewResults = findViewById(R.id.activity_transport_listview_result)

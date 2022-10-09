@@ -12,7 +12,7 @@ import de.uos.campusapp.component.ui.messages.repository.MessagesLocalRepository
 import de.uos.campusapp.component.ui.messages.repository.MessagesRemoteRepository
 import de.uos.campusapp.component.ui.overview.card.Card
 import de.uos.campusapp.component.ui.overview.card.ProvidesCard
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Utils
 import org.joda.time.DateTime
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class MessagesController @Inject constructor(
     private val context: Context
 ): ProvidesNotifications, ProvidesCard {
 
-    private val localRepository: MessagesLocalRepository = MessagesLocalRepository(TcaDb.getInstance(context))
+    private val localRepository: MessagesLocalRepository = MessagesLocalRepository(CaDb.getInstance(context))
     private val remoteRepository: MessagesRemoteRepository = MessagesRemoteRepository(context)
 
     /**

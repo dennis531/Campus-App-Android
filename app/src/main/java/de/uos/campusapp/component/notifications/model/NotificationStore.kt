@@ -2,11 +2,11 @@ package de.uos.campusapp.component.notifications.model
 
 import android.content.Context
 import de.uos.campusapp.component.notifications.persistence.ScheduledNotification
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 
 class NotificationStore(context: Context) {
 
-    private val dao = TcaDb.getInstance(context).scheduledNotificationsDao()
+    private val dao = CaDb.getInstance(context).scheduledNotificationsDao()
 
     fun find(notification: AppNotification): ScheduledNotification? {
         return dao.find(notification.type.id, notification.id)

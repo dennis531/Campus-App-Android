@@ -21,7 +21,7 @@ import de.uos.campusapp.component.ui.cafeteria.model.CafeteriaRole
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.uos.campusapp.component.ui.eduroam.SetupEduroamActivity
 import de.uos.campusapp.component.ui.onboarding.StartupActivity
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.di.injector
 import de.uos.campusapp.service.SilenceService
 import de.uos.campusapp.service.StartSyncReceiver
@@ -360,7 +360,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
     @SuppressLint("ApplySharedPref")
     @Throws(ExecutionException::class, InterruptedException::class)
     private fun clearData() {
-        TcaDb.resetDb(requireContext())
+        CaDb.resetDb(requireContext())
         requireContext().defaultSharedPreferences.edit().clear().commit()
 
         // Remove all notifications that are currently shown

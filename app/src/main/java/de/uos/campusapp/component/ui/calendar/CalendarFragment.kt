@@ -25,7 +25,7 @@ import de.uos.campusapp.component.ui.calendar.api.CalendarAPI
 import de.uos.campusapp.component.ui.calendar.model.CalendarItem
 import de.uos.campusapp.component.ui.calendar.model.AbstractEvent
 import de.uos.campusapp.component.ui.transportation.TransportController
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.databinding.FragmentCalendarBinding
 import de.uos.campusapp.service.QueryLocationsService
 import de.uos.campusapp.utils.*
@@ -417,7 +417,7 @@ class CalendarFragment : FragmentForAccessingApi<List<AbstractEvent>>(
     }
 
     override fun onEventDeleted(eventId: String) {
-        val db = TcaDb.getInstance(requireContext())
+        val db = CaDb.getInstance(requireContext())
         db.calendarDao().delete(eventId)
 
         val id = eventId.hashCode()

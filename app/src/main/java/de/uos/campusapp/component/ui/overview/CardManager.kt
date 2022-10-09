@@ -3,7 +3,7 @@ package de.uos.campusapp.component.ui.overview
 import android.content.Context
 import android.preference.PreferenceManager
 import de.uos.campusapp.R
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Const.CARD_POSITION_PREFERENCE_SUFFIX
 import de.uos.campusapp.utils.Const.DISCARD_SETTINGS_START
 
@@ -42,7 +42,7 @@ object CardManager {
                 .clear()
                 .apply()
 
-        TcaDb.getInstance(context)
+        CaDb.getInstance(context)
                 .newsDao()
                 .restoreAllNews()
 

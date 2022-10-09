@@ -4,35 +4,43 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import com.google.gson.Gson
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
 import de.uos.campusapp.api.auth.AuthManager
+import de.uos.campusapp.api.general.exception.ForbiddenException
+import de.uos.campusapp.api.general.exception.NotFoundException
+import de.uos.campusapp.api.general.exception.UnauthorizedException
 import de.uos.campusapp.component.other.generic.fragment.FragmentForLoadingInBackground
 import de.uos.campusapp.component.ui.chat.ChatRoomController
 import de.uos.campusapp.component.ui.chat.api.ChatAPI
 import de.uos.campusapp.component.ui.chat.model.ChatMember
+import de.uos.campusapp.component.ui.onboarding.api.OnboardingAPI
 import de.uos.campusapp.component.ui.onboarding.di.OnboardingComponent
 import de.uos.campusapp.component.ui.onboarding.di.OnboardingComponentProvider
+import de.uos.campusapp.component.ui.onboarding.model.IdentityInterface
 import de.uos.campusapp.databinding.FragmentOnboardingExtrasBinding
 import de.uos.campusapp.service.SilenceService
 import de.uos.campusapp.utils.*
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.defaultSharedPreferences
 import org.jetbrains.anko.support.v4.browse
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
     R.layout.fragment_onboarding_extras,
     R.string.connect_to_your_campus
 ) {
+    private val compositeDisposable = CompositeDisposable()
 
     private val onboardingComponent: OnboardingComponent by lazy {
         (requireActivity() as OnboardingComponentProvider).onboardingComponent()
-    }
-
-    private val apiClient: ChatAPI by lazy {
-        ConfigUtils.getApiClient(requireContext(), Component.CHAT) as ChatAPI
     }
 
     private val calendarAuthManager: AuthManager by lazy {
@@ -42,6 +50,13 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
     private val chatAuthManager: AuthManager by lazy {
         ConfigUtils.getAuthManager(requireContext(), Component.CHAT)
     }
+
+    private val chatApiClient: ChatAPI by lazy {
+        ConfigUtils.getApiClient(requireContext(), Component.CHAT) as ChatAPI
+    }
+
+    @Inject
+    lateinit var onboardingApiClient: OnboardingAPI
 
     @Inject
     lateinit var cacheManager: CacheManager
@@ -65,15 +80,65 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
         setupSilentModeView()
         setupGroupChatView()
 
-        cacheManager.fillCache()
-
         with(binding) {
 //            bugReportsCheckBox.isChecked = Utils.getSettingBool(requireContext(), Const.BUG_REPORTS, true)
 
             privacyPolicyButton.setOnClickListener { browse(getString(R.string.url_privacy_policy)) }
+            // Reactivate button after identity is loaded successfully
+            finishButton.isEnabled = false
             finishButton.setOnClickListener { startLoading() }
         }
 
+        loadIdentity()
+    }
+
+    // Move identity loading to extras fragment
+    private fun loadIdentity() {
+        showLoadingStart()
+        compositeDisposable += Single.fromCallable { onboardingApiClient.getIdentity() }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ response ->
+                handleIdentity(response)
+                cacheManager.fillCache()
+            }, {
+                handleIdentityFailure(it)
+            })
+    }
+
+    private fun handleIdentity(identity: IdentityInterface) {
+        AuthManager.saveIdentity(requireContext(), identity)
+
+        showLoadingEnded()
+        binding.finishButton.isEnabled = true
+    }
+
+    private fun handleIdentityFailure(t: Throwable) {
+        displayErrorDialog(t)
+    }
+
+    /**
+     * Display an obtrusive error dialog because on the provided [Throwable].
+     * @param throwable The [Throwable] that occurred
+     */
+    private fun displayErrorDialog(throwable: Throwable) {
+        val messageResId = when (throwable) {
+            is UnknownHostException -> R.string.no_internet_connection
+            is UnauthorizedException -> R.string.error_unauthorized
+            is ForbiddenException -> R.string.error_no_rights_to_access_function
+            is NotFoundException -> R.string.error_resource_not_found
+            else -> R.string.error_unknown
+        }
+
+        AlertDialog.Builder(requireContext())
+            .setMessage(messageResId)
+            .setPositiveButton(R.string.ok, null)
+            .setCancelable(true)
+            .create()
+            .apply {
+                window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
+            }
+            .show()
     }
 
     private fun setupSilentModeView() {
@@ -145,7 +210,7 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
 
         // Try to restore already joined chat rooms from server
         return try {
-            val rooms = apiClient.getChatRooms()
+            val rooms = chatApiClient.getChatRooms()
             chatRoomController.replaceIntoRooms(rooms)
 
             currentChatMember
@@ -178,6 +243,11 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
 
     private fun finishOnboarding() {
         navigator.finish()
+    }
+
+    override fun onDestroy() {
+        compositeDisposable.dispose()
+        super.onDestroy()
     }
 
     private fun SharedPreferences.Editor.put(key: String, value: Any) {

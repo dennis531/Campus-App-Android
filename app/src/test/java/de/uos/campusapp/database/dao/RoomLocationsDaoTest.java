@@ -17,7 +17,7 @@ import de.uos.campusapp.component.other.locations.RoomLocationsDao;
 import de.uos.campusapp.component.ui.calendar.CalendarDao;
 import de.uos.campusapp.component.ui.calendar.model.CalendarItem;
 import de.uos.campusapp.component.other.locations.model.RoomLocations;
-import de.uos.campusapp.database.TcaDb;
+import de.uos.campusapp.database.CaDb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,10 +31,10 @@ public class RoomLocationsDaoTest {
 
     @Before
     public void setUp() {
-        dao = TcaDb.Companion.getInstance(RuntimeEnvironment.application)
-                             .roomLocationsDao();
-        calendarDao = TcaDb.Companion.getInstance(RuntimeEnvironment.application)
-                                     .calendarDao();
+        dao = CaDb.Companion.getInstance(RuntimeEnvironment.application)
+                            .roomLocationsDao();
+        calendarDao = CaDb.Companion.getInstance(RuntimeEnvironment.application)
+                                    .calendarDao();
         nr = 0;
         JodaTimeAndroid.init(RuntimeEnvironment.application);
     }
@@ -43,8 +43,8 @@ public class RoomLocationsDaoTest {
     public void tearDown() {
         dao.flush();
         calendarDao.flush();
-        TcaDb.Companion.getInstance(RuntimeEnvironment.application)
-                       .close();
+        CaDb.Companion.getInstance(RuntimeEnvironment.application)
+                      .close();
     }
 
     private CalendarItem createCalendarItem(DateTime startDate, String location) {

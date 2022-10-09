@@ -15,7 +15,7 @@ import de.uos.campusapp.component.ui.transportation.model.WidgetsTransport
 import de.uos.campusapp.component.ui.transportation.model.AbstractDeparture
 import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 import de.uos.campusapp.component.ui.transportation.model.WidgetDepartures
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.ConfigUtils
 import de.uos.campusapp.utils.NetUtils
 import de.uos.campusapp.utils.Utils
@@ -27,7 +27,7 @@ import java.util.*
  */
 class TransportController(private val context: Context) : ProvidesCard, ProvidesNotifications {
 
-    private val transportDao = TcaDb.getInstance(context).transportDao()
+    private val transportDao = CaDb.getInstance(context).transportDao()
 
     /**
      * Check if the transport symbol is one of the user's favorites.

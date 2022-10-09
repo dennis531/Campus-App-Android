@@ -28,7 +28,7 @@ import de.uos.campusapp.api.general.exception.NotFoundException
 import de.uos.campusapp.component.other.generic.activity.BaseActivity
 import de.uos.campusapp.component.other.generic.viewstates.EmptyViewState
 import de.uos.campusapp.component.other.generic.viewstates.ErrorViewState
-import de.uos.campusapp.component.other.generic.viewstates.FailedLMSViewState
+import de.uos.campusapp.component.other.generic.viewstates.FailedApiViewState
 import de.uos.campusapp.component.other.generic.viewstates.NoInternetViewState
 import de.uos.campusapp.component.other.generic.viewstates.UnknownErrorViewState
 import de.uos.campusapp.utils.*
@@ -274,16 +274,16 @@ abstract class BaseFragment<T>(
     private fun showErrorLayout(throwable: Throwable) {
         when (throwable) {
             is UnknownHostException -> showNoInternetLayout()
-            is UnauthorizedException -> showFailedLMSLayout(R.string.error_unauthorized)
-            is ForbiddenException -> showFailedLMSLayout(R.string.error_no_rights_to_access_function)
-            is NotFoundException -> showFailedLMSLayout(R.string.error_resource_not_found)
+            is UnauthorizedException -> showFailedApiLayout(R.string.error_unauthorized)
+            is ForbiddenException -> showFailedApiLayout(R.string.error_no_rights_to_access_function)
+            is NotFoundException -> showFailedApiLayout(R.string.error_resource_not_found)
             else -> showError(R.string.error_unknown)
         }
     }
 
-    private fun showFailedLMSLayout(messageResId: Int = R.string.error_accessing_api_body) {
+    private fun showFailedApiLayout(messageResId: Int = R.string.error_accessing_api_body) {
         runOnUiThread {
-            showError(FailedLMSViewState(messageResId))
+            showError(FailedApiViewState(messageResId))
         }
     }
 

@@ -2,13 +2,13 @@ package de.uos.campusapp.component.ui.messages.repository
 
 import de.uos.campusapp.component.ui.messages.model.AbstractMessage
 import de.uos.campusapp.component.ui.messages.model.MessageType
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class MessagesLocalRepository @Inject constructor(
-    private val database: TcaDb
+    private val database: CaDb
 ) {
 
     private val executor: Executor = Executors.newSingleThreadExecutor()

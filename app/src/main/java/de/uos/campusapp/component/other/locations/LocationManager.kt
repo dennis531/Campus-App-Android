@@ -19,7 +19,7 @@ import de.uos.campusapp.component.ui.roomfinder.model.RoomFinderRoomInterface
 import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaItem
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaLocalRepository
 import de.uos.campusapp.component.ui.transportation.model.AbstractStation
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.*
 import org.jetbrains.anko.doAsync
 import java.io.IOException
@@ -37,12 +37,12 @@ class LocationManager @Inject constructor(c: Context) {
     private var manager: android.location.LocationManager? = null
     private val apiClient: de.uos.campusapp.api.generic.BaseAPI = ConfigUtils.getApiClient(mContext, Component.ROOMFINDER)
     private val cafeteriaLocalRepository: CafeteriaLocalRepository by lazy {
-        CafeteriaLocalRepository(TcaDb.getInstance(c))
+        CafeteriaLocalRepository(CaDb.getInstance(c))
     }
 
 
     init {
-        val db = TcaDb.getInstance(c)
+        val db = CaDb.getInstance(c)
         buildingToGpsDao = db.buildingToGpsDao()
     }
 

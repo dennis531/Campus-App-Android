@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import de.uos.campusapp.R
 import de.uos.campusapp.component.ui.cafeteria.FavoriteDishDao
 import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.splitOnChanged
 
 class CafeteriaMenusAdapter(
@@ -19,7 +19,7 @@ class CafeteriaMenusAdapter(
 ) : RecyclerView.Adapter<CafeteriaMenusAdapter.ViewHolder>() {
 
     private val dao: FavoriteDishDao by lazy {
-        TcaDb.getInstance(context).favoriteDishDao()
+        CaDb.getInstance(context).favoriteDishDao()
     }
 
     private val itemLayout: Int by lazy {

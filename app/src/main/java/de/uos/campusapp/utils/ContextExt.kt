@@ -1,8 +1,7 @@
 package de.uos.campusapp.utils
 
 import android.content.Context
-import de.uos.campusapp.api.tumcabe.TUMCabeClient
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 
-val Context.tcaDb: TcaDb
-    get() = TcaDb.getInstance(this)
+val Context.tcaDb: CaDb
+    get() = CaDb.getInstance(this)

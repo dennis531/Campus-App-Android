@@ -11,7 +11,7 @@ import de.uos.campusapp.component.other.locations.LocationManager
 import de.uos.campusapp.component.ui.calendar.CalendarController
 import de.uos.campusapp.component.ui.calendar.model.CalendarItem
 import de.uos.campusapp.component.other.locations.model.RoomLocations
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
 import de.uos.campusapp.utils.Const
@@ -40,8 +40,8 @@ class QueryLocationsService : JobIntentService() {
             return
         }
 
-        val calendarDao = TcaDb.getInstance(this).calendarDao()
-        val roomLocationsDao = TcaDb.getInstance(this).roomLocationsDao()
+        val calendarDao = CaDb.getInstance(this).calendarDao()
+        val roomLocationsDao = CaDb.getInstance(this).roomLocationsDao()
 
         calendarDao.lecturesWithoutCoordinates
                 .filter { it.location.isNotEmpty() }

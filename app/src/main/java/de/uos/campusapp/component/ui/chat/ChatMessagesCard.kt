@@ -17,7 +17,7 @@ import de.uos.campusapp.component.ui.overview.CardInteractionListener
 import de.uos.campusapp.component.ui.overview.CardManager.CARD_CHAT
 import de.uos.campusapp.component.ui.overview.card.Card
 import de.uos.campusapp.component.ui.overview.card.CardViewHolder
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.Const
 import java.util.ArrayList
@@ -41,7 +41,7 @@ class ChatMessagesCard(
         get() = R.menu.card_popup_menu
 
     init {
-        val tcaDb = TcaDb.getInstance(context)
+        val tcaDb = CaDb.getInstance(context)
         chatMessageDao = tcaDb.chatMessageDao()
         setChatRoom(room.name, room.id)
     }

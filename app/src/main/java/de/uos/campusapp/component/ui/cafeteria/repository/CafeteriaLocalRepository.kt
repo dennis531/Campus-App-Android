@@ -5,7 +5,7 @@ import de.uos.campusapp.component.ui.cafeteria.model.*
 import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaItem
 import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuItem
 import de.uos.campusapp.component.ui.cafeteria.model.database.CafeteriaMenuPriceItem
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.sync.model.Sync
 import io.reactivex.Flowable
 import org.joda.time.DateTime
@@ -14,7 +14,7 @@ import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class CafeteriaLocalRepository @Inject constructor(
-    private val database: TcaDb
+    private val database: CaDb
 ) {
 
     private val executor: Executor = Executors.newSingleThreadExecutor()

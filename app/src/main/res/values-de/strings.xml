@@ -203,6 +203,7 @@
     <string name="recordings_open_failed">Vorlesungsaufzeichnungen können nicht geöffnet werden</string>
     <string name="no_files">Keine Dateien verfügbar</string>
     <string name="file_open_failure_format_string">%s kann nicht geöffnet werden</string>
+    <string name="no_app_for_open_file">Keine App zum Öffnen dieser Datei vorhanden</string>
     <string name="author_format_string">Autor: %s</string>
     <string name="size_format_string">Größe: %s</string>
     <string name="download_success_format_string">%s erfolgreich heruntergeladen</string>

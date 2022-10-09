@@ -240,7 +240,7 @@ abstract class ProgressActivity<T>(
 
     private fun showFailedLMSLayout(messageResId: Int = R.string.error_accessing_api_body) {
         runOnUiThread {
-            showError(FailedLMSViewState(messageResId))
+            showError(FailedApiViewState(messageResId))
         }
     }
 

@@ -28,7 +28,7 @@ class NoInternetViewState : ErrorViewState(
         messageResId = R.string.no_internet_connection
 )
 
-class FailedLMSViewState(messageResId: Int) : ErrorViewState(
+class FailedApiViewState(messageResId: Int) : ErrorViewState(
         headerResId = R.string.error_accessing_api_header,
         messageResId = messageResId
 )

@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import de.uos.campusapp.component.ui.news.model.NewsItem
 import de.uos.campusapp.component.ui.overview.CardInteractionListener
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 
 class NewsInflater(context: Context) {
 
     private val newsDao: NewsDao by lazy {
-        TcaDb.getInstance(context).newsDao()
+        CaDb.getInstance(context).newsDao()
     }
 
     @JvmOverloads

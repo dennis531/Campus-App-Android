@@ -3,7 +3,7 @@ package de.uos.campusapp.component.ui.openinghours
 import android.content.Context
 import de.uos.campusapp.api.tumonline.CacheControl
 import de.uos.campusapp.component.ui.openinghours.api.OpeningHoursAPI
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.service.DownloadWorker
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
@@ -15,7 +15,7 @@ import javax.inject.Inject
  */
 class LocationImportAction @Inject constructor(
     private val context: Context,
-    private val database: TcaDb
+    private val database: CaDb
 ) : DownloadWorker.Action {
 
     private val apiClient: OpeningHoursAPI by lazy {

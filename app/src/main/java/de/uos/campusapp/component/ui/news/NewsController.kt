@@ -8,7 +8,7 @@ import de.uos.campusapp.component.ui.news.api.NewsAPI
 import de.uos.campusapp.component.ui.news.model.NewsItem
 import de.uos.campusapp.component.ui.overview.card.Card
 import de.uos.campusapp.component.ui.overview.card.ProvidesCard
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
 import de.uos.campusapp.utils.Utils
@@ -27,7 +27,7 @@ class NewsController @Inject constructor(
         ConfigUtils.getApiClient(context, Component.NEWS) as NewsAPI
     }
 
-    private val newsDao = TcaDb.getInstance(context).newsDao()
+    private val newsDao = CaDb.getInstance(context).newsDao()
 
     /**
      * Get the index of the newest item that is older than 'now'

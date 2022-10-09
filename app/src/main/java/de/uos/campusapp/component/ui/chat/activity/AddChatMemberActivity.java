@@ -23,7 +23,7 @@ import de.uos.campusapp.component.ui.chat.adapter.MemberSuggestionsListAdapter;
 import de.uos.campusapp.component.ui.chat.api.ChatAPI;
 import de.uos.campusapp.component.ui.chat.model.ChatMember;
 import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom;
-import de.uos.campusapp.database.TcaDb;
+import de.uos.campusapp.database.CaDb;
 import de.uos.campusapp.utils.Component;
 import de.uos.campusapp.utils.ConfigUtils;
 import de.uos.campusapp.utils.Const;
@@ -188,9 +188,9 @@ public class AddChatMemberActivity extends BaseActivity {
                                       .subscribe(response -> {
                                           if (response != null) {
                                               if (response.getMembers() != null) {
-                                                  TcaDb.Companion.getInstance(getBaseContext())
-                                                                 .chatRoomDao()
-                                                                 .updateMemberCount(response.getMembers(), response.getId());
+                                                  CaDb.Companion.getInstance(getBaseContext())
+                                                                .chatRoomDao()
+                                                                .updateMemberCount(response.getMembers(), response.getId());
                                               }
                                               Utils.showToast(getBaseContext(), R.string.chat_member_added);
                                           } else {

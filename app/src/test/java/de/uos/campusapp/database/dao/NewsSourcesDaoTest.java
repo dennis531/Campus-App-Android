@@ -12,7 +12,7 @@ import org.robolectric.annotation.Config;
 import de.uos.campusapp.TestApp;
 import de.uos.campusapp.component.ui.news.NewsSourcesDao;
 import de.uos.campusapp.component.ui.news.model.NewsSources;
-import de.uos.campusapp.database.TcaDb;
+import de.uos.campusapp.database.CaDb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,13 +24,13 @@ public class NewsSourcesDaoTest {
 
     @Before
     public void setUp() {
-        dao = TcaDb.Companion.getInstance(RuntimeEnvironment.application).newsSourcesDao();
+        dao = CaDb.Companion.getInstance(RuntimeEnvironment.application).newsSourcesDao();
     }
 
     @After
     public void tearDown() {
         dao.flush();
-        TcaDb.Companion.getInstance(RuntimeEnvironment.application).close();
+        CaDb.Companion.getInstance(RuntimeEnvironment.application).close();
     }
 
     /**

@@ -36,6 +36,10 @@ public final class ApiHelper {
     private static final int HTTP_TIMEOUT = 25000;
     private static OkHttpClient client;
 
+    /**
+     * Creates a unauthenticated OkHttp client
+     * @return client
+     */
     public static OkHttpClient getOkHttpClient(Context c) {
         if (client != null) {
             return client;
@@ -65,6 +69,12 @@ public final class ApiHelper {
         return client;
     }
 
+    /**
+     * Creates a authenticated OkHttp client for the given Api
+     *
+     * @param api Api needed to get the configured auth manager
+     * @return client
+     */
     public static OkHttpClient getOkHttpAuthClient(Context c, Api api) {
         OkHttpClient client = getOkHttpClient(c);
 

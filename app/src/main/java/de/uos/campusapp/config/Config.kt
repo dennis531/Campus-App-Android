@@ -29,7 +29,7 @@ enum class TransportationApi {
 
 enum class CafeteriaApi {
     MUNICH,
-    UOS_BACKEND
+    OSNABRUECK
 }
 
 /**
@@ -37,10 +37,13 @@ enum class CafeteriaApi {
  */
 @Keep
 object Config {
-    // Campus locations
-    // First values are defaults. Campus Ids can be set freely and must be unique. Station list only needed for cards of the transportation
-    // component to determine the next station. Station id must match with the station id used in the transportation api.
-    // If no cafeterias are provided and cafeteria component is enabled, the nearest cafeteria will be used for location based cafeteria recommendation.
+    /**
+     * Campus locations
+     * First values are defaults. Campus Ids can be set freely and must be unique. Station list only needed for cards of the transportation
+     * component to determine the next station. Station id must match with the station id used in the transportation api.
+     * If no cafeterias are provided and cafeteria component is enabled, the nearest cafeteria will be used for location based cafeteria recommendation.
+     * Default: empty list
+     */
     val CAMPUS = listOf<Campus>(
         // Coordinates of "Schlossinnenhof"
         Campus("I", "Campus Innenstadt", 52.27158, 8.04426, listOf(
@@ -132,7 +135,7 @@ object Config {
     val LECTURES_SHOW_RECORDS = true // Lecture Records menu item will be displayed in lecture details; default: false
 
     // Tuition fees options
-    // if true and tuition api is provided, the tuition will be loaded from the selected api
+    // if true and tuition api is provided, the tuition will be loaded from the selected api. If false, the value from [TUITIONFEES_TUITION] will be loaded
     val TUITIONFEES_FROM_API = false // Default: false
     val TUITIONFEES_TUITION = Tuition(
         start = DateTimeUtils.getDate("2022-07-01"),
@@ -152,6 +155,6 @@ object Config {
     val TRANSPORTATION_API = TransportationApi.VBN // Default: MVV
 
     // Cafeteria options
-    val CAFETERIA_API = CafeteriaApi.UOS_BACKEND
+    val CAFETERIA_API = CafeteriaApi.OSNABRUECK
     val CAFETERIA_INGREDIENTS_TEXT = R.string.cafeteria_ingredients_os // Edit the ingredients text in strings.xml; default: null
 }

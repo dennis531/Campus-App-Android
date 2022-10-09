@@ -13,7 +13,7 @@ import java.util.List;
 
 import de.uos.campusapp.R;
 import de.uos.campusapp.component.other.generic.fragment.BaseFragment;
-import de.uos.campusapp.database.TcaDb;
+import de.uos.campusapp.database.CaDb;
 import kotlin.Unit;
 
 public class OpeningHoursListFragment extends BaseFragment<Unit>
@@ -47,8 +47,8 @@ public class OpeningHoursListFragment extends BaseFragment<Unit>
 
         int layout = android.R.layout.simple_list_item_activated_1;
 
-        LocationDao locationDao = TcaDb.Companion.getInstance(requireContext())
-                                                 .locationDao();
+        LocationDao locationDao = CaDb.Companion.getInstance(requireContext())
+                                                .locationDao();
 
         List<String> names = locationDao.getCategories();
         adapter = new ArrayAdapter<>(requireContext(), layout, android.R.id.text1, names);

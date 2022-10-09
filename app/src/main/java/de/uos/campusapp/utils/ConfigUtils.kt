@@ -57,7 +57,7 @@ object ConfigUtils {
         return when (getConfig(ConfigConst.CAFETERIA_API, CafeteriaApiEnum.MUNICH)) {
             // Add more cafeteria api clients here
             CafeteriaApiEnum.MUNICH -> MunichCafeteriaAPIClient.getInstance(context)
-            CafeteriaApiEnum.UOS_BACKEND -> UOSBackendAPIClient.getInstance(context)
+            CafeteriaApiEnum.OSNABRUECK -> UOSBackendAPIClient.getInstance(context)
             else -> throw IllegalStateException("Cafeteria API not known.")
         }
     }

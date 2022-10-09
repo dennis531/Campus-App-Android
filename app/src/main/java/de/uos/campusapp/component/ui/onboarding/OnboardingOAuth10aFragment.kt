@@ -10,13 +10,10 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
-import de.uos.campusapp.api.auth.AuthManager
 import de.uos.campusapp.api.auth.OAuthManager
-import de.uos.campusapp.component.ui.onboarding.api.OnboardingAPI
-import de.uos.campusapp.component.other.generic.fragment.BaseFragment
+import de.uos.campusapp.component.other.generic.fragment.FragmentForAuthentication
 import de.uos.campusapp.component.ui.onboarding.di.OnboardingComponent
 import de.uos.campusapp.component.ui.onboarding.di.OnboardingComponentProvider
-import de.uos.campusapp.component.ui.onboarding.model.IdentityInterface
 import de.uos.campusapp.databinding.FragmentOnboardingOauthBinding
 import de.uos.campusapp.utils.Utils
 import de.uos.campusapp.utils.plusAssign
@@ -31,7 +28,7 @@ import oauth.signpost.exception.OAuthMessageSignerException
 import oauth.signpost.exception.OAuthNotAuthorizedException
 import javax.inject.Inject
 
-class OnboardingOAuth10aFragment : BaseFragment<String>(
+class OnboardingOAuth10aFragment : FragmentForAuthentication<String>(
     R.layout.fragment_onboarding_oauth,
     R.string.connect_to_your_campus
 ) {
@@ -44,12 +41,6 @@ class OnboardingOAuth10aFragment : BaseFragment<String>(
     @Inject
     lateinit var authManager: OAuthManager
 
-    @Inject
-    lateinit var apiClient: OnboardingAPI
-
-    @Inject
-    lateinit var navigator: OnboardingNavigator
-
     private val binding by viewBinding(FragmentOnboardingOauthBinding::bind)
 
     override fun onAttach(context: Context) {
@@ -60,7 +51,6 @@ class OnboardingOAuth10aFragment : BaseFragment<String>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         disableRefresh()
-        setCustomCloseIcon()
 
         binding.nextButton.setOnClickListener { onNextPressed() }
     }
@@ -77,7 +67,7 @@ class OnboardingOAuth10aFragment : BaseFragment<String>(
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                        { loadIdentity() },
+                        { openNextOnboardingStep() },
                         {
                             handleAuthenticationFailure(it)
                         }
@@ -113,19 +103,6 @@ class OnboardingOAuth10aFragment : BaseFragment<String>(
                 window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
             }
             .show()
-    }
-
-    private fun setCustomCloseIcon() {
-        val closeIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_clear)
-        if (closeIcon != null) {
-            val color = ContextCompat.getColor(requireContext(), R.color.color_primary)
-            closeIcon.setTint(color)
-        }
-        with(binding.toolbarBinding) {
-            toolbar.navigationIcon = closeIcon
-            toolbar.setNavigationOnClickListener { requireActivity().finish() }
-        }
-
     }
 
     private fun onNextPressed() {
@@ -174,28 +151,6 @@ class OnboardingOAuth10aFragment : BaseFragment<String>(
 
     private fun resetToken() {
         authManager.clear()
-    }
-
-    private fun loadIdentity() {
-        compositeDisposable += Single.fromCallable { apiClient.getIdentity() }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ response ->
-                handleIdentity(response)
-            }, {
-                handleAuthenticationFailure(it)
-            })
-    }
-
-    private fun handleIdentity(identity: IdentityInterface) {
-        AuthManager.saveIdentity(requireContext(), identity)
-
-        showLoadingEnded()
-        openNextOnboardingStep()
-    }
-
-    private fun openNextOnboardingStep() {
-        navigator.openNext()
     }
 
     override fun onDestroy() {

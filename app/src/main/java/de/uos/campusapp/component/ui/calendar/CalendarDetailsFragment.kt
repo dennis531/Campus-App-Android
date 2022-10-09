@@ -20,7 +20,7 @@ import de.uos.campusapp.component.other.navigation.NavigationManager
 import de.uos.campusapp.component.ui.calendar.api.CalendarAPI
 import de.uos.campusapp.component.ui.calendar.model.CalendarItem
 import de.uos.campusapp.component.ui.roomfinder.RoomFinderActivity
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.databinding.FragmentCalendarDetailsBinding
 import de.uos.campusapp.utils.*
 import de.uos.campusapp.utils.Const.CALENDAR_ID_PARAM
@@ -59,7 +59,7 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         context?.let {
-            val dao = TcaDb.getInstance(it).calendarDao()
+            val dao = CaDb.getInstance(it).calendarDao()
             val calendarItem = dao.getCalendarItemsById(calendarItemId)
             updateView(calendarItem)
         }
@@ -138,7 +138,7 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
     }
 
     private fun displayDeleteDialog(eventId: String) {
-        val s = TcaDb.getInstance(requireContext()).calendarDao().getSeriesIdForEvent(eventId)
+        val s = CaDb.getInstance(requireContext()).calendarDao().getSeriesIdForEvent(eventId)
         val alertDialog = AlertDialog.Builder(requireContext())
                 .setTitle(R.string.event_delete_title)
                 .setMessage(R.string.delete_event_info)
@@ -151,11 +151,11 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
     }
 
     private fun deleteEventSeries(seriesId: String) {
-        val calendarItems = TcaDb.getInstance(requireContext()).calendarDao().getCalendarItemsInSeries(seriesId)
+        val calendarItems = CaDb.getInstance(requireContext()).calendarDao().getCalendarItemsInSeries(seriesId)
         calendarItems.forEach {
             deleteEvent(it.id)
         }
-        TcaDb.getInstance(requireContext()).calendarDao().removeSeriesIdMappings(seriesId)
+        CaDb.getInstance(requireContext()).calendarDao().removeSeriesIdMappings(seriesId)
     }
 
     private fun deleteEvent(eventId: String) {

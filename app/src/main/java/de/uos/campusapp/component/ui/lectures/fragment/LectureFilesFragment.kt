@@ -177,7 +177,12 @@ class LectureFilesFragment : FragmentForAccessingApi<List<FileInterface>>(
                         or Intent.FLAG_ACTIVITY_NEW_TASK
             )
         }
-        startActivity(intent)
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            // No app exists to open this file format
+            Utils.showToast(requireContext(), getString(R.string.no_app_for_open_file))
+        }
     }
 
     override fun onDestroy() {

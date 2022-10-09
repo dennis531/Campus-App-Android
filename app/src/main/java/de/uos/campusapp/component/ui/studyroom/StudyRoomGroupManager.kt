@@ -3,7 +3,7 @@ package de.uos.campusapp.component.ui.studyroom
 import android.content.Context
 import de.uos.campusapp.component.ui.studyroom.model.StudyRoomItem
 import de.uos.campusapp.component.ui.studyroom.model.StudyRoomGroupItem
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import org.jetbrains.anko.doAsync
 
 /**
@@ -15,7 +15,7 @@ class StudyRoomGroupManager(context: Context) {
     private val groupsDao: StudyRoomGroupDao
 
     init {
-        val db = TcaDb.getInstance(context)
+        val db = CaDb.getInstance(context)
         roomsDao = db.studyRoomDao()
         groupsDao = db.studyRoomGroupDao()
     }

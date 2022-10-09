@@ -13,7 +13,7 @@ import de.uos.campusapp.component.other.generic.fragment.FragmentForSearching
 import de.uos.campusapp.component.ui.person.api.PersonAPI
 import de.uos.campusapp.component.ui.person.model.PersonInterface
 import de.uos.campusapp.component.ui.person.model.Person
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.databinding.FragmentPersonSearchBinding
 import de.uos.campusapp.di.injector
 import javax.inject.Inject
@@ -44,7 +44,7 @@ class PersonSearchFragment : FragmentForSearching<List<PersonInterface>>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recentsDao = TcaDb.getInstance(requireContext()).recentsDao()
+        recentsDao = CaDb.getInstance(requireContext()).recentsDao()
 
         binding.personsRecyclerView.setHasFixedSize(true)
         disableRefresh()

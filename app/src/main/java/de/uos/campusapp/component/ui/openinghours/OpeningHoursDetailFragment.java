@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import de.uos.campusapp.R;
 import de.uos.campusapp.component.other.generic.adapter.EqualSpacingItemDecoration;
 import de.uos.campusapp.component.ui.openinghours.model.LocationItem;
-import de.uos.campusapp.database.TcaDb;
+import de.uos.campusapp.database.CaDb;
 
 /**
  * A fragment representing a single Item detail screen. This fragment is either
@@ -59,8 +59,8 @@ public class OpeningHoursDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_item_detail, container, false);
 
         // load all locations from category
-        LocationDao dao = TcaDb.Companion.getInstance(getActivity())
-                                         .locationDao();
+        LocationDao dao = CaDb.Companion.getInstance(getActivity())
+                                        .locationDao();
         List<LocationItem> locations = dao.getAllOfCategory(mItemCategory);
 
         RecyclerView recyclerView = rootView.findViewById(R.id.fragment_item_detail_recyclerview);

@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.os.Build
 import androidx.room.util.TableInfo
 import de.uos.campusapp.TestApp
-import de.uos.campusapp.database.TcaDb
+import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.utils.Const
 import org.junit.After
 import org.junit.Before
@@ -77,14 +77,14 @@ class PreRoomMigrationTest {
          *  Roboelectric is such a custom deployment, so work around that
          */
         ReflectionHelpers.setStaticField(Build.VERSION::class.java, "SDK_INT", 19)
-        val tcadb = TcaDb.getInstance(RuntimeEnvironment.application)
+        val tcadb = CaDb.getInstance(RuntimeEnvironment.application)
         assert(tcadb.newsSourcesDao().getNewsSources("test").isEmpty())
     }
 
     @After
     fun tearDown() {
         db.close()
-        TcaDb.getInstance(RuntimeEnvironment.application).close()
+        CaDb.getInstance(RuntimeEnvironment.application).close()
         File(db.path).delete()
     }
 }
