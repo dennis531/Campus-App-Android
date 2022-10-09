@@ -447,7 +447,7 @@
         <receiver
             android:name=".component.ui.cafeteria.widget.MensaWidget"
             android:label="@string/mensa_widget"
-            android:enabled="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -463,7 +463,7 @@
         <receiver
             android:name=".component.ui.transportation.widget.TransportationWidget"
             android:label="@string/transportation_widget"
-            android:enabled="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="de.uos.campusapp.intent.action.TRANSPORTATION_WIDGET_FORCE_RELOAD" />
@@ -501,7 +501,7 @@
         <receiver
             android:name="de.uos.campusapp.component.ui.calendar.widget.TimetableWidget"
             android:label="@string/timetable_widget"
-            android:enabled="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

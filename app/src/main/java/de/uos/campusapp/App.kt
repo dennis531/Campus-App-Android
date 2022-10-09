@@ -111,30 +111,32 @@ open class App : Application() {
 
     private fun setupWidgets() {
         // Calendar Widget
-        if (ConfigUtils.isComponentEnabled(this, Component.CALENDAR)) {
-            packageManager.setComponentEnabledSetting(
-                ComponentName(this, TimetableWidget::class.java),
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP
-            )
-        }
+        packageManager.setComponentEnabledSetting(
+            ComponentName(this, TimetableWidget::class.java),
+            getWidgetEnabledState(Component.CALENDAR),
+            PackageManager.DONT_KILL_APP
+        )
 
         // Transportation Widget
-        if (ConfigUtils.isComponentEnabled(this, Component.TRANSPORTATION)) {
-            packageManager.setComponentEnabledSetting(
-                ComponentName(this, TransportationWidget::class.java),
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP
-            )
-        }
+        packageManager.setComponentEnabledSetting(
+            ComponentName(this, TransportationWidget::class.java),
+            getWidgetEnabledState(Component.TRANSPORTATION),
+            PackageManager.DONT_KILL_APP
+        )
 
         // Cafeteria Widget
-        if (ConfigUtils.isComponentEnabled(this, Component.CAFETERIA)) {
-            packageManager.setComponentEnabledSetting(
-                ComponentName(this, MensaWidget::class.java),
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP
-            )
+        packageManager.setComponentEnabledSetting(
+            ComponentName(this, MensaWidget::class.java),
+            getWidgetEnabledState(Component.CAFETERIA),
+            PackageManager.DONT_KILL_APP
+        )
+    }
+
+    private fun getWidgetEnabledState(component: Component): Int {
+        return if (ConfigUtils.isComponentEnabled(this, component, false)) {
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+        } else {
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED
         }
     }
 
