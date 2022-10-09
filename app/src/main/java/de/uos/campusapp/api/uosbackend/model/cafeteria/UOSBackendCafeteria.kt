@@ -10,6 +10,8 @@ data class UOSBackendCafeteria (
     override val name: String,
     @SerializedName("address")
     override val address: String? = null,
+    @SerializedName("opening_hours")
+    override val openingHours: String? = null,
     @SerializedName("latitude")
     override val latitude: Double? = null,
     @SerializedName("longitude")

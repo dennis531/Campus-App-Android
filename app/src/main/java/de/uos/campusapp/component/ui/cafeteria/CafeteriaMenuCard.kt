@@ -50,6 +50,11 @@ class CafeteriaMenuCard(context: Context, private val cafeteria: CafeteriaWithMe
     }
 
     override fun shouldShow(prefs: SharedPreferences): Boolean {
+        // Don't show if no menus are available
+        if (cafeteria.menus.isEmpty()) {
+            return false
+        }
+
         // the card reappears when the day is over and a new menu will be shown
         val prevDate = prefs.getLong(CAFETERIA_DATE + "_" + cafeteria.id, 0)
         val date = cafeteria.nextMenuDate

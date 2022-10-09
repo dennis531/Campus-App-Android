@@ -20,6 +20,7 @@ open class CafeteriaItem(
     open var id: String,
     open var name: String,
     open var address: String? = null,
+    open var openingHours: String? = null,
     open var latitude: Double? = null,
     open var longitude: Double? = null
 ) : Comparable<CafeteriaItem> {
