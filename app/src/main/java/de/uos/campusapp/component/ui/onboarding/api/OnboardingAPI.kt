@@ -4,8 +4,14 @@ import de.uos.campusapp.api.generic.BaseAPI
 import de.uos.campusapp.component.ui.onboarding.model.IdentityInterface
 
 /**
- * Represents an api which provides authentication mechanisms
+ * Api interface for the onboarding component
  */
 interface OnboardingAPI : BaseAPI {
+
+    /**
+     * Loads user identity from external system
+     *
+     * @return Identity information of user
+     */
     fun getIdentity(): IdentityInterface
 }

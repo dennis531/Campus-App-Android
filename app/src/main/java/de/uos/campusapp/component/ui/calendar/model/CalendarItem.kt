@@ -12,13 +12,6 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import java.util.*
 
-enum class CalendarItemType(val typeName: String) {
-    CANCELED(CalendarItem.CANCELED),
-    LECTURE(CalendarItem.LECTURE),
-    EXERCISE(CalendarItem.EXERCISE),
-    OTHER(CalendarItem.OTHER)
-}
-
 /**
  * Entity for storing information about lecture events
  */
@@ -40,18 +33,11 @@ data class CalendarItem(
     @Ignore
     var color: Int? = null
 
-    val type: CalendarItemType
-        get() {
-            return when (typeName) {
-                CANCELED -> CalendarItemType.CANCELED
-                LECTURE -> CalendarItemType.LECTURE
-                EXERCISE -> CalendarItemType.EXERCISE
-                else -> CalendarItemType.OTHER
-            }
-        }
+    val type: CalendarEventType
+        get() = CalendarEventType.fromType(typeName)
 
     val isCanceled: Boolean
-        get() = type == CalendarItemType.CANCELED
+        get() = type == CalendarEventType.CANCELED
 
     fun getEventDateString(): String {
         val timeFormat = DateTimeFormat.forPattern("HH:mm").withLocale(Locale.US)
@@ -105,6 +91,10 @@ data class CalendarItem(
                 .setStyle(style)
                 .setAllDay(false)
                 .build()
+    }
+
+    fun toEvent(): AbstractEvent {
+        return Event(id, title, type, description, dtstart, dtend, location, isEditable)
     }
 
     companion object {

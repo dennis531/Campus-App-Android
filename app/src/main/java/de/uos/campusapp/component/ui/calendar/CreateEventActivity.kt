@@ -335,7 +335,7 @@ class CreateEventActivity : ActivityForAccessingApi<String>(R.layout.activity_cr
         generateAdditionalEvents()
 
         for (curEvent in events) {
-            fetch { (apiClient as CalendarAPI).createCalendarEvent(curEvent) }
+            fetch { (apiClient as CalendarAPI).createCalendarEvent(curEvent.toEvent()) }
         }
     }
 

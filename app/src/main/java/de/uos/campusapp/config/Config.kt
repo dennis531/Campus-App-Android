@@ -149,7 +149,7 @@ object Config {
     val CHAT_ROOM_CREATEABLE = false // Default: True
     val CHAT_ROOM_JOINABLE = false // Default: True
     val CHAT_ROOM_LEAVEABLE = false // Default: True
-    val CHAT_ROOM_MEMBER_ADDABLE = false // Allows to add members to a chat room by other users; Default: True
+    val CHAT_ROOM_MEMBER_ADDABLE = false // Allows to add members to a chat room by other users; It needs [CHAT_ROOM_JOINABLE] to be enabled; Otherwise members could not join chat rooms; Default: True
 
     // Transportation options
     val TRANSPORTATION_API = TransportationApi.VBN // Default: MVV

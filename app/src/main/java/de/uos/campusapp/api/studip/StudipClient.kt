@@ -184,7 +184,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         return converter.readDocumentCollection(jsonResponseStream, StudipBaseEvent::class.java).get()
     }
 
-    override fun createCalendarEvent(calendarItem: CalendarItem): String {
+    override fun createCalendarEvent(calendarEvent: AbstractEvent): String {
         // Not supported by the STUD.IP json api
         return ""
     }

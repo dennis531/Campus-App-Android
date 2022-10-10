@@ -26,7 +26,7 @@ import org.joda.time.DateTimeZone
 abstract class AbstractEvent {
     abstract val id: String?
     abstract val title: String
-    abstract val type: CalendarItemType?
+    abstract val type: CalendarEventType?
     abstract val description: String?
     abstract val dtstart: DateTime?
     abstract val dtend: DateTime?
@@ -91,5 +91,17 @@ abstract class AbstractEvent {
      */
     private fun getEndTimeInDeviceTimezone(): DateTime? {
         return dtend?.withZoneRetainFields(tzGer)?.withZone(DateTimeZone.getDefault())
+    }
+}
+
+enum class CalendarEventType(val typeName: String) {
+    CANCELED(CalendarItem.CANCELED),
+    LECTURE(CalendarItem.LECTURE),
+    EXERCISE(CalendarItem.EXERCISE),
+    OTHER(CalendarItem.OTHER);
+
+    companion object {
+        private val map = CalendarEventType.values().associateBy(CalendarEventType::typeName)
+        fun fromType(typeName: String) = map[typeName] ?: CalendarEventType.OTHER
     }
 }

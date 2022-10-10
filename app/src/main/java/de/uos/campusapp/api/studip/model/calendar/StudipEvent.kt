@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Type
-import de.uos.campusapp.component.ui.calendar.model.CalendarItemType
+import de.uos.campusapp.component.ui.calendar.model.CalendarEventType
 import de.uos.campusapp.component.ui.calendar.model.AbstractEvent
 import org.joda.time.DateTime
 
@@ -19,9 +19,9 @@ open class StudipBaseEvent: AbstractEvent() {
     val categories: List<String>? = null
 
     @JsonIgnore
-    override var type: CalendarItemType? = null
+    override var type: CalendarEventType? = null
         get() {
-            return if(categories?.contains("Vorlesung") == true) CalendarItemType.LECTURE else CalendarItemType.OTHER
+            return if(categories?.contains("Vorlesung") == true) CalendarEventType.LECTURE else CalendarEventType.OTHER
         }
 
     @JsonProperty("description")

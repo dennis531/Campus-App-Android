@@ -8,7 +8,7 @@ import org.joda.time.DateTime
 class Event(
     override val id: String?,
     override val title: String,
-    override val type: CalendarItemType?,
+    override val type: CalendarEventType?,
     override val description: String?,
     override val dtstart: DateTime,
     override val dtend: DateTime,
