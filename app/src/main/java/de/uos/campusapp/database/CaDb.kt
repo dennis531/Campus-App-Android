@@ -119,15 +119,6 @@ abstract class CaDb : RoomDatabase() {
     abstract fun activeNotificationsDao(): ActiveAlarmsDao
 
     companion object {
-//        private val migrations = arrayOf(
-//                Migration1to2(),
-//                Migration2to3(),
-//                Migration3to4(),
-//                Migration4to5(),
-//                Migration5to6(),
-//                Migration6to7()
-//        )
-
         private var instance: CaDb? = null
 
         @Synchronized
@@ -136,7 +127,6 @@ abstract class CaDb : RoomDatabase() {
             if (instance == null) {
                 instance = Room.databaseBuilder(context.applicationContext, CaDb::class.java, Const.DATABASE_NAME)
                         .allowMainThreadQueries()
-//                        .addMigrations(*migrations)
                         .build()
                 this.instance = instance
             }

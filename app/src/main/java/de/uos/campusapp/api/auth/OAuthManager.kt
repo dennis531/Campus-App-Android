@@ -108,7 +108,7 @@ class OAuthManager @Inject constructor(private val context: Context) : AuthManag
 
         init {
             // Set up message signer
-            val signer = when (ConfigUtils.getConfig(ConfigConst.OAUTH_SIGNATURE_METHOD, OAuthSignatureMethod.OAUTH_PLAINTEXT)) {
+            val signer = when (ConfigUtils.getConfig(ConfigConst.OAUTH_SIGNATURE_METHOD, OAuthSignatureMethod.OAUTH_HMAC_SHA1)) {
                 OAuthSignatureMethod.OAUTH_HMAC_SHA1 -> HmacSha1MessageSigner()
                 OAuthSignatureMethod.OAUTH_HMAC_SHA256 -> HmacSha256MessageSigner()
                 else -> PlainTextMessageSigner()

@@ -8,7 +8,7 @@ import org.joda.time.DateTime
  * @property id
  * @property name Room name
  * @property info Description (optional)
- * @property occupiedUntil occupied until datetime (optional)
+ * @property occupiedUntil occupied until datetime; room will be displayed as free if this value is null (optional)
  * @property freeUntil free until datetime (optional)
  */
 abstract class AbstractStudyRoom {

@@ -81,7 +81,7 @@
     <string name="silence_phone">Lautlos Service</string>
     <string name="silence_phone_info">Das Gerät wird während einer Vorlesung automatisch in den lautlosen Modus gestellt.</string>
     <string name="background_mode">Hintergrundmodus (empfohlen)</string>
-    <string name="background_info">Aktualisiert die Inhalte der App automatisch einmal täglich, wenn du dich im Raum deiner Hochschule aufhältst.</string>
+    <string name="background_info">Aktualisiert die Inhalte der App automatisch einmal täglich, wenn du dich im Raum deiner Bildungseinrichtung aufhältst.</string>
     <string name="mode_background_mode">Aktivierung des Hintergrundmodus</string>
     <string name="always">Immer</string>
     <string name="wifi_only">Nur bei WLAN-Verbindung</string>
@@ -113,7 +113,7 @@
     <string name="set_silent_mode">Bei Aktivierung wird sich das Gerät bei einer aktuell stattfindenden Vorlesung lautlos schalten.</string>
     <string name="set_background_mode">Aktiviere oder deaktiviere den <i>Hintergrundmodus</i>. Bei Aktivierung werden einmal am Tag im Hintergrund alle Inhalte heruntergeladen, um deine Campus App auf den neusten Stand zu halten.</string>
     <string name="goto_campus">Starte Campus App</string>
-    <string name="oauth_msg">Um den Zugriff auf alle Funktionen der App zu erhalten, musst du auf der nächsten Seite den Zugriff auf dein Campus System erlauben.\n\nDiese App speichert nicht dein Passwort.\n\nNach dem Einrichten kannst du:\n &#8226; auf deinen Kalender zugreifen\n &#8226; Details zu deinen Vorlesungen erfahren\n &#8226; deine Noten ansehen\n &#8226; deinen Studienbeitragsstatus prüfen\n &#8226; mit Komilitonen aus deinen Vorlesungen chatten</string>
+    <string name="oauth_msg">Um den Zugriff auf alle Funktionen der App zu erhalten, musst du auf der nächsten Seite den Zugriff auf dein Campus System erlauben.\n\nDiese App speichert nicht dein Passwort.\n\nNach dem Einrichten kannst du:\n &#8226; auf deinen Kalender zugreifen\n &#8226; Nachrichten lesen und schreiben\n &#8226; Details zu deinen Vorlesungen erfahren\n &#8226; mit Komilitonen chatten</string>
 
     <!-- News -->
     <string name="no_link_existing">Kein Link gefunden.</string>
@@ -353,7 +353,7 @@
     <string name="campus_klinikum_großhadern">Klinikum Großhadern</string>
     <string name="cafeteria">Mensa</string>
     <string name="card_cafeteria_summary">Zeigt den Mensa-Speiseplan an</string>
-    <string name="card_transportation_summary">Zeigt die Abfahrtszeiten der öffentlich Verkehrmittel an</string>
+    <string name="card_transportation_summary">Zeigt die Abfahrtszeiten der öffentlichen Verkehrsmittel an</string>
     <string name="card_next_lecture_summary">Zeigt Informationen zur nächsten Vorlesung an</string>
     <string name="card_tuition_fee_summary">Erinnert dich, wenn du die Studiengebühren zahlen musst</string>
     <string name="card_messages_summary">Zeigt deine letzten Nachrichten an</string>
@@ -457,7 +457,7 @@ Signatur: %5$s</string>
     <string name="semester_summer">Sommersemester</string>
     <string name="semester_winter">Wintersemester</string>
     <string name="update_notification_description">Eine neue Version der Campus App wurde am %s released. Hier tippen zum herunterladen.</string>
-    <string name="support_us">Hilf uns, die Campus App besser zu machen. Like uns auf Facebook, schlage neue Ideen auf GitHub vor oder sage uns deine Meinung per E-Mail.</string>
+    <string name="support_us">Hilf uns, die Campus App besser zu machen. Sende uns eine E-Mail, wenn du auf ein Problem stößt.</string>
     <string name="support_us_title">Unterstütze uns</string>
     <string name="permission_location_explanation">Die Campus App braucht die Erlaubnis, auf deinen Standort zugreifen zu dürfen, um Mensa-Speisepläne in deiner Nähe oder Fahrpläne der nächstgelegenen MVV-Station anzeigen zu können. Wenn du das nicht willst, kannst du deinen Standort in den Einstellungen konfigurieren.</string>
     <string name="permission_calendar_explanation">Die Campus App braucht die Erlaubnis, auf deinen Kalender zugreifen zu dürfen, um diesen mit deinem Campus-Kalender abgleichen zu können.</string>
@@ -593,7 +593,7 @@ Signatur: %5$s</string>
                                         &#8226; mit Komilitonen aus deinen Vorlesungen chatten</string>
     <string name="campus_login">Mit Campus verbinden</string>
     <string name="card_login_title">Willkommen zur Campus App</string>
-    <string name="card_login_body">Verbinde die App mit deinem Campus, um auf deinen Kalendar, deine Vorlesungen und deine Noten zugreifen zu können.</string>
+    <string name="card_login_body">Verbinde die App mit deinem Campus, um auf deinen Kalender, deine Vorlesungen und weiteres zugreifen zu können.</string>
 
     <string name="watch_trailer">Trailer anschauen</string>
     <string name="show_trailer_error">Trailer kann nicht gezeigt werden</string>
@@ -672,7 +672,7 @@ Signatur: %5$s</string>
     <string name="checking_if_token_enabled">Überprüfung, ob Token aktiviert ist …</string>
 
     <string name="unknown">Unbekannt</string>
-    <string name="about">Über</string>
+    <string name="other">Sonstiges</string>
     <string name="due_on_format_string">Fällig am %s</string>
     <string name="home">Übersicht</string>
     <string name="released">Veröffentlicht</string>
@@ -691,7 +691,7 @@ Signatur: %5$s</string>
     <string name="next_lecture_show_more">Zeige %d weitere …</string>
     <string name="next_lecture_hide">Verbergen</string>
     <string name="employee_mode">Personalmodus</string>
-    <string name="employee_mode_info">Menüpunkte wie die Notenansicht oder Studienbeitrag werden in dieser Ansicht nicht angezeigt.</string>
+    <string name="employee_mode_info">Irrelevante Menüpunkte für Mitarbeitende werden in dieser Ansicht nicht angezeigt.</string>
     <string name="show_in_calendar">Im Kalender öffnen</string>
 
     <string name="update_note_title">Neue Features</string>

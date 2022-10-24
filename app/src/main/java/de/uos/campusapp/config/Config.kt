@@ -42,6 +42,7 @@ object Config {
      * First values are defaults. Campus Ids can be set freely and must be unique. Station list only needed for cards of the transportation
      * component to determine the next station. Station id must match with the station id used in the transportation api.
      * If no cafeterias are provided and cafeteria component is enabled, the nearest cafeteria will be used for location based cafeteria recommendation.
+     * Cafeteria id must match with the cafeteria id used in the cafeteria api.
      * Default: empty list
      */
     val CAMPUS = listOf<Campus>(
@@ -78,6 +79,12 @@ object Config {
     // UOS Backend API
     val UOS_BACKEND_API_BASE_URL = "http://192.168.178.91:8000/api/"
 
+    // Cafeteria API
+    val CAFETERIA_API = CafeteriaApi.OSNABRUECK
+
+    // Transportation API
+    val TRANSPORTATION_API = TransportationApi.VBN // Default: MVV
+
     // Authentication
     // To set a different authentication method for an api, create a variable with the following format "{ApiName}_AUTH_METHOD" (e.g. "STUDIP_AUTH_METHOD")
     val AUTH_METHOD = AuthMethod.OAUTH10A // Default: AuthMethod.OAUTH10A
@@ -90,7 +97,7 @@ object Config {
     val OAUTH_AUTHORIZE_URL = "http://192.168.178.91/studip/dispatch.php/api/oauth/authorize"
     // Callback URL is "campus://campus-app/oauth/callback". Configuration in R.values.strings.xml possible.
 
-    val OAUTH_SIGNATURE_METHOD = OAuthSignatureMethod.OAUTH_PLAINTEXT
+    val OAUTH_SIGNATURE_METHOD = OAuthSignatureMethod.OAUTH_PLAINTEXT // Default: OAuthSignatureMethod.OAUTH_HMAC_SHA1
 
     // Components
     // API and Authentication requirements can be configured in Component enum class
@@ -101,18 +108,27 @@ object Config {
     val NEWS_ENABLED = true
     val EDUROAM_ENABLED = true
     val GEOFENCING_ENABLED = true
-    val GRADES_ENABLED = true
-    val TUITIONFEES_ENABLED = true
-    val ROOMFINDER_ENABLED = true
+    val GRADES_ENABLED = false
+    val TUITIONFEES_ENABLED = false
+    val ROOMFINDER_ENABLED = false
     val CHAT_ENABLED = true
-    val OPENINGHOUR_ENABLED = true
+    val OPENINGHOUR_ENABLED = false
     val TRANSPORTATION_ENABLED = true
     val CAFETERIA_ENABLED = true
-    val STUDYROOM_ENABLED = true
+    val STUDYROOM_ENABLED = false
     val MESSAGES_ENABLED = true
+
+    // Cafeteria options
+    val CAFETERIA_INGREDIENTS_TEXT = R.string.cafeteria_ingredients_os // Edit the ingredients text in strings.xml; default: null
 
     // Calendar options
     val CALENDAR_EDITABLE = false
+
+    // Chat options
+    val CHAT_ROOM_CREATEABLE = false // Default: True
+    val CHAT_ROOM_JOINABLE = false // Default: True
+    val CHAT_ROOM_LEAVEABLE = false // Default: True
+    val CHAT_ROOM_MEMBER_ADDABLE = false // Allows to add members to a chat room by other users; It needs [CHAT_ROOM_JOINABLE] to be enabled; Otherwise members could not join chat rooms; Default: True
 
     // Eduroam options
     // Allows to check if the user's eduroam wifi setting is set for this campus. If settings are set for this campus, several checks are performed.
@@ -125,14 +141,14 @@ object Config {
     // Geofencing options
     // Geofencing disables background task when the user leaves the geographical region
     // Coordinates define the center of the circular region
-    val GEOFENCING_LATITUDE = 52.27158 // latitude of "Camous Innenstadt"; default: 0.0
-    val GEOFENCING_LONGITUDE = 8.04426 // longitude of "Camous Innenstadt"; default: 0.0
+    val GEOFENCING_LATITUDE = 52.27158 // latitude of "Campus Innenstadt"; default: 0.0
+    val GEOFENCING_LONGITUDE = 8.04426 // longitude of "Campus Innenstadt"; default: 0.0
     // Radius of the circular region
     val GEOFENCING_RADIUS_IN_METER = 50 * 1000f // 50 Km; default: 0f
 
     // Lectures options
     val LECTURES_SHOW_FILES = true // Lecture Files can be listed and downloaded; default: false
-    val LECTURES_SHOW_RECORDS = true // Lecture Records menu item will be displayed in lecture details; default: false
+    val LECTURES_SHOW_RECORDS = false // Lecture Records menu item will be displayed in lecture details; default: false
 
     // Tuition fees options
     // if true and tuition api is provided, the tuition will be loaded from the selected api. If false, the value from [TUITIONFEES_TUITION] will be loaded
@@ -144,17 +160,4 @@ object Config {
         amount = 321.03
     )
     val TUITIONFEES_LINK = "https://www.uni-osnabrueck.de/studium/organisatorisches/rueckmeldung/"
-
-    // Chat options
-    val CHAT_ROOM_CREATEABLE = false // Default: True
-    val CHAT_ROOM_JOINABLE = false // Default: True
-    val CHAT_ROOM_LEAVEABLE = false // Default: True
-    val CHAT_ROOM_MEMBER_ADDABLE = false // Allows to add members to a chat room by other users; It needs [CHAT_ROOM_JOINABLE] to be enabled; Otherwise members could not join chat rooms; Default: True
-
-    // Transportation options
-    val TRANSPORTATION_API = TransportationApi.VBN // Default: MVV
-
-    // Cafeteria options
-    val CAFETERIA_API = CafeteriaApi.OSNABRUECK
-    val CAFETERIA_INGREDIENTS_TEXT = R.string.cafeteria_ingredients_os // Edit the ingredients text in strings.xml; default: null
 }

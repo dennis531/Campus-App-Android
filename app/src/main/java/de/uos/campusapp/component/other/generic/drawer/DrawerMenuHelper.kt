@@ -18,7 +18,6 @@ import de.uos.campusapp.component.ui.chat.ChatRoomsFragment
 import de.uos.campusapp.component.ui.messages.fragment.MessagesFragment
 import de.uos.campusapp.component.ui.news.NewsFragment
 import de.uos.campusapp.component.ui.openinghours.OpeningHoursListFragment
-import de.uos.campusapp.component.ui.overview.InformationActivity
 import de.uos.campusapp.component.ui.overview.MainFragment
 import de.uos.campusapp.component.ui.studyroom.StudyRoomsFragment
 import de.uos.campusapp.component.ui.transportation.TransportationActivity
@@ -66,9 +65,9 @@ class DrawerMenuHelper(
             allItems += candidate
         }
 
-        val aboutMenu = navigationMenu.addSubMenu(R.string.about)
-        for (item in ABOUT) {
-            aboutMenu += item
+        val otherMenu = navigationMenu.addSubMenu(R.string.other)
+        for (item in OTHER) {
+            otherMenu += item
             allItems += item
         }
 
@@ -90,7 +89,7 @@ class DrawerMenuHelper(
             }
         }
 
-        for (item in ABOUT) {
+        for (item in OTHER) {
             if (menuItem.title == activity.getString(item.titleRes)) {
                 return item
             }
@@ -141,9 +140,9 @@ class DrawerMenuHelper(
                 NavItem.ActivityDestination(R.string.transport, R.drawable.ic_outline_train_24px, TransportationActivity::class.java, Component.TRANSPORTATION)
         )
 
-        private val ABOUT: Array<NavItem> = arrayOf(
+        private val OTHER: Array<NavItem> = arrayOf(
                 // NavItem.ActivityDestination(R.string.show_feedback, R.drawable.ic_outline_feedback_24px, FeedbackActivity::class.java),
-                NavItem.ActivityDestination(R.string.about_tca, R.drawable.ic_action_info, InformationActivity::class.java),
+                // NavItem.ActivityDestination(R.string.about_tca, R.drawable.ic_action_info, InformationActivity::class.java),
                 NavItem.ActivityDestination(R.string.settings, R.drawable.ic_outline_settings_24px, SettingsActivity::class.java)
         )
     }

@@ -77,7 +77,7 @@
     <string name="oauth_callback_host" translatable="false">campus-app</string>
     <string name="oauth_callback_path_prefix" translatable="false">/oauth/callback</string>
     <string name="oauth_callback_scheme" translatable="false">campus</string>
-    <string name="oauth_msg">To enable all functions of the app, you need to grant access to your campus system on the next page.\n\nThis app does not save your password.\n\nAfter the setup you can:\n &#8226; View your calendar\n &#8226; See details about your lectures\n &#8226; Get an overview over your grades\n &#8226; Check if you have outstanding tuition fees\n &#8226; Chat with other students</string>
+    <string name="oauth_msg">To enable all functions of the app, you need to grant access to your campus system on the next page.\n\nThis app does not save your password.\n\nAfter the setup you can:\n &#8226; View your calendar\n &#8226; Read and write messages\n &#8226; See details about your lectures\n &#8226; Chat with other students</string>
     <string name="error_oauth_request_signing_failed">Your request can not be signed.</string>
     <string name="error_oauth_not_authorized">You are not authorized.</string>
     <string name="error_oauth_communication_failed">The communication with the server failed.</string>
@@ -122,7 +122,7 @@
     <string name="logout_error_title">Logout failed</string>
     <string name="logout_try_again">Do you want to try again?</string>
     <string name="employee_mode">Employee Mode</string>
-    <string name="employee_mode_info">Some unnecessary items like grades and tuition fees are hidden in this mode.</string>
+    <string name="employee_mode_info">Some unnecessary items for employees are hidden in this mode.</string>
     <string name="clear_cache">Clear Cache</string>
     <string name="clear_cache_detail">Deletes all data which was downloaded by the Campus App and stored on your device.</string>
     <string name="delete_cache_sure">Are you sure you want to delete all data?</string>
@@ -541,8 +541,8 @@ Signature: %5$s</string>
     <string name="widget_configure_description">Configure the cards to show</string>
 
     <string name="update_notification_description">A new version of the Campus App has been released on %s. Tap to download now.</string>
-    <string name="support_us">Help us to spread the word about the Campus App. Like us on Facebook, suggest an exciting idea on GitHub or send an e-mail telling us what you think.</string>
-    <string name="support_email_link" translatable="false">mailto:app@tum.de</string>
+    <string name="support_us">Help us to improve the Campus App. Send us an e-mail if you encounter a problem.</string>
+    <string name="support_email_link" translatable="false">dbenz@uos.de</string>
     <string name="support_us_title">Support us</string>
     <string name="permission_calendar_explanation">Campus App needs permission to access your calendar to be able to sync it with your campus calendar.</string>
     <string name="permission_location_explanation">Campus App needs permission to access your location to display useful information, e.g. the menus of cafeterias around you or timetables of your nearest MVV station. If you do not grant this permission, you will still be able to configure your location in the settings.</string>
@@ -691,7 +691,7 @@ Signature: %5$s</string>
                                         &#8226; Chat with other students from your lectures</string>
     <string name="campus_login">Connect to Campus</string>
     <string name="card_login_title">Welcome to the Campus App</string>
-    <string name="card_login_body">Connect the app to your campus now to access your calendar, lectures and grades.</string>
+    <string name="card_login_body">Connect the app to your campus now to access your calendar, lectures and more.</string>
 
     <string name="kino_cover_description">movie poster</string>
     <string name="show_trailer_error">Trailer can\'t be shown</string>
@@ -747,7 +747,7 @@ Signature: %5$s</string>
 
     <string name="unknown">Unknown</string>
     <string name="home">Home</string>
-    <string name="about">About</string>
+    <string name="other">Other</string>
     <string name="due_on_format_string">Due on %s</string>
     <string name="released">Released</string>
 

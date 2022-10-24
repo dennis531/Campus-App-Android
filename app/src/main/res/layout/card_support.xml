@@ -1,5 +1,6 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/StandardCard">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,10 +62,12 @@
                 android:text="@string/facebook"
                 android:textAllCaps="false"
                 android:textColor="@color/facebook"
+                android:visibility="gone"
                 app:cornerRadius="@dimen/material_corner_radius"
                 app:icon="@drawable/ic_outline_thumb_up_24px_white"
                 app:iconPadding="@dimen/material_small_padding"
-                app:iconTint="@color/facebook" />
+                app:iconTint="@color/facebook"
+                tools:visibility="visible" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/github_button"
@@ -74,10 +77,12 @@
                 android:text="@string/github"
                 android:textAllCaps="false"
                 android:textColor="@color/github"
+                android:visibility="gone"
                 app:cornerRadius="@dimen/material_corner_radius"
                 app:icon="@drawable/ic_code_white_24dp"
                 app:iconPadding="@dimen/material_small_padding"
-                app:iconTint="@color/github" />
+                app:iconTint="@color/github"
+                tools:visibility="visible" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/email_button"

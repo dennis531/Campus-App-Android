@@ -46,10 +46,12 @@ class SupportCard(context: Context) : Card(CardManager.CARD_SUPPORT, context,Com
                 v.context.startActivity(browserIntent)
             }
             view.findViewById<View>(R.id.email_button).setOnClickListener { v ->
-                val intent = Intent(Intent.ACTION_SENDTO)
-                val uri = Uri.parse(view.context.getString(R.string.support_email_link))
-                intent.setDataAndType(uri, "text/plain")
-                intent.putExtra(Intent.EXTRA_SUBJECT, view.context.getString(R.string.feedback))
+                val intent = Intent(Intent.ACTION_SENDTO).apply {
+                    type = "text/plain"
+                    data = Uri.parse("mailto:")
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf(view.context.getString(R.string.support_email_link)))
+                    putExtra(Intent.EXTRA_SUBJECT, view.context.getString(R.string.feedback))
+                }
                 v.context.startActivity(Intent.createChooser(intent, "Send Email"))
             }
             return CardViewHolder(view, interactionListener)

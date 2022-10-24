@@ -38,8 +38,8 @@ android {
         applicationId "de.uos.campusapp"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 580
-        versionName "3.14-dev"
+        versionCode 1
+        versionName "1.0-dev"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
