@@ -391,7 +391,14 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
     }
 
     override fun sendMessage(message: AbstractMessage): AbstractMessage {
-        return apiService.sendMessage(StudipMessage(message)).execute().body()!!
+        return apiService.sendMessage(StudipMessage(message)).execute().body()!!.apply {
+            // Stud.IP doesn't return the names of the users
+            studipSender?.let {
+                if (it.fullName.isEmpty()) {
+                    it.fullName = message.sender?.name ?: ""
+                }
+            }
+        }
     }
 
     override fun deleteMessage(message: AbstractMessage) {

@@ -130,6 +130,7 @@
     <string name="sender_format_string">Von: %s</string>
     <string name="recipients_format_string">An: %s</string>
     <string name="recipients_count_format_string">%d Personen</string>
+    <string name="recipient_not_named">1 Person</string>
     <string name="new_messages_format_string">%d neue Nachrichten</string>
     <string name="new_message">Neue Nachricht</string>
     <string name="message_sending">Nachricht wird gesendet…</string>

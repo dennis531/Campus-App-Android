@@ -47,7 +47,11 @@ abstract class AbstractMessage: Parcelable {
 
             if (recipients.size > 3 || recipientsNames.isEmpty()) {
                 // Return number of persons if more than 3 recipients or no names are given
-                return context.getString(R.string.recipients_count_format_string, recipients.size)
+                return if (recipients.size > 1) {
+                    context.getString(R.string.recipients_count_format_string, recipients.size)
+                } else {
+                    context.getString(R.string.recipient_not_named)
+                }
             }
 
             return recipientsNames.joinToString(", ")
