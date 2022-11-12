@@ -79,7 +79,7 @@
     <string name="success_clear_cache">Daten erfolgreich gelöscht</string>
     <string name="services">Dienste</string>
     <string name="silence_phone">Lautlos Service</string>
-    <string name="silence_phone_info">Das Gerät wird während einer Vorlesung automatisch in den lautlosen Modus gestellt.</string>
+    <string name="silence_phone_info">Das Gerät wird während einer Veranstaltung automatisch in den lautlosen Modus gestellt.</string>
     <string name="background_mode">Hintergrundmodus (empfohlen)</string>
     <string name="background_info">Aktualisiert die Inhalte der App automatisch einmal täglich, wenn du dich im Raum deiner Bildungseinrichtung aufhältst.</string>
     <string name="mode_background_mode">Aktivierung des Hintergrundmodus</string>
@@ -110,10 +110,10 @@
     <string name="step_1">Schritt 1</string>
     <string name="step_2">Schritt 2</string>
     <string name="step_3">Schritt 3</string>
-    <string name="set_silent_mode">Bei Aktivierung wird sich das Gerät bei einer aktuell stattfindenden Vorlesung lautlos schalten.</string>
+    <string name="set_silent_mode">Bei Aktivierung wird sich das Gerät bei einer aktuell stattfindenden Veranstaltung lautlos schalten.</string>
     <string name="set_background_mode">Aktiviere oder deaktiviere den <i>Hintergrundmodus</i>. Bei Aktivierung werden einmal am Tag im Hintergrund alle Inhalte heruntergeladen, um deine Campus App auf den neusten Stand zu halten.</string>
     <string name="goto_campus">Starte Campus App</string>
-    <string name="oauth_msg">Um den Zugriff auf alle Funktionen der App zu erhalten, musst du auf der nächsten Seite den Zugriff auf dein Campus System erlauben.\n\nDiese App speichert nicht dein Passwort.\n\nNach dem Einrichten kannst du:\n &#8226; auf deinen Kalender zugreifen\n &#8226; Nachrichten lesen und schreiben\n &#8226; Details zu deinen Vorlesungen erfahren\n &#8226; mit Komilitonen chatten</string>
+    <string name="oauth_msg">Um den Zugriff auf alle Funktionen der App zu erhalten, musst du auf der nächsten Seite den Zugriff auf dein Campus System erlauben.\n\nDiese App speichert nicht dein Passwort.\n\nNach dem Einrichten kannst du:\n &#8226; auf deinen Kalender zugreifen\n &#8226; Nachrichten lesen und schreiben\n &#8226; Details zu deinen Veranstaltungen erfahren\n &#8226; mit Komilitonen chatten</string>
 
     <!-- News -->
     <string name="no_link_existing">Kein Link gefunden.</string>
@@ -158,7 +158,7 @@
     <string name="drawer_close">Schließen</string>
     <string name="my_campus">Mein Campus</string>
     <string name="calendar">Kalender</string>
-    <string name="my_lectures">Meine Vorlesungen</string>
+    <string name="my_lectures">Meine Veranstaltungen</string>
     <string name="chat_rooms">Chatrooms</string>
     <string name="tuition_fees">Rückmeldung</string>
     <string name="common_info">Allgemeine Informationen</string>
@@ -169,8 +169,8 @@
     <string name="news">News</string>
 
     <!-- Activity titles -->
-    <string name="lectures_information">Vorlesungsinformationen</string>
-    <string name="lectures_appointments">Vorlesungstermine</string>
+    <string name="lectures_information">Veranstaltungsdetails</string>
+    <string name="lectures_appointments">Veranstaltungstermine</string>
     <string name="person_information">Personeninformationen</string>
 
     <!-- Organisations -->
@@ -193,15 +193,15 @@
     <!-- Lectures -->
     <string name="no_appointments">Keine Termine verfügbar</string>
     <string name="lec_details">Details</string>
-    <string name="lecture_begin">Vorlesungbeginn</string>
-    <string name="lec_contributors">Vorlesungsteam</string>
-    <string name="lec_content">Vorlesungsinhalt</string>
+    <string name="lecture_begin">Veranstaltungsbeginn</string>
+    <string name="lec_contributors">Veranstaltungsteam</string>
+    <string name="lec_content">Veranstaltungsinhalt</string>
     <string name="lec_method">Methode</string>
     <string name="lec_target">Ziele</string>
     <string name="examination_aids">Prüfungshilfsmittel</string>
-    <string name="lecture_files">Vorlesungsdateien</string>
-    <string name="lecture_recordings">Vorlesungsaufzeichnungen</string>
-    <string name="recordings_open_failed">Vorlesungsaufzeichnungen können nicht geöffnet werden</string>
+    <string name="lecture_files">Veranstaltungsdateien</string>
+    <string name="lecture_recordings">Veranstaltungsaufzeichnungen</string>
+    <string name="recordings_open_failed">Veranstaltungsaufzeichnungen können nicht geöffnet werden</string>
     <string name="no_files">Keine Dateien verfügbar</string>
     <string name="file_open_failure_format_string">%s kann nicht geöffnet werden</string>
     <string name="no_app_for_open_file">Keine App zum Öffnen dieser Datei vorhanden</string>
@@ -267,7 +267,7 @@
 
     <!-- Cards -->
     <string name="last_updated">Der Inhalt wurde zuletzt %s aktualisiert.</string>
-    <string name="next_lecture">Nächste Vorlesung</string>
+    <string name="next_lecture">Nächste Veranstaltung</string>
     <string name="restore_all_cards">Karten wiederherstellen</string>
     <string name="card_dismissed">Karte ausgeblendet</string>
     <string name="reregister_success">Du bist für das %s rückgemeldet!</string>
@@ -355,7 +355,7 @@
     <string name="cafeteria">Mensa</string>
     <string name="card_cafeteria_summary">Zeigt den Mensa-Speiseplan an</string>
     <string name="card_transportation_summary">Zeigt die Abfahrtszeiten der öffentlichen Verkehrsmittel an</string>
-    <string name="card_next_lecture_summary">Zeigt Informationen zur nächsten Vorlesung an</string>
+    <string name="card_next_lecture_summary">Zeigt Informationen zur nächsten Veranstaltung an</string>
     <string name="card_tuition_fee_summary">Erinnert dich, wenn du die Studiengebühren zahlen musst</string>
     <string name="card_messages_summary">Zeigt deine letzten Nachrichten an</string>
     <string name="card_news_summary">Schlägt ausgewählte News vor</string>
@@ -405,7 +405,7 @@
     <string name="only_latest_article_summary">Zeigt jeweils nur den neusten Artikel. Ansonsten werden alle Artikel der ausgewählten Quellen angezeigt.</string>
     <string name="set_chat">Wenn es aktiviert ist, kannst du Chatrooms beitreten und mit deinen Kommilitonen diskutieren.</string>
     <string name="open_chat_terms">Chatbedingungen</string>
-    <string name="have_to_accept_terms">Chatbedingungen müssen akzeptiert werden, damit du den Vorlesungs-Chat verwenden kannst!</string>
+    <string name="have_to_accept_terms">Chatbedingungen müssen akzeptiert werden, damit du den Veranstaltungs-Chat verwenden kannst!</string>
     <string name="activate_key">Bitte aktiviere zuerst deinen Public Key</string>
     <string name="joined_chat_room">Du bist dem Chatroom beigetreten!</string>
     <string name="chat_room_join_error">Der Chatroom konnte nicht beigetreten werden</string>
@@ -420,7 +420,7 @@
     <string name="newspread_summary">Wähle aus welches newspread angezeigt werden soll. Das sind die Folien die auf den Info Monitoren in deiner Fakultät angezeigt werden.</string>
     <string name="vibration">Vibration</string>
     <string name="silent">Leise</string>
-    <string name="mode_silent_mode">Modus während Vorlesung</string>
+    <string name="mode_silent_mode">Modus während Veranstaltung</string>
     <string name="message_details">Nachricht-Info</string>
     <string name="message_detail_text">&lt;b>Gesendet von&lt;/b>&lt;br>
 Name: %1$s&lt;br>
@@ -441,10 +441,10 @@ Signatur: %5$s</string>
     <string name="public_key_mail">Public Key Aktivierungs-E-Mail wurde an %s@mytum.de gesendet!\n\n<b>Bitte aktiviere ihn jetzt!</b></string>
     <string name="failure_uploading_public_key">Fehler beim Hochladen des Public Key</string>
     <string name="key_not_activated">Du hast deinen Key noch nicht aktiviert!</string>
-    <string name="no_rights_to_access_lectures">Vorlesungen konnten nicht abgerufen werden. Bitte überprüfe die Rechte deines TUMonline Tokens!</string>
+    <string name="no_rights_to_access_lectures">Veranstaltungen konnten nicht abgerufen werden. Bitte überprüfe die Rechte deines TUMonline Tokens!</string>
     <string name="edit">Bearbeiten</string>
-    <string name="auto_join_chat">Neuen Vorlesungs-Chats beitreten</string>
-    <string name="set_auto_join_chat">Wenn du dich für eine neue Vorlesung einschreibst, wirst du automatisch zum Chatroom der Vorlesung hinzugefügt.</string>
+    <string name="auto_join_chat">Neuen Veranstaltungs-Chats beitreten</string>
+    <string name="set_auto_join_chat">Wenn du dich für eine neue Veranstaltung einschreibst, wirst du automatisch zum Chatroom der Veranstaltung hinzugefügt.</string>
     <string name="add_chat_member">Jemanden zum Chatroom hinzufügen</string>
     <string name="add_chat_room">Neuer Chatroom</string>
     <string name="join_chat_room">Chatroom betreten</string>
@@ -475,7 +475,7 @@ Signatur: %5$s</string>
     <string name="add_widget">Widget hinzufügen</string>
     <string name="my_grades">Meine Noten</string>
     <string name="widget_configure_description">Anzeige der Karten einstellen</string>
-    <string name="accept_chat_terms">Chatbedingungen müssen akzeptiert werden, damit du den Vorlesungs-Chat verwenden kannst!</string>
+    <string name="accept_chat_terms">Chatbedingungen müssen akzeptiert werden, damit du den Veranstaltungs-Chat verwenden kannst!</string>
     <string name="chat_not_setup">Chat ist nicht richtig eingerichtet, bitte den Assistenten über die Einstellungen neu starten!</string>
     <string name="please_connect_to_internet">Bitte verbinden Sie sich mit dem Internet, um den ersten App-Start fortzusetzen</string>
     <string name="IN">in</string>
@@ -498,8 +498,8 @@ Signatur: %5$s</string>
     <string name="transportation_widget_auto_reload">Automatisch aktualisieren</string>
     <string name="transportation_widget_auto_reload_hint">Erhöht Strom und Datenverbrauch</string>
     <string name="timetable_widget">Stundenplan Widget Campus</string>
-    <string name="timetable_widget_select_lectures">Vorlesungen auswählen</string>
-    <string name="timetable_widget_no_lectures">Keine Vorlesungen geplant :)</string>
+    <string name="timetable_widget_select_lectures">Veranstaltungen auswählen</string>
+    <string name="timetable_widget_no_lectures">Keine Veranstaltungen geplant :)</string>
     <string name="eduroam_not_valid_id">Keine gültige Kennung</string>
     <string name="eduroam_please_enter_password">Bitte Passwort eingeben. Dieses wird nicht gespeichert.</string>
     <string name="barrier_free">Barrierefreiheit</string>
@@ -559,9 +559,9 @@ Signatur: %5$s</string>
     <string name="title_activity_cards_detail">Karte hinzufügen</string>
     <string name="card_question">Frage</string>
     <string name="card_answer">Antwort</string>
-    <string name="filter_lecture_ALL_LECTURES">Alle Vorlesungen</string>
-    <string name="filter_lecture_OWN_LECTURES">Eigene Vorlesungen</string>
-    <string name="filter_lecture_SELECTED_LECTURES">Ausgewählte Vorlesungen</string>
+    <string name="filter_lecture_ALL_LECTURES">Alle Veranstaltungen</string>
+    <string name="filter_lecture_OWN_LECTURES">Eigene Veranstaltungen</string>
+    <string name="filter_lecture_SELECTED_LECTURES">Ausgewählte Veranstaltungen</string>
     <string name="show_answer">Antwort anzeigen</string>
 
     <!-- Create personal Appointment (Calendar) -->
@@ -588,13 +588,13 @@ Signatur: %5$s</string>
 
     <string name="tumonline_advantages">Nach dem Einrichten von TUMonline kannst du:\n
                                         &#8226; auf deinen Kalender zugreifen\n
-                                        &#8226; Details zu deinen Vorlesungen erfahren\n
+                                        &#8226; Details zu deinen Veranstaltungen erfahren\n
                                         &#8226; deine Noten ansehen\n
                                         &#8226; deinen Studienbeitragsstatus prüfen\n
-                                        &#8226; mit Komilitonen aus deinen Vorlesungen chatten</string>
+                                        &#8226; mit Komilitonen aus deinen Veranstaltungen chatten</string>
     <string name="campus_login">Mit Campus verbinden</string>
     <string name="card_login_title">Willkommen zur Campus App</string>
-    <string name="card_login_body">Verbinde die App mit deinem Campus, um auf deinen Kalender, deine Vorlesungen und weiteres zugreifen zu können.</string>
+    <string name="card_login_body">Verbinde die App mit deinem Campus, um auf deinen Kalender, deine Veranstaltungen und weiteres zugreifen zu können.</string>
 
     <string name="watch_trailer">Trailer anschauen</string>
     <string name="show_trailer_error">Trailer kann nicht gezeigt werden</string>
@@ -639,7 +639,7 @@ Signatur: %5$s</string>
     <string name="discard">Verwerfen</string>
     <string name="keep_editing">Weiter bearbeiten</string>
 
-    <string name="channel_description_general">Nächste Vorlesung, News und Erinnerungen über Studienbeiträge</string>
+    <string name="channel_description_general">Nächste Veranstaltung, News und Erinnerungen über Studienbeiträge</string>
     <string name="channel_description_cafeteria">Aktuelles Tagesmenü</string>
     <string name="channel_description_chat">Neue Chat-Nachrichten</string>
     <string name="channel_description_mvv">Abfahrten an nahegelegenen Haltestellen</string>
