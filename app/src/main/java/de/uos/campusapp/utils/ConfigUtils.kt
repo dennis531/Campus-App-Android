@@ -17,6 +17,14 @@ import de.uos.campusapp.config.CafeteriaApi as CafeteriaApiEnum
 import de.uos.campusapp.component.ui.transportation.api.generic.TransportationAPI
 
 object ConfigUtils {
+
+    /**
+     * Gets the configuration of an option
+     *
+     * @param key Option name
+     * @param defaultVal Default value if option is not set
+     * @return Option value
+     */
     @JvmStatic
     @Suppress("UNCHECKED_CAST")
     fun <T> getConfig(key: String, defaultVal: T): T {
@@ -27,6 +35,9 @@ object ConfigUtils {
         }
     }
 
+    /**
+     * Gets the configured api client for the passed component
+     */
     @JvmStatic
     fun getApiClient(context: Context, component: Component): BaseAPI {
         return when (component) {

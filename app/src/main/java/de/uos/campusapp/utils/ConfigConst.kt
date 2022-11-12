@@ -1,5 +1,8 @@
 package de.uos.campusapp.utils
 
+/**
+ * This class defines all available config options
+ */
 object ConfigConst {
     const val CAMPUS = "CAMPUS"
 
