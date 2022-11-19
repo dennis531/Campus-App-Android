@@ -48,7 +48,16 @@ class TuitionFeesFragment : FragmentForAccessingApi<AbstractTuition>(
     }
 
     private fun refreshData(cacheControl: CacheControl) {
-        fetch { tuitionFeeManager.loadTuition(cacheControl) }
+        fetch {
+            val tuition = tuitionFeeManager.loadTuition(cacheControl) ?: return@fetch null
+
+            // Do not return tuition if not started to display error message
+            return@fetch if (tuition.hasStarted) {
+                tuition
+            } else {
+                null
+            }
+        }
     }
 
     override fun onDownloadSuccessful(response: AbstractTuition) {
@@ -60,11 +69,6 @@ class TuitionFeesFragment : FragmentForAccessingApi<AbstractTuition>(
     }
 
     private fun showTuition(tuition: AbstractTuition) {
-        if (!tuition.hasStarted) {
-            showTuitionNotAvailable()
-            return
-        }
-
         with(binding) {
             val amountText = tuition.getAmountText(requireContext())
             amountTextView.text = amountText
