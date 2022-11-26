@@ -1,7 +1,7 @@
 package de.uos.campusapp.component.ui.openinghours
 
 import android.content.Context
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.ui.openinghours.api.OpeningHoursAPI
 import de.uos.campusapp.database.CaDb
 import de.uos.campusapp.service.DownloadWorker

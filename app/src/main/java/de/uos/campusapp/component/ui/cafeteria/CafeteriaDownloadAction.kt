@@ -1,7 +1,7 @@
 package de.uos.campusapp.component.ui.cafeteria
 
 import android.content.Context
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.ui.cafeteria.controller.CafeteriaMenuManager
 import de.uos.campusapp.component.ui.cafeteria.repository.CafeteriaRemoteRepository
 import de.uos.campusapp.service.DownloadWorker

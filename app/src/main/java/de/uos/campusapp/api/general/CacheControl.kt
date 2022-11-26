@@ -1,4 +1,4 @@
-package de.uos.campusapp.api.tumonline
+package de.uos.campusapp.api.general
 
 enum class CacheControl(val header: String) {
     BYPASS_CACHE("no-cache"),

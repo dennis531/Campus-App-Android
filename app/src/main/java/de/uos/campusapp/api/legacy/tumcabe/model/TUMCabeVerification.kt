@@ -1,4 +1,4 @@
-package de.uos.campusapp.api.tumcabe.model
+package de.uos.campusapp.api.legacy.tumcabe.model
 
 import android.content.Context
 import de.uos.campusapp.api.auth.legacy.AuthenticationManager

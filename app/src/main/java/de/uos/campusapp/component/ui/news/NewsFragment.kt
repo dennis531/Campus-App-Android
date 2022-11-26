@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl.USE_CACHE
+import de.uos.campusapp.api.general.CacheControl.USE_CACHE
 import de.uos.campusapp.component.other.generic.adapter.EqualSpacingItemDecoration
 import de.uos.campusapp.component.other.generic.fragment.FragmentForDownloadingExternal
 import de.uos.campusapp.databinding.FragmentNewsBinding

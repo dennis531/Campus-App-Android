@@ -19,7 +19,7 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.other.generic.fragment.FragmentForAccessingApi
 import de.uos.campusapp.component.ui.grades.api.GradesAPI
 import de.uos.campusapp.component.ui.grades.model.AbstractExam

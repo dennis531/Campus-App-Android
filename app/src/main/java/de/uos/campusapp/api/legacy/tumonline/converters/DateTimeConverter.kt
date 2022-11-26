@@ -1,4 +1,4 @@
-package de.uos.campusapp.api.tumonline.converters
+package de.uos.campusapp.api.legacy.tumonline.converters
 
 import com.google.gson.JsonParseException
 import com.tickaroo.tikxml.TypeConverter

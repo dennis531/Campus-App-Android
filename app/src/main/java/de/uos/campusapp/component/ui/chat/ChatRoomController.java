@@ -12,7 +12,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import de.uos.campusapp.api.tumonline.CacheControl;
+import de.uos.campusapp.api.general.CacheControl;
 import de.uos.campusapp.component.ui.chat.model.AbstractChatRoom;
 import de.uos.campusapp.component.ui.chat.model.ChatRoomAndLastMessage;
 import de.uos.campusapp.component.ui.chat.model.ChatRoomDbRow;

@@ -1,11 +1,11 @@
-package de.uos.campusapp.api.tumonline
+package de.uos.campusapp.api.legacy.tumonline
 
 import android.content.Context
 import com.tickaroo.tikxml.TikXml
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import de.uos.campusapp.api.general.ApiHelper
-import de.uos.campusapp.api.tumonline.model.AccessToken
-import de.uos.campusapp.api.tumonline.model.TokenConfirmation
+import de.uos.campusapp.api.legacy.tumonline.model.AccessToken
+import de.uos.campusapp.api.legacy.tumonline.model.TokenConfirmation
 import de.uos.campusapp.utils.CacheManager
 import io.reactivex.Single
 import retrofit2.Call

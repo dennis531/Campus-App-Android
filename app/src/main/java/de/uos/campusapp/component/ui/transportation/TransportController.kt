@@ -2,7 +2,7 @@ package de.uos.campusapp.component.ui.transportation
 
 import android.content.Context
 import android.util.SparseArray
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.notifications.NotificationScheduler
 import de.uos.campusapp.component.notifications.ProvidesNotifications
 import de.uos.campusapp.component.other.general.model.Recent

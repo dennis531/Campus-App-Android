@@ -2,7 +2,7 @@ package de.uos.campusapp.component.ui.overview
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.ui.overview.card.Card
 import javax.inject.Inject
 

@@ -2,7 +2,7 @@ package de.uos.campusapp.component.ui.cafeteria.controller
 
 import android.content.Context
 import android.preference.PreferenceManager
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.notifications.ProvidesNotifications
 import de.uos.campusapp.component.other.locations.LocationManager
 import de.uos.campusapp.component.ui.cafeteria.CafeteriaMenuCard

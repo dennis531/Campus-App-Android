@@ -1,7 +1,7 @@
 package de.uos.campusapp.component.ui.tuitionfees
 
 import android.content.Context
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.notifications.NotificationScheduler
 import de.uos.campusapp.component.notifications.ProvidesNotifications
 import de.uos.campusapp.component.notifications.persistence.NotificationType

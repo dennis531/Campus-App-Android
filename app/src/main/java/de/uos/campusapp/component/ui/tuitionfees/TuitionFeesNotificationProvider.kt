@@ -4,7 +4,7 @@ import android.app.PendingIntent
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.notifications.NotificationProvider
 import de.uos.campusapp.component.notifications.model.AppNotification
 import de.uos.campusapp.component.notifications.model.InstantNotification

@@ -1,7 +1,7 @@
 package de.uos.campusapp.component.ui.legacy.updatenote
 
 import android.content.Context
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.service.DownloadWorker
 import de.uos.campusapp.utils.Const
 import de.uos.campusapp.utils.Utils

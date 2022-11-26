@@ -15,7 +15,7 @@ import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.lifecycle.LiveDataReactiveStreams
 import de.uos.campusapp.BuildConfig.VERSION_CODE
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.other.generic.activity.BaseActivity
 import de.uos.campusapp.component.other.generic.activity.BaseNavigationActivity
 import de.uos.campusapp.databinding.ActivityStartupBinding

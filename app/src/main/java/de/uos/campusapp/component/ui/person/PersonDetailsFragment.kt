@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.other.generic.fragment.BaseFragment
 import de.uos.campusapp.component.ui.person.adapteritems.*
 import de.uos.campusapp.component.ui.person.api.PersonAPI

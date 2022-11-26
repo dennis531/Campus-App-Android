@@ -1,4 +1,4 @@
-package de.uos.campusapp.api.tumonline.converters
+package de.uos.campusapp.api.legacy.tumonline.converters
 
 import android.os.Build
 import android.text.Html

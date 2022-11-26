@@ -1,4 +1,4 @@
-package de.uos.campusapp.api.tumcabe;
+package de.uos.campusapp.api.legacy.tumcabe;
 
 import android.content.Context;
 
@@ -17,12 +17,12 @@ import androidx.annotation.Nullable;
 import de.uos.campusapp.api.auth.legacy.exception.NoPrivateKey;
 import de.uos.campusapp.api.general.ApiHelper;
 import de.uos.campusapp.api.general.DateSerializer;
-import de.uos.campusapp.api.tumcabe.model.DeviceRegister;
-import de.uos.campusapp.api.tumcabe.model.DeviceUploadFcmToken;
-import de.uos.campusapp.api.tumcabe.model.ObfuscatedIdsUpload;
-import de.uos.campusapp.api.tumcabe.model.TUMCabeStatus;
-import de.uos.campusapp.api.tumcabe.model.TUMCabeVerification;
-import de.uos.campusapp.api.tumcabe.model.UploadStatus;
+import de.uos.campusapp.api.legacy.tumcabe.model.DeviceRegister;
+import de.uos.campusapp.api.legacy.tumcabe.model.DeviceUploadFcmToken;
+import de.uos.campusapp.api.legacy.tumcabe.model.ObfuscatedIdsUpload;
+import de.uos.campusapp.api.legacy.tumcabe.model.TUMCabeStatus;
+import de.uos.campusapp.api.legacy.tumcabe.model.TUMCabeVerification;
+import de.uos.campusapp.api.legacy.tumcabe.model.UploadStatus;
 import de.uos.campusapp.component.ui.legacy.feedback.model.Feedback;
 import de.uos.campusapp.component.ui.legacy.feedback.model.FeedbackResult;
 import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteria;

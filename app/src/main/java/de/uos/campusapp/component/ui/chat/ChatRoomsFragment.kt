@@ -20,9 +20,9 @@ import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl
-import de.uos.campusapp.api.tumonline.CacheControl.BYPASS_CACHE
-import de.uos.campusapp.api.tumonline.CacheControl.USE_CACHE
+import de.uos.campusapp.api.general.CacheControl
+import de.uos.campusapp.api.general.CacheControl.BYPASS_CACHE
+import de.uos.campusapp.api.general.CacheControl.USE_CACHE
 import de.uos.campusapp.component.other.generic.adapter.NoResultsAdapter
 import de.uos.campusapp.component.other.generic.fragment.FragmentForAccessingApi
 import de.uos.campusapp.component.ui.chat.activity.ChatActivity

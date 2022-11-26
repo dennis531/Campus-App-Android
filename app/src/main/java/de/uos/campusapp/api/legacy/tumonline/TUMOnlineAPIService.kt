@@ -1,7 +1,7 @@
-package de.uos.campusapp.api.tumonline
+package de.uos.campusapp.api.legacy.tumonline
 
-import de.uos.campusapp.api.tumonline.model.AccessToken
-import de.uos.campusapp.api.tumonline.model.TokenConfirmation
+import de.uos.campusapp.api.legacy.tumonline.model.AccessToken
+import de.uos.campusapp.api.legacy.tumonline.model.TokenConfirmation
 import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.GET

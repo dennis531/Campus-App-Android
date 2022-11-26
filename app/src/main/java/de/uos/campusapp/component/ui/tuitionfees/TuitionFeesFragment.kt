@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.other.generic.fragment.FragmentForAccessingApi
 import de.uos.campusapp.component.ui.tuitionfees.model.AbstractTuition
 import de.uos.campusapp.databinding.FragmentTuitionFeesBinding

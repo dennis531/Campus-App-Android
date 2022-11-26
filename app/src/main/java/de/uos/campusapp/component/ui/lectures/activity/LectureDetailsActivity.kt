@@ -9,7 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.other.generic.activity.ActivityForAccessingApi
 import de.uos.campusapp.component.ui.lectures.api.LecturesAPI
 import de.uos.campusapp.component.ui.lectures.model.AbstractLecture

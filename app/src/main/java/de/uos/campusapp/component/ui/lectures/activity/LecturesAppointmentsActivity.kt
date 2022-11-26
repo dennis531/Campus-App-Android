@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.other.generic.activity.ActivityForAccessingApi
 import de.uos.campusapp.component.ui.lectures.adapter.LectureAppointmentsListAdapter
 import de.uos.campusapp.component.ui.lectures.api.LecturesAPI

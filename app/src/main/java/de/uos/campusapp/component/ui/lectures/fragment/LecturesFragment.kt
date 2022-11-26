@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.other.generic.adapter.NoResultsAdapter
 import de.uos.campusapp.component.other.generic.fragment.FragmentForSearching
 import de.uos.campusapp.component.ui.lectures.LectureSearchSuggestionProvider

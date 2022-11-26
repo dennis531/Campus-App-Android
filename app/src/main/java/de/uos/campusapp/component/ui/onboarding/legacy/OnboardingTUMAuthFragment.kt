@@ -11,10 +11,10 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
 import de.uos.campusapp.api.auth.legacy.AuthenticationManager
 import de.uos.campusapp.api.auth.legacy.exception.NoPublicKey
-import de.uos.campusapp.api.tumonline.TUMOnlineClient
+import de.uos.campusapp.api.legacy.tumonline.TUMOnlineClient
 import de.uos.campusapp.api.general.exception.UnauthorizedException
 import de.uos.campusapp.api.general.exception.UnknownErrorException
-import de.uos.campusapp.api.tumonline.model.AccessToken
+import de.uos.campusapp.api.legacy.tumonline.model.AccessToken
 import de.uos.campusapp.component.other.generic.fragment.BaseFragment
 import de.uos.campusapp.component.ui.onboarding.OnboardingNavigator
 import de.uos.campusapp.component.ui.onboarding.di.OnboardingComponent

@@ -1,4 +1,4 @@
-package de.uos.campusapp.api.tumonline.interceptors
+package de.uos.campusapp.api.legacy.tumonline.interceptors
 
 import android.content.Context
 import de.uos.campusapp.api.general.exception.UnauthorizedException

@@ -1,13 +1,13 @@
-package de.uos.campusapp.api.tumcabe;
+package de.uos.campusapp.api.legacy.tumcabe;
 
 import java.util.List;
 
-import de.uos.campusapp.api.tumcabe.model.DeviceRegister;
-import de.uos.campusapp.api.tumcabe.model.DeviceUploadFcmToken;
-import de.uos.campusapp.api.tumcabe.model.ObfuscatedIdsUpload;
-import de.uos.campusapp.api.tumcabe.model.TUMCabeStatus;
-import de.uos.campusapp.api.tumcabe.model.TUMCabeVerification;
-import de.uos.campusapp.api.tumcabe.model.UploadStatus;
+import de.uos.campusapp.api.legacy.tumcabe.model.DeviceRegister;
+import de.uos.campusapp.api.legacy.tumcabe.model.DeviceUploadFcmToken;
+import de.uos.campusapp.api.legacy.tumcabe.model.ObfuscatedIdsUpload;
+import de.uos.campusapp.api.legacy.tumcabe.model.TUMCabeStatus;
+import de.uos.campusapp.api.legacy.tumcabe.model.TUMCabeVerification;
+import de.uos.campusapp.api.legacy.tumcabe.model.UploadStatus;
 import de.uos.campusapp.component.ui.legacy.feedback.model.Feedback;
 import de.uos.campusapp.component.ui.legacy.feedback.model.FeedbackResult;
 import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteria;
@@ -27,14 +27,14 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
-import static de.uos.campusapp.api.tumcabe.TUMCabeClient.API_CAFETERIAS;
-import static de.uos.campusapp.api.tumcabe.TUMCabeClient.API_CHAT_MEMBERS;
-import static de.uos.campusapp.api.tumcabe.TUMCabeClient.API_CHAT_ROOMS;
-import static de.uos.campusapp.api.tumcabe.TUMCabeClient.API_DEVICE;
-import static de.uos.campusapp.api.tumcabe.TUMCabeClient.API_FEEDBACK;
-import static de.uos.campusapp.api.tumcabe.TUMCabeClient.API_MEMBERS;
-import static de.uos.campusapp.api.tumcabe.TUMCabeClient.API_OPENING_HOURS;
-import static de.uos.campusapp.api.tumcabe.TUMCabeClient.API_UPDATE_NOTE;
+import static de.uos.campusapp.api.legacy.tumcabe.TUMCabeClient.API_CAFETERIAS;
+import static de.uos.campusapp.api.legacy.tumcabe.TUMCabeClient.API_CHAT_MEMBERS;
+import static de.uos.campusapp.api.legacy.tumcabe.TUMCabeClient.API_CHAT_ROOMS;
+import static de.uos.campusapp.api.legacy.tumcabe.TUMCabeClient.API_DEVICE;
+import static de.uos.campusapp.api.legacy.tumcabe.TUMCabeClient.API_FEEDBACK;
+import static de.uos.campusapp.api.legacy.tumcabe.TUMCabeClient.API_MEMBERS;
+import static de.uos.campusapp.api.legacy.tumcabe.TUMCabeClient.API_OPENING_HOURS;
+import static de.uos.campusapp.api.legacy.tumcabe.TUMCabeClient.API_UPDATE_NOTE;
 
 public interface TUMCabeAPIService {
 

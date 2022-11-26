@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.TUMOnlineClient
+import de.uos.campusapp.api.legacy.tumonline.TUMOnlineClient
 import de.uos.campusapp.api.general.exception.UnauthorizedException
 import de.uos.campusapp.component.other.generic.fragment.BaseFragment
 import de.uos.campusapp.component.ui.onboarding.OnboardingNavigator

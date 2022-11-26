@@ -1,7 +1,7 @@
 package de.uos.campusapp.component.ui.overview.card
 
 import androidx.annotation.NonNull
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 
 /**
  * Interface which has to be implemented by a manager class to add cards to the stream

@@ -10,9 +10,9 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import de.uos.campusapp.api.tumonline.CacheControl
-import de.uos.campusapp.api.tumonline.CacheControl.BYPASS_CACHE
-import de.uos.campusapp.api.tumonline.CacheControl.USE_CACHE
+import de.uos.campusapp.api.general.CacheControl
+import de.uos.campusapp.api.general.CacheControl.BYPASS_CACHE
+import de.uos.campusapp.api.general.CacheControl.USE_CACHE
 import de.uos.campusapp.di.injector
 import de.uos.campusapp.utils.CacheManager
 import de.uos.campusapp.utils.ConfigUtils

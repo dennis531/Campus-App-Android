@@ -1,4 +1,4 @@
-package de.uos.campusapp.api.tumonline.converters
+package de.uos.campusapp.api.legacy.tumonline.converters
 
 import com.tickaroo.tikxml.TypeConverter
 import java.text.NumberFormat

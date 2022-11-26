@@ -1,9 +1,9 @@
-package de.uos.campusapp.api.tumonline.interceptors
+package de.uos.campusapp.api.legacy.tumonline.interceptors
 
 import android.content.Context
 import com.tickaroo.tikxml.TikXml
 import de.uos.campusapp.api.general.exception.UnauthorizedException
-import de.uos.campusapp.api.tumonline.model.Error
+import de.uos.campusapp.api.legacy.tumonline.model.Error
 import de.uos.campusapp.utils.Const
 import de.uos.campusapp.utils.Utils
 import de.uos.campusapp.utils.tryOrNull

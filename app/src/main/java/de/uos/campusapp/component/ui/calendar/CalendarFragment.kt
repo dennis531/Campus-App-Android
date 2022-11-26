@@ -18,7 +18,7 @@ import com.alamkanak.weekview.WeekView
 import com.alamkanak.weekview.WeekViewDisplayable
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.notifications.persistence.NotificationType
 import de.uos.campusapp.component.other.generic.fragment.FragmentForAccessingApi
 import de.uos.campusapp.component.ui.calendar.api.CalendarAPI

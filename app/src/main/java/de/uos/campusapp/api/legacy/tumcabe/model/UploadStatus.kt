@@ -1,4 +1,4 @@
-package de.uos.campusapp.api.tumcabe.model
+package de.uos.campusapp.api.legacy.tumcabe.model
 
 import com.google.gson.annotations.SerializedName
 

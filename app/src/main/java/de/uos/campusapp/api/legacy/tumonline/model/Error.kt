@@ -1,4 +1,4 @@
-package de.uos.campusapp.api.tumonline.model
+package de.uos.campusapp.api.legacy.tumonline.model
 
 import com.tickaroo.tikxml.annotation.PropertyElement
 import com.tickaroo.tikxml.annotation.Xml

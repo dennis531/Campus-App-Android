@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.uos.campusapp.R
-import de.uos.campusapp.api.tumonline.CacheControl
+import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.service.DownloadWorker
 import de.uos.campusapp.utils.NetUtils
 import de.uos.campusapp.utils.Utils
