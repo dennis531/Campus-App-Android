@@ -14,8 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- For automatically setting up eduroam -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- FCM requires a Google account. -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- Allow vibration for chat messages -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- Allow vibration for chat messages -->
     <uses-permission android:name="android.permission.VIBRATE" /> <!-- As AndroidLint suggests: We do not necessarily need camera access -->
     <uses-feature
         android:name="android.hardware.camera"
@@ -50,7 +49,9 @@
 
         <uses-library android:name="android.test.runner" />
 
-        <receiver android:name=".service.ScanResultsAvailableReceiver">
+        <receiver
+            android:name=".service.ScanResultsAvailableReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.net.wifi.SCAN_RESULTS" />
             </intent-filter>
@@ -84,6 +85,7 @@
 
         <activity
             android:name=".component.ui.onboarding.StartupActivity"
+            android:exported="true"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name" >
             <intent-filter>
@@ -99,6 +101,7 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".component.other.generic.activity.BaseNavigationActivity"
+            android:exported="false"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -184,6 +187,7 @@
         </activity>
         <activity
             android:name=".component.ui.transportation.TransportationActivity"
+            android:exported="false"
             android:configChanges="orientation|screenSize"
             android:label="@string/transport"
             android:launchMode="singleTop"
@@ -235,6 +239,7 @@
         </activity>
         <activity
             android:name="de.uos.campusapp.component.ui.lectures.activity.LecturesPersonalActivity"
+            android:exported="false"
             android:configChanges="orientation|screenSize"
             android:label="@string/my_lectures"
             android:launchMode="singleTop"
@@ -272,6 +277,7 @@
         </activity>
         <activity
             android:name="de.uos.campusapp.component.ui.person.PersonSearchActivity"
+            android:exported="false"
             android:configChanges="orientation|screenSize"
             android:label="@string/person_search"
             android:launchMode="singleTop"
@@ -299,6 +305,7 @@
         </activity>
         <activity
             android:name="de.uos.campusapp.component.ui.roomfinder.RoomFinderActivity"
+            android:exported="false"
             android:configChanges="orientation|screenSize"
             android:label="@string/roomfinder"
             android:launchMode="singleTop"
@@ -359,6 +366,7 @@
         </activity>
         <activity
             android:name=".component.ui.onboarding.OnboardingActivity"
+            android:exported="true"
             android:configChanges="orientation|screenSize"
             android:label="@string/connect_to_your_campus"
             android:launchMode="singleTop"
@@ -476,6 +484,7 @@
 
         <activity
             android:name=".component.ui.transportation.widget.TransportationWidgetConfigureActivity"
+            android:exported="false"
             android:allowTaskReparenting="false"
             android:configChanges="orientation|screenSize"
             android:excludeFromRecents="true"
@@ -513,6 +522,7 @@
 
         <activity
             android:name="de.uos.campusapp.component.ui.calendar.widget.TimetableWidgetConfigureActivity"
+            android:exported="false"
             android:allowTaskReparenting="false"
             android:configChanges="orientation|screenSize"
             android:excludeFromRecents="true"
@@ -523,7 +533,9 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity> <!-- Used to restart alarm when device has been restarted -->
-        <receiver android:name=".service.StartSyncReceiver" >
+        <receiver
+            android:name=".service.StartSyncReceiver"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -547,7 +559,9 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver android:name=".service.GeofencingUpdateReceiver" />
-        <receiver android:name=".service.GeofencingStartupReceiver"
+        <receiver
+            android:name=".service.GeofencingStartupReceiver"
+            android:exported="false"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

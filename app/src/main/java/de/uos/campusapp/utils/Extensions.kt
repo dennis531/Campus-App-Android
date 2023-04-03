@@ -51,7 +51,7 @@ val Menu.allItems: List<MenuItem>
     get() {
         return items.flatMap { item ->
             if (item.hasSubMenu()) {
-                item.subMenu.allItems
+                item.subMenu!!.allItems
             } else {
                 listOf(item)
             }

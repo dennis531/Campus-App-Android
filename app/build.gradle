@@ -17,7 +17,7 @@ apply from: '../gradle/scripts/checkstyle.gradle'
 apply from: '../gradle/scripts/testLogging.gradle'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     buildTypes {
         all {
             proguardFiles(file('../proguard').listFiles())
@@ -37,9 +37,9 @@ android {
     defaultConfig {
         applicationId "de.uos.campusapp"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 1
-        versionName "1.0-dev"
+        versionName "1.0.0-dev"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
