@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/startupTumLogo"
+        android:id="@+id/startupCampusLogo"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_centerInParent="true"
@@ -29,7 +29,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/startupTumLogo"
+        app:layout_constraintTop_toBottomOf="@id/startupCampusLogo"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

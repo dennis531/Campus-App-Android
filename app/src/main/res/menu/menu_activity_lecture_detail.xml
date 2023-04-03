@@ -6,12 +6,12 @@
         android:id="@+id/action_open_lecture_files"
         android:icon="@drawable/ic_outline_folder_24px"
         android:title="@string/lecture_files"
-        app:iconTint="@color/tum_blue"
+        app:iconTint="@color/campus_blue"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_open_lecture_recordings"
         android:icon="@drawable/ic_outline_videocam_24px"
         android:title="@string/lecture_files"
-        app:iconTint="@color/tum_blue"
+        app:iconTint="@color/campus_blue"
         app:showAsAction="ifRoom" />
 </menu>

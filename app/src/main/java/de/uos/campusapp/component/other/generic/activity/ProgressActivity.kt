@@ -96,8 +96,8 @@ abstract class ProgressActivity<T>(
             setOnRefreshListener(this@ProgressActivity)
             setColorSchemeResources(
                     R.color.color_primary,
-                    R.color.tum_A100,
-                    R.color.tum_A200
+                    R.color.campus_A100,
+                    R.color.campus_A200
             )
         }
     }

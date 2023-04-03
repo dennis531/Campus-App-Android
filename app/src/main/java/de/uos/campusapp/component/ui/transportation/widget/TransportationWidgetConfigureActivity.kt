@@ -47,7 +47,7 @@ class TransportationWidgetConfigureActivity : ActivityForSearching<Unit>(
         supportActionBar?.let { actionBar ->
             actionBar.setDisplayHomeAsUpEnabled(true)
             val closeIcon = ContextCompat.getDrawable(this, R.drawable.ic_action_cancel)
-            val color = ContextCompat.getColor(this, R.color.tum_blue)
+            val color = ContextCompat.getColor(this, R.color.campus_blue)
             closeIcon?.setTint(color)
             actionBar.setHomeAsUpIndicator(closeIcon)
         }

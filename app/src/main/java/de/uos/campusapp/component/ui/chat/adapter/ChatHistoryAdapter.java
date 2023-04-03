@@ -198,7 +198,7 @@ public class ChatHistoryAdapter extends BaseAdapter {
                 iconTint = ContextCompat.getColor(context, R.color.error);
             } else {
                 statusIcon = ContextCompat.getDrawable(context, R.drawable.ic_check);
-                iconTint = ContextCompat.getColor(context, R.color.tum_blue);
+                iconTint = ContextCompat.getColor(context, R.color.campus_blue);
             }
 
             if (isError) {

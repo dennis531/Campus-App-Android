@@ -167,7 +167,7 @@ class FeedbackActivity : BaseActivity(R.layout.activity_feedback), FeedbackContr
                 includeEmailCheckbox.text = getString(R.string.feedback_include_email)
                 customEmailInput.setText(email)
             } else {
-                includeEmailCheckbox.text = getString(R.string.feedback_include_email_tum_id, email)
+                includeEmailCheckbox.text = getString(R.string.feedback_include_email_id, email)
             }
         }
 

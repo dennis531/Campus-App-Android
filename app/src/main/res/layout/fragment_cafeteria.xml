@@ -15,7 +15,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/default_window_background"
             android:elevation="@dimen/material_default_elevation"
-            android:theme="@style/TumToolbar">
+            android:theme="@style/CampusToolbar">
 
             <Spinner
                 android:id="@+id/spinnerToolbar"

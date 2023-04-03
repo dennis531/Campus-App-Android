@@ -30,7 +30,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/tumInGeneralRadioButton"
+                    android:id="@+id/campusInGeneralRadioButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -38,7 +38,7 @@
                     android:text="@string/general" />
 
                 <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/tumCampusAppRadioButton"
+                    android:id="@+id/campusAppRadioButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

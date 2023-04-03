@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:tumcampus="http://schemas.android.com/apk/res-auto">
+      xmlns:campusapp="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_search"
         android:title="@string/search"
         android:icon="@drawable/ic_action_search"
-        tumcampus:actionViewClass="androidx.appcompat.widget.SearchView"
-        tumcampus:showAsAction="always"/>
+        campusapp:actionViewClass="androidx.appcompat.widget.SearchView"
+        campusapp:showAsAction="always"/>
 </menu>

@@ -142,11 +142,11 @@
     <string name="about_tca">About the App</string>
     <string name="information">Information</string>
     <string name="facebook" translatable="false">Facebook</string>
-    <string name="facebook_link" translatable="false">https://m.facebook.com/TUMCampus</string>
-    <string name="facebook_link_app" translatable="false">fb://facewebmodal/f?href=https://www.facebook.com/TUMCampus</string>
+    <string name="facebook_link" translatable="false"></string>
+    <string name="facebook_link_app" translatable="false">fb://facewebmodal/f?href=</string>
     <string name="github" translatable="false">GitHub</string>
     <string name="github_contribute">Contribute on GitHub</string>
-    <string name="github_link" translatable="false">https://github.com/TUM-Dev/Campus-Android</string>
+    <string name="github_link" translatable="false">https://github.com/dennis531/Campus-App-Android</string>
     <string name="licences">Open-source licences</string>
     <string name="licences_summary">Legal notes to licences</string>
 
@@ -228,7 +228,6 @@
 
     <!-- Organisations -->
     <string name="organisation">University Osnabrück</string>
-    <string name="tum">Technical university of Munich</string>
     <string name="contact_person">Contact Person</string>
     <string name="secretary">Secretary</string>
     <string name="bib">Library</string>
@@ -405,10 +404,8 @@
     <string name="send_email">Send e-mail feedback</string>
     <string name="show_feedback">Send feedback</string>
     <string name="feedbackSubj">Feedback for Campus App</string>
-    <!-- TODO: Rework info text-->
     <string name="app_info_text">
-        The TUM Campus App is being developed by volunteers, students of the Android practical course and employees of the Chair of Operating Systems led by Professor Dr. Baumgarten.
-        The app can be used on smartphones and tablets and is available for both iOS and Android.\n\nYou can reach us via the feedback form in the app or via email (app@tum.de) if you have any special concerns or requests.
+        The Campus App is an open source project based on the TUM Campus App. The app can be used on smartphones and tablets and is available for Android.\n\nYou can reach us via the feedback form in the app or via email (dennis.benz@uos.de) if you have any special concerns or requests.
     </string>
 
     <!-- END Translated, please do not change identifiers -->
@@ -497,16 +494,9 @@
     <string name="vibration">Vibration</string>
     <string name="silent">Silent</string>
     <string name="mode_silent_mode">State during lectures</string>
-    <string name="url_privacy_policy" translatable="false">https://www.tum.app/privacy</string>
+    <string name="url_privacy_policy" translatable="false"></string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="message_details">Message info</string>
-    <string name="message_detail_text">&lt;b>Sender&lt;/b>&lt;br>
-Name: %1$s&lt;br>
-E-Mail: %2$s@mytum.de&lt;br>&lt;br>
-&lt;b>Message&lt;/b>&lt;br>
-Time: %3$s&lt;br>
-Status: %4$s&lt;br>
-Signature: %5$s</string>
     <string name="valid">Valid</string>
     <string name="not_valid">Not valid</string>
     <string name="status_sent">Sent</string>
@@ -523,7 +513,6 @@ Signature: %5$s</string>
     <string name="public_key_mail">Public key activation mail sent to %s@mytum.de.\n\n<b>Please activate it now!</b></string>
     <string name="failure_uploading_public_key">Failure uploading public key</string>
     <string name="key_not_activated">You have not activated your key!</string>
-    <string name="no_rights_to_access_lectures">Lectures could not be accessed. Please check the rights of your TUMonline token!</string>
     <string name="edit">Edit</string>
     <string name="auto_join_chat">Auto-join new lecture rooms</string>
     <string name="set_auto_join_chat">If you subscribe to a new lecture, the app will automatically add you to the lecture’s chat room.</string>
@@ -558,7 +547,6 @@ Signature: %5$s</string>
     <string name="event_plan">Event plan</string>
     <string name="please_connect_to_internet">Please connect to internet in order to proceed the first app start</string>
     <string name="transition_card" translatable="false">card_transition</string>
-    <string name="tumonline_link" translatable="false"><a href="http://campus.tum.de">TUMonline</a></string>
     <string name="accept_chat_terms">Terms must be accepted to use group chat!</string>
     <string name="IN">in</string>
     <string name="MINUTES">minutes</string>
@@ -603,7 +591,7 @@ Signature: %5$s</string>
     <string name="feedback_hint">What would you like us to know?</string>
     <string name="add_picture_button">Add picture</string>
     <string name="feedback_include_email">Include my email to get a reply</string>
-    <string name="feedback_include_email_tum_id">Include my email to get a reply (%s)</string>
+    <string name="feedback_include_email_id">Include my email to get a reply (%s)</string>
     <string name="feedback_email_hint">Your email</string>
     <string name="feedback_include_location">Include current location</string>
     <string name="feedback_send_button">Send feedback</string>
@@ -642,9 +630,6 @@ Signature: %5$s</string>
 
     <string name="channel_mvv">Public Transport</string>
     <string name="channel_description_mvv">Departures at nearby stations</string>
-
-    <string name="channel_tum_alarmierung">Campus Emergency Notifications</string>
-    <string name="channel_description_tum_alarmierung">Alarms about emergencies at Campus</string>
 
     <string name="favorite_dish_info">You will get notifications on days your favorite dishes are available in the cafeteria. Enjoy!</string>
     <string name="location_services_off_title">Location Services are Off</string>

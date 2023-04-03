@@ -78,7 +78,7 @@ class StartupActivity : BaseActivity(R.layout.activity_startup, Component.ONBOAR
 
     private fun initEasterEgg() {
         if (Utils.getSettingBool(this, Const.RAINBOW_MODE, false)) {
-            binding.startupTumLogo.setImageResource(R.drawable.campus_logo_rainbow)
+            binding.startupCampusLogo.setImageResource(R.drawable.campus_logo_rainbow)
         }
 
         binding.container.setOnClickListener {
@@ -87,9 +87,9 @@ class StartupActivity : BaseActivity(R.layout.activity_startup, Component.ONBOAR
                 val shouldEnableRainbow = Utils.getSettingBool(this, Const.RAINBOW_MODE, false).not()
 
                 if (shouldEnableRainbow) {
-                    binding.startupTumLogo.setImageResource(R.drawable.campus_logo_rainbow)
+                    binding.startupCampusLogo.setImageResource(R.drawable.campus_logo_rainbow)
                 } else {
-                    binding.startupTumLogo.setImageResource(R.drawable.campus_logo_blue)
+                    binding.startupCampusLogo.setImageResource(R.drawable.campus_logo_blue)
                 }
 
                 Utils.setSetting(this, Const.RAINBOW_MODE, shouldEnableRainbow)

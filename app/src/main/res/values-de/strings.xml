@@ -175,7 +175,6 @@
 
     <!-- Organisations -->
     <string name="organisation">Universität Osnabrück</string>
-    <string name="tum">Technische Universität München</string>
     <string name="contact_person">Kontaktperson</string>
     <string name="secretary">Sekretariat</string>
     <string name="bib">Bibliothek</string>
@@ -422,13 +421,6 @@
     <string name="silent">Leise</string>
     <string name="mode_silent_mode">Modus während Veranstaltung</string>
     <string name="message_details">Nachricht-Info</string>
-    <string name="message_detail_text">&lt;b>Gesendet von&lt;/b>&lt;br>
-Name: %1$s&lt;br>
-E-Mail: %2$s@mytum.de&lt;br>&lt;br>
-&lt;b>Nachricht&lt;/b>&lt;br>
-Zeit: %3$s&lt;br>
-Status: %4$s&lt;br>
-Signatur: %5$s</string>
     <string name="valid">Gültig</string>
     <string name="not_valid">Nicht gültig</string>
     <string name="status_sent">Gesendet</string>
@@ -441,7 +433,6 @@ Signatur: %5$s</string>
     <string name="public_key_mail">Public Key Aktivierungs-E-Mail wurde an %s@mytum.de gesendet!\n\n<b>Bitte aktiviere ihn jetzt!</b></string>
     <string name="failure_uploading_public_key">Fehler beim Hochladen des Public Key</string>
     <string name="key_not_activated">Du hast deinen Key noch nicht aktiviert!</string>
-    <string name="no_rights_to_access_lectures">Veranstaltungen konnten nicht abgerufen werden. Bitte überprüfe die Rechte deines TUMonline Tokens!</string>
     <string name="edit">Bearbeiten</string>
     <string name="auto_join_chat">Neuen Veranstaltungs-Chats beitreten</string>
     <string name="set_auto_join_chat">Wenn du dich für eine neue Veranstaltung einschreibst, wirst du automatisch zum Chatroom der Veranstaltung hinzugefügt.</string>
@@ -524,7 +515,7 @@ Signatur: %5$s</string>
     <string name="feedback_hint">Hier ist Platz für dein Feedback…</string>
     <string name="add_picture_button">Bild hinzufügen</string>
     <string name="feedback_include_email">Email mitversenden um eine Antwort zu erhalten</string>
-    <string name="feedback_include_email_tum_id">Email mitversenden um eine Antwort zu erhalten (%s)</string>
+    <string name="feedback_include_email_id">Email mitversenden um eine Antwort zu erhalten (%s)</string>
     <string name="feedback_email_hint">E-Mail-Adresse</string>
     <string name="feedback_include_location">Standort beifügen</string>
     <string name="feedback_send_button">Feedback abschicken</string>
@@ -548,7 +539,6 @@ Signatur: %5$s</string>
     <string name="channel_cafeteria">Mensa</string>
     <string name="channel_chat">Chat</string>
     <string name="channel_mvv">MVV</string>
-    <string name="channel_tum_alarmierung">Campus Alarmierung (für Katastrophen)</string>
 
     <string name="favorite_dish_info">Du bekommst an Tagen, an denen es eines deiner Lieblingsgerichte in der Mensa gibt eine Benachrichtigung. Guten Appetit!</string>
     <string name="location_services_off_title">Standortfreigabe ist ausgeschaltet</string>
@@ -643,7 +633,6 @@ Signatur: %5$s</string>
     <string name="channel_description_cafeteria">Aktuelles Tagesmenü</string>
     <string name="channel_description_chat">Neue Chat-Nachrichten</string>
     <string name="channel_description_mvv">Abfahrten an nahegelegenen Haltestellen</string>
-    <string name="channel_description_tum_alarmierung">Alarmierung bei Notfällen an dem Campus</string>
     <string name="channel_description_eduroam">Untersützung beim Einrichten von eduroam</string>
     <string name="channel_messages">Nachrichten</string>
     <string name="channel_description_messages">Neue Nachrichten</string>

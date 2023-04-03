@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:elevation="12dp"
-            android:theme="@style/TumToolbar"
-            app:popupTheme="@style/TumToolbarPopUp">
+            android:theme="@style/CampusToolbar"
+            app:popupTheme="@style/CampusToolbarPopUp">
 
             <Spinner
                 android:id="@+id/filterSpinner"

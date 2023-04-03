@@ -36,7 +36,7 @@
                 android:paddingTop="@dimen/material_small_padding"
                 android:paddingEnd="@dimen/material_default_padding"
                 android:paddingBottom="@dimen/material_small_padding"
-                android:textColor="@color/tum_blue"
+                android:textColor="@color/campus_blue"
                 tools:text="Show 3 more ..." />
 
             <LinearLayout

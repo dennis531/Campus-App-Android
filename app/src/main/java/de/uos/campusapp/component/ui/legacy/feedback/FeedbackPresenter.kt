@@ -68,7 +68,7 @@ class FeedbackPresenter @Inject constructor(
     }
 
     private fun updateFeedbackTopic(topicButton: Int) {
-        if (topicButton == R.id.tumInGeneralRadioButton) {
+        if (topicButton == R.id.campusInGeneralRadioButton) {
             feedback.topic = Const.FEEDBACK_TOPIC_GENERAL
         } else {
             feedback.topic = Const.FEEDBACK_TOPIC_APP

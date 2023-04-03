@@ -5,8 +5,8 @@
 
     <color name="github">@color/text_secondary</color>
 
-    <color name="list_divider">@color/tum_400</color>
-    <color name="placeholder">@color/tum_light_gray</color>
+    <color name="list_divider">@color/campus_400</color>
+    <color name="placeholder">@color/campus_light_gray</color>
 
     <color name="spinner_border">#8AFFFFFF</color>
 
@@ -19,22 +19,21 @@
     <color name="secondary_window_background">@android:color/black</color>
 
     <color name="chat_incoming">#151515</color>
-    <color name="chat_outgoing">@color/tum_900</color>
+    <color name="chat_outgoing">@color/campus_900</color>
 
     <!-- Navigation drawer -->
 
     <color name="navigation_drawer_header_background">@color/black</color>
 
     <color name="navigation_drawer_item_background_selected">#780065BD</color>
-    <color name="navigation_drawer_item_text_selected">@color/tum_100</color>
+    <color name="navigation_drawer_item_text_selected">@color/campus_100</color>
 
 
     <color name="study_room_free">#213D21</color>
     <color name="study_room_occupied">#551E25</color>
 
-    <!-- official TUM accent colors (style guide) -->
-    <color name="color_primary">@color/tum_400</color>
-    <color name="color_primary_dark">@color/tum_300</color>
+    <color name="color_primary">@color/campus_400</color>
+    <color name="color_primary_dark">@color/campus_300</color>
 
     <color name="grade_4.1">#BF1010</color>
     <color name="grade_4.2">#AA2020</color>

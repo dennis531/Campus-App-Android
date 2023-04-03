@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="@dimen/material_default_elevation"
-        android:theme="@style/TumToolbar"
-        app:popupTheme="@style/TumToolbarPopUp"/>
+        android:theme="@style/CampusToolbar"
+        app:popupTheme="@style/CampusToolbarPopUp"/>
 
 </com.google.android.material.appbar.AppBarLayout>

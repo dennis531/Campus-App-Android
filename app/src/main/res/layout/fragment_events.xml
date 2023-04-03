@@ -14,8 +14,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/TumToolbar"
-            app:popupTheme="@style/TumToolbarPopUp" />
+            android:theme="@style/CampusToolbar"
+            app:popupTheme="@style/CampusToolbarPopUp" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/event_tab"
