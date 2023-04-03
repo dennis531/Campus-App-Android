@@ -77,12 +77,11 @@
                 android:text="@string/github"
                 android:textAllCaps="false"
                 android:textColor="@color/github"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cornerRadius="@dimen/material_corner_radius"
                 app:icon="@drawable/ic_code_white_24dp"
                 app:iconPadding="@dimen/material_small_padding"
-                app:iconTint="@color/github"
-                tools:visibility="visible" />
+                app:iconTint="@color/github" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/email_button"

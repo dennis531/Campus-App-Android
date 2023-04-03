@@ -219,7 +219,6 @@
     <string name="opening_hours">Opening Hours</string>
     <string name="news">News</string>
     <string name="events" translatable="false">Events</string>
-    <string name="barrier_free">Barrier-free Information</string>
 
     <!-- Activity titles -->
     <string name="lectures_information">Lecture Information</string>
@@ -302,19 +301,6 @@
     <!-- Study Rooms -->
     <string name="occupied">Occupied till</string>
     <string name="free">Free</string>
-
-    <!-- Plans -->
-    <string name="campus_garching" translatable="false">Campus Garching</string>
-    <string name="campus_klinikum">Campus Klinikum</string>
-    <string name="campus_olympiapark">Campus Olympiapark</string>
-    <string name="campus_olympiapark_gyms">Campus Olympiapark hall plan</string>
-    <string name="campus_main">Main Campus</string>
-    <string name="campus_weihenstephan">Campus Weihenstephan</string>
-    <string name="campus_garching_adress">Walther-Meißner-Straße 3, 85748 Garching</string>
-    <string name="campus_klinikum_adress">Ismaninger Straße 22, 81675 Munich</string>
-    <string name="campus_olympiapark_adress">Connollystraße 32, 80809 Munich</string>
-    <string name="campus_main_adress">Arcisstraße 21, 80333 Munich</string>
-    <string name="campus_weihenstephan_adress">Liesel-Beckmann-Straße 6, 85354 Freising</string>
 
     <!-- Chat rooms -->
     <string name="my_chat_rooms">My Chat Rooms</string>
@@ -412,7 +398,6 @@
     <string name="min_search_len" tools:ignore="PluralsCandidate">Query must be at least %d chars long</string>
     <string name="default_cafeteria">Default Cafeteria</string>
     <string name="default_station">Default Station</string>
-    <string name="campus_klinikum_großhadern">Klinikum Großhadern</string>
     <string name="cafeteria">Cafeteria</string>
     <string name="card_cafeteria_summary">Displays the cafeteria menu</string>
     <string name="card_transportation_summary">Shows you the departure times of public transport</string>
@@ -431,18 +416,6 @@
     <string name="opens">Opens</string>
     <string name="closes">Closes</string>
     <string name="closed">Closed</string>
-
-    <!-- Kino -->
-    <string name="kino" translatable="false">der tu film</string>
-    <string name="imdb_rating">IMDb-Rating</string>
-    <string name="year">Year of release</string>
-    <string name="runtime">Runtime</string>
-    <string name="genres">Genres</string>
-    <string name="director">Director</string>
-    <string name="actors">Actors</string>
-    <string name="description">Description</string>
-    <string name="no_movies">No upcoming movies</string>
-    <string name="no_tickets_remaining_tufilm_message">Unfortunately there are no more online tickets available for this movie.\nAdditional tickets can be purchased at our evening box office or our advance ticket sales desks.</string>
 
     <!-- Eduroam card -->
     <string name="eduroam" translatable="false">Eduroam</string>
@@ -489,8 +462,6 @@
     <string name="error_setup_chat_member">Something is wrong with your chat registration!</string>
     <string name="error_pk_verification">Verification error occurred</string>
     <string name="room_timetable">Room timetable</string>
-    <string name="newspread" translatable="false" translateable="false">Newspread</string>
-    <string name="newspread_summary">Select which newspread you want to be shown. This are the slides on the info monitors in your faculty buildings.</string>
     <string name="vibration">Vibration</string>
     <string name="silent">Silent</string>
     <string name="mode_silent_mode">State during lectures</string>
@@ -505,9 +476,6 @@
     <string name="joined">Joined</string>
     <string name="not_joined">All</string>
     <string name="default_campus">Default campus</string>
-    <string name="campus_garching_hochbrueck" translatable="false">Campus Garching Hochbrück</string>
-    <string name="campus_leopoldstrasse" translatable="false">Campus Leopoldstraße</string>
-    <string name="campus_geschwister_scholl" translatable="false">Campus Geschwister Scholl-Platz</string>
     <string name="no_default_campus">No default campus</string>
     <string name="reply_label">Reply</string>
     <string name="public_key_mail">Public key activation mail sent to %s@mytum.de.\n\n<b>Please activate it now!</b></string>
@@ -532,7 +500,7 @@
 
     <string name="update_notification_description">A new version of the Campus App has been released on %s. Tap to download now.</string>
     <string name="support_us">Help us to improve the Campus App. Send us an e-mail if you encounter a problem.</string>
-    <string name="support_email_link" translatable="false">dbenz@uos.de</string>
+    <string name="support_email_link" translatable="false">debenz@uos.de</string>
     <string name="support_us_title">Support us</string>
     <string name="permission_calendar_explanation">Campus App needs permission to access your calendar to be able to sync it with your campus calendar.</string>
     <string name="permission_location_explanation">Campus App needs permission to access your location to display useful information, e.g. the menus of cafeterias around you or timetables of your nearest MVV station. If you do not grant this permission, you will still be able to configure your location in the settings.</string>
@@ -542,12 +510,10 @@
     <string name="ok">OK</string>
     <string name="alarm_date_published_on">Published on:</string>
     <string name="chat_not_setup">Chat is not setup properly, please rerun the wizard via the settings!</string>
-    <string name="www" translatable="false">der tu film</string>
     <string name="more_info">More Information</string>
     <string name="event_plan">Event plan</string>
     <string name="please_connect_to_internet">Please connect to internet in order to proceed the first app start</string>
     <string name="transition_card" translatable="false">card_transition</string>
-    <string name="accept_chat_terms">Terms must be accepted to use group chat!</string>
     <string name="IN">in</string>
     <string name="MINUTES">minutes</string>
     <string name="AT">at</string>
@@ -573,12 +539,6 @@
     <string name="eduroam_not_valid_id">Not a valid ID.</string>
     <string name="eduroam_please_enter_password">Please enter your password. It will not be saved.</string>
 
-    <!-- Barrier-free  -->
-    <string name="facilities">Facilities</string>
-    <string name="nerby_facilities">Nearby Facilities</string>
-    <string name="barrierfree_toilets">Barrier-free Toilets</string>
-    <string name="elevators">Elevators</string>
-
     <string name="eduroam_dialog_title">Delete old eduroam profile</string>
     <string name="eduroam_dialog_preferences">Open Wi-Fi preferences</string>
     <string name="done">Done</string>
@@ -587,7 +547,7 @@
     <!-- Feedback Activity -->
     <string name="feedback">Feedback</string>
     <string name="general">Campus in General</string>
-    <string name="tca">Campus App</string>
+    <string name="ca" translatable="false">Campus App</string>
     <string name="feedback_hint">What would you like us to know?</string>
     <string name="add_picture_button">Add picture</string>
     <string name="feedback_include_email">Include my email to get a reply</string>
@@ -605,7 +565,7 @@
     <string name="feedback_send_success">Your feedback was successfully sent!</string>
     <string-array name="feedback_options">
         <item>@string/general</item>
-        <item>@string/tca</item>
+        <item>@string/ca</item>
     </string-array>
     <string name="grades_without_weight">Grades without weights</string>
     <string name="study_program_format_string">Program %s</string>
@@ -679,16 +639,11 @@
     <string name="card_login_title">Welcome to the Campus App</string>
     <string name="card_login_body">Connect the app to your campus now to access your calendar, lectures and more.</string>
 
-    <string name="kino_cover_description">movie poster</string>
-    <string name="show_trailer_error">Trailer can\'t be shown</string>
-    <string name="watch_trailer">Watch trailer</string>
-
     <string name="pdf_viewer_title">PDF Viewer</string>
     <string name="dialog_add_to_contacts">Add to Contacts?</string>
 
     <!-- Add user to chat via search -->
     <string name="user_search_hint">Search Name or Identification</string>
-    <string name="error_invalid_tum_id_format">Invalid TUM-ID format</string>
     <string name="error_user_not_found">No user found</string>
     <string name="add_user_to_chat_message">Add <b>%s</b> to chat room <b>%s</b>?</string>
     <string name="chat_member_added">Added user to chat room</string>

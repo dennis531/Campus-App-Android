@@ -38,4 +38,21 @@
         <copyright>Made by Freepik and Madebyoliver</copyright>
         <url>http://flaticon.com</url>
     </notice>
+    <notice>
+        <name>Signpost</name>
+        <url>https://github.com/mttkay/signpost</url>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>okhttp-signpost</name>
+        <url>https://github.com/mttkay/signpost</url>
+        <copyright>Patrik Åkerfeldt</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>jsonapi-converter</name>
+        <url>https://github.com/mttkay/signpost</url>
+        <copyright>Jasmin Begic</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
 </notices>

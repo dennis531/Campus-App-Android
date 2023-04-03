@@ -10,5 +10,4 @@
     android:previewImage="@drawable/widget_timetable_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="15000"
-    android:widgetCategory="home_screen|keyguard"
-    tools:targetApi="jelly_bean_mr1" />
+    android:widgetCategory="home_screen|keyguard" />

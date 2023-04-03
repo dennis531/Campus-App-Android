@@ -142,17 +142,6 @@
     <string name="error_subject_missing">Betreff ist nicht vorhanden</string>
     <string name="error_message_missing">Nachricht ist nicht vorhanden</string>
 
-    <!-- Kino -->
-    <string name="imdb_rating">IMDb-Wertung</string>
-    <string name="year">Erscheinungsjahr</string>
-    <string name="runtime">Laufzeit</string>
-    <string name="genres">Genres</string>
-    <string name="director">Regisseur</string>
-    <string name="actors">Schauspieler</string>
-    <string name="description">Beschreibung</string>
-    <string name="no_movies">Keine Filme in nächster Zeit</string>
-    <string name="no_tickets_remaining_tufilm_message">Derzeit stehen leider keine weiteren Online Tickets für diesen Film zur Verfügung.\nWeitere Tickets können an der Abendkasse sowie den Vorverkaufsstellen erworben werden.</string>
-
     <!-- Navigation drawer -->
     <string name="drawer_open">Öffnen</string>
     <string name="drawer_close">Schließen</string>
@@ -246,18 +235,6 @@
     <string name="mensa_pasing">Mensa Pasing</string>
     <string name="mensa_weihenstephan">Mensa Weihenstephan</string>
 
-    <!-- Plans -->
-    <string name="campus_klinikum">Campus Klinikum</string>
-    <string name="campus_olympiapark">Campus Olympiapark</string>
-    <string name="campus_olympiapark_gyms">Campus Olympiapark Hallenplan</string>
-    <string name="campus_main">Stammgelände</string>
-    <string name="campus_weihenstephan">Campus Weihenstephan</string>
-    <string name="campus_garching_adress">Walther-Meißner-Straße 3, 85748 Garching</string>
-    <string name="campus_klinikum_adress">Ismaninger Straße 22, 81675 München</string>
-    <string name="campus_olympiapark_adress">Connollystraße 32, 80809 München</string>
-    <string name="campus_main_adress">Arcisstraße 21, 80333 München</string>
-    <string name="campus_weihenstephan_adress">Liesel-Beckmann-Straße 6, 85354 Freising</string>
-
     <!-- Chat rooms -->
     <string name="my_chat_rooms">Meine Chatrooms</string>
     <string name="send">Senden</string>
@@ -350,7 +327,6 @@
     <string name="min_search_len">Text muss mindestens %d Zeichen lang sein</string>
     <string name="default_cafeteria">Standardmensa</string>
     <string name="default_station">Standardhaltestelle</string>
-    <string name="campus_klinikum_großhadern">Klinikum Großhadern</string>
     <string name="cafeteria">Mensa</string>
     <string name="card_cafeteria_summary">Zeigt den Mensa-Speiseplan an</string>
     <string name="card_transportation_summary">Zeigt die Abfahrtszeiten der öffentlichen Verkehrsmittel an</string>
@@ -416,7 +392,6 @@
     <string name="error_setup_chat_member">Etwas stimmt nicht mit deiner Chat Registrierung!</string>
     <string name="error_pk_verification">Es ist ein Problem bei der Authentifizierung aufgetreten</string>
     <string name="room_timetable">Belegungsplan</string>
-    <string name="newspread_summary">Wähle aus welches newspread angezeigt werden soll. Das sind die Folien die auf den Info Monitoren in deiner Fakultät angezeigt werden.</string>
     <string name="vibration">Vibration</string>
     <string name="silent">Leise</string>
     <string name="mode_silent_mode">Modus während Veranstaltung</string>
@@ -466,7 +441,6 @@
     <string name="add_widget">Widget hinzufügen</string>
     <string name="my_grades">Meine Noten</string>
     <string name="widget_configure_description">Anzeige der Karten einstellen</string>
-    <string name="accept_chat_terms">Chatbedingungen müssen akzeptiert werden, damit du den Veranstaltungs-Chat verwenden kannst!</string>
     <string name="chat_not_setup">Chat ist nicht richtig eingerichtet, bitte den Assistenten über die Einstellungen neu starten!</string>
     <string name="please_connect_to_internet">Bitte verbinden Sie sich mit dem Internet, um den ersten App-Start fortzusetzen</string>
     <string name="IN">in</string>
@@ -493,11 +467,6 @@
     <string name="timetable_widget_no_lectures">Keine Veranstaltungen geplant :)</string>
     <string name="eduroam_not_valid_id">Keine gültige Kennung</string>
     <string name="eduroam_please_enter_password">Bitte Passwort eingeben. Dieses wird nicht gespeichert.</string>
-    <string name="barrier_free">Barrierefreiheit</string>
-    <string name="barrierfree_toilets">Berrierefreie Toiletten</string>
-    <string name="elevators">Aufzüge</string>
-    <string name="facilities">Einrichtungen</string>
-    <string name="nerby_facilities">Einrichtungen in der Nähe</string>
 
     <string name="eduroam_dialog_title">Altes Eduroam-Profil löschen</string>
     <string name="eduroam_dialog_preferences">WLAN-Einstellungen öffnen</string>
@@ -507,10 +476,9 @@
     <!-- Feedback Activity -->
     <string name="feedback">Feedback</string>
     <string name="general">Campus Allgemein</string>
-    <string name="tca">Campus App</string>
     <string-array name="feedback_options">
         <item>@string/general</item>
-        <item>@string/tca</item>
+        <item>@string/ca</item>
     </string-array>
     <string name="feedback_hint">Hier ist Platz für dein Feedback…</string>
     <string name="add_picture_button">Bild hinzufügen</string>
@@ -586,10 +554,6 @@
     <string name="card_login_title">Willkommen zur Campus App</string>
     <string name="card_login_body">Verbinde die App mit deinem Campus, um auf deinen Kalender, deine Veranstaltungen und weiteres zugreifen zu können.</string>
 
-    <string name="watch_trailer">Trailer anschauen</string>
-    <string name="show_trailer_error">Trailer kann nicht gezeigt werden</string>
-    <string name="kino_cover_description">Cover</string>
-
     <string name="pdf_viewer_title">PDF Viewer</string>
 
     <string name="app_info_text">
@@ -604,7 +568,6 @@
 
     <!-- Add user to chat via search -->
     <string name="user_search_hint">Suche Name oder Kennung</string>
-    <string name="error_invalid_tum_id_format">Inkorrekte TUM Kennung</string>
     <string name="error_user_not_found">Niemand gefunden</string>
     <string name="add_user_to_chat_message"><b>%s</b> zum Chatroom <b>%s</b> hinzufügen?</string>
     <string name="chat_member_added">Nutzer*in hinzugefügt</string>
