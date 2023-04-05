@@ -48,6 +48,11 @@ open class NewsCard @JvmOverloads constructor(
     }
 
     override fun getNavigationDestination(): NavDestination? {
+        // Do not open link if content is available
+        if (news.content.isNotEmpty()) {
+            return null
+        }
+
         val url = news.link
         if (url.isEmpty()) {
             Utils.showToast(context, R.string.no_link_existing)

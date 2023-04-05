@@ -7,9 +7,10 @@ import org.joda.time.DateTime
  *
  * @property id
  * @property title Message title
- * @property link Message URL link. Directs the user to this URL when clicking on the news. (optional)
+ * @property link Message URL link. Directs the user to this URL when clicking on the news.
+ *                Only supported when `content` is empty or null because `content` is collapsable. (optional)
  * @property imageUrl (optional)
- * @property content Message text with HTML markup (optional)
+ * @property content Message text with HTML markup. Long contents are expendable. (optional)
  * @property date Date of news
  */
 abstract class AbstractNews {

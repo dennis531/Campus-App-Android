@@ -1,5 +1,6 @@
 package de.uos.campusapp.component.ui.news
 
+import android.text.TextUtils
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -29,6 +30,8 @@ class NewsViewHolder(
     private val dateTextView: TextView by lazy { itemView.findViewById<TextView>(R.id.news_date) }
     private val contentTextView: TextView by lazy { itemView.findViewById<TextView>(R.id.news_content) }
 
+    private var isContentCollapsed = true
+
     fun bind(newsItem: NewsItem) = with(itemView) {
         val card = NewsCard(context = context, news = newsItem)
         currentCard = card
@@ -54,6 +57,20 @@ class NewsViewHolder(
         contentTextView.isVisible = newsItem.content.isNotBlank()
         if (newsItem.content.isNotBlank()) {
             contentTextView.text = Utils.fromHtml(newsItem.content)
+
+            contentTextView.maxLines = MAX_COLLAPSED_CONTENT_LINES
+            contentTextView.ellipsize = TextUtils.TruncateAt.END
+
+            contentTextView.setOnClickListener {
+                if (isContentCollapsed) {
+                    contentTextView.ellipsize = null
+                    contentTextView.maxLines = Int.MAX_VALUE
+                } else {
+                    contentTextView.ellipsize = TextUtils.TruncateAt.END
+                    contentTextView.maxLines = MAX_COLLAPSED_CONTENT_LINES
+                }
+                isContentCollapsed = !isContentCollapsed
+            }
         }
     }
 
@@ -71,5 +88,7 @@ class NewsViewHolder(
 
     companion object {
         private val COMPILE = Pattern.compile("^[0-9]+\\. [0-9]+\\. [0-9]+:[ ]*")
+
+        private const val MAX_COLLAPSED_CONTENT_LINES = 10
     }
 }
