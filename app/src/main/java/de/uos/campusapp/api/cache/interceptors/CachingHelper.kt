@@ -1,4 +1,4 @@
-package de.uos.campusapp.api.legacy.tumonline.interceptors
+package de.uos.campusapp.api.cache.interceptors
 
 import okhttp3.CacheControl
 import okhttp3.Response

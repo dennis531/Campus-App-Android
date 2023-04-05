@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder
 import de.uos.campusapp.api.general.ApiHelper
 import de.uos.campusapp.api.general.DateSerializer
 import de.uos.campusapp.api.general.CacheControl
-import de.uos.campusapp.api.legacy.tumonline.interceptors.CacheResponseInterceptor
+import de.uos.campusapp.api.cache.interceptors.CacheResponseInterceptor
 import de.uos.campusapp.api.uosbackend.serializers.cafeteria.UOSBackendCafeteriaPriceSerializer
 import de.uos.campusapp.component.other.locations.LocationManager
 import de.uos.campusapp.component.ui.cafeteria.api.generic.CafeteriaAPI

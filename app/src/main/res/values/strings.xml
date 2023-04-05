@@ -52,21 +52,14 @@
     <string name="error_accessing_api_header">Error accessing external system</string>
     <string name="error_accessing_api_body">Please make sure you are authenticated and has the corresponding rights.</string>
 
-    <string name="error_no_access_token_setup_header">No TUMonline access token was set</string>
-    <string name="error_no_access_token_setup_body">Please set your TUMonline access token in the <i>Settings</i> to access TUMonline features.</string>
-
     <string name="error_something_wrong">Sorry, something went wrong.</string>
     <string name="click_to_try_again"><b>Click here to retry.</b></string>
     <string name="error_access_token_already_set_generate_new">Your access token is already set. If you generate a new token, the old one becomes useless.</string>
-    <string name="error_invalid_tum_id">Your TUM ID is invalid</string>
-    <string name="error_access_token_could_not_be_generated">Your TUMonline access token could not be generated.</string>
-    <string name="error_access_token_inactive">Your TUMonline access token is not enabled. Head to TUMonline to enable it.</string>
     <string name="error_no_internet_connection">No Internet connection</string>
     <string name="error_no_data_to_show">No data to show.</string>
     <string name="error_no_rights_to_access_function">You don’t have the rights to access this function.</string>
     <string name="error_unauthorized">You can´t be authenticated.</string>
     <string name="error_resource_not_found">Your requested resource can not be found.</string>
-    <string name="error_request_limit_reached">You reached the request limit for TUMonline. Try again later.</string>
     <string name="error_unknown">Unknown error.</string>
     <string name="error_api_unavailable">System is currently unavailable.</string>
 
@@ -163,10 +156,8 @@
     <string name="onboarding">Onboarding</string>
     <string name="not_connected_to_api">Not connected</string>
     <string name="connect_to_your_campus">Connect to your Campus</string>
-    <string name="welcome_tum_msg">To setup TUMonline access, you need to provide your <b>TUM ID</b>.\n\nThe ID has the format <i>ga12abc</i>.</string>
     <string name="button_skip">Skip</string>
     <string name="button_next">Next</string>
-    <string name="need_to_enable_tum"><b>The TUMonline access token was successfully generated</b>\n\nPlease enable the token in TUMonline now via <i>Services/Token-Management</i> or follow the link in the email from TUMonline which you will receive shortly.\nMake sure the rights you want to gain in the app are set under <i>Specific Rights</i>.</string>
     <string name="step_1">Step 1</string>
     <string name="step_2">Step 2</string>
     <string name="step_3">Step 3</string>
@@ -478,7 +469,6 @@
     <string name="default_campus">Default campus</string>
     <string name="no_default_campus">No default campus</string>
     <string name="reply_label">Reply</string>
-    <string name="public_key_mail">Public key activation mail sent to %s@mytum.de.\n\n<b>Please activate it now!</b></string>
     <string name="failure_uploading_public_key">Failure uploading public key</string>
     <string name="key_not_activated">You have not activated your key!</string>
     <string name="edit">Edit</string>
@@ -629,12 +619,6 @@
     <string name="event_canceled">Canceled</string>
 
     <string name="back">Back</string>
-    <string name="tumonline_advantages">After the setup you can:\n
-                                        &#8226; View your TUMonline calendar\n
-                                        &#8226; See details about your lectures\n
-                                        &#8226; Get an overview over your grades\n
-                                        &#8226; Check if you have outstanding tuition fees\n
-                                        &#8226; Chat with other students from your lectures</string>
     <string name="campus_login">Connect to Campus</string>
     <string name="card_login_title">Welcome to the Campus App</string>
     <string name="card_login_body">Connect the app to your campus now to access your calendar, lectures and more.</string>
@@ -648,9 +632,7 @@
     <string name="add_user_to_chat_message">Add <b>%s</b> to chat room <b>%s</b>?</string>
     <string name="chat_member_added">Added user to chat room</string>
 
-    <string name="enter_your_tum_id">Enter your TUM ID …</string>
     <string name="generate_new_token">Generate new token</string>
-    <string name="open_tum_online">Open TUMonline</string>
     <string name="go_to_room">Go to room</string>
     <string name="topic">Topic:</string>
 

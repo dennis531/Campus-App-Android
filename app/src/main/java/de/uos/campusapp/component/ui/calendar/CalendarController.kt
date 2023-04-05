@@ -206,14 +206,14 @@ class CalendarController(private val context: Context) : ProvidesCard, ProvidesN
         private val PROJECTION = arrayOf("_id", "name")
 
         /**
-         * Replaces the current TUM_CAMPUS_APP calendar with a new version.
+         * Replaces the current CAMPUS_APP calendar with a new version.
          *
          * @param context Context
          */
         @Throws(SQLiteException::class)
         @JvmStatic
         fun syncCalendar(context: Context) {
-            // Deleting earlier calendar created by TUM Campus App
+            // Deleting earlier calendar created by Campus App
             deleteLocalCalendar(context)
             CalendarHelper.addCalendar(context)?.let {
                 addEvents(context, it)

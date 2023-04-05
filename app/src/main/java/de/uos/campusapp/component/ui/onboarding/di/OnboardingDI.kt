@@ -4,8 +4,6 @@ import android.content.Context
 import dagger.*
 import de.uos.campusapp.component.ui.onboarding.*
 import de.uos.campusapp.component.ui.onboarding.api.OnboardingAPI
-import de.uos.campusapp.component.ui.onboarding.legacy.CheckTokenFragment
-import de.uos.campusapp.component.ui.onboarding.legacy.OnboardingStartFragment
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.ConfigUtils
 import javax.inject.Scope
@@ -18,8 +16,6 @@ annotation class OnboardingScope
 interface OnboardingComponent {
 
     fun inject(onboardingActivity: OnboardingActivity)
-    fun inject(startFragment: OnboardingStartFragment)
-    fun inject(checkTokenFragment: CheckTokenFragment)
     fun inject(extrasFragment: OnboardingExtrasFragment)
     fun inject(oauthFragment: OnboardingOAuth10aFragment)
 

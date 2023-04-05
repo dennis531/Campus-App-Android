@@ -103,10 +103,8 @@
     <string name="onboarding">Einrichtung</string>
     <string name="not_connected_to_api">Nicht verbunden</string>
     <string name="connect_to_your_campus">Mit deinem Campus verbinden</string>
-    <string name="welcome_tum_msg">Um den Zugriff auf TUMonline-Dienste zu ermöglichen, wird deine <b>TUM-Kennung</b> benötigt.\n\nDie Kennung hat das Format <i>ga12abc</i>.</string>
     <string name="button_skip">Überspringen</string>
     <string name="button_next">Weiter</string>
-    <string name="need_to_enable_tum"><b>Das TUMonline-Access-Token wurde erfolgreich erzeugt</b>\n\nBitte aktiviere das Token in TUMonline unter <i>Dienste/Token-Verwaltung</i> oder folge dem Link in der Email, die du in Kürze von TUMonline erhalten wirst. Beachte, dass du ebenfalls die Rechte zum Zugriff auf einzelne Dienste unter <i>Aktive Rechte</i> aktivieren musst.</string>
     <string name="step_1">Schritt 1</string>
     <string name="step_2">Schritt 2</string>
     <string name="step_3">Schritt 3</string>
@@ -405,7 +403,6 @@
     <string name="not_joined">Alle</string>
     <string name="default_campus">Standardcampus</string>
     <string name="no_default_campus">Kein Standardcampus</string>
-    <string name="public_key_mail">Public Key Aktivierungs-E-Mail wurde an %s@mytum.de gesendet!\n\n<b>Bitte aktiviere ihn jetzt!</b></string>
     <string name="failure_uploading_public_key">Fehler beim Hochladen des Public Key</string>
     <string name="key_not_activated">Du hast deinen Key noch nicht aktiviert!</string>
     <string name="edit">Bearbeiten</string>
@@ -544,12 +541,6 @@
 
     <string name="back">Zurück</string>
 
-    <string name="tumonline_advantages">Nach dem Einrichten von TUMonline kannst du:\n
-                                        &#8226; auf deinen Kalender zugreifen\n
-                                        &#8226; Details zu deinen Veranstaltungen erfahren\n
-                                        &#8226; deine Noten ansehen\n
-                                        &#8226; deinen Studienbeitragsstatus prüfen\n
-                                        &#8226; mit Komilitonen aus deinen Veranstaltungen chatten</string>
     <string name="campus_login">Mit Campus verbinden</string>
     <string name="card_login_title">Willkommen zur Campus App</string>
     <string name="card_login_body">Verbinde die App mit deinem Campus, um auf deinen Kalender, deine Veranstaltungen und weiteres zugreifen zu können.</string>
@@ -557,8 +548,9 @@
     <string name="pdf_viewer_title">PDF Viewer</string>
 
     <string name="app_info_text">
-        Die TUM Campus App wird von Freiwilligen, Studierenden des Android Praktikums und Lehrstuhlmitarbeiter*innen des Informatik Fachgebiet 13 unter
-        Professor Dr. Baumgarten entwickelt. Die App eignet sich sowohl zur Verwendung auf Smartphones, wie auch Tablets und wird für Android und iOS bereitgestellt.\n\nFür besondere Anliegen erreichen Sie uns auch via E-Mail unter: app@tum.de
+        Die Campus App ist ein Open-Source-Projekt und basiert auf der TUM Campus App. Die App kann auf Smartphones und Tablets genutzt werden
+        und ist für Android verfügbar.\n\nFür besondere Anliegen oder Wünsche können Sie uns über das Feedback-Formular in der App oder
+        per E-Mail (dennis.benz@uos.de) erreichen.
     </string>
     <string name="dialog_add_to_contacts">Zu Kontakten hinzufügen?</string>
     <string name="add">Hinzufügen</string>
@@ -577,11 +569,9 @@
 
     <string name="topic">Über</string>
     <string name="generate_new_token">Neues Token generieren</string>
-    <string name="open_tum_online">TUMonline öffnen</string>
     <string name="create">Erstellen</string>
     <string name="enter_name_placeholder">Name eingeben …</string>
     <string name="go_to_room">Raum anzeigen</string>
-    <string name="enter_your_tum_id">TUM-ID eingeben …</string>
 
     <string name="send_feedback_question">Feedback absenden?</string>
     <string name="feedback_empty">Bitte gib hier dein Feedback ein</string>
@@ -608,16 +598,10 @@
 
     <string name="error_accessing_api_header">Fehler beim Zugriff auf externes System</string>
     <string name="error_accessing_api_body">Bitte stelle sicher, dass das du authentifiziert bist und die entsprechenden Rechte besitzt.</string>
-    <string name="error_no_access_token_setup_header">Kein TUMonline-Access-Token gefunden</string>
-    <string name="error_no_access_token_setup_body">Bitte erzeuge ein TUMonline-Access-Token in den Einstellungen, um TUMonline-Funktionen nutzen zu können.</string>
     <string name="error_access_token_already_set_generate_new">Dein Access-Token ist bereits gesetzt. Wenn du ein neues Token generierst, wird das alte unbrauchbar.</string>
-    <string name="error_invalid_tum_id">Deine TUM-Kennung ist ungültig</string>
-    <string name="error_access_token_could_not_be_generated">Dein TUMonline-Access-Token konnte nicht erstellt werden.</string>
-    <string name="error_access_token_inactive">Dein TUMonline-Access-Token ist noch inaktiv. Gehe zu TUMonline, um es zu aktivieren.</string>
     <string name="error_no_internet_connection">Keine Internetverbindung</string>
     <string name="error_no_data_to_show">Es sind keine Daten vorhanden.</string>
     <string name="error_no_rights_to_access_function">Du hast keine Berechtigung, um diese Funktion zu nutzen.</string>
-    <string name="error_request_limit_reached">Du hast das Anfragelimit für TUMonline erreicht. Versuche es später erneut.</string>
     <string name="error_unauthorized">Du kannst nicht authentifiziert werden.</string>
     <string name="error_resource_not_found">Deine angefragte Ressource kann nicht gefunden werden.</string>
     <string name="error_unknown">Unbekannter Fehler.</string>

@@ -34,7 +34,7 @@ class CheckErrorInterceptor(private val context: Context) : Interceptor {
 
         // Because the request did not return an Error, we can re-enable LMS request
         // if they have been disabled before
-        Utils.setSetting(context, Const.TUMO_DISABLED, false)
+//        Utils.setSetting(context, Const.TUMO_DISABLED, false)
 
         return response
     }

@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 
 import de.uos.campusapp.BuildConfig;
 import de.uos.campusapp.api.auth.AuthManager;
-import de.uos.campusapp.api.auth.legacy.AuthenticationManager;
 import de.uos.campusapp.config.Api;
 import de.uos.campusapp.utils.ConfigUtils;
 import de.uos.campusapp.utils.Utils;
@@ -32,7 +31,7 @@ import okhttp3.Request;
 
 public final class ApiHelper {
 
-    private static final String TAG = "TUM_API_CALL";
+    private static final String TAG = "CAMPUS_API_CALL";
     private static final int HTTP_TIMEOUT = 25000;
     private static OkHttpClient client;
 
@@ -99,7 +98,7 @@ public final class ApiHelper {
                                           .toString());
             Request.Builder newRequest = chain.request()
                                               .newBuilder()
-                                              .addHeader("X-DEVICE-ID", AuthenticationManager.getDeviceID(c))
+                                              .addHeader("X-DEVICE-ID", AuthManager.Companion.getDeviceID(c))
                                               .addHeader("User-Agent", userAgent.toString())
                                               .addHeader("X-ANDROID-VERSION", Build.VERSION.RELEASE);
             try {

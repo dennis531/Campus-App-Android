@@ -14,7 +14,7 @@ import java.lang.StringBuilder
 
 /**
  * This class handles the view output of the results for finding lectures via
- * TUMOnline used in [LecturesPersonalActivity]
+ * your campus system used in [LecturesPersonalActivity]
  * and [ChatRoomsActivity].
  * It implements [se.emilsjolander.stickylistheaders.StickyListHeadersAdapter] to
  * show semester info as sticky header.

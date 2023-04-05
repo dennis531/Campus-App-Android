@@ -30,28 +30,12 @@ object Const {
     const val TITLE_EXTRA = "title"
 
     const val API_HOSTNAME = ""
-    const val API_HOSTNAME_NEW = "app.tum.de"
-    const val STUDY_ROOMS_HOSTNAME = "www.devapp.it.tum.de"
 
     const val CURRENT_CHAT_ROOM = "current_chat_room"
     const val CHAT_ROOM_NAME = "chat_room_name"
 
-    const val PRIVATE_KEY = "chat_member_private_key"
-    const val PUBLIC_KEY = "chat_member_public_key"
-    const val PUBLIC_KEY_UPLOADED = "chat_member_public_key_uploaded"
-
-    const val TUMO_PIDENT_NR = "pIdentNr"
-    const val TUMO_STUDENT_ID = "tumoStudentNr"
-    const val TUMO_EXTERNAL_ID = "tumoExternNr"
-    const val TUMO_EMPLOYEE_ID = "tumoBediensteteNr"
-    const val TUMO_DISABLED = "tumo_is_disabled"
     const val EMPLOYEE_MODE = "employee_mode"
 
-    const val FCM_REG_ID = "gcm_registration_id"
-    const val FCM_REG_ID_SENT_TO_SERVER = "gcm_registration_id_sent_to_server"
-    const val FCM_REG_ID_LAST_TRANSMISSION = "gcm_registration_id_last_transmission"
-    const val FCM_INSTANCE_ID = "gcm_instance_id"
-    const val FCM_TOKEN_ID = "gcm_token_id"
     const val SYNC_CALENDAR = "sync_calendar"
     const val PREFERENCE_SCREEN = "preference_screen"
     const val P_TOKEN = "pToken"
@@ -100,8 +84,6 @@ object Const {
     const val ADD_GEOFENCE_EXTRA = "AddGeofence"
     const val CAMPUS_GEOFENCE = "geofence_campus_id"
 
-    const val TUM_ID_PATTERN = "^[a-z]{2}[0-9]{2}[a-z]{3}$"
-
     const val CARD_POSITION_PREFERENCE_SUFFIX = "_card_position"
     const val DISCARD_SETTINGS_START = "discard_settings_start"
     const val DISCARD_SETTINGS_PHONE = "discard_settings_phone"
@@ -126,9 +108,6 @@ object Const {
 
     const val EVENT_TIME = "event_time"
 
-    const val KINO_DATE = "kinoDate"
-    const val KINO_ID = "kinoId"
-
     const val CALENDAR_MONTHS_BEFORE = 2
     const val CALENDAR_MONTHS_AFTER = 2
 
@@ -143,11 +122,7 @@ object Const {
     const val NEWS_ALERT_SHOW_UNTIL = "newsAlertShowUntil"
 
     const val CONTACTS_PERMISSION_REQUEST_CODE = 0
-    const val PERSON_SEARCH_TUM_REQUEST_KEY = "pSuche"
 
-    const val TUM_CAMPUS_URL = "http://campus.tum.de"
-
-    const val TUM_ONLINE_PROFILE_PICTURE_URL_FORMAT_STRING = "https://campus.tum.de/tumonline/visitenkarte.showImage?pPersonenGruppe=%s&pPersonenId=%s"
     const val PROFILE_PICTURE_URL = "profile_picture_url"
     const val PROFILE_EMAIL = "profile_email"
     const val PROFILE_ID = "profile_id"

@@ -6,7 +6,7 @@ import de.uos.campusapp.component.other.generic.activity.BaseActivity
 import de.uos.campusapp.utils.Component
 
 /**
- * Activity to show information about a person at TUM.
+ * Activity to show information about a person.
  */
 class PersonDetailsActivity : BaseActivity(R.layout.activity_person_details, Component.PERSON) {
 

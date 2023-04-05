@@ -118,11 +118,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
      * TODO: Disable mode for students; Const.TUMO_EMPLOYEE_ID doesn't work anymore
      */
     private fun setUpEmployeeSettings() {
-        val isEmployee = Utils.getSetting(requireContext(), Const.TUMO_EMPLOYEE_ID, "").isNotEmpty()
-        val checkbox = findPreference(Const.EMPLOYEE_MODE) ?: return
-        if (!isEmployee) {
-            checkbox.isEnabled = false
-        }
+//        val isEmployee = Utils.getSetting(requireContext(), Const.TUMO_EMPLOYEE_ID, "").isNotEmpty()
+//        val checkbox = findPreference(Const.EMPLOYEE_MODE) ?: return
+//        if (!isEmployee) {
+//            checkbox.isEnabled = false
+//        }
     }
 
     override fun onSharedPreferenceChanged(

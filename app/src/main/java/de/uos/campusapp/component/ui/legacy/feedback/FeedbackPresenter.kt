@@ -14,7 +14,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import de.uos.campusapp.R
-import de.uos.campusapp.api.legacy.tumcabe.TUMCabeClient
 import de.uos.campusapp.component.ui.legacy.feedback.di.LrzId
 import de.uos.campusapp.component.ui.legacy.feedback.model.Feedback
 import de.uos.campusapp.component.ui.legacy.feedback.model.FeedbackResult
@@ -35,12 +34,12 @@ class FeedbackPresenter @Inject constructor(
     @LrzId override val lrzId: String,
 ) : FeedbackContract.Presenter {
 
-    private val tumCabeClient: TUMCabeClient = TUMCabeClient.getInstance(context)
+//    private val tumCabeClient: TUMCabeClient = TUMCabeClient.getInstance(context)
 
     private val compositeDisposable = CompositeDisposable()
     override var feedback = Feedback()
 
-    private var sendFeedbackCall = tumCabeClient.sendFeedback(feedback)
+//    private var sendFeedbackCall = tumCabeClient.sendFeedback(feedback)
     private var sendImagesCalls = mutableListOf<Call<FeedbackResult>>()
 
     private var currentPhotoPath: String? = null
@@ -102,7 +101,7 @@ class FeedbackPresenter @Inject constructor(
         feedback.includeEmail = hasLrzId
 
         if (hasLrzId) {
-            feedback.email = "$lrzId@mytum.de"
+            feedback.email = ""
         }
     }
 
@@ -182,29 +181,29 @@ class FeedbackPresenter @Inject constructor(
         }
 
         view?.showProgressDialog()
-        sendFeedbackCall.enqueue(object : Callback<FeedbackResult> {
-            override fun onResponse(
-                call: Call<FeedbackResult>,
-                response: Response<FeedbackResult>
-            ) {
-                val result = response.body()
-                if (result == null || result.isSuccess) {
-                    view?.showSendErrorDialog()
-                }
-
-                if (feedback.imageCount == 0) {
-                    view?.onFeedbackSent()
-                } else {
-                    sendImages()
-                }
-            }
-
-            override fun onFailure(call: Call<FeedbackResult>, t: Throwable) {
-                if (!call.isCanceled) {
-                    view?.showSendErrorDialog()
-                }
-            }
-        })
+//        sendFeedbackCall.enqueue(object : Callback<FeedbackResult> {
+//            override fun onResponse(
+//                call: Call<FeedbackResult>,
+//                response: Response<FeedbackResult>
+//            ) {
+//                val result = response.body()
+//                if (result == null || result.isSuccess) {
+//                    view?.showSendErrorDialog()
+//                }
+//
+//                if (feedback.imageCount == 0) {
+//                    view?.onFeedbackSent()
+//                } else {
+//                    sendImages()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<FeedbackResult>, t: Throwable) {
+//                if (!call.isCanceled) {
+//                    view?.showSendErrorDialog()
+//                }
+//            }
+//        })
     }
 
     private fun showNoLocationAccessDialog() {
@@ -222,36 +221,36 @@ class FeedbackPresenter @Inject constructor(
 
     private fun sendImages() {
         val imagePaths = feedback.picturePaths.toTypedArray()
-        sendImagesCalls = tumCabeClient.sendFeedbackImages(feedback, imagePaths)
-
-        for (call in sendImagesCalls) {
-            call.enqueue(object : Callback<FeedbackResult> {
-                override fun onResponse(
-                    call: Call<FeedbackResult>,
-                    response: Response<FeedbackResult>
-                ) {
-                    val result = response.body()
-                    if (result == null || !result.isSuccess) {
-                        view?.showSendErrorDialog()
-                        return
-                    }
-
-                    imagesSent++
-
-                    if (imagesSent == feedback.imageCount) {
-                        view?.onFeedbackSent()
-                    }
-
-                    Utils.log("Sent " + imagesSent + " of " + feedback.imageCount + " images")
-                }
-
-                override fun onFailure(call: Call<FeedbackResult>, t: Throwable) {
-                    if (!call.isCanceled) {
-                        view?.showSendErrorDialog()
-                    }
-                }
-            })
-        }
+//        sendImagesCalls = tumCabeClient.sendFeedbackImages(feedback, imagePaths)
+//
+//        for (call in sendImagesCalls) {
+//            call.enqueue(object : Callback<FeedbackResult> {
+//                override fun onResponse(
+//                    call: Call<FeedbackResult>,
+//                    response: Response<FeedbackResult>
+//                ) {
+//                    val result = response.body()
+//                    if (result == null || !result.isSuccess) {
+//                        view?.showSendErrorDialog()
+//                        return
+//                    }
+//
+//                    imagesSent++
+//
+//                    if (imagesSent == feedback.imageCount) {
+//                        view?.onFeedbackSent()
+//                    }
+//
+//                    Utils.log("Sent " + imagesSent + " of " + feedback.imageCount + " images")
+//                }
+//
+//                override fun onFailure(call: Call<FeedbackResult>, t: Throwable) {
+//                    if (!call.isCanceled) {
+//                        view?.showSendErrorDialog()
+//                    }
+//                }
+//            })
+//        }
     }
 
     /**
@@ -302,14 +301,14 @@ class FeedbackPresenter @Inject constructor(
 
     override fun detachView() {
         clearPictures()
-        sendFeedbackCall.cancel()
-
-        for (call in sendImagesCalls) {
-            call.cancel()
-        }
-
-        compositeDisposable.dispose()
-        view = null
+//        sendFeedbackCall.cancel()
+//
+//        for (call in sendImagesCalls) {
+//            call.cancel()
+//        }
+//
+//        compositeDisposable.dispose()
+//        view = null
     }
 
     private fun clearPictures() {

@@ -21,16 +21,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 /**
- * This Activity will show all details found on the TUMOnline web service
+ * This Activity will show all details found on your campus system
  * identified by its lecture id (which has to be posted to this activity by
  * bundle).
  *
  *
  * There is also the opportunity to get all appointments which are related to
  * this lecture by clicking the button on top of the view.
- *
- *
- * HINT: a valid TUM Online token is needed
  *
  *
  * NEEDS: stp_sp_nr set in incoming bundle (lecture id)

@@ -5,6 +5,7 @@ import de.uos.campusapp.component.ui.onboarding.model.IdentityInterface
 import de.uos.campusapp.utils.Const
 import de.uos.campusapp.utils.Utils
 import okhttp3.Interceptor
+import java.util.UUID
 
 /**
  * Abstract authentication manager providing general authentication function like
@@ -31,6 +32,8 @@ abstract class AuthManager {
     
     companion object {
 
+        private var uniqueID: String? = null
+
         /**
          * Saves all user information in preferences
          */
@@ -43,6 +46,24 @@ abstract class AuthManager {
             Utils.setSetting(context, Const.PROFILE_PICTURE_URL, identity.imageUrl)
             Utils.setSetting(context, Const.PROFILE_EMAIL, identity.email)
             Utils.setSetting(context, Const.PROFILE_DISPLAY_NAME, identity.fullName)
+        }
+
+        /**
+         * Gets an unique id that identifies this device.
+         * Should only reset after a reinstall or wiping of the settingsPrefix.
+         *
+         * @return Unique device id
+         */
+        @Synchronized
+        fun getDeviceID(context: Context): String {
+            if (uniqueID == null) {
+                uniqueID = Utils.getSetting(context, Const.PREF_UNIQUE_ID, "")
+                if ("" == uniqueID) {
+                    uniqueID = UUID.randomUUID().toString()
+                    Utils.setSetting(context, Const.PREF_UNIQUE_ID, uniqueID!!)
+                }
+            }
+            return uniqueID!!
         }
     }
 }

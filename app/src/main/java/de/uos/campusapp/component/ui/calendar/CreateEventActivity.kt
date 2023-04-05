@@ -42,7 +42,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 /**
- * Allows the user to create (and edit) a private event in TUMonline.
+ * Allows the user to create (and edit) a private event in your campus system.
  */
 class CreateEventActivity : ActivityForAccessingApi<String>(R.layout.activity_create_event, Component.CALENDAR) {
 

@@ -89,19 +89,15 @@ class InformationActivity : BaseActivity(R.layout.activity_information, Componen
             } catch (ignore: NameNotFoundException) {
             }
 
-            addDebugRow(debugInfos, "TUM ID", sp.getString(Const.USERNAME, ""))
+            addDebugRow(debugInfos, "Username", sp.getString(Const.USERNAME, ""))
             val token = sp.getString(Const.ACCESS_TOKEN, "")
             if (token == "") {
-                addDebugRow(debugInfos, "TUM access token", "")
+                addDebugRow(debugInfos, "Access token", "")
             } else {
-                addDebugRow(debugInfos, "TUM access token", token?.substring(0, 5) + "...")
+                addDebugRow(debugInfos, "Access token", token?.substring(0, 5) + "...")
             }
             addDebugRow(debugInfos, "Bug reports", sp.getBoolean(Const.BUG_REPORTS, false).toString() + " ")
 
-            addDebugRow(debugInfos, "REG ID", Utils.getSetting(applicationContext, Const.FCM_REG_ID, ""))
-            addDebugRow(debugInfos, "REG transmission", DateUtils.getRelativeDateTimeString(applicationContext,
-                    Utils.getSettingLong(applicationContext, Const.FCM_REG_ID_LAST_TRANSMISSION, 0),
-                    DateUtils.MINUTE_IN_MILLIS, DateUtils.DAY_IN_MILLIS * 2, 0).toString())
             try {
                 val packageInfo = packageManager.getPackageInfo(packageName, 0)
                 addDebugRow(debugInfos, "Version code", PackageInfoCompat.getLongVersionCode(packageInfo).toString())
