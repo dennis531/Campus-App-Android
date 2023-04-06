@@ -93,20 +93,15 @@ public class ChatRoomController implements ProvidesCard {
     public List<Card> getCards(@NonNull CacheControl cacheControl) {
         List<Card> results = new ArrayList<>();
 
-        try {
-            // Get all rooms that have unread messages
-            List<ChatRoomDbRow> rooms = chatRoomDao.getUnreadRooms();
-            if (!rooms.isEmpty()) {
-                for (ChatRoomDbRow room : rooms) {
-                    ChatMessagesCard card = new ChatMessagesCard(mContext, room);
-                    results.add(card.getIfShowOnStart());
-                }
+        // Get all rooms that have unread messages
+        List<ChatRoomDbRow> rooms = chatRoomDao.getUnreadRooms();
+        if (!rooms.isEmpty()) {
+            for (ChatRoomDbRow room : rooms) {
+                ChatMessagesCard card = new ChatMessagesCard(mContext, room);
+                results.add(card.getIfShowOnStart());
             }
-
-            return results;
-        } catch (Throwable t) {
-            Utils.log(t);
-            return results;
         }
+
+        return results;
     }
 }

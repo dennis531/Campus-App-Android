@@ -15,5 +15,5 @@
 ### Environment
 * Phone: 
 * OS version: 
-* TUM Campus App version: v1
+* Campus App version: v1
 * Language: 

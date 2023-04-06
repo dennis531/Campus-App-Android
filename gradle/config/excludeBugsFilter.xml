@@ -22,13 +22,13 @@
         <Package name="~se\..*" />
     </Match>
     <Match>
-        <Class name="~de\.tum\.in\.tumcampusapp\.R.*" />
+        <Class name="~de\.uos\.campusapp\.R.*" />
     </Match>
     <Match>
-        <Class name="~de\.tum\.in\.tumcampusapp\.Manifest.*" />
+        <Class name="~de\.uos\.campusapp\.Manifest.*" />
     </Match>
     <Match>
-        <Package name="~de\.tum\.in\.tumcampusapp\.models.*" />
+        <Package name="~de\.uos\.campusapp\.models.*" />
         <Bug pattern="URF_UNREAD_FIELD" />
     </Match>
 </FindBugsFilter>

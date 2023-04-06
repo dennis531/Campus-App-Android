@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ruleset>
 
-    <description>Custom ruleset for the TumCampusApp</description>
+    <description>Custom ruleset for the Campus App</description>
 
     <exclude-pattern>.*/R.java</exclude-pattern>
     <exclude-pattern>.*/gen/.*</exclude-pattern>

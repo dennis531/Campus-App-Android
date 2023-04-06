@@ -1,25 +1,21 @@
-Die TUM Campus App wird von Freiwilligen und Studierenden entwickelt. Die App eignet sich sowohl zur Verwendung auf Smartphones, wie auch Tablets und bietet unter anderem folgende Funktionen:
+Die Campus App basiert auf der TUM Campus App. Die App eignet sich sowohl zur Verwendung auf Smartphones, wie auch Tablets und bietet unter anderem folgende Funktionen:
 
-Vorlesungstermine, Neuigkeiten von TUM relevanten Organisationen, Veranstaltungshinweise, Mensa Speiseplan, MVV Abfahrtszeiten, Umgebungspläne und viele weitere Funktionen. 
+Vorlesungstermine, Neuigkeiten vom Campus, Veranstaltungshinweise, Mensa Speiseplan, Abfahrtszeiten, Umgebungspläne und viele weitere Funktionen.
 
-Die App ist sowohl für Studierende, wie auch Mitarbeiter*innen gedacht.
+Die App ist sowohl für Studierende, wie auch Mitarbeitende gedacht.
 
-Entwickler*innen und involvierte Personen:
-https://github.com/TUM-Dev/Campus-Android/blob/master/CONTRIBUTORS.md
-
-Support: https://www.facebook.com/TUMCampus / app@tum.de
+Support: https://github.com/dennis531/Campus-App-Android / debenz@uos.de
 
 Wichtiger Hinweis:
-Dies ist keine offizielle App der Technischen Universität München. Es erfolgt daher auch kein offizieller Support oder eine Haftung. Die App wird von und für Studierende entwickelt.
+Dies ist keine offizielle App einer Hochschule. Es erfolgt daher auch kein offizieller Support oder eine Haftung.
 
 Berechtigungen und deren Gründe:
-- Standort abfragen: Um immer aktuelle Informationen zum aktuellen Standort anzuzeigen, wie z.B. Mensa Menü, MVV Abfahrtszeiten, ....
-- Kontakte ändern: Damit in der Personensuche mit einem Klick die Kontaktdaten eines Kommilitonen oder TU Mitarbeiters in die Kontakte eingefügt werden können
+- Standort abfragen: Um immer aktuelle Informationen zum aktuellen Standort anzuzeigen, wie z.B. Mensa Menü, Busabfahrtszeiten, ....
+- Kontakte ändern: Damit in der Personensuche mit einem Klick die Kontaktdaten eines Kommilitonen oder Mitarbeiters in die Kontakte eingefügt werden können
 - Kalendertermine lesen/ändern: Damit sich die Vorlesungstermine mit dem Google Kalender synchronisieren lassen 
 - SD-Karteninhalte ändern oder löschen: Damit die App Daten zwischenspeichern kann und damit das Laden beschleunigt wird.
-- Konten auf dem Gerät suchen: Wird für die Chatfunktion benötigt, da dafür ein Google Account benötigt wird.
 - Internetzugriff: Um sämtliche Daten abrufen zu können.
 - Ruhezustand deaktivieren: Um auch bei ausgeschaltetem Display Nachrichten empfangen zu können
 
 Lizenz: GNU GPL v3 - http://www.gnu.org/licenses/gpl.html
-Der Quellcode kann hier eingesehen werden: https://github.com/TUM-Dev/
+Der Quellcode kann hier eingesehen werden: https://github.com/dennis531/Campus-App-Android

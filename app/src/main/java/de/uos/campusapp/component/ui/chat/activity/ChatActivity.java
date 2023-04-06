@@ -87,7 +87,7 @@ public class ChatActivity extends ActivityForDownloadingExternal
 
     private Handler pollingHandler;
 
-    private final int POLLING_INTERVAL = 30000;  // Polls every 30 seconds
+    private static final int POLLING_INTERVAL = 30000;  // Polls every 30 seconds
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
