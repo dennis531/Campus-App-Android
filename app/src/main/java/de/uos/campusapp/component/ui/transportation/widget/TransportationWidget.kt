@@ -56,7 +56,7 @@ class TransportationWidget : AppWidgetProvider() {
         }
 
         val intent = Intent(context, TransportationWidget::class.java)
-        val sender = PendingIntent.getBroadcast(context, 0, intent, 0)
+        val sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val alarmManager = context.alarmManager
         alarmManager.cancel(sender)
         if (autoReload) {
@@ -114,7 +114,7 @@ class TransportationWidget : AppWidgetProvider() {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
         }
         val pendingIntent = PendingIntent.getActivity(
-                context, appWidgetId, configIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                context, appWidgetId, configIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         remoteViews.setOnClickPendingIntent(R.id.transportation_widget_setting_button, pendingIntent)
 
         // Set up the reload functionality
@@ -123,7 +123,7 @@ class TransportationWidget : AppWidgetProvider() {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
         }
         val pendingReloadIntent = PendingIntent.getBroadcast(
-                context, appWidgetId, reloadIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                context, appWidgetId, reloadIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         remoteViews.setOnClickPendingIntent(R.id.transportation_widget_reload_button, pendingReloadIntent)
 
         val isAutoReload = widgetDepartures.autoReload

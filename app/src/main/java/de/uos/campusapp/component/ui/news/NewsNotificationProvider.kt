@@ -34,7 +34,7 @@ class NewsNotificationProvider(
 
         val intent = Intent(context, NewsActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
-                context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val notification = getNotificationBuilder()
                 .setContentTitle(summaryTitle)

@@ -102,8 +102,8 @@ class ScanResultsAvailableReceiver : BroadcastReceiver() {
             val setupIntent = Intent(context, SetupEduroamActivity::class.java)
             val hideIntent = Intent(context, NeverShowAgainService::class.java)
 
-            val setupPendingIntent = PendingIntent.getActivity(context, 0, setupIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-            val hidePendingIntent = PendingIntent.getService(context, 0, hideIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val setupPendingIntent = PendingIntent.getActivity(context, 0, setupIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            val hidePendingIntent = PendingIntent.getService(context, 0, hideIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
             // Create FcmNotification using NotificationCompat.Builder
             val notification = NotificationCompat.Builder(context, Const.NOTIFICATION_CHANNEL_EDUROAM)

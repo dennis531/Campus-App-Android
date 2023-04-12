@@ -75,7 +75,7 @@ class SilenceService : JobIntentService() {
 
         val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val newIntent = Intent(this, SilenceService::class.java)
-        val pendingIntent = PendingIntent.getService(this, 0, newIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getService(this, 0, newIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val startTime = System.currentTimeMillis()
         var waitDuration = CHECK_INTERVAL.toLong()

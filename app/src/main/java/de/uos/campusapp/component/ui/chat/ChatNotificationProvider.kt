@@ -67,7 +67,7 @@ class ChatNotificationProvider(
             addNextIntent(notificationIntent)
         }
 
-        val contentIntent = taskStackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT or PendingIntent.FLAG_ONE_SHOT)
+        val contentIntent = taskStackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT or PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
 
         val notification = getNotificationBuilder()
             .setContentTitle(chatRoom.title)

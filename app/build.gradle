@@ -36,9 +36,9 @@ android {
     }
     defaultConfig {
         applicationId "de.uos.campusapp"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 33
-        versionCode 1
+        versionCode 2
         versionName "1.0.0-dev"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -113,7 +113,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'android.arch.lifecycle:reactivestreams:1.1.1'
-    implementation 'android.arch.work:work-runtime-ktx:1.0.1'
+    implementation 'androidx.work:work-runtime-ktx:2.8.1'
     // Note: Appcompat 1.4 breaks sandwich menu injected into toolbar by DrawerLayout
     // upgrading this and or androidx.fragment:fragment-ktx will break the toolbar
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -191,7 +191,7 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.28.3'
 
     // LeakCanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
 
     // DebugDatabase
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'

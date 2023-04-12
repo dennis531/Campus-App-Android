@@ -32,7 +32,7 @@ class TuitionFeesNotificationProvider(context: Context) : NotificationProvider(c
         val text = context.getString(R.string.reregister_todo, tuition.deadline)
 
         val intent = tuition.getIntent(context)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         val notification = getNotificationBuilder()
                 .setContentTitle(title)

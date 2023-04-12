@@ -35,7 +35,7 @@ class TransportNotificationProvider(context: Context) : NotificationProvider(con
 
         val intent = station.getIntent(context)
         val pendingIntent = PendingIntent.getActivity(
-                context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val notification = getNotificationBuilder()
                 .setContentTitle(title)

@@ -34,7 +34,7 @@ class MessagesNotificationProvider(
 
         val intent = message.getIntent(context)
         val pendingIntent = PendingIntent.getActivity(
-            context, message.id.hashCode(), intent, 0)
+            context, message.id.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE)
 
         val notification = getNotificationBuilder()
             .setContentTitle(title)
@@ -69,7 +69,7 @@ class MessagesNotificationProvider(
 
             val intent = Intent(context, MessagesActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(
-                context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
             val notification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
                 .setContentTitle(context.getString(R.string.messages))
