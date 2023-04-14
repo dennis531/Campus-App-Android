@@ -550,7 +550,7 @@
     <string name="app_info_text">
         Die Campus App ist ein Open-Source-Projekt und basiert auf der TUM Campus App. Die App kann auf Smartphones und Tablets genutzt werden
         und ist für Android verfügbar.\n\nFür besondere Anliegen oder Wünsche können Sie uns über das Feedback-Formular in der App oder
-        per E-Mail (dennis.benz@uos.de) erreichen.
+        per E-Mail (campus-app@uos.de) erreichen.
     </string>
     <string name="dialog_add_to_contacts">Zu Kontakten hinzufügen?</string>
     <string name="add">Hinzufügen</string>

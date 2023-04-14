@@ -4,7 +4,7 @@ Vorlesungstermine, Neuigkeiten vom Campus, Veranstaltungshinweise, Mensa Speisep
 
 Die App ist sowohl für Studierende, wie auch Mitarbeitende gedacht.
 
-Support: https://github.com/dennis531/Campus-App-Android / debenz@uos.de
+Support: https://github.com/dennis531/Campus-App-Android / campus-app@uos.de
 
 Wichtiger Hinweis:
 Dies ist keine offizielle App einer Hochschule. Es erfolgt daher auch kein offizieller Support oder eine Haftung.

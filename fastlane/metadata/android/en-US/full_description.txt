@@ -10,7 +10,7 @@ The Campus App is based on the TUM Campus App. It can be used on both smartphone
 
 The app is intended for both students and employees!
 
-Support: https://github.com/dennis531/Campus-App-Android / debenz@uos.de
+Support: https://github.com/dennis531/Campus-App-Android / campus-app@uos.de
 
 Disclaimer: This is not an official app of a university and there is consequentially no official support or liability.
 

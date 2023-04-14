@@ -382,7 +382,7 @@
     <string name="show_feedback">Send feedback</string>
     <string name="feedbackSubj">Feedback for Campus App</string>
     <string name="app_info_text">
-        The Campus App is an open source project based on the TUM Campus App. The app can be used on smartphones and tablets and is available for Android.\n\nYou can reach us via the feedback form in the app or via email (dennis.benz@uos.de) if you have any special concerns or requests.
+        The Campus App is an open source project based on the TUM Campus App. The app can be used on smartphones and tablets and is available for Android.\n\nYou can reach us via the feedback form in the app or via email (campus-app@uos.de) if you have any special concerns or requests.
     </string>
 
     <!-- END Translated, please do not change identifiers -->
@@ -490,7 +490,7 @@
 
     <string name="update_notification_description">A new version of the Campus App has been released on %s. Tap to download now.</string>
     <string name="support_us">Help us to improve the Campus App. Send us an e-mail if you encounter a problem.</string>
-    <string name="support_email_link" translatable="false">debenz@uos.de</string>
+    <string name="support_email_link" translatable="false">campus-app@uos.de</string>
     <string name="support_us_title">Support us</string>
     <string name="permission_calendar_explanation">Campus App needs permission to access your calendar to be able to sync it with your campus calendar.</string>
     <string name="permission_location_explanation">Campus App needs permission to access your location to display useful information, e.g. the menus of cafeterias around you or timetables of your nearest MVV station. If you do not grant this permission, you will still be able to configure your location in the settings.</string>
