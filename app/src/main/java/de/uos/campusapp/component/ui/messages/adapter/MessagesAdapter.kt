@@ -86,5 +86,4 @@ class MessagesAdapter(
             subjectTextView.setTypeface(subjectTextView.typeface, Typeface.BOLD)
         }
     }
-
 }

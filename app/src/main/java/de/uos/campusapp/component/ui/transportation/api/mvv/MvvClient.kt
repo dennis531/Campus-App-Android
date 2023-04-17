@@ -12,7 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MvvClient(val service: MvvApiService): TransportationAPI {
+class MvvClient(val service: MvvApiService) : TransportationAPI {
 
     override fun getStations(query: String, maxResults: Int): List<AbstractStation> {
         val mvvStationList = service.getStations(query).execute().body()!!

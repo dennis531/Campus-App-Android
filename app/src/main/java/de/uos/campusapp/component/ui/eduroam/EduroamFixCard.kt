@@ -122,7 +122,7 @@ class EduroamFixCard(
     }
 
     private fun isCampusEduroam(identity: String): Boolean {
-        return idDomains.any {identity.endsWith(it)}
+        return idDomains.any { identity.endsWith(it) }
     }
 
     private fun isValidSubjectMatchAPI18(eduroam: WifiConfiguration): Boolean {

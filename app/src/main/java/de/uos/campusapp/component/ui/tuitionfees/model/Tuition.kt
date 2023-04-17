@@ -10,4 +10,4 @@ class Tuition(
     override val deadline: DateTime,
     override val semester: String,
     override val amount: Double
-): AbstractTuition()
+) : AbstractTuition()

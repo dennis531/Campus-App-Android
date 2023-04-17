@@ -78,20 +78,20 @@ object Config {
     val CAMPUS = listOf<Campus>(
         // Coordinates of "Schlossinnenhof"
         Campus("I", "Campus Innenstadt", 52.27158, 8.04426, listOf(
-            Cafeteria("1", "Mensa Schlossgarten"),
+            Cafeteria("1", "Mensa Schlossgarten")
         ), listOf(
             Station("1:000009071781", "Universität/Osnabrück Halle"),
             Station("1:000009071700", "Neumarkt"),
-            Station("1:000009071516", "Arndtplatz"),
+            Station("1:000009071516", "Arndtplatz")
         )),
         // Coordinates of "Mensavorplatz"
         Campus("W", "Campus Westerberg", 52.28431, 8.02342, listOf(
-            Cafeteria("0", "Mensa Westerberg"),
+            Cafeteria("0", "Mensa Westerberg")
         ), listOf(
             Station("1:000009071756", "Campus Westerberg"),
             Station("1:000009071624", "Botanischer Garten"),
             Station("1:000009071548", "Nelson-Mandela-Platz"),
-            Station("1:000009071788", "Walkmühlenweg"),
+            Station("1:000009071788", "Walkmühlenweg")
         ))
     )
 
@@ -102,9 +102,9 @@ object Config {
      */
     val ORGANISATION_NAME = R.string.organisation
 
-
-
-    // API options
+    /*************
+     * API options
+     *************/
 
     /**
      * Main api used by all components
@@ -129,8 +129,9 @@ object Config {
      */
     val TRANSPORTATION_API = TransportationApi.VBN
 
-
-    // Stud.IP api options
+    /*********************
+     * Stud.IP api options
+     *********************/
 
     /**
      * Stud.IP base api url
@@ -146,8 +147,9 @@ object Config {
      */
     val STUDIP_BASE_URL = "http://localhost/studip/"
 
-
-    // UOS Backend API options
+    /*************************
+     * UOS Backend API options
+     *************************/
 
     /**
      * UOS backend base api url
@@ -156,9 +158,9 @@ object Config {
      */
     val UOS_BACKEND_API_BASE_URL = "http://localhost:8000/api/"
 
-
-
-    // Authentication options
+    /************************
+     * Authentication options
+     ************************/
 
     /**
      * Main authentication method used by all apis
@@ -169,8 +171,9 @@ object Config {
      */
     val AUTH_METHOD = AuthMethod.OAUTH10A
 
-
-    // OAUTH options
+    /***************
+     * OAUTH options
+     ***************/
 
     /**
      * OAuth 1.0a consumer key
@@ -216,8 +219,9 @@ object Config {
      */
     val OAUTH_SIGNATURE_METHOD = OAuthSignatureMethod.OAUTH_PLAINTEXT
 
-
-    // Component options
+    /*******************
+     * Component options
+     *******************/
 
     /**
      * Component visibility
@@ -229,23 +233,24 @@ object Config {
      */
 
     val CALENDAR_ENABLED = true
-    val GRADES_ENABLED = true
+    val GRADES_ENABLED = false
     val LECTURES_ENABLED = true
     val PERSON_ENABLED = true
-    val ROOMFINDER_ENABLED = true
+    val ROOMFINDER_ENABLED = false
     val TUITIONFEES_ENABLED = true
-    val CAFETERIA_ENABLED = true
+    val CAFETERIA_ENABLED = false
     val CHAT_ENABLED = true
     val EDUROAM_ENABLED = true
     val GEOFENCING_ENABLED = true
     val NEWS_ENABLED = true
-    val OPENINGHOUR_ENABLED = true
-    val TRANSPORTATION_ENABLED = true
-    val STUDYROOM_ENABLED = true
+    val OPENINGHOUR_ENABLED = false
+    val TRANSPORTATION_ENABLED = false
+    val STUDYROOM_ENABLED = false
     val MESSAGES_ENABLED = true
 
-
-    // Cafeteria options
+    /*******************
+     * Cafeteria options
+     *******************/
 
     /**
      * Cafeteria additives text
@@ -254,8 +259,9 @@ object Config {
      */
     val CAFETERIA_INGREDIENTS_TEXT = R.string.cafeteria_ingredients_os
 
-
-    // Calendar options
+    /******************
+     * Calendar options
+     ******************/
 
     /**
      * Enables the creation and deletion of calendar events
@@ -266,8 +272,9 @@ object Config {
      */
     val CALENDAR_EDITABLE = false
 
-
-    // Chat options
+    /**************
+     * Chat options
+     **************/
 
     /**
      * Activates the creation of chat rooms
@@ -306,8 +313,9 @@ object Config {
      */
     val CHAT_ROOM_MEMBER_ADDABLE = false
 
-
-    // Eduroam options
+    /*****************
+     * Eduroam options
+     *****************/
 
     /**
      * List of eduroam identity domains
@@ -339,10 +347,12 @@ object Config {
      */
     val EDUROAM_ANONYMOUS_IDENTITIES = listOf<String>("eduroam@uos.de", "eduroam@uni-osnabrueck.de", "anonymous@uni-osnabrueck.de")
 
-
-    // Geofencing options
-    // Geofencing disables background task when the user leaves the geographical region
-    // The Coordinates define the center of a circular region
+    /**
+     * Geofencing options
+     *
+     * Geofencing disables background task when the user leaves the geographical region
+     * The Coordinates define the center of a circular region
+     */
 
     /**
      * Latitude of the circular region
@@ -365,8 +375,9 @@ object Config {
      */
     val GEOFENCING_RADIUS_IN_METER = 50 * 1000f // 50 Km
 
-
-    // Lectures options
+    /******************
+     * Lectures options
+     ******************/
 
     /**
      * Activates the lectures files function. This function allows to list and download lecture files.
@@ -386,8 +397,9 @@ object Config {
      */
     val LECTURES_SHOW_RECORDS = false
 
-
-    // Tuition fees options
+    /**********************
+     * Tuition fees options
+     **********************/
 
     /**
      * Indicates whether the fees should be loaded from the api
@@ -408,8 +420,8 @@ object Config {
     val TUITIONFEES_TUITION = Tuition(
         start = DateTimeUtils.getDate("2022-07-01"),
         deadline = DateTimeUtils.getDate("2022-07-31"),
-        semester = "Wintersemester 2022/23",
-        amount = 321.03
+        semester = "Wintersemester 2023/24",
+        amount = 335.03
     )
 
     /**

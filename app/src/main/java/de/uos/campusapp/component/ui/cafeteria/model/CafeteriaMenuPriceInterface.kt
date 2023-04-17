@@ -10,4 +10,3 @@ interface CafeteriaMenuPriceInterface {
     var role: CafeteriaRole
     var amount: Double
 }
-

@@ -3,7 +3,7 @@ package de.uos.campusapp.component.ui.overview
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-//import com.google.firebase.crashlytics.FirebaseCrashlytics
+// import com.google.firebase.crashlytics.FirebaseCrashlytics
 import de.uos.campusapp.api.general.CacheControl
 import de.uos.campusapp.component.ui.calendar.CalendarController
 import de.uos.campusapp.component.ui.tuitionfees.TuitionFeeManager
@@ -25,7 +25,7 @@ import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
 class CardsRepository @Inject constructor(
-    private val context: Context,
+    private val context: Context
 ) {
 
     private var cards = MutableLiveData<List<Card>>()

@@ -88,7 +88,6 @@ class MessagesFragment : BaseFragment<Unit>(
                 override fun onTabReselected(tab: TabLayout.Tab) {
                     messagesRecyclerView.smoothScrollToPosition(0)
                 }
-
             })
         }
 

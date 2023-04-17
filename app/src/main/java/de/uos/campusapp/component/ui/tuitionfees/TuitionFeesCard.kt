@@ -73,9 +73,9 @@ class TuitionFeesCard(
         // by showing him that he has been re-registered successfully
         val deadline = DateTimeUtils.getDateString(tuition.deadline)
         val amount = java.lang.Double.toString(tuition.amount)
-        return !(prevDeadline.isEmpty() && tuition.isPaid(context))
-                && tuition.hasStarted
-                && (prevDeadline < deadline || prevAmount > amount)
+        return !(prevDeadline.isEmpty() && tuition.isPaid(context)) &&
+                tuition.hasStarted &&
+                (prevDeadline < deadline || prevAmount > amount)
     }
 
     public override fun discard(editor: Editor) {

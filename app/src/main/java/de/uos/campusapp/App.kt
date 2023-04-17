@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-//import com.google.firebase.crashlytics.FirebaseCrashlytics
+// import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import de.uos.campusapp.component.notifications.NotificationUtils.setupNotificationChannels
@@ -51,7 +51,7 @@ open class App : Application() {
         }
         setupStrictMode()
         loadTheme()
-        //BackendHelper.getBackendConnection()
+        // BackendHelper.getBackendConnection()
         setupWidgets()
         setupShortcuts()
         setupGeofencing()

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.content.ContextCompat
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import de.uos.campusapp.R
 import de.uos.campusapp.api.auth.OAuthManager
@@ -18,7 +17,6 @@ import de.uos.campusapp.databinding.FragmentOnboardingOauthBinding
 import de.uos.campusapp.utils.Utils
 import de.uos.campusapp.utils.plusAssign
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

@@ -40,7 +40,6 @@ class LocationManager @Inject constructor(c: Context) {
         CafeteriaLocalRepository(CaDb.getInstance(c))
     }
 
-
     init {
         val db = CaDb.getInstance(c)
         buildingToGpsDao = db.buildingToGpsDao()
@@ -196,7 +195,7 @@ class LocationManager @Inject constructor(c: Context) {
         val campus = getCurrentOrNextCampus()
         if (campus != null) {
             val prefs = PreferenceManager.getDefaultSharedPreferences(mContext)
-            val cafeteria =  prefs.getString("card_cafeteria_default_" + campus.id, campus.cafeterias?.firstOrNull()?.id)
+            val cafeteria = prefs.getString("card_cafeteria_default_" + campus.id, campus.cafeterias?.firstOrNull()?.id)
             if (cafeteria != null) {
                 return cafeteria
             }

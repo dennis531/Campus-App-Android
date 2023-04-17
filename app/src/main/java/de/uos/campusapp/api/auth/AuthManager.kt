@@ -29,7 +29,7 @@ abstract class AuthManager {
      * Returns the authentication interceptor for the okhttp3 client
      */
     abstract fun getInterceptor(): Interceptor
-    
+
     companion object {
 
         private var uniqueID: String? = null

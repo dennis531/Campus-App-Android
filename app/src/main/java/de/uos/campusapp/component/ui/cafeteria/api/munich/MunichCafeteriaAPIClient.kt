@@ -16,7 +16,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
-class MunichCafeteriaAPIClient(private val apiService: MunichCafeteriaAPIService): CafeteriaAPI {
+class MunichCafeteriaAPIClient(private val apiService: MunichCafeteriaAPIService) : CafeteriaAPI {
 
     override fun getCafeterias(): List<Cafeteria> {
         // TODO: Remove hardcoded response

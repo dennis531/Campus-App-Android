@@ -13,7 +13,7 @@ import java.io.Serializable
  * @property info Information text (optional)
  * @property imageUrl Url containing a map or a picture of the related building or room (optional)
  */
-interface RoomFinderRoomInterface: SimpleStickyListHeadersAdapter.SimpleStickyListItem, Serializable {
+interface RoomFinderRoomInterface : SimpleStickyListHeadersAdapter.SimpleStickyListItem, Serializable {
     val id: String
     val name: String
     val address: String?

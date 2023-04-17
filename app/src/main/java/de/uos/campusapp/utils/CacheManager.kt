@@ -4,7 +4,6 @@ import android.content.Context
 import de.uos.campusapp.component.ui.calendar.CalendarController
 import de.uos.campusapp.component.ui.calendar.api.CalendarAPI
 import de.uos.campusapp.component.ui.lectures.api.LecturesAPI
-import de.uos.campusapp.component.ui.chat.ChatRoomController
 import de.uos.campusapp.service.QueryLocationsService
 import okhttp3.Cache
 import org.jetbrains.anko.doAsync

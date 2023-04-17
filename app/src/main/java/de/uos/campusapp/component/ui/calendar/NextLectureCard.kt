@@ -15,7 +15,7 @@ import de.uos.campusapp.utils.Component
 import org.joda.time.DateTime
 import java.util.*
 
-class NextLectureCard(context: Context) : Card(CardManager.CARD_NEXT_LECTURE, context, Component.CALENDAR,"card_next_lecture") {
+class NextLectureCard(context: Context) : Card(CardManager.CARD_NEXT_LECTURE, context, Component.CALENDAR, "card_next_lecture") {
 
     private val calendarController: CalendarController = CalendarController(context)
 

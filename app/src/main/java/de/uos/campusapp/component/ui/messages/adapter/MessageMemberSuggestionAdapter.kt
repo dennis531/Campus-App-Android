@@ -13,7 +13,7 @@ import de.uos.campusapp.component.ui.messages.model.AbstractMessageMember
 class MessageMemberSuggestionAdapter(
     private val context: Context,
     private var members: List<AbstractMessageMember>
-): BaseAdapter(), Filterable {
+) : BaseAdapter(), Filterable {
 
     override fun getCount(): Int {
         return members.size
@@ -56,5 +56,4 @@ class MessageMemberSuggestionAdapter(
             }
         }
     }
-
 }

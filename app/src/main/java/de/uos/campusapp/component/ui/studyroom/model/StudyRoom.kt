@@ -11,5 +11,4 @@ data class StudyRoom(
     override var info: String? = null,
     override var occupiedUntil: DateTime? = null,
     override var freeUntil: DateTime? = null
-) : AbstractStudyRoom() {
-}
+) : AbstractStudyRoom()

@@ -17,7 +17,7 @@ import de.uos.campusapp.component.ui.onboarding.OnboardingNavigator
  */
 abstract class FragmentForAuthentication<T>(
     @LayoutRes layoutId: Int,
-    @StringRes titleResId: Int,
+    @StringRes titleResId: Int
 ) : BaseFragment<T>(layoutId, titleResId) {
 
     private val navigator: OnboardingNavigator by lazy {

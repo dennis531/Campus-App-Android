@@ -8,7 +8,7 @@ import de.uos.campusapp.component.ui.person.model.InstituteInterface
 import java.io.Serializable
 
 @Type("institute-memberships")
-class StudipInstitute: InstituteInterface {
+class StudipInstitute : InstituteInterface {
     @Id
     var id: String = ""
     var location: String = ""

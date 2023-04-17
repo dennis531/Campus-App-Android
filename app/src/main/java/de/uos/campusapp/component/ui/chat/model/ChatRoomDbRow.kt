@@ -15,5 +15,4 @@ data class ChatRoomDbRow(
     var lastRead: String? = null,
     @ColumnInfo(name = "last_notified")
     var lastNotified: String? = null
-) {
-}
+)

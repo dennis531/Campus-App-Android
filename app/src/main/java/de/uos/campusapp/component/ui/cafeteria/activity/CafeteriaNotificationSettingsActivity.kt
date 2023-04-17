@@ -24,8 +24,7 @@ class CafeteriaNotificationSettingsActivity : BaseActivity(
 ) {
 
     private lateinit var binding: ActivityCafeteriaNotificationSettingsBinding
-    
-    
+
     override fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
         binding = ActivityCafeteriaNotificationSettingsBinding.inflate(layoutInflater)
         return binding.root

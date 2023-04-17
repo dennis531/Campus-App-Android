@@ -47,7 +47,7 @@ abstract class ProgressActivity<T>(
     private var hadSuccessfulRequest = false
 
     private val contentView: ViewGroup
-        get() =  findViewById<ViewGroup>(android.R.id.content).getChildAt(0) as ViewGroup
+        get() = findViewById<ViewGroup>(android.R.id.content).getChildAt(0) as ViewGroup
 
     protected var swipeRefreshLayout: SwipeRefreshLayout? = null
 

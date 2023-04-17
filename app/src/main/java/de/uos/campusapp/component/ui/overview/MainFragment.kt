@@ -35,7 +35,6 @@ import de.uos.campusapp.utils.Utils
 import de.uos.campusapp.utils.observe
 import org.jetbrains.anko.connectivityManager
 import org.jetbrains.anko.support.v4.runOnUiThread
-import org.joda.time.DateTime
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Provider
@@ -82,7 +81,6 @@ class MainFragment : BaseFragment<Unit>(
                 R.color.campus_A100,
                 R.color.campus_A200)
 
-
         with(binding) {
             registerForContextMenu(cardsRecyclerView)
 
@@ -96,7 +94,6 @@ class MainFragment : BaseFragment<Unit>(
             // Swipe gestures
             ItemTouchHelper(ItemTouchHelperCallback()).attachToRecyclerView(cardsRecyclerView)
         }
-
 
         // Start silence Service (if already started it will just invoke a check)
         val service = Intent(requireContext(), SilenceService::class.java)
@@ -200,8 +197,8 @@ class MainFragment : BaseFragment<Unit>(
     private inner class ItemTouchHelperCallback : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
         override fun getSwipeDirs(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
         ): Int {
             val cardViewHolder = viewHolder as CardViewHolder
             val card = cardViewHolder.currentCard
@@ -209,9 +206,9 @@ class MainFragment : BaseFragment<Unit>(
         }
 
         override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
         ): Boolean {
             cardsAdapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
             return true

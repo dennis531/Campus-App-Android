@@ -149,7 +149,6 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<AbstractChatRoom>>(
                 chatRoomsListView.adapter = chatRoomsAdapter
             }
         }
-
     }
 
     /**
@@ -214,7 +213,6 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<AbstractChatRoom>>(
                         Utils.showToast(requireContext(), R.string.joined_chat_room)
                     }
                 }
-
             }, {
                 Utils.log(it, "Failure joining chat room - trying to GET it from the server")
                 Utils.showToastOnUIThread(requireActivity(), R.string.chat_room_join_error)
@@ -285,7 +283,7 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<AbstractChatRoom>>(
     }
 
     private fun createChatRoom(name: String) {
-        Utils.logVerbose("create chat room ${name}")
+        Utils.logVerbose("create chat room $name")
         if (this.currentChatMember == null) {
             Utils.showToast(requireContext(), getString(R.string.chat_not_setup))
             return
@@ -320,7 +318,6 @@ class ChatRoomsFragment : FragmentForAccessingApi<List<AbstractChatRoom>>(
                         Utils.showToast(requireContext(), R.string.joined_chat_room)
                     }
                 }
-
             }, {
                 Utils.log(it, "Failure creating chat room - trying to GET it from the server")
                 Utils.showToastOnUIThread(requireActivity(), R.string.chat_room_create_error)

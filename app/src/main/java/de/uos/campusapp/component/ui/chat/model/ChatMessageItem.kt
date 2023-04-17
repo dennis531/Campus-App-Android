@@ -36,7 +36,7 @@ open class ChatMessageItem : Parcelable {
     /**
      * Called when creating a new chat message
      *
-     * @param text   ChatNotification message text
+     * @param text ChatNotification message text
      * @param member Member who sent the message
      */
     constructor(text: String, member: ChatMember) : super() {

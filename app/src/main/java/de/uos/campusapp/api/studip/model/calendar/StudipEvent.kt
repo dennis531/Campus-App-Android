@@ -8,7 +8,7 @@ import de.uos.campusapp.component.ui.calendar.model.CalendarEventType
 import de.uos.campusapp.component.ui.calendar.model.AbstractEvent
 import org.joda.time.DateTime
 
-open class StudipBaseEvent: AbstractEvent() {
+open class StudipBaseEvent : AbstractEvent() {
     @Id
     override val id: String? = null
 
@@ -21,7 +21,7 @@ open class StudipBaseEvent: AbstractEvent() {
     @JsonIgnore
     override var type: CalendarEventType? = null
         get() {
-            return if(categories?.contains("Vorlesung") == true) CalendarEventType.LECTURE else CalendarEventType.OTHER
+            return if (categories?.contains("Vorlesung") == true) CalendarEventType.LECTURE else CalendarEventType.OTHER
         }
 
     @JsonProperty("description")

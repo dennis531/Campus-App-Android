@@ -50,10 +50,8 @@ interface StudipAPIService {
     @Streaming
     fun downloadLectureFile(@Path("id") id: String): Call<ResponseBody>
 
-
     @GET("studip/news")
     fun getNews(): Call<List<StudipNews>>
-
 
     @GET("blubber-threads?include=context,mentions")
     fun getChatRooms(): Call<List<StudipBlubberThread>>
@@ -72,9 +70,7 @@ interface StudipAPIService {
     @POST("blubber-threads/{id}/comments")
     fun sendChatMessage(@Path("id") roomId: String, @Body message: StudipBlubberComment): Call<StudipBlubberComment>
 
-
-    @GET("users/{id}/inbox?include=sender,recipients&page[limit]=10")
-    fun getInboxMessages(@Path("id") userId: String): Call<List<StudipMessage>>
+    @GET("users/{id}/inbox?include=sender,recipients&page[limit]=10") fun getInboxMessages(@Path("id") userId: String): Call<List<StudipMessage>>
 
     @GET("users/{id}/outbox?include=sender,recipients&page[limit]=10")
     fun getOutboxMessages(@Path("id") userId: String): Call<List<StudipMessage>>

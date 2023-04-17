@@ -15,7 +15,7 @@ class MunichCafeteriaMenu(
     @SerializedName("type_long")
     var type: String,
     @SerializedName("name")
-    var name: String,
+    var name: String
 ) {
     val prices: List<CafeteriaMenuPriceInterface>
         get() = MunichCafeteriaPrices.getMenuPrices(type)

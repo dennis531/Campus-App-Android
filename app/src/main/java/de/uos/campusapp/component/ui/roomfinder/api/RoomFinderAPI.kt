@@ -8,7 +8,7 @@ import de.uos.campusapp.component.ui.roomfinder.model.RoomFinderScheduleInterfac
 /**
  * Api interface for the roomfinder component
  */
-interface RoomFinderAPI: BaseAPI {
+interface RoomFinderAPI : BaseAPI {
 
     /**
      * Searches a room in the external system

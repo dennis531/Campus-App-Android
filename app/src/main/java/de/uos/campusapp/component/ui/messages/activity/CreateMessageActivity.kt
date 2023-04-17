@@ -6,7 +6,7 @@ import de.uos.campusapp.component.other.generic.activity.BaseActivity
 import de.uos.campusapp.component.ui.messages.fragment.CreateMessageFragment
 import de.uos.campusapp.utils.Component
 
-class CreateMessageActivity: BaseActivity(R.layout.activity_create_message, Component.MESSAGES) {
+class CreateMessageActivity : BaseActivity(R.layout.activity_create_message, Component.MESSAGES) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

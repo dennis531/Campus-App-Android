@@ -18,7 +18,7 @@ import de.uos.campusapp.utils.Utils
 /**
  * Card that describes how to dismiss a card
  */
-class SupportCard(context: Context) : Card(CardManager.CARD_SUPPORT, context,Component.OVERVIEW, "") {
+class SupportCard(context: Context) : Card(CardManager.CARD_SUPPORT, context, Component.OVERVIEW, "") {
 
     public override fun discard(editor: Editor) {
         Utils.setSetting(context, CardManager.SHOW_SUPPORT, false)

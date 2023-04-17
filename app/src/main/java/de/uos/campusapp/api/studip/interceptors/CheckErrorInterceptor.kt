@@ -5,8 +5,6 @@ import de.uos.campusapp.api.general.exception.ForbiddenException
 import de.uos.campusapp.api.general.exception.NotFoundException
 import de.uos.campusapp.api.general.exception.UnauthorizedException
 import de.uos.campusapp.api.general.exception.UnknownErrorException
-import de.uos.campusapp.utils.Const
-import de.uos.campusapp.utils.Utils
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.InterruptedIOException

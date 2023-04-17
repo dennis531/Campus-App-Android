@@ -118,7 +118,7 @@ class NewsController @Inject constructor(
 
         return news
             .filterNotNull()
-            .map { item ->  NewsCard(context, item) }
+            .map { item -> NewsCard(context, item) }
             .mapNotNull { it.getIfShowOnStart() }
     }
 

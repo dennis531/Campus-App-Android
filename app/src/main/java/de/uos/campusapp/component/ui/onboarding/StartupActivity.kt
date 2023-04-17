@@ -46,7 +46,7 @@ class StartupActivity : BaseActivity(R.layout.activity_startup, Component.ONBOAR
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         injector.downloadComponent().inject(this)
 
         // Only use Crashlytics if we are not compiling debug

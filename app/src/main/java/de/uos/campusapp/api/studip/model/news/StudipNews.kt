@@ -8,7 +8,7 @@ import de.uos.campusapp.component.ui.news.model.AbstractNews
 import org.joda.time.DateTime
 
 @Type("news")
-class StudipNews: AbstractNews() {
+class StudipNews : AbstractNews() {
     @Id
     override val id: String = ""
 

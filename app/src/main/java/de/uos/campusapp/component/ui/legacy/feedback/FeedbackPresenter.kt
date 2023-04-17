@@ -23,15 +23,13 @@ import de.uos.campusapp.utils.Utils
 import de.uos.campusapp.utils.plusAssign
 import io.reactivex.disposables.CompositeDisposable
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
 
 class FeedbackPresenter @Inject constructor(
     private val context: Context,
-    @LrzId override val lrzId: String,
+    @LrzId override val lrzId: String
 ) : FeedbackContract.Presenter {
 
 //    private val tumCabeClient: TUMCabeClient = TUMCabeClient.getInstance(context)

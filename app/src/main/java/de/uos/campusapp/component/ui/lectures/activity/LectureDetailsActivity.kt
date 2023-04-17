@@ -134,7 +134,6 @@ class LectureDetailsActivity : ActivityForAccessingApi<AbstractLecture>(R.layout
 
             appointmentsButton.isEnabled = true
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

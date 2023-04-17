@@ -9,7 +9,7 @@ class UOSBackendMenuPrice(
     var roleId: String = ROLE_STUDENT,
     @SerializedName("amount")
     override var amount: Double = -1.0
-): CafeteriaMenuPriceInterface {
+) : CafeteriaMenuPriceInterface {
 
     override var role: CafeteriaRole = CafeteriaRole.STUDENT
         get() {

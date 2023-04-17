@@ -13,7 +13,7 @@ data class RoomFinderRoom(
     override val campus: String? = null,
     override val info: String? = null,
     override val imageUrl: String? = null
-): RoomFinderRoomInterface {
+) : RoomFinderRoomInterface {
 
     companion object {
         fun fromRecent(r: Recent): RoomFinderRoom {

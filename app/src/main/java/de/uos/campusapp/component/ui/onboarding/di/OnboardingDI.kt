@@ -37,7 +37,6 @@ object OnboardingModule {
     ): OnboardingAPI = ConfigUtils.getApiClient(context, Component.ONBOARDING) as OnboardingAPI
 }
 
-
 interface OnboardingComponentProvider {
     fun onboardingComponent(): OnboardingComponent
 }

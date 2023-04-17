@@ -6,7 +6,7 @@ import de.uos.campusapp.component.ui.person.model.PersonInterface
 /**
  * Api interface for the person component
  */
-interface PersonAPI: BaseAPI {
+interface PersonAPI : BaseAPI {
 
     /**
      * Searches a person in the external system

@@ -18,7 +18,7 @@ import java.lang.StringBuilder
 class MessagesNotificationProvider(
     context: Context,
     private val message: AbstractMessage
-): NotificationProvider(context) {
+) : NotificationProvider(context) {
 
     override fun getNotificationBuilder(): NotificationCompat.Builder {
         return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
@@ -87,5 +87,4 @@ class MessagesNotificationProvider(
             return InstantNotification(NotificationType.MESSAGES, SUMMARY_ID, notification)
         }
     }
-
 }

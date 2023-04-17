@@ -32,7 +32,6 @@ import io.reactivex.schedulers.Schedulers
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-
 class CreateMessageFragment : BaseFragment<Unit>(
     R.layout.fragment_create_message,
     R.string.new_message
@@ -278,7 +277,6 @@ class CreateMessageFragment : BaseFragment<Unit>(
         super.onDestroy()
         compositeDisposable.dispose()
     }
-
 
     companion object {
         private const val THRESHOLD = 3 // min number of characters before getting suggestions

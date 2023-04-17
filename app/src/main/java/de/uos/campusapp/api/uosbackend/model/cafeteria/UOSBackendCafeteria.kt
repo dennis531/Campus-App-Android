@@ -3,7 +3,7 @@ package de.uos.campusapp.api.uosbackend.model.cafeteria
 import com.google.gson.annotations.SerializedName
 import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteria
 
-data class UOSBackendCafeteria (
+data class UOSBackendCafeteria(
     @SerializedName("id")
     override val id: String,
     @SerializedName("name")

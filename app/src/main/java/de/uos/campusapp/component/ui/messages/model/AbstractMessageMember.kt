@@ -9,7 +9,7 @@ import android.os.Parcelable
  * @property id
  * @property name Name of member
  */
-abstract class AbstractMessageMember(): Parcelable {
+abstract class AbstractMessageMember() : Parcelable {
     abstract val id: String
     abstract val name: String
 

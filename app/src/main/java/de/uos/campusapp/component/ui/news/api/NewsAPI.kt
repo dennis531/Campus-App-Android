@@ -6,7 +6,7 @@ import de.uos.campusapp.component.ui.news.model.AbstractNews
 /**
  * Api interface for the news component
  */
-interface NewsAPI: BaseAPI {
+interface NewsAPI : BaseAPI {
 
     /**
      * Gets latest news from external system

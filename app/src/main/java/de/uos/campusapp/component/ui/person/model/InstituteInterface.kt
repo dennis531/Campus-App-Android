@@ -14,5 +14,3 @@ interface InstituteInterface : Serializable {
         private const val serialVersionUID = 2906210652697246506L
     }
 }
-
-

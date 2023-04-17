@@ -28,7 +28,7 @@ class RoomFinderDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with (binding!!) {
+        with(binding!!) {
             campusTextView.text = room.campus
             campusTextView.isVisible = !room.campus.isNullOrBlank()
 

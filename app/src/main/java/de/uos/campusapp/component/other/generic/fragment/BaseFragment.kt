@@ -58,7 +58,7 @@ abstract class BaseFragment<T>(
         get() = requireActivity().findViewById<Toolbar?>(R.id.toolbar)
 
     private val contentView: ViewGroup
-        get() =  requireActivity().findViewById<ViewGroup>(android.R.id.content).getChildAt(0) as ViewGroup
+        get() = requireActivity().findViewById<ViewGroup>(android.R.id.content).getChildAt(0) as ViewGroup
 
     protected var swipeRefreshLayout: SwipeRefreshLayout? = null
 

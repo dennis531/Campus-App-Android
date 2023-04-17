@@ -13,7 +13,7 @@ class RoomContactItem(
     private val roomQuery: String
 ) : AbstractContactItem(R.string.room, text, R.drawable.ic_outline_business_24px) {
 
-    override fun getIntent(context: Context) : Intent? {
+    override fun getIntent(context: Context): Intent? {
         if (roomQuery.isBlank() || !ConfigUtils.isComponentEnabled(context, Component.ROOMFINDER)) {
             return null
         }

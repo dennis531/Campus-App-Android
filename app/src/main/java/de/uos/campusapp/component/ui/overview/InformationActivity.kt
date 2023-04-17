@@ -8,7 +8,6 @@ import android.content.pm.PackageManager.NameNotFoundException
 import android.net.Uri
 import android.os.Bundle
 import androidx.preference.PreferenceManager
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,6 @@ import de.uos.campusapp.component.other.generic.activity.BaseActivity
 import de.uos.campusapp.databinding.ActivityInformationBinding
 import de.uos.campusapp.utils.Component
 import de.uos.campusapp.utils.Const
-import de.uos.campusapp.utils.Utils
 
 /**
  * Provides information about this app and all contributors
@@ -58,7 +56,6 @@ class InformationActivity : BaseActivity(R.layout.activity_information, Componen
                     .build()
                     .show()
         }
-
 
         displayDebugInfo()
     }
@@ -107,7 +104,6 @@ class InformationActivity : BaseActivity(R.layout.activity_information, Componen
             addDebugRow(debugInfos, "Build configuration", BuildConfig.DEBUG.toString())
             debugInfos.visibility = View.VISIBLE
         }
-
     }
 
     private fun addDebugRow(tableLayout: TableLayout, label: String, value: String?) {

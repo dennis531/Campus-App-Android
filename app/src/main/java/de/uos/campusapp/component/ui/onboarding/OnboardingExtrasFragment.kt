@@ -181,7 +181,6 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
                 groupChatCheckBox.isEnabled = false
             }
         }
-
     }
 
     override fun onLoadInBackground(): ChatMember? {
@@ -231,7 +230,7 @@ class OnboardingExtrasFragment : FragmentForLoadingInBackground<ChatMember>(
                     putBoolean(Const.BACKGROUND_MODE, true) // Enable by default
 //                    putBoolean(Const.BUG_REPORTS, bugReportsCheckBox.isChecked)
 
-                    if (result!= null && !result.username.isNullOrEmpty()) {
+                    if (result != null && !result.username.isNullOrEmpty()) {
                         putBoolean(Const.GROUP_CHAT_ENABLED, groupChatCheckBox.isChecked)
                         put(Const.CHAT_MEMBER, result)
                     }

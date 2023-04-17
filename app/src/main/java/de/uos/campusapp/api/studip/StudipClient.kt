@@ -24,7 +24,6 @@ import de.uos.campusapp.api.studip.model.news.StudipNews
 import de.uos.campusapp.api.studip.model.person.StudipInstitute
 import de.uos.campusapp.api.studip.model.person.StudipPerson
 import de.uos.campusapp.component.ui.calendar.api.CalendarAPI
-import de.uos.campusapp.component.ui.calendar.model.CalendarItem
 import de.uos.campusapp.component.ui.calendar.model.AbstractEvent
 import de.uos.campusapp.component.ui.grades.api.GradesAPI
 import de.uos.campusapp.component.ui.grades.model.AbstractExam
@@ -82,7 +81,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         val exam1 = Exam(
             "123",
             "Info A",
-            "WS 2016",
+            "WS 2016"
         )
 
         val exam2 = Exam(
@@ -246,7 +245,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         // Get older messages
         if (latestMessage != null) {
             // If all messages are older than one month than the latest message, the messages cannot be loaded due to the ascending message order
-            val oldMessages =  apiService.getChatMessages(
+            val oldMessages = apiService.getChatMessages(
                 chatRoom.id,
                 latestMessage.timestamp.minusMonths(1).toString(),
                 latestMessage.timestamp.toString()
@@ -344,13 +343,13 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
         val studyRoom3 = StudyRoom(
             "3",
             "21/E01",
-            "Einzelarbeitsraum",
+            "Einzelarbeitsraum"
         )
 
         val studyRoom4 = StudyRoom(
             "4",
             "21/E02",
-            "Gruppenarbeitsraum",
+            "Gruppenarbeitsraum"
         )
 
         val studyRoom5 = StudyRoom(
@@ -455,7 +454,7 @@ class StudipClient(private val apiService: StudipAPIService, context: Context, v
                 StudipNews::class.java,
                 StudipBlubberThread::class.java,
                 StudipBlubberComment::class.java,
-                StudipMessage::class.java,
+                StudipMessage::class.java
             )
 
             // Set up relationship resolver

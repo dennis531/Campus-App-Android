@@ -6,7 +6,7 @@ import de.uos.campusapp.component.ui.studyroom.model.AbstractStudyRoomGroup
 /**
  * Api interface for the study room component
  */
-interface StudyRoomAPI: BaseAPI {
+interface StudyRoomAPI : BaseAPI {
 
     /**
      * Get room groups, e.g. library, containing study rooms

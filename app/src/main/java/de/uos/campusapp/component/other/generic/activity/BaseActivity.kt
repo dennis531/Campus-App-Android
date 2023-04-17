@@ -22,7 +22,7 @@ import org.jetbrains.anko.contentView
 
 abstract class BaseActivity(
     @LayoutRes private val layoutId: Int,
-    val component: Component? = null,
+    val component: Component? = null
 ) : AppCompatActivity() {
 
     val injector: AppComponent by lazy { app.appComponent }

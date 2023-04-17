@@ -148,5 +148,4 @@ class MessagesDetailsFragment : Fragment() {
                 }
             }
     }
-
 }

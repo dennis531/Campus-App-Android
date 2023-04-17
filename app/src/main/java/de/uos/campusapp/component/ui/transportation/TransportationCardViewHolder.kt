@@ -22,7 +22,7 @@ class TransportationCardViewHolder(
             val stationNameTextView = itemView.findViewById<TextView>(R.id.stationNameTextView)
             val contentContainerLayout = itemView.findViewById<LinearLayout>(R.id.contentContainerLayout)
 
-            if(stationNameTextView.text != station.name){
+            if (stationNameTextView.text != station.name) {
                 stationNameTextView.text = station.name
                 contentContainerLayout.removeAllViews()
             }

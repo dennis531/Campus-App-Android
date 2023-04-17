@@ -7,7 +7,7 @@ import de.uos.campusapp.component.ui.cafeteria.model.AbstractCafeteriaMenu
 /**
  * Api interface for the cafeteria component
  */
-interface CafeteriaAPI: BaseAPI {
+interface CafeteriaAPI : BaseAPI {
 
     /**
      * Gets all available cafeterias

@@ -126,7 +126,6 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
                 buttonsContainer.visibility = View.GONE
             }
         }
-
     }
 
     private fun openEventInCalendarActivity(calendarItem: CalendarItem) {
@@ -169,7 +168,7 @@ class CalendarDetailsFragment : RoundedBottomSheetDialogFragment() {
             }, {
                 // if (call.isCanceled) {
                 //     return
-                //}
+                // }
                 handleDeleteEventError(it)
             })
     }

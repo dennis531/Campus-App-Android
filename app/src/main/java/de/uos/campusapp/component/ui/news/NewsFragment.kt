@@ -72,7 +72,6 @@ class NewsFragment : FragmentForDownloadingExternal(
             newsRecyclerView.scrollToPosition(firstVisiblePosition)
         }
 
-
         showLoadingEnded()
     }
 

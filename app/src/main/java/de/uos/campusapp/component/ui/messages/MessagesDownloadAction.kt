@@ -10,7 +10,7 @@ import javax.inject.Inject
 class MessagesDownloadAction @Inject constructor(
     private val context: Context,
     private val messagesController: MessagesController
-): DownloadWorker.Action {
+) : DownloadWorker.Action {
 
     override fun execute(cacheBehaviour: CacheControl) {
         if (!ConfigUtils.isComponentEnabled(context, Component.MESSAGES)) {

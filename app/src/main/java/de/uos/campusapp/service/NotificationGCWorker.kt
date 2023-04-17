@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Notification Garbage Collector which removes old notifications from database.
  */
-class NotificationGCWorker (context: Context, workerParams: WorkerParameters) :
+class NotificationGCWorker(context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
 
     private val persistentStore: NotificationStore by lazy {

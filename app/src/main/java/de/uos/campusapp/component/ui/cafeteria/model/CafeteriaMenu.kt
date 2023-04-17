@@ -12,5 +12,4 @@ data class CafeteriaMenu(
     override var date: DateTime,
     override var type: String,
     override var prices: List<CafeteriaMenuPriceInterface>?
-) : AbstractCafeteriaMenu() {
-}
+) : AbstractCafeteriaMenu()

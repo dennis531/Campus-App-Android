@@ -57,7 +57,7 @@ class CreateEventActivity : ActivityForAccessingApi<String>(R.layout.activity_cr
     private val loadingDisposable = CompositeDisposable()
 
     private val repeatHelper = RepeatHelper()
-    
+
     private lateinit var binding: ActivityCreateEventBinding
 
     override fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
@@ -94,7 +94,6 @@ class CreateEventActivity : ActivityForAccessingApi<String>(R.layout.activity_cr
             })
         }
 
-
         val extras = intent.extras
         with(binding) {
             if (extras != null) {
@@ -115,7 +114,6 @@ class CreateEventActivity : ActivityForAccessingApi<String>(R.layout.activity_cr
         initStartEndDates(extras)
         setDateAndTimeListeners()
         initRepeatingSettingsListeners()
-
 
         binding.createEventButton.setOnClickListener {
             if (end.isBefore(start)) {
@@ -363,7 +361,6 @@ class CreateEventActivity : ActivityForAccessingApi<String>(R.layout.activity_cr
                 curDateStart = curDateStart.plusWeeks(1)
                 curDateEnd = curDateEnd.plusWeeks(1)
                 events.add(CalendarItem("", baseEvent.title, CalendarItem.OTHER, baseEvent.description, curDateStart, curDateEnd, "", true, false))
-
             }
         }
     }

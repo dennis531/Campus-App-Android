@@ -47,7 +47,7 @@ class StudipBlubberComment() : AbstractChatMessage() {
             return author?.let { ChatMember(it.id, it.username, it.fullName) } ?: ChatMember()
         }
 
-    constructor(message: AbstractChatMessage) : this()  {
+    constructor(message: AbstractChatMessage) : this() {
         text = message.text
         timestampIso = message.timestamp.toString()
     }

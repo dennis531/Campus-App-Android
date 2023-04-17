@@ -83,7 +83,6 @@ class StudyRoomsFragment : FragmentForAccessingApi<List<AbstractStudyRoomGroup>>
             sectionsPagerAdapter.setStudyRoomGroupId(selectedRoomGroupId)
             pager.adapter = sectionsPagerAdapter
         }
-
     }
 
     private fun loadStudyRooms() {

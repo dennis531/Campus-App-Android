@@ -38,7 +38,7 @@ class CafeteriaMenuItem(
         cafeteriaId: String,
         name: String,
         date: DateTime,
-        type: String,
+        type: String
     ) : this(id, cafeteriaId, name, date, type, null)
 
     val tag: String

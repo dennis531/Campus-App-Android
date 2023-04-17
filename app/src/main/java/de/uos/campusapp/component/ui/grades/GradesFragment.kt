@@ -81,7 +81,6 @@ class GradesFragment : FragmentForAccessingApi<List<AbstractExam>>(
             showChartButton?.setOnClickListener { toggleInLandscape() }
         }
 
-
         loadGrades(CacheControl.USE_CACHE)
 
         // Tracks whether the user has used the calendar module before. This is used in determining when to prompt for a
@@ -152,8 +151,7 @@ class GradesFragment : FragmentForAccessingApi<List<AbstractExam>>(
                 legend.textColor = getColor(resources, R.color.text_primary, null)
 
                 invalidate()
-        }
-
+            }
         }
     }
 
@@ -275,7 +273,6 @@ class GradesFragment : FragmentForAccessingApi<List<AbstractExam>>(
                 visibility = View.VISIBLE
             }
         }
-
 
         binding.filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {

@@ -22,7 +22,7 @@ import org.joda.time.format.DateTimeFormat
  * @property recipients List of recipients (required for outgoing messages)
  * @property date Message date
  */
-abstract class AbstractMessage: Parcelable {
+abstract class AbstractMessage : Parcelable {
     abstract val id: String
     abstract val subject: String
     abstract val text: String

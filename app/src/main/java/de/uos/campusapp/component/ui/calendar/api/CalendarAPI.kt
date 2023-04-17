@@ -7,7 +7,7 @@ import de.uos.campusapp.utils.ConfigConst
 /**
  * Api interface for the calendar component
  */
-interface CalendarAPI: BaseAPI {
+interface CalendarAPI : BaseAPI {
 
     /**
      * Gets all calendar events from client

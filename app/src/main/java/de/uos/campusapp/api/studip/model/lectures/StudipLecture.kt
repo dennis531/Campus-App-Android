@@ -119,4 +119,3 @@ class StudipLecture : AbstractLecture() {
         return null
     }
 }
-

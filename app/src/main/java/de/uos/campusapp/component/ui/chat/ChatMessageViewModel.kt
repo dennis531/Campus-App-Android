@@ -38,7 +38,7 @@ class ChatMessageViewModel(
 
     fun getOlderMessages(
         room: AbstractChatRoom,
-        message: ChatMessageItem,
+        message: ChatMessageItem
     ): Observable<List<ChatMessageItem>> {
         return remoteRepository
                 .getMessages(room, message)
@@ -48,7 +48,7 @@ class ChatMessageViewModel(
     }
 
     fun getNewMessages(
-        room: AbstractChatRoom,
+        room: AbstractChatRoom
     ): Observable<List<ChatMessageItem>> {
         return remoteRepository
                 .getNewMessages(room)

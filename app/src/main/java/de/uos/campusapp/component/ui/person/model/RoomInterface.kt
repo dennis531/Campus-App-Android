@@ -8,7 +8,7 @@ import java.io.Serializable
  * @property location address of room or related building
  * @property number Room number
  */
-interface RoomInterface: Serializable {
+interface RoomInterface : Serializable {
     var location: String
     var number: String
 

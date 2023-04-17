@@ -42,7 +42,7 @@ interface BaseAPI {
             Component.PERSON to PersonAPI::class.java,
             Component.ROOMFINDER to RoomFinderAPI::class.java,
             Component.STUDYROOM to StudyRoomAPI::class.java,
-            Component.TRANSPORTATION to TransportationAPI::class.java,
+            Component.TRANSPORTATION to TransportationAPI::class.java
         )
     }
 }

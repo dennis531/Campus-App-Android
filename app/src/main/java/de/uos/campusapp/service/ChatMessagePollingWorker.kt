@@ -40,7 +40,7 @@ class ChatMessagePollingWorker(context: Context, workerParams: WorkerParameters)
 
         // collect all new messages from each chat room
         for (room in rooms) {
-            viewModel.getNewMessages(room).subscribe({onDataLoaded(room)}, {Utils.log(it)})
+            viewModel.getNewMessages(room).subscribe({ onDataLoaded(room) }, { Utils.log(it) })
         }
 
         return Result.success()
@@ -48,7 +48,7 @@ class ChatMessagePollingWorker(context: Context, workerParams: WorkerParameters)
 
     private fun onDataLoaded(room: AbstractChatRoom) {
         // Show notification only if unread messages have not been notified before
-        if(chatMessageDao.getNumberUnreadAndUnnotified(room.id) == 0) {
+        if (chatMessageDao.getNumberUnreadAndUnnotified(room.id) == 0) {
             return
         }
 

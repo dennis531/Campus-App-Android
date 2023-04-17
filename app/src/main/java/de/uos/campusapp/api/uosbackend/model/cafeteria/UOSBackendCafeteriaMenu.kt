@@ -18,5 +18,4 @@ class UOSBackendCafeteriaMenu(
     override var type: String,
     @SerializedName("prices")
     override var prices: List<CafeteriaMenuPriceInterface>? = null
-): AbstractCafeteriaMenu()
-
+) : AbstractCafeteriaMenu()

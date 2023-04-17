@@ -26,7 +26,6 @@ class LecturesAppointmentsActivity : ActivityForAccessingApi<List<LectureAppoint
 
     private lateinit var binding: ActivityLecturesappointmentsBinding
 
-
     override fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
         binding = ActivityLecturesappointmentsBinding.inflate(layoutInflater)
         return binding.root

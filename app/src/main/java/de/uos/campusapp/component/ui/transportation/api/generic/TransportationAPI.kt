@@ -7,7 +7,7 @@ import de.uos.campusapp.component.ui.transportation.model.AbstractStation
 /**
  * Api interface for the transportation component
  */
-interface TransportationAPI: BaseAPI {
+interface TransportationAPI : BaseAPI {
 
     /**
      * Searches Stations

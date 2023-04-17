@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class MessagesController @Inject constructor(
     private val context: Context
-): ProvidesNotifications, ProvidesCard {
+) : ProvidesNotifications, ProvidesCard {
 
     private val localRepository: MessagesLocalRepository = MessagesLocalRepository(CaDb.getInstance(context))
     private val remoteRepository: MessagesRemoteRepository = MessagesRemoteRepository(context)
@@ -42,7 +42,6 @@ class MessagesController @Inject constructor(
 
             // Show notification
             showMessageNotification(messages, lastMessageDate)
-
         } catch (t: Throwable) {
             Utils.log(t)
         }
@@ -78,7 +77,6 @@ class MessagesController @Inject constructor(
                 Utils.log(t)
                 success = false
             }
-
         }
 
         return success

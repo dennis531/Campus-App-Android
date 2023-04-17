@@ -6,7 +6,7 @@ import de.uos.campusapp.component.ui.grades.model.AbstractExam
 /**
  * Api interface for the grades component
  */
-interface GradesAPI: BaseAPI {
+interface GradesAPI : BaseAPI {
 
     /**
      * Get all grades of the user from external system

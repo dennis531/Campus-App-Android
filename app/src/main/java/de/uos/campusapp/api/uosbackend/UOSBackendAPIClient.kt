@@ -70,7 +70,7 @@ class UOSBackendAPIClient(private val apiService: UOSBackendAPIService, context:
     companion object {
         private val BASE_URL = ConfigUtils.getConfig(ConfigConst.UOS_BACKEND_API_BASE_URL, "")
 
-        private const val VBN_SEARCH_RADIUS = 1000  // 1 km
+        private const val VBN_SEARCH_RADIUS = 1000 // 1 km
 
         private var apiClient: UOSBackendAPIClient? = null
 

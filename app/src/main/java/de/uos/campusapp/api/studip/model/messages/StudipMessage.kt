@@ -23,7 +23,6 @@ class StudipMessage() : AbstractMessage() {
     override var id: String = ""
         get() = apiId ?: ""
 
-
     @JsonProperty("subject")
     override var subject: String = ""
 
@@ -61,12 +60,11 @@ class StudipMessage() : AbstractMessage() {
     @JsonIgnore
     override var type: MessageType = MessageType.INBOX
 
-    constructor(message: AbstractMessage): this() {
+    constructor(message: AbstractMessage) : this() {
         subject = message.subject
         text = message.text
         studipRecipients = message.recipients.map {
             StudipPerson().apply { id = it.id }
         }
     }
-
 }

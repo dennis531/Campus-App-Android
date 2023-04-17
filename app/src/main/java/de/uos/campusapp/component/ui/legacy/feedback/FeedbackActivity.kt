@@ -44,9 +44,9 @@ class FeedbackActivity : BaseActivity(R.layout.activity_feedback), FeedbackContr
 
     @Inject
     lateinit var presenter: FeedbackContract.Presenter
-    
+
     private lateinit var binding: ActivityFeedbackBinding
-    
+
     override fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
         binding = ActivityFeedbackBinding.inflate(layoutInflater)
         return binding.root
@@ -170,7 +170,6 @@ class FeedbackActivity : BaseActivity(R.layout.activity_feedback), FeedbackContr
                 includeEmailCheckbox.text = getString(R.string.feedback_include_email_id, email)
             }
         }
-
     }
 
     override fun showEmailInput(show: Boolean) {

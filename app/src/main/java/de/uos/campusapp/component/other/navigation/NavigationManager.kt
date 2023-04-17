@@ -19,7 +19,7 @@ object NavigationManager {
         }
     }
 
-    //Use FragmentManager.getFragmentFactory() and FragmentFactory.instantiate(ClassLoader, String)
+    // Use FragmentManager.getFragmentFactory() and FragmentFactory.instantiate(ClassLoader, String)
 
     private fun open(context: Context, navItem: NavItem.FragmentDestination) {
         val activity = context as? BaseNavigationActivity ?: return

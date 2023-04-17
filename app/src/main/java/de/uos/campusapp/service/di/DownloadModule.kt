@@ -43,7 +43,7 @@ object DownloadModule {
     @Provides
     fun provideLocationImportAction(
         context: Context,
-        database: CaDb,
+        database: CaDb
     ): LocationImportAction = LocationImportAction(context, database)
 
     @JvmStatic
@@ -80,14 +80,14 @@ object DownloadModule {
         locationImportAction: LocationImportAction,
         gradesDownloadAction: GradesDownloadAction,
         newsDownloadAction: NewsDownloadAction,
-        messagesDownloadAction: MessagesDownloadAction,
+        messagesDownloadAction: MessagesDownloadAction
         // updateNoteDownloadAction: UpdateNoteDownloadAction
     ): DownloadWorker.WorkerActions = DownloadWorker.WorkerActions(
             cafeteriaDownloadAction,
             locationImportAction,
             gradesDownloadAction,
             newsDownloadAction,
-            messagesDownloadAction,
+            messagesDownloadAction
             // updateNoteDownloadAction
     )
 }

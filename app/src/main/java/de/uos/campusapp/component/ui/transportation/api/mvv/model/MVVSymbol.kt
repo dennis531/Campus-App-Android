@@ -12,7 +12,7 @@ import de.uos.campusapp.component.ui.transportation.model.Symbol
  *
  * @param line Line symbol name e.g. U6, S1, T14
  */
-class MVVSymbol(override val name: String): Symbol {
+class MVVSymbol(override val name: String) : Symbol {
 
     @ColorRes
     val backgroundColorResId: Int

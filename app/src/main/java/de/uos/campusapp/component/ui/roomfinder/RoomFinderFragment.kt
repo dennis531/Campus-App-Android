@@ -49,7 +49,7 @@ class RoomFinderFragment : FragmentForSearchingInBackground<List<RoomFinderRoomI
         super.onCreate(savedInstanceState)
         injector.roomFinderComponent().inject(this)
     }
-    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = RoomFinderListAdapter(requireContext(), recents)
