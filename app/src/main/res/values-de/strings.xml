@@ -471,6 +471,11 @@
     <string name="done">Fertig</string>
     <string name="eduroam_dialog_info_text">Die WLAN-Konfiguration muss entfernt werden, da die App andere Konfigurationen nicht überschreiben kann. Öffne die WLAN-Einstellungen, wähle eduroam aus und klicke auf Entfernen.</string>
 
+    <!-- Survey card -->
+    <string name="survey_title">Umfrage zur Campus-App</string>
+    <string name="open_survey">Umfrage öffnen</string>
+    <string name="survey_info">Gib uns Feedback zum Prototyp einer Campus-App. Dein Input hilft uns zu entscheiden, ob wir eine ähnliche App in der Zukunft anbieten wollen und welche nützlichen Funktionen diese haben soll.</string>
+
     <!-- Feedback Activity -->
     <string name="feedback">Feedback</string>
     <string name="general">Campus Allgemein</string>

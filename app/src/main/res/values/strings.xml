@@ -483,6 +483,12 @@
     <string name="just_now">Just now</string>
     <string name="yesterday">Yesterday</string>
 
+    <!-- Survey card -->
+    <string name="survey_title">Survey about Campus App</string>
+    <string name="open_survey">Open Survey</string>
+    <string name="survey_info">Give us feedback about the Campus App prototype. Your input helps us decide if we want to provide an app like this in the future and what functionality it needs to have in order to be helpful.</string>
+    <string name="survey_link" translatable="false">https://www.survey.uni-osnabrueck.de/limesurvey/index.php/817871?lang=de</string>
+
     <string name="add_widget">Add widget</string>
     <!-- Widget Mensa -->
     <string name="mensa_widget" translatable="false">Mensa Widget Campus</string>

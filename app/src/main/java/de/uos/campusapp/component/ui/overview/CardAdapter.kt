@@ -41,6 +41,7 @@ class CardAdapter(private val interactionListener: CardInteractionListener) : Re
             CardManager.CARD_SUPPORT -> return SupportCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_LOGIN -> return LoginPromptCard.inflateViewHolder(viewGroup, interactionListener)
             CardManager.CARD_UPDATE_NOTE -> return UpdateNoteCard.inflateViewHolder(viewGroup, interactionListener)
+            CardManager.CARD_SURVEY -> return SurveyCard.inflateViewHolder(viewGroup, interactionListener)
             else -> throw UnsupportedOperationException()
         }
     }
