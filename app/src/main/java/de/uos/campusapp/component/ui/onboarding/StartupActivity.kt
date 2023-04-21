@@ -1,13 +1,14 @@
 package de.uos.campusapp.component.ui.onboarding
 
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
-import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.*
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat.checkSelfPermission
 import androidx.core.app.ActivityCompat.requestPermissions
@@ -137,8 +138,8 @@ class StartupActivity : BaseActivity(R.layout.activity_startup, Component.ONBOAR
 
     private fun requestLocationPermission() {
         when {
-            hasLocationPermissions -> openMainActivityIfInitializationFinished()
-            shouldShowRationale -> runOnUiThread { showLocationPermissionRationaleDialog() }
+            hasLocationPermissions -> requestNotificationPermission()
+            shouldShowLocationRationale -> runOnUiThread { showLocationPermissionRationaleDialog() }
             else -> requestPermissions(this, PERMISSIONS_LOCATION, REQUEST_LOCATION)
         }
     }
@@ -146,7 +147,7 @@ class StartupActivity : BaseActivity(R.layout.activity_startup, Component.ONBOAR
     private val hasLocationPermissions: Boolean
         get() = PERMISSIONS_LOCATION.all { checkSelfPermission(this, it) == PERMISSION_GRANTED }
 
-    private val shouldShowRationale: Boolean
+    private val shouldShowLocationRationale: Boolean
         get() = PERMISSIONS_LOCATION.all { shouldShowRequestPermissionRationale(this, it) }
 
     /**
@@ -165,11 +166,49 @@ class StartupActivity : BaseActivity(R.layout.activity_startup, Component.ONBOAR
                 .show()
     }
 
+    private fun requestNotificationPermission() {
+        // Android 12 and below don't require this permission
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            openMainActivityIfInitializationFinished()
+            return
+        }
+        when {
+            hasNotificationPermission -> openMainActivityIfInitializationFinished()
+            shouldShowRequestPermissionRationale(this, POST_NOTIFICATIONS) ->
+                runOnUiThread { showNotificationPermissionRationaleDialog() }
+            else -> requestPermissions(this, arrayOf(POST_NOTIFICATIONS), REQUEST_NOTIFICATION)
+        }
+    }
+
+    private val hasNotificationPermission: Boolean
+        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+        get() = checkSelfPermission(this, POST_NOTIFICATIONS) == PERMISSION_GRANTED
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun showNotificationPermissionRationaleDialog() {
+        AlertDialog.Builder(this, R.style.Theme_MaterialComponents_Light_Dialog)
+            .setMessage(R.string.permission_notification_explanation)
+            .setPositiveButton(R.string.ok) { _, _ ->
+                requestPermissions(this, arrayOf(POST_NOTIFICATIONS), REQUEST_NOTIFICATION)
+            }
+            .create()
+            .apply {
+                window?.setBackgroundDrawableResource(R.drawable.rounded_corners_background)
+            }
+            .show()
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
         grantResults: IntArray
     ) {
+        if (requestCode == REQUEST_LOCATION) {
+            // Request permission for Android 13 and up after location permission request
+            requestNotificationPermission()
+            return
+        }
+
         openMainActivityIfInitializationFinished()
     }
 
@@ -199,6 +238,7 @@ class StartupActivity : BaseActivity(R.layout.activity_startup, Component.ONBOAR
 
     private companion object {
         private const val REQUEST_LOCATION = 0
+        private const val REQUEST_NOTIFICATION = 1
         private val PERMISSIONS_LOCATION = arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION)
     }
 }
