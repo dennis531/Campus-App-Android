@@ -1,0 +1,66 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/StandardCard">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/cardTitle"
+            style="@style/CardTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/material_default_padding"
+            android:layout_marginTop="@dimen/material_default_padding"
+            android:layout_marginEnd="@dimen/material_default_padding"
+            android:text="@string/survey_title"
+            app:layout_constraintEnd_toStartOf="@id/cardMoreIcon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/cardMoreIcon"
+            style="@style/CardMoreIcon"
+            app:layout_constraintBottom_toBottomOf="@id/cardTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cardTitle" />
+
+        <TextView
+            android:id="@+id/cardBody"
+            style="@style/CardBody"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/material_default_padding"
+            android:layout_marginTop="@dimen/material_default_padding"
+            android:layout_marginEnd="@dimen/material_default_padding"
+            android:layout_marginBottom="@dimen/material_default_padding"
+            android:text="@string/survey_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/survey_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/material_small_padding"
+            android:layout_marginEnd="@dimen/material_default_padding"
+            android:layout_marginStart="@dimen/material_default_padding"
+            android:layout_marginTop="@dimen/material_small_padding"
+            android:text="@string/open_survey"
+            android:textAllCaps="false"
+            android:textColor="@color/default_button_text"
+            app:cornerRadius="@dimen/material_corner_radius"
+            app:icon="@drawable/ic_outline_feedback_24px"
+            app:iconPadding="@dimen/material_small_padding"
+            app:iconTint="@color/default_button_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardBody" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

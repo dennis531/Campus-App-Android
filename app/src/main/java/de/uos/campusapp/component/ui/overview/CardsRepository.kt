@@ -61,6 +61,7 @@ class CardsRepository @Inject constructor(
             add(NoInternetCard(context).getIfShowOnStart())
             add(LoginPromptCard(context).getIfShowOnStart())
             add(SupportCard(context).getIfShowOnStart())
+            add(SurveyCard(context).getIfShowOnStart())
             add(EduroamCard(context).getIfShowOnStart())
             add(EduroamFixCard(context).getIfShowOnStart())
             add(UpdateNoteCard(context).getIfShowOnStart())

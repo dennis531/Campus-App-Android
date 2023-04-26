@@ -14,6 +14,7 @@ object CardManager {
 
     const val SHOW_SUPPORT = "show_support"
     const val SHOW_LOGIN = "show_login"
+    const val SHOW_SURVEY = "show_survey"
 
     /**
      * Card typ constants
@@ -32,6 +33,7 @@ object CardManager {
     const val CARD_LOGIN = R.layout.card_login_prompt
     const val CARD_EDUROAM_FIX = R.layout.card_eduroam_fix
     const val CARD_UPDATE_NOTE = R.layout.card_update_note
+    const val CARD_SURVEY = R.layout.card_survey
 
     /**
      * Resets dismiss settings for all cards

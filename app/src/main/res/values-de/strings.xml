@@ -424,6 +424,7 @@
     <string name="support_us">Hilf uns, die Campus App besser zu machen. Sende uns eine E-Mail, wenn du auf ein Problem stößt.</string>
     <string name="support_us_title">Unterstütze uns</string>
     <string name="permission_location_explanation">Die Campus App braucht die Erlaubnis, auf deinen Standort zugreifen zu dürfen, um Mensa-Speisepläne in deiner Nähe oder Fahrpläne der nächstgelegenen MVV-Station anzeigen zu können. Wenn du das nicht willst, kannst du deinen Standort in den Einstellungen konfigurieren.</string>
+    <string name="permission_notification_explanation">Die Campus App braucht die Erlaubnis, dir Nachrichten senden zu dürfen, um dich zum Beispiel über neue Chatnachrichten zu informieren oder an Semesterbeiträge zu erinnern.</string>
     <string name="permission_calendar_explanation">Die Campus App braucht die Erlaubnis, auf deinen Kalender zugreifen zu dürfen, um diesen mit deinem Campus-Kalender abgleichen zu können.</string>
     <string name="permission_contacts_explanation">Die Campus App braucht die Erlaubnis, auf deine Kontakte zugreifen zu dürfen, um diese Person hinzufügen zu können.</string>
     <string name="cancel">Abbruch</string>
@@ -469,6 +470,11 @@
     <string name="eduroam_dialog_preferences">WLAN-Einstellungen öffnen</string>
     <string name="done">Fertig</string>
     <string name="eduroam_dialog_info_text">Die WLAN-Konfiguration muss entfernt werden, da die App andere Konfigurationen nicht überschreiben kann. Öffne die WLAN-Einstellungen, wähle eduroam aus und klicke auf Entfernen.</string>
+
+    <!-- Survey card -->
+    <string name="survey_title">Umfrage zur Campus-App</string>
+    <string name="open_survey">Umfrage öffnen</string>
+    <string name="survey_info">Gib uns Feedback zum Prototyp einer Campus-App. Dein Input hilft uns zu entscheiden, ob wir eine ähnliche App in der Zukunft anbieten wollen und welche nützlichen Funktionen diese haben soll.</string>
 
     <!-- Feedback Activity -->
     <string name="feedback">Feedback</string>
