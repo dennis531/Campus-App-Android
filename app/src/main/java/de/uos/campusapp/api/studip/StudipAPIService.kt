@@ -31,7 +31,7 @@ interface StudipAPIService {
     @GET("users/{id}/events")
     fun getCalendar(@Path("id") id: String): Call<ResponseBody>
 
-    @GET("users/{id}/courses?include=institute,start-semester,end-semester&page[limit]=100")
+    @GET("users/{id}/courses?include=institute,start-semester,end-semester&page[limit]=500")
     fun getPersonalLectures(@Path("id") id: String): Call<List<StudipLecture>>
 
     @GET("courses?include=institute,start-semester,end-semester")
