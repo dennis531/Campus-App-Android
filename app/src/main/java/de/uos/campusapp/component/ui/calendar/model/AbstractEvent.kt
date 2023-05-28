@@ -1,13 +1,13 @@
 package de.uos.campusapp.component.ui.calendar.model
 
 import android.content.Context
+import android.text.format.DateUtils
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import de.uos.campusapp.R
 import de.uos.campusapp.component.notifications.model.FutureNotification
 import de.uos.campusapp.component.notifications.persistence.NotificationType
 import de.uos.campusapp.utils.Const
-import de.uos.campusapp.utils.DateTimeUtils
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 
@@ -56,12 +56,25 @@ abstract class AbstractEvent {
             return null
         }
 
-        val timestamp = DateTimeUtils.formatFutureTime(startTimeInDeviceTimeZone, context)
+        val notificationTime = startTimeInDeviceTimeZone.minusMinutes(15)
+
+        val timestamp = DateUtils.getRelativeTimeSpanString(
+            startTimeInDeviceTimeZone.millis,
+            notificationTime.millis,
+            DateUtils.MINUTE_IN_MILLIS,
+            DateUtils.FORMAT_ABBREV_RELATIVE
+        ).toString()
         val duration = endTimeInDeviceTimeZone.millis - startTimeInDeviceTimeZone.millis
+
+        val notificationText = StringBuilder(timestamp)
+        if (!location.isNullOrBlank()) {
+            notificationText.append("\n")
+            notificationText.append(location)
+        }
 
         val notification = NotificationCompat.Builder(context, Const.NOTIFICATION_CHANNEL_DEFAULT)
             .setContentTitle(title)
-            .setContentText(timestamp)
+            .setContentText(notificationText)
             .setAutoCancel(true)
             .setSmallIcon(R.drawable.ic_outline_event_24px)
             .setShowWhen(false)
@@ -69,7 +82,6 @@ abstract class AbstractEvent {
             .setTimeoutAfter(duration)
             .build()
 
-        val notificationTime = startTimeInDeviceTimeZone.minusMinutes(15)
         return FutureNotification(NotificationType.CALENDAR, id!!.hashCode(), notification, notificationTime)
     }
 
